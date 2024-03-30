@@ -1,18 +1,21 @@
 import { fetch_articles } from "@lib/service/article";
 import { A, createAsync } from "@solidjs/router";
-import { For, Show, createEffect } from "solid-js";
+import { Component, For, Show, createEffect } from "solid-js";
 import { Button } from "~/components/ui/button";
 
 export const route = {
   load: () => fetch_articles,
 };
-
-export default function PostsList() {
+const Article: Component = () => {
   const list = createAsync(fetch_articles);
 
   createEffect(() => {
     console.log({ list: list() });
   });
+
+  console.log("coming here");
+
+  console.log({ list });
 
   return (
     <Show when={list()}>
@@ -35,4 +38,6 @@ export default function PostsList() {
       )}
     </Show>
   );
-}
+};
+
+export default Article;
