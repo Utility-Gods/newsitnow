@@ -1,23 +1,7 @@
+import { fetch_articles } from "@lib/service/article";
 import { A, createAsync } from "@solidjs/router";
 import { For, Show, createEffect } from "solid-js";
-import { Button } from "@components/ui/button";
-
-const fetch_articles = async () => {
-  const requestOptions: RequestInit = {
-    method: "GET",
-    redirect: "follow",
-  };
-
-  const articles = await fetch(
-    "https://directus.newsitnowcms.orb.local/items/Articles",
-    requestOptions
-  )
-    .then((response) => response.json())
-    .catch((error) => console.log("error", error));
-
-  console.log({ articles });
-  return articles;
-};
+import { Button } from "~/components/ui/button";
 
 export const route = {
   load: () => fetch_articles,

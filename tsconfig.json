@@ -16,8 +16,10 @@
       "@lib": ["./src/lib"],
       "@lib/*": ["./src/lib/*"],
       "~/*": ["./src/*"],
-      "@components": ["./src/components"],
-      "@components/*": ["./src/components/*"]
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
+      "@pages": ["src/pages"],
+      "@pages/*": ["src/pages/*"]
     },
     "rootDirs": ["."]
   },
