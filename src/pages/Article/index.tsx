@@ -18,25 +18,28 @@ const Article: Component = () => {
   console.log({ list });
 
   return (
-    <Show when={list()}>
-      {(data) => (
-        <ul class="p-6 text-red-800 font-bold">
-          <Button variant="destructive">Click me</Button>
-          <For each={data().data}>
-            {(post) => (
-              <li>
-                {JSON.stringify(post)}
-                <h2>{post.id}</h2>
+    <div class="flex flex-col">
+      <div class="text-2xl font-semibold leading-10">Articles</div>
+      <Show when={list()}>
+        {(data) => (
+          <ul class="p-6 text-red-800 font-bold">
+            <Button variant="destructive">Click me</Button>
+            <For each={data().data}>
+              {(post) => (
+                <li>
+                  {JSON.stringify(post)}
+                  <h2>{post.id}</h2>
 
-                <span>
-                  {post.user_created} &bull; {post.collection_id}
-                </span>
-              </li>
-            )}
-          </For>
-        </ul>
-      )}
-    </Show>
+                  <span>
+                    {post.user_created} &bull; {post.collection_id}
+                  </span>
+                </li>
+              )}
+            </For>
+          </ul>
+        )}
+      </Show>
+    </div>
   );
 };
 

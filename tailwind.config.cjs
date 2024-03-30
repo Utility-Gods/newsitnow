@@ -105,7 +105,7 @@ module.exports = {
           800: "#ea9da1",
           900: "#f5ced0",
         },
-        red: {
+        secondary: {
           DEFAULT: "#e72929",
           100: "#310505",
           200: "#610b0b",

@@ -2,9 +2,8 @@ import { Component } from "solid-js";
 
 const Collection: Component = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
-      {/* Add your collection content here */}
+    <div class="flex flex-col">
+      <div class="text-2xl font-semibold leading-10">Dashboard</div>
     </div>
   );
 };
