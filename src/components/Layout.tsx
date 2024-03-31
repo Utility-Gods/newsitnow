@@ -1,5 +1,5 @@
-import Nav from "./app/Nav";
-import SideBar from "./app/SideBar";
+import Nav from "@components/bare/Nav";
+import SideBar from "@components/bare/SideBar";
 
 const Layout = (props) => (
   <div>

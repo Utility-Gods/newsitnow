@@ -124,6 +124,18 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontSize: {
+        xs: ["12px", "20px"],
+        sm: ["14px", "20px"],
+        base: ["16px", "24px"],
+        md: ["18px", "24px"],
+        lg: ["20px", "24px"],
+        xl: ["20px", "24px"],
+        "2xl": ["24px", "28px"],
+        "3xl": ["30px", "34px"],
+        "4xl": ["36px", "40px"],
+        "5xl": ["40px", "40px"],
+      },
       fontFamily: {
         sans: ["Lato"],
       },
