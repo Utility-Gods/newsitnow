@@ -22,11 +22,10 @@ import { save_collection } from "@lib/service/article";
 export const CreateCollectionModal: Component = (props) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
-  const [collection, { mutate, refetch }] = createResource(save_collection);
-  const [createCollectionForm, { Form, Field, FieldArray }] =
-    createForm<CreateCollectionForm>({
-      validate: valiForm(CreateCollectionSchema),
-    });
+  const [, { mutate, refetch }] = createResource(save_collection);
+  const [, { Form, Field, FieldArray }] = createForm<CreateCollectionForm>({
+    validate: valiForm(CreateCollectionSchema),
+  });
 
   console.log(Form);
 
