@@ -1,17 +1,13 @@
 import { fetch_articles } from "@lib/service/article";
-import { A, createAsync } from "@solidjs/router";
-import { Component, For, Show, createEffect } from "solid-js";
+import { A } from "@solidjs/router";
+import { Component, For, Show, createEffect, createResource } from "solid-js";
 import { Button } from "~/components/ui/button";
 
 export const route = {
   load: () => fetch_articles,
 };
 const Article: Component = () => {
-  const list = createAsync(fetch_articles);
-
-  createEffect(() => {
-    console.log({ list: list() });
-  });
+  const [list] = createResource(fetch_articles);
 
   console.log("coming here");
 

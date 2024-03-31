@@ -55,7 +55,6 @@ export const CreateCollectionModal: Component = (props) => {
                       {...props}
                       id="name"
                       area-invalid={field.error ? "true" : "false"}
-                      value="Pedro Duarte"
                       required
                     />
                     {field.error && (
