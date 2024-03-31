@@ -1,4 +1,4 @@
-import { Component, mergeProps } from "solid-js";
+import { Component, createResource, mergeProps } from "solid-js";
 import { createForm, SubmitHandler, valiForm } from "@modular-forms/solid";
 
 import {
@@ -17,10 +17,12 @@ import {
   CreateCollectionForm,
   CreateCollectionSchema,
 } from "@lib/schema/forms/create_collection";
+import { save_collection } from "@lib/service/article";
 
 export const CreateCollectionModal: Component = (props) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
+  const [collection, { mutate, refetch }] = createResource(save_collection);
   const [createCollectionForm, { Form, Field, FieldArray }] =
     createForm<CreateCollectionForm>({
       validate: valiForm(CreateCollectionSchema),
@@ -28,9 +30,15 @@ export const CreateCollectionModal: Component = (props) => {
 
   console.log(Form);
 
-  const handleSubmit: SubmitHandler<CreateCollectionForm> = (values, event) => {
+  const handleSubmit: SubmitHandler<CreateCollectionForm> = async (
+    values,
+    event
+  ) => {
     event.preventDefault();
     console.log(values);
+    const result = await mutate(values);
+    refetch(values);
+    console.log({ result });
   };
 
   return (

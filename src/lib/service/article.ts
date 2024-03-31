@@ -15,4 +15,24 @@ const fetch_articles = async () => {
   return articles;
 };
 
-export { fetch_articles };
+const save_collection = async (data: any) => {
+  const requestOptions: RequestInit = {
+    method: "POST",
+    body: JSON.stringify(data),
+    redirect: "follow",
+  };
+
+  const collection = await fetch(
+    "https://directus.newsitnowcms.orb.local/items/Collections",
+    requestOptions
+  )
+    .then((response) => response.json())
+    .catch((error) => console.log("error", error));
+
+  console.log({ collection });
+  return collection;
+};
+
+export { fetch_articles, save_collection };
+
+
