@@ -9,7 +9,10 @@ export const Nav: Component = () => {
           <span>ORANGE</span>
           <span class="text-primary">GAS</span>
         </h1>
-        <Badge class="bg-white  text-md font-semibold" variant="outline">
+        <Badge
+          class="bg-white text-primary-100  text-md font-semibold"
+          variant="outline"
+        >
           Beta Version
         </Badge>
       </nav>

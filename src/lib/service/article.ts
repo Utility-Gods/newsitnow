@@ -16,6 +16,7 @@ const fetch_articles = async () => {
 };
 
 const save_collection = async (data: any) => {
+  console.log({ data });
   const requestOptions: RequestInit = {
     method: "POST",
     body: JSON.stringify(data),
