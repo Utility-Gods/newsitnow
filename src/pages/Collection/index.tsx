@@ -1,4 +1,5 @@
 import { Component, createSignal } from "solid-js";
+import CollectionList from "~/components/functional/CollectionList";
 import { CreateCollectionModal } from "~/components/functional/CreateCollectionModal";
 import { Button } from "~/components/ui/button";
 
@@ -17,6 +18,7 @@ const Collection: Component = () => {
           Create Collection
         </Button>
       </div>
+      <CollectionList />
       <CreateCollectionModal open={open()} onOpenChange={setOpen} />
     </div>
   );

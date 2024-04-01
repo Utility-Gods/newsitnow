@@ -7,9 +7,9 @@ const Loader: Component = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      stroke-width="2"
+      stroke-line-cap="round"
+      stroke-line-join="round"
       class="lucide lucide-loader"
     >
       <line x1={12} x2={12} y1={2} y2={6} />
@@ -22,6 +22,6 @@ const Loader: Component = () => {
       <line x1={16.24} x2={19.07} y1={7.76} y2={4.93} />
     </svg>
   );
-};
+}
 
 export default Loader;

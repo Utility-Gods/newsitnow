@@ -25,7 +25,7 @@ import {
   CreateCollectionForm,
   CreateCollectionSchema,
 } from "@lib/schema/forms/create_collection";
-import { save_collection } from "@lib/service/article";
+import { save_collection } from "@lib/service/collection";
 
 export const CreateCollectionModal: Component = (props) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
@@ -41,7 +41,7 @@ export const CreateCollectionModal: Component = (props) => {
   };
 
   const [loading, setLoading] = createSignal(false);
-  const [, { mutate, refetch }] = createResource(formValues, save_collection);
+  // const [, { mutate, refetch }] = createResource(formValues, save_collection);
 
   console.log(Form);
 
@@ -57,10 +57,9 @@ export const CreateCollectionModal: Component = (props) => {
       console.log(values);
       formValues.name = values.name;
       formValues.description = values.description;
-      mutate(values);
-     const result = await refetch(values);
+      const result = await save_collection(formValues);
 
-     console.log({ result });
+      console.log({ result });
       showToast({
         title: "Collection created",
         description: "Collection has been created successfully",

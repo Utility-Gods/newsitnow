@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 
-const Collection: Component = () => {
+const Home: Component = () => {
   return (
     <div class="flex flex-col">
       <div class="text-2xl font-semibold leading-10">Dashboard</div>
@@ -8,4 +8,4 @@ const Collection: Component = () => {
   );
 };
 
-export default Collection;
+export default Home;
