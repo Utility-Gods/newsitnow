@@ -6,10 +6,13 @@ import { cn } from "~/lib/utils"
 const Table: Component<ComponentProps<"table">> = (props) => {
   const [, rest] = splitProps(props, ["class"])
   return (
-    <div class="relative w-full overflow-auto">
-      <table class={cn("w-full caption-bottom text-sm", props.class)} {...rest} />
+    <div class="relative w-full overflow-auto no-scrollbar">
+      <table
+        class={cn("w-full caption-bottom text-sm", props.class)}
+        {...rest}
+      />
     </div>
-  )
+  );
 }
 
 const TableHeader: Component<ComponentProps<"thead">> = (props) => {

@@ -1,5 +1,5 @@
 import { fetch_collections } from "@lib/service/collection";
-import { Component, createEffect, createResource, For } from "solid-js";
+import { Component, createResource, For } from "solid-js";
 import {
   Table,
   TableBody,
@@ -9,7 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { Badge } from "../ui/badge";
+
+import { BadgeDelta } from "~/components/ui/badge-delta";
 
 const CollectionList: Component = () => {
   const [collectionList] = createResource(fetch_collections);
@@ -32,7 +33,9 @@ const CollectionList: Component = () => {
               <TableCell class="font-medium">{c.name}</TableCell>
               <TableCell>{c.description}</TableCell>
               <TableCell>
-                <Badge variant="secondary"> {c.status.toUpperCase()}</Badge>
+                <BadgeDelta deltaType="unchanged">
+                  {c.status.toUpperCase()}
+                </BadgeDelta>
               </TableCell>
               <TableCell class="text-right">
                 {new Date(c.date_created).toLocaleDateString()}

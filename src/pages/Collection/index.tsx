@@ -6,8 +6,8 @@ import { Button } from "~/components/ui/button";
 const Collection: Component = () => {
   const [open, setOpen] = createSignal(false);
   return (
-    <div class="flex flex-col flex-1">
-      <div class="flex justify-between items-center w-full">
+    <div class="flex flex-col flex-1 flex-grow overflow-hidden">
+      <div class="flex justify-between items-center p-6 ">
         <div class="text-2xl font-semibold leading-10">Collections</div>
 
         <Button
@@ -18,7 +18,9 @@ const Collection: Component = () => {
           Create Collection
         </Button>
       </div>
-      <CollectionList />
+      <div class="flex gap-6 flex-col p-6 overflow-hidden h-full">
+        <CollectionList />
+      </div>
       <CreateCollectionModal open={open()} onOpenChange={setOpen} />
     </div>
   );
