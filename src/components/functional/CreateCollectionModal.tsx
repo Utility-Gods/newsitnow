@@ -58,12 +58,15 @@ export const CreateCollectionModal: Component = (props) => {
       formValues.name = values.name;
       formValues.description = values.description;
       mutate(values);
-      refetch();
+     const result = await refetch(values);
+
+     console.log({ result });
       showToast({
         title: "Collection created",
         description: "Collection has been created successfully",
       });
     } catch (e) {
+      console.log("------------", e);
       console.log(e);
       showToast({
         title: "Failed to create collection",
