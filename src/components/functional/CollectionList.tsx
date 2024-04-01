@@ -13,8 +13,14 @@ import {
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 
-const CollectionList: Component = () => {
-  const merged = mergeProps({ openDetails: (open: boolean) => {} });
+export type CollectionListProps = {
+  openDetails: (open: boolean) => void;
+  setActiveCollection: (id: string) => void;
+};
+
+const CollectionList: Component<CollectionListProps> = (props) => {
+  console.log("CollectionList props", props);
+
   const [collectionList] = createResource(fetch_collections);
 
   return (
@@ -49,7 +55,8 @@ const CollectionList: Component = () => {
                   size="sm"
                   onClick={() => {
                     console.log("Viewing collection", c);
-                    merged.openDetails(true);
+                    props.openDetails(true);
+                    props.setActiveCollection(c.id);
                   }}
                 >
                   View

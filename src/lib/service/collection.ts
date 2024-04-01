@@ -53,6 +53,8 @@ const fetch_collection_by_id = async (id: string) => {
     redirect: "follow",
   };
 
+  console.log("fetching collection by id", id);
+
   const collection = await fetch(
     import.meta.env.VITE_DIRECTUS_PROJECT_URL + "items/Collections/" + id,
     requestOptions

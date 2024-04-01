@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/button";
 const Collection: Component = () => {
   const [openModal, setOpenModal] = createSignal(false);
   const [openDetails, setOpenDetails] = createSignal(false);
+  const [activeCollection, setActiveCollection] = createSignal(null);
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden">
@@ -22,10 +23,17 @@ const Collection: Component = () => {
         </Button>
       </div>
       <div class="flex gap-6 flex-col p-6 overflow-hidden h-full">
-        <CollectionList openDetails={setOpenDetails} />
+        <CollectionList
+          openDetails={setOpenDetails}
+          setActiveCollection={setActiveCollection}
+        />
       </div>
       <CreateCollectionModal open={openModal()} onOpenChange={setOpenModal} />
-      <CollectionDetails open={openDetails()} onOpenChange={setOpenDetails} />
+      <CollectionDetails
+        open={openDetails()}
+        onOpenChange={setOpenDetails}
+        collectionId={activeCollection()}
+      />
     </div>
   );
 };
