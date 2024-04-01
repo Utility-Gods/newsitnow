@@ -1,5 +1,5 @@
 import { fetch_collections } from "@lib/service/collection";
-import { Component, createResource, For } from "solid-js";
+import { Component, createResource, For, mergeProps } from "solid-js";
 import {
   Table,
   TableBody,
@@ -11,8 +11,10 @@ import {
 } from "~/components/ui/table";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import { Button } from "@components/ui/button";
 
 const CollectionList: Component = () => {
+  const merged = mergeProps({ openDetails: (open: boolean) => {} });
   const [collectionList] = createResource(fetch_collections);
 
   return (
@@ -24,6 +26,7 @@ const CollectionList: Component = () => {
           <TableHead>Descriptions</TableHead>
           <TableHead>Status</TableHead>
           <TableHead class="text-right">Created</TableHead>
+          <TableHead class="w-[100px]">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -39,6 +42,21 @@ const CollectionList: Component = () => {
               </TableCell>
               <TableCell class="text-right">
                 {new Date(c.date_created).toLocaleDateString()}
+              </TableCell>
+              <TableCell class="text-right gap-2 flex">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    console.log("Viewing collection", c);
+                    merged.openDetails(true);
+                  }}
+                >
+                  View
+                </Button>
+                <Button variant="destructive" size="sm">
+                  Edit
+                </Button>
               </TableCell>
             </TableRow>
           )}

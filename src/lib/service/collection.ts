@@ -46,4 +46,24 @@ const fetch_collections = async () => {
   return collections;
 };
 
-export { fetch_collections, save_collection };
+
+const fetch_collection_by_id = async (id: string) => {
+  const requestOptions: RequestInit = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  const collection = await fetch(
+    import.meta.env.VITE_DIRECTUS_PROJECT_URL + "items/Collections/" + id,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      return result.data;
+    })
+    .catch((error) => console.log("error", error));
+
+  return collection;
+};
+
+export { fetch_collections, save_collection, fetch_collection_by_id };
