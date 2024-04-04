@@ -61,7 +61,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                 >
                   View
                 </Button>
-                <Button variant="destructive" size="sm">
+                <Button variant="secondary" size="sm">
                   Edit
                 </Button>
               </TableCell>
