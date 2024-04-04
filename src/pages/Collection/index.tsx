@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 const Collection: Component = () => {
   const [openModal, setOpenModal] = createSignal(false);
   const [openDetails, setOpenDetails] = createSignal(false);
-  const [activeCollection, setActiveCollection] = createSignal(null);
+  const [activeCollection, setActiveCollection] = createSignal("");
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden">
@@ -17,7 +17,7 @@ const Collection: Component = () => {
         <Button
           class="font-bold text-base"
           size="lg"
-          onClick={() => setOpenDetails(true)}
+          onClick={() => setOpenModal(true)}
         >
           Create Collection
         </Button>

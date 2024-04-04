@@ -10,7 +10,14 @@ import {
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 import PageSpinner from "../bare/PageSpinner";
-import { createResource, createSignal, mergeProps, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createResource,
+  createSignal,
+  mergeProps,
+  Show,
+} from "solid-js";
 
 import { fetch_collection_by_id } from "@lib/service/collection";
 
@@ -20,11 +27,13 @@ type CollectionDetailsProps = {
   collectionId: string;
 };
 
-function CollectionDetails(props: CollectionDetailsProps) {
-  const [collection] = createResource(
-    props.collectionId,
-    fetch_collection_by_id
-  );
+const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
+  const [collectionId, setCollectionId] = createSignal(props.collectionId);
+  const [collection] = createResource(collectionId, fetch_collection_by_id);
+
+  createEffect(() => {
+    setCollectionId(props.collectionId);
+  });
 
   console.log(props);
   const [loading, setLoading] = createSignal(false);
@@ -43,7 +52,7 @@ function CollectionDetails(props: CollectionDetailsProps) {
               </Callout>
             </SheetTitle>
             <SheetDescription>
-              <Show when={collection(props.collectionId)}>
+              <Show when={collection()}>
                 {(data) => (
                   <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
                     <div class="flex gap-3 items-center">
@@ -78,6 +87,6 @@ function CollectionDetails(props: CollectionDetailsProps) {
       </Show>
     </>
   );
-}
+};
 
 export default CollectionDetails;

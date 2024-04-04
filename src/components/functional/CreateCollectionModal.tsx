@@ -1,10 +1,4 @@
-import {
-  Component,
-  createResource,
-  createSignal,
-  mergeProps,
-  Show,
-} from "solid-js";
+import { Component, createSignal, mergeProps, Show } from "solid-js";
 import { createForm, SubmitHandler, valiForm } from "@modular-forms/solid";
 import { showToast } from "~/components/ui/toast";
 
@@ -27,13 +21,18 @@ import {
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
 
-export const CreateCollectionModal: Component = (props) => {
+type CreateCollectionModalProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
+  props
+) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
-  const [createCollectionForm, { Form, Field, FieldArray }] =
-    createForm<CreateCollectionForm>({
-      validate: valiForm(CreateCollectionSchema),
-    });
+  const [, { Form, Field, FieldArray }] = createForm<CreateCollectionForm>({
+    validate: valiForm(CreateCollectionSchema),
+  });
 
   const formValues = {
     name: "",
@@ -41,7 +40,6 @@ export const CreateCollectionModal: Component = (props) => {
   };
 
   const [loading, setLoading] = createSignal(false);
-  // const [, { mutate, refetch }] = createResource(formValues, save_collection);
 
   console.log(Form);
 
