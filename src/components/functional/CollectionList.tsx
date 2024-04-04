@@ -42,7 +42,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
               <TableCell class="font-medium">{c.name}</TableCell>
               <TableCell>{c.description}</TableCell>
               <TableCell>
-                <BadgeDelta deltaType="unchanged">
+                <BadgeDelta deltaType="moderateIncrease">
                   {c.status.toUpperCase()}
                 </BadgeDelta>
               </TableCell>

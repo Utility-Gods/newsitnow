@@ -1,5 +1,6 @@
 import { Component } from "solid-js";
-import { Badge } from "~/components/ui/badge";
+
+import { BadgeDelta } from "../ui/badge-delta";
 
 export const Nav: Component = () => {
   return (
@@ -9,12 +10,7 @@ export const Nav: Component = () => {
           <span>ORANGE</span>
           <span class="text-primary">GAS</span>
         </h1>
-        <Badge
-          class="bg-white text-secondary  text-md font-semibold"
-          variant="outline"
-        >
-          Beta Version
-        </Badge>
+        <BadgeDelta deltaType="unchanged">Beta Version</BadgeDelta>
       </nav>
     </header>
   );

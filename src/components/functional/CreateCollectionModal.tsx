@@ -70,6 +70,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
         description: "An error occurred while creating the collection",
       });
     } finally {
+      merged.onOpenChange(false);
       setLoading(false);
     }
   };
@@ -123,6 +124,13 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
               </div>
             </div>
             <DialogFooter>
+              <Button
+                variant="ghost"
+                type="button"
+                onClick={() => merged.onOpenChange(false)}
+              >
+                Close
+              </Button>
               <Button type="submit">Save changes</Button>
             </DialogFooter>
           </Form>
