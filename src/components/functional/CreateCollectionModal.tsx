@@ -20,6 +20,7 @@ import {
   CreateCollectionSchema,
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
+import { ok, err } from "neverthrow";
 
 type CreateCollectionModalProps = {
   open: boolean;
@@ -57,11 +58,21 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       formValues.description = values.description;
       const result = await save_collection(formValues);
 
-      console.log({ result });
-      showToast({
-        title: "Collection created",
-        description: "Collection has been created successfully",
-      });
+      if (result?.isOk()) {
+        console.log({ result });
+        showToast({
+          title: "Collection created",
+          description: "Collection has been created successfully",
+        });
+      }
+
+      if (result?.isErr()) {
+        showToast({
+          title: "Some error occured",
+          description: "Could not create collection, please try again later",
+          variant: "destructive",
+        });
+      }
     } catch (e) {
       console.log("------------", e);
       console.log(e);

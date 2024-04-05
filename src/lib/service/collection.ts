@@ -1,3 +1,5 @@
+import { err, ok } from "neverthrow";
+
 const save_collection = async (data: any) => {
   try {
     const requestOptions: RequestInit = {
@@ -13,14 +15,13 @@ const save_collection = async (data: any) => {
       .then((response) => {
         console.log(response.status);
         if (response.status !== 200) {
-          console.log("returning from here 1");
           throw new Error("Failed to save collection");
         }
-        console.log("returning from here 3");
-        return response.json();
+        return ok(response.json());
       })
       .catch((error) => {
-        throw new Error(error);
+        console.log(error);
+        return err("some error occured");
       });
   } catch (e) {
     console.log(e);
@@ -45,7 +46,6 @@ const fetch_collections = async () => {
 
   return collections;
 };
-
 
 const fetch_collection_by_id = async (id: string) => {
   const requestOptions: RequestInit = {
