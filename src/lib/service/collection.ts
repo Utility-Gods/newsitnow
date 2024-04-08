@@ -2,11 +2,18 @@ import { err, ok } from "neverthrow";
 
 const save_collection = async (data: any) => {
   try {
-    const requestOptions: RequestInit = {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      name: data.name,
+      description: data.description,
+    });
+
+    const requestOptions = {
       method: "POST",
-      body: JSON.stringify(data),
+      body: raw,
     };
-    console.log("coming here", data, requestOptions);
 
     return await fetch(
       import.meta.env.VITE_DIRECTUS_PROJECT_URL + "items/Collections",
@@ -61,6 +68,7 @@ const fetch_collection_by_id = async (id: string) => {
   )
     .then((response) => response.json())
     .then((result) => {
+      console.log(result);
       return result.data;
     })
     .catch((error) => console.log("error", error));
