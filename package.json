@@ -28,9 +28,12 @@
     "neverthrow": "^6.1.0",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.8.11",
+    "strapi-sdk-js": "^2.3.3",
     "tailwind-merge": "^2.2.2",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "valibot": "^0.30.0"
-  }
+  },
+  "main": "index.js",
+  "repository": "git@github.com:Utility-Gods/newsitnow.git"
 }

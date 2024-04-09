@@ -1,10 +1,8 @@
+import { strapi } from "@lib/strapi";
 import { err, ok } from "neverthrow";
 
 const save_collection = async (data: any) => {
   try {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
     const raw = JSON.stringify({
       name: data.name,
       description: data.description,
@@ -15,42 +13,19 @@ const save_collection = async (data: any) => {
       body: raw,
     };
 
-    return await fetch(
-      import.meta.env.VITE_DIRECTUS_PROJECT_URL + "items/Collections",
-      requestOptions
-    )
-      .then((response) => {
-        console.log(response.status);
-        if (response.status !== 200) {
-          throw new Error("Failed to save collection");
-        }
-        return ok(response.json());
-      })
-      .catch((error) => {
-        console.log(error);
-        return err("some error occured");
-      });
+    return await strapi.create("collections", {
+      name: data.name,
+      description: data.description,
+    });
   } catch (e) {
     console.log(e);
   }
 };
 
 const fetch_collections = async () => {
-  const requestOptions: RequestInit = {
-    method: "GET",
-    redirect: "follow",
-  };
+  const collections = await strapi.find("collections");
 
-  const collections = await fetch(
-    import.meta.env.VITE_DIRECTUS_PROJECT_URL + "items/Collections",
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((result) => {
-      return result.data;
-    })
-    .catch((error) => console.log("error", error));
-
+  console.log("fetching collections", collections);
   return collections;
 };
 

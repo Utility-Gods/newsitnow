@@ -1,5 +1,11 @@
 import { fetch_collections } from "@lib/service/collection";
-import { Component, createResource, For, mergeProps } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createResource,
+  For,
+  mergeProps,
+} from "solid-js";
 import {
   Table,
   TableBody,
@@ -23,6 +29,10 @@ const CollectionList: Component<CollectionListProps> = (props) => {
 
   const [collectionList] = createResource(fetch_collections);
 
+  createEffect(() => {
+    collectionList();
+    console.log("CollectionList", collectionList());
+  });
   return (
     <Table>
       <TableCaption>A list of your collections.</TableCaption>
@@ -36,18 +46,18 @@ const CollectionList: Component<CollectionListProps> = (props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <For each={collectionList()}>
-          {(c) => (
+        <For each={collectionList()?.data}>
+          {({ attributes: c }) => (
             <TableRow>
               <TableCell class="font-medium">{c.name}</TableCell>
               <TableCell>{c.description}</TableCell>
               <TableCell>
                 <BadgeDelta deltaType="moderateIncrease">
-                  {c.status.toUpperCase()}
+                  {/* {c.status.toUpperCase()} */}
                 </BadgeDelta>
               </TableCell>
               <TableCell class="text-right">
-                {new Date(c.date_created).toLocaleDateString()}
+                {new Date(c.created_on).toLocaleDateString()}
               </TableCell>
               <TableCell class="text-right gap-2 flex">
                 <Button
