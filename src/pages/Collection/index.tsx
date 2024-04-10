@@ -1,7 +1,7 @@
 import { Component, createSignal } from "solid-js";
-import CollectionDetails from "~/components/functional/CollectionDetails";
-import CollectionList from "~/components/functional/CollectionList";
-import { CreateCollectionModal } from "~/components/functional/CreateCollectionModal";
+import CollectionDetails from "~/components/functional/collection/CollectionDetails";
+import CollectionList from "~/components/functional/collection/CollectionList";
+import { CreateCollectionModal } from "~/components/functional/collection/CreateCollectionModal";
 import { Button } from "~/components/ui/button";
 
 const Collection: Component = () => {

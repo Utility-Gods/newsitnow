@@ -26,8 +26,8 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2  rounded-lg  hover:bg-muted   group ${
-                path() === "/" ? "text-text bg-muted" : "text-text"
+              class={`flex items-center p-2  rounded-lg  hover:bg-background   group ${
+                path() === "/" ? "text-text bg-background" : "text-text"
               }`}
             >
               <svg
@@ -47,8 +47,10 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/collection"
-              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
-                path() === "/collection" ? "text-text bg-muted" : "text-text"
+              class={`flex items-center p-2  rounded-lg  hover:bg-background    group ${
+                path() === "/collection"
+                  ? "text-text bg-background"
+                  : "text-text"
               }`}
             >
               <svg
@@ -66,8 +68,8 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/article"
-              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
-                path() === "/article" ? "text-text bg-muted" : "text-text"
+              class={`flex items-center p-2  rounded-lg  hover:bg-background    group ${
+                path() === "/article" ? "text-text bg-background" : "text-text"
               }`}
             >
               <svg
@@ -85,8 +87,8 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
-                path() === "/signin" ? "text-text bg-muted" : "text-text"
+              class={`flex items-center p-2  rounded-lg  hover:bg-background    group ${
+                path() === "/signin" ? "text-text bg-background" : "text-text"
               }`}
             >
               <svg
@@ -110,8 +112,8 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
-                path() === "/signup" ? "text-text bg-muted" : "text-text"
+              class={`flex items-center p-2  rounded-lg  hover:bg-background    group ${
+                path() === "/signup" ? "text-text bg-background" : "text-text"
               }`}
             >
               <svg

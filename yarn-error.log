@@ -1,0 +1,63 @@
+Arguments: 
+  /Users/siddharthjain/.nvm/versions/node/v21.2.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add @kobalte/core
+
+PATH: 
+  /Users/siddharthjain/.npm/_npx/ee21f74023e4584f/node_modules/.bin:/Users/siddharthjain/Desktop/code/utility-gods/newsitnow/node_modules/.bin:/Users/siddharthjain/Desktop/code/utility-gods/node_modules/.bin:/Users/siddharthjain/Desktop/code/node_modules/.bin:/Users/siddharthjain/Desktop/node_modules/.bin:/Users/siddharthjain/node_modules/.bin:/Users/node_modules/.bin:/node_modules/.bin:/Users/siddharthjain/.nvm/versions/node/v21.2.0/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin:/Users/siddharthjain/.opam/default/bin:/Users/siddharthjain/.console-ninja/.bin:/Users/siddharthjain/.nvm/versions/node/v21.2.0/bin:/opt/local/bin:/opt/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/mysql/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/go/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/siddharthjain/.cargo/bin:/Users/siddharthjain/.orbstack/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  21.2.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/Users/siddharthjain/Library/Caches/Yarn/v6/npm-glob-parent-6.0.2-6d237d99083950c79290f24c7642a3de9a28f9e3-integrity/node_modules/glob-parent/package.json' -> '/Users/siddharthjain/Desktop/code/utility-gods/newsitnow/node_modules/tailwindcss/node_modules/glob-parent/package.json'
+
+npm manifest: 
+  {
+    "name": "newsitnow-fe",
+    "version": "0.0.0",
+    "description": "front-end for news it now CMS",
+    "author": "admin@utilitygods.com",
+    "scripts": {
+      "start": "vite",
+      "dev": "vite",
+      "build": "vite build",
+      "serve": "vite preview"
+    },
+    "license": "MIT",
+    "devDependencies": {
+      "solid-devtools": "^0.29.3",
+      "typescript": "^5.3.3",
+      "vite": "^5.0.11",
+      "vite-plugin-solid": "^2.8.2",
+      "vite-tsconfig-paths": "^4.3.2"
+    },
+    "dependencies": {
+      "@kobalte/core": "^0.12.6",
+      "@modular-forms/solid": "^0.20.0",
+      "@solidjs/router": "^0.13.1",
+      "autoprefixer": "^10.4.19",
+      "class-variance-authority": "^0.7.0",
+      "clsx": "^2.1.0",
+      "neverthrow": "^6.1.0",
+      "solid-icons": "^1.1.0",
+      "solid-js": "^1.8.11",
+      "strapi-sdk-js": "^2.3.3",
+      "tailwind-merge": "^2.2.2",
+      "tailwindcss": "^3.4.3",
+      "tailwindcss-animate": "^1.0.7",
+      "valibot": "^0.30.0"
+    },
+    "main": "index.js",
+    "repository": "git@github.com:Utility-Gods/newsitnow.git"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -9,7 +9,7 @@ import {
 
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
-import PageSpinner from "../bare/PageSpinner";
+import PageSpinner from "../../bare/PageSpinner";
 import {
   Component,
   createEffect,

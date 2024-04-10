@@ -1,6 +1,6 @@
 import * as v from "valibot";
 
-export const CreateCollectionSchema = v.object({
+export const CreateArticleSchema = v.object({
   name: v.string([
     v.minLength(3, "Name must be at least 3 characters long"),
     v.maxLength(50, "Name must be at most 50 characters long"),
@@ -11,5 +11,4 @@ export const CreateCollectionSchema = v.object({
   ]),
 });
 
-export type CreateCollectionForm = v.Input<typeof CreateCollectionSchema>;
-
+export type CreateArticleForm = v.Input<typeof CreateArticleSchema>;
