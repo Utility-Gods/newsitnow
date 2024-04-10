@@ -18,7 +18,7 @@ const SideBar: Component = () => {
     // JSX code for your component's UI goes here
     <aside
       id="default-sidebar"
-      class="text-white z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="text-text z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
       <div class="h-full px-3 py-4 overflow-y-auto bg-primary ">
@@ -26,12 +26,12 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2  rounded-lg  hover:bg-white hover:text-primary  group ${
-                path() === "/" ? "text-primary bg-white" : "text-white"
+              class={`flex items-center p-2  rounded-lg  hover:bg-muted   group ${
+                path() === "/" ? "text-text bg-muted" : "text-text"
               }`}
             >
               <svg
-                class="w-5 h-5 text-gray-500 transition duration-75  group-hover:text-primary "
+                class="w-5 h-5 text-text transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -47,14 +47,12 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/collection"
-              class={`flex items-center p-2  rounded-lg  hover:bg-white hover:text-primary   group ${
-                path() === "/collection"
-                  ? "text-primary bg-white"
-                  : "text-white"
+              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
+                path() === "/collection" ? "text-text bg-muted" : "text-text"
               }`}
             >
               <svg
-                class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-primary "
+                class="flex-shrink-0 w-5 h-5 text-text transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -68,12 +66,12 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/article"
-              class={`flex items-center p-2  rounded-lg  hover:bg-white hover:text-primary   group ${
-                path() === "/article" ? "text-primary bg-white" : "text-white"
+              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
+                path() === "/article" ? "text-text bg-muted" : "text-text"
               }`}
             >
               <svg
-                class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-primary "
+                class="flex-shrink-0 w-5 h-5 text-text transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -87,12 +85,12 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2  rounded-lg  hover:bg-white hover:text-primary   group ${
-                path() === "/signin" ? "text-primary bg-white" : "text-white"
+              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
+                path() === "/signin" ? "text-text bg-muted" : "text-text"
               }`}
             >
               <svg
-                class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-primary "
+                class="flex-shrink-0 w-5 h-5 text-text transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -112,12 +110,12 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2  rounded-lg  hover:bg-white hover:text-primary   group ${
-                path() === "/signup" ? "text-primary bg-white" : "text-white"
+              class={`flex items-center p-2  rounded-lg  hover:bg-muted    group ${
+                path() === "/signup" ? "text-text bg-muted" : "text-text"
               }`}
             >
               <svg
-                class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-primary "
+                class="flex-shrink-0 w-5 h-5 text-text transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
