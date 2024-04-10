@@ -2,10 +2,7 @@ import { strapi } from "@lib/strapi";
 import { err, ok } from "neverthrow";
 
 const fetch_articles = async () => {
-  const requestOptions: RequestInit = {
-    method: "GET",
-    redirect: "follow",
-  };
+
 
   const articles = await strapi.find("articles");
 
