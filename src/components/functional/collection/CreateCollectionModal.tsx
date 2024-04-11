@@ -78,6 +78,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       console.log("------------", e);
       console.log(e);
       showToast({
+        variant: "error",
         title: "Failed to create collection",
         description: "An error occurred while creating the collection",
       });

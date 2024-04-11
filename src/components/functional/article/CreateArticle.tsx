@@ -36,12 +36,10 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
 
   const formValues = {
     name: "",
-    description: "",
+    content: "",
   };
 
   const [loading, setLoading] = createSignal(false);
-
-  console.log(Form);
 
   const handleSubmit: SubmitHandler<CreateArticleForm> = async (
     values,
@@ -54,14 +52,20 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
     try {
       console.log(values);
       formValues.name = values.name;
-      formValues.description = values.description;
+      formValues.content = values.content;
       const result = await save_article(formValues);
 
+      showToast({
+        variant: "success",
+        title: "Article created",
+        description: "The article has been created successfully",
+      });
       console.log(result);
     } catch (e) {
       console.log("------------", e);
       console.log(e);
       showToast({
+        variant: "error",
         title: "Failed to create article",
         description: "An error occurred while creating the article",
       });
@@ -106,13 +110,13 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                 </Field>
               </div>
               <div class="grid grid-cols-4 items-center gap-4">
-                <Label for="description" class="text-right">
+                <Label for="content" class="text-right">
                   Description
                 </Label>
-                <Field name="description">
+                <Field name="content">
                   {(field, props) => (
                     <div class="flex flex-col col-span-3 gap-1">
-                      <Textarea {...props} id="description" rows="3" required />
+                      <Textarea {...props} id="content" rows="3" required />
                       <span class="text-secondary text-sm">{field.error}</span>
                     </div>
                   )}

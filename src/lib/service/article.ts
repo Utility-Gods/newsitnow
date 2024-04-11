@@ -10,10 +10,7 @@ const fetch_articles = async () => {
 };
 
 const save_article = async (data: any) => {
-  const result = await strapi.create("articles", {
-    name: data.name,
-    description: data.description,
-  });
+  const result = await strapi.create("articles", data);
 
   if (!result.data) {
     return err(result.data);

@@ -30,7 +30,6 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const [articleList] = createResource(fetch_articles);
 
   createEffect(() => {
-    articleList();
     console.log("ArticleList", articleList());
   });
   return (
