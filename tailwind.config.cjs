@@ -66,7 +66,7 @@ module.exports = {
           600: "#ff7b47",
           700: "#ff9c75",
           800: "#ffbda3",
-          900: "#ffded1",
+          900: "hsl(17, 100%, 91%)",
         },
         atomic_tangerine: {
           DEFAULT: "#f29f76",

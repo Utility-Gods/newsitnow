@@ -59,21 +59,22 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       const result = await save_collection(formValues);
 
       console.log(result);
-      // if (result?.isOk()) {
-      //   console.log({ result });
-      //   showToast({
-      //     title: "Collection created",
-      //     description: "Collection has been created successfully",
-      //   });
-      // }
+      if (result?.isOk()) {
+        console.log({ result });
+        showToast({
+          variant: "success",
+          title: "Collection created",
+          description: "Collection has been created successfully",
+        });
+      }
 
-      // if (result?.isErr()) {
-      //   showToast({
-      //     title: "Some error occured",
-      //     description: "Could not create collection, please try again later",
-      //     variant: "destructive",
-      //   });
-      // }
+      if (result?.isErr()) {
+        showToast({
+          title: "Some error occured",
+          description: "Could not create collection, please try again later",
+          variant: "error",
+        });
+      }
     } catch (e) {
       console.log("------------", e);
       console.log(e);

@@ -47,7 +47,6 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
   ) => {
     setLoading(true);
 
-    console.log({ loading: loading() });
     event.preventDefault();
     try {
       console.log(values);
@@ -55,6 +54,9 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
       formValues.content = values.content;
       const result = await save_article(formValues);
 
+      if (result.isErr()) {
+        throw result.error;
+      }
       showToast({
         variant: "success",
         title: "Article created",
