@@ -95,7 +95,12 @@ const ToastTitle: Component<ToastPrimitive.ToastTitleProps> = (props) => {
 
 const ToastDescription: Component<ToastPrimitive.ToastDescriptionProps> = (props) => {
   const [, rest] = splitProps(props, ["class"])
-  return <ToastPrimitive.Description class={cn("text-sm opacity-90", props.class)} {...rest} />
+  return (
+    <ToastPrimitive.content
+      class={cn("text-sm opacity-90", props.class)}
+      {...rest}
+    />
+  );
 }
 
 function showToast(props: {
@@ -105,14 +110,18 @@ function showToast(props: {
   duration?: number
 }) {
   toaster.show((data) => (
-    <Toast toastId={data.toastId} variant={props.variant} duration={props.duration}>
+    <Toast
+      toastId={data.toastId}
+      variant={props.variant}
+      duration={props.duration}
+    >
       <div class="grid gap-1">
         {props.title && <ToastTitle>{props.title}</ToastTitle>}
-        {props.description && <ToastDescription>{props.description}</ToastDescription>}
+        {props.content && <ToastDescription>{props.content}</ToastDescription>}
       </div>
       <ToastClose />
     </Toast>
-  ))
+  ));
 }
 
 function showToastPromise<T, U>(

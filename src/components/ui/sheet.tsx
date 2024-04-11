@@ -2,8 +2,7 @@ import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
 
 import { Dialog as SheetPrimitive } from "@kobalte/core"
-import { cva, type VariantProps } from "class-variance-authority"
-import { TbX } from "solid-icons/tb"
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "~/lib/utils"
 
@@ -43,123 +42,66 @@ const SheetOverlay: Component<SheetPrimitive.DialogOverlayProps> = (props) => {
   return (
     <SheetPrimitive.Overlay
       class={cn(
-        "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm transition-all duration-100 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in",
+        "fixed inset-0 z-50 bg-black/80 data-[expanded=]:animate-in data-[closed=]:animate-out data-[closed=]:fade-out-0 data-[expanded=]:fade-in-0",
         props.class
       )}
       {...rest}
     />
-  )
+  );
 }
 
 const sheetVariants = cva(
-  "fixed z-50 scale-100 gap-4 border bg-background p-6 opacity-100 shadow-lg",
+  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[closed=]:duration-300 data-[expanded=]:duration-500 data-[expanded=]:animate-in data-[closed=]:animate-out",
   {
     variants: {
       position: {
-        top: "w-full duration-300 animate-in slide-in-from-top",
-        bottom: "w-full duration-300 animate-in slide-in-from-bottom",
-        left: "h-full duration-300 animate-in slide-in-from-left",
-        right: "h-full duration-300 animate-in slide-in-from-right"
+        top: "inset-x-0 top-0 border-b data-[closed=]:slide-out-to-top data-[expanded=]:slide-in-from-top",
+        bottom:
+          "inset-x-0 bottom-0 border-t data-[closed=]:slide-out-to-bottom data-[expanded=]:slide-in-from-bottom",
+        left: "inset-y-0 left-0 h-full w-3/4 border-r data-[closed=]:slide-out-to-left data-[expanded]:slide-in-from-left sm:max-w-sm",
+        right:
+          "inset-y-0 right-0 h-full w-3/4  border-l data-[closed=]:slide-out-to-right data-[expanded=]:slide-in-from-right sm:max-w-sm",
       },
-      size: {
-        content: "",
-        default: "",
-        sm: "",
-        lg: "",
-        xl: "",
-        full: ""
-      }
     },
-    compoundVariants: [
-      {
-        position: ["top", "bottom"],
-        size: "content",
-        class: "max-h-screen"
-      },
-      {
-        position: ["top", "bottom"],
-        size: "default",
-        class: "h-1/3"
-      },
-      {
-        position: ["top", "bottom"],
-        size: "sm",
-        class: "h-1/4"
-      },
-      {
-        position: ["top", "bottom"],
-        size: "lg",
-        class: "h-1/2"
-      },
-      {
-        position: ["top", "bottom"],
-        size: "xl",
-        class: "h-5/6"
-      },
-      {
-        position: ["top", "bottom"],
-        size: "full",
-        class: "h-screen"
-      },
-      {
-        position: ["right", "left"],
-        size: "content",
-        class: "max-w-screen"
-      },
-      {
-        position: ["right", "left"],
-        size: "default",
-        class: "w-1/3"
-      },
-      {
-        position: ["right", "left"],
-        size: "sm",
-        class: "w-1/4"
-      },
-      {
-        position: ["right", "left"],
-        size: "lg",
-        class: "w-1/2"
-      },
-      {
-        position: ["right", "left"],
-        size: "xl",
-        class: "w-5/6"
-      },
-      {
-        position: ["right", "left"],
-        size: "full",
-        class: "w-screen"
-      }
-    ],
     defaultVariants: {
       position: "right",
-      size: "default"
-    }
+    },
   }
-)
+);
 
 export interface DialogContentProps
   extends SheetPrimitive.DialogContentProps,
     VariantProps<typeof sheetVariants> {}
 
 const SheetContent: Component<DialogContentProps> = (props) => {
-  const [, rest] = splitProps(props, ["position", "size", "class", "children"])
+  const [, rest] = splitProps(props, ["position", "class", "children"]);
   return (
     <SheetPortal position={props.position}>
       <SheetOverlay />
       <SheetPrimitive.Content
-        class={cn(sheetVariants({ position: props.position, size: props.size }), props.class)}
+        class={cn(sheetVariants({ position: props.position }), props.class)}
         {...rest}
       >
         {props.children}
         <SheetPrimitive.CloseButton class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-          <TbX class="size-4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-4"
+          >
+            <path d="M18 6l-12 12" />
+            <path d="M6 6l12 12" />
+          </svg>
           <span class="sr-only">Close</span>
         </SheetPrimitive.CloseButton>
       </SheetPrimitive.Content>
     </SheetPortal>
-  )
+  );
 }
 
 const SheetHeader: Component<ComponentProps<"div">> = (props) => {
@@ -207,5 +149,5 @@ export {
   SheetHeader,
   SheetFooter,
   SheetTitle,
-  SheetDescription
-}
+  SheetDescription,
+};

@@ -89,11 +89,11 @@ const DialogTitle: Component<DialogPrimitive.DialogTitleProps> = (props) => {
 const DialogDescription: Component<DialogPrimitive.DialogDescriptionProps> = (props) => {
   const [, rest] = splitProps(props, ["class"])
   return (
-    <DialogPrimitive.Description
+    <DialogPrimitive.content
       class={cn("text-sm text-muted-foreground", props.class)}
       {...rest}
     />
-  )
+  );
 }
 
 export {

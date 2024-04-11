@@ -55,7 +55,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
     try {
       console.log(values);
       formValues.name = values.name;
-      formValues.description = values.description;
+      formValues.content = values.content;
       const result = await save_collection(formValues);
 
       console.log(result);

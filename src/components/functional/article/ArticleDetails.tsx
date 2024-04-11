@@ -29,10 +29,12 @@ type ArticleDetailsProps = {
 
 const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   const [articleId, setArticleId] = createSignal(props.articleId);
-  const [article] = createResource(articleId, fetch_article_by_id);
+  const [article] = createResource(articleId(), fetch_article_by_id);
 
   createEffect(() => {
+    console.log("ArticleDetails createEffect");
     setArticleId(props.articleId);
+    article();
   });
 
   console.log(props);
@@ -58,6 +60,7 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Name</div>
                       <div class="text-md font-semibold">{data().name}</div>
+                      {JSON.stringify(data())}
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Description</div>

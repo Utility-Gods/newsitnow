@@ -29,9 +29,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
 
   const [articleList] = createResource(fetch_articles);
 
-  createEffect(() => {
-    console.log("ArticleList", articleList());
-  });
+  createEffect(() => {});
   return (
     <Table>
       <TableCaption>A list of your articles.</TableCaption>
@@ -49,7 +47,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           {({ attributes: c }) => (
             <TableRow>
               <TableCell class="font-medium">{c.name}</TableCell>
-              <TableCell>{c.description}</TableCell>
+              <TableCell>{c.content}</TableCell>
               <TableCell>
                 <BadgeDelta deltaType="moderateIncrease">
                   {/* {c.status.toUpperCase()} */}

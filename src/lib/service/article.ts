@@ -19,7 +19,12 @@ const save_article = async (data: any) => {
 };
 
 const fetch_article_by_id = async (id: string) => {
+  console.log("fetch_article_by_id", id);
+  if (!id) {
+    return;
+  }
   const article = await strapi.findOne("articles", id);
+
   return article;
 };
 

@@ -30,7 +30,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   const [collectionList] = createResource(fetch_collections);
 
   createEffect(() => {
-    collectionList();
     console.log("CollectionList", collectionList());
   });
   return (
@@ -50,7 +49,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           {({ attributes: c }) => (
             <TableRow>
               <TableCell class="font-medium">{c.name}</TableCell>
-              <TableCell>{c.description}</TableCell>
+              <TableCell>{c.content}</TableCell>
               <TableCell>
                 <BadgeDelta deltaType="moderateIncrease">
                   {/* {c.status.toUpperCase()} */}

@@ -61,14 +61,12 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Description</div>
-                      <div class="text-md font-semibold">
-                        {data().description}
-                      </div>
+                      <div class="text-md font-semibold">{data().content}</div>
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Created</div>
                       <div class="text-md font-semibold">
-                        {new Date(data().date_created).toLocaleDateString()}
+                        {new Date(data().created_on).toLocaleDateString()}
                       </div>
                     </div>
                     <div class="flex gap-3 items-center">
