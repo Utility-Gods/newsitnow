@@ -83,10 +83,12 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
         <DialogContent class="sm:max-w-[550px] w-[80%] md:w-[60%]">
           <Form onSubmit={handleSubmit}>
             <DialogHeader>
-              <DialogTitle>Create Article</DialogTitle>
-              <DialogDescription>
+              <div class="text-lg font-semibold leading-none tracking-tight">
+                Create Article
+              </div>
+              <div class="text-sm text-muted-foreground">
                 Create a new article and press save when you're done.
-              </DialogDescription>
+              </div>
             </DialogHeader>
             <div class="grid gap-4 py-4">
               <div class="grid grid-cols-4 items-center gap-4">

@@ -95,10 +95,12 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
         <DialogContent class="sm:max-w-[550px] w-[80%] md:w-[60%]">
           <Form onSubmit={handleSubmit}>
             <DialogHeader>
-              <DialogTitle>Create Collection</DialogTitle>
-              <DialogDescription>
+              <div class="text-lg font-semibold leading-none tracking-tight">
+                Create Collection
+              </div>
+              <div class="text-sm text-muted-foreground">
                 Create a new collection and press save when you're done.
-              </DialogDescription>
+              </div>
             </DialogHeader>
             <div class="grid gap-4 py-4">
               <div class="grid grid-cols-4 items-center gap-4">
