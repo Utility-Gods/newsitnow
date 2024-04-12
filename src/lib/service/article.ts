@@ -1,16 +1,15 @@
 import { strapi } from "@lib/strapi";
+import { Article } from "@lib/types/Article";
 import { err, ok } from "neverthrow";
 
 const fetch_articles = async () => {
-
-
-  const articles = await strapi.find("articles");
+  const articles = await strapi.find<Article[]>("articles");
 
   return articles;
 };
 
 const save_article = async (data: any) => {
-  const result = await strapi.create("articles", data);
+  const result = await strapi.create<Article>("articles", data);
 
   if (!result.data) {
     return err(result.data);
@@ -23,7 +22,7 @@ const fetch_article_by_id = async (id: string) => {
   if (!id) {
     return;
   }
-  const article = await strapi.findOne("articles", id);
+  const article = await strapi.findOne<Article>("articles", id);
 
   return article;
 };

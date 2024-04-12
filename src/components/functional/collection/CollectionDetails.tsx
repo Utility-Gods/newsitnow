@@ -31,11 +31,6 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
   const [collectionId, setCollectionId] = createSignal(props.collectionId);
   const [collection] = createResource(collectionId, fetch_collection_by_id);
 
-  createEffect(() => {
-    setCollectionId(props.collectionId);
-  });
-
-  console.log(props);
   const [loading, setLoading] = createSignal(false);
   return (
     <>
@@ -66,7 +61,7 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Created</div>
                       <div class="text-md font-semibold">
-                        {new Date(data().created_on).toLocaleDateString()}
+                        {new Date(data().createdAt).toLocaleDateString()}
                       </div>
                     </div>
                     <div class="flex gap-3 items-center">

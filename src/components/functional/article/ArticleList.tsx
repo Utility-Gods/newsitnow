@@ -28,6 +28,9 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const merged = mergeProps(props);
   const [articleList] = createResource(fetch_articles);
 
+  createEffect(() => {
+    console.log("ArticleList", articleList());
+  });
   return (
     <Table>
       <TableCaption>A list of your articles.</TableCaption>
@@ -52,7 +55,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                 </BadgeDelta>
               </TableCell>
               <TableCell class="text-right">
-                {new Date(c.created_on).toLocaleDateString()}
+                {new Date(c.createdAt).toLocaleDateString()}
               </TableCell>
               <TableCell class="text-right gap-2 flex">
                 <Button

@@ -31,11 +31,6 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   const [articleId, setArticleId] = createSignal(props.articleId);
   const [article] = createResource(articleId, fetch_article_by_id);
 
-  createEffect(() => {
-    console.log("ArticleDetails createEffect", props.articleId);
-    setArticleId(props.articleId);
-    console.log(article(), articleId());
-  });
 
   console.log(props);
   const [loading] = createSignal(false);
@@ -59,24 +54,29 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                   <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Name</div>
-                      <div class="text-md font-semibold">{data().name}</div>
-                      {JSON.stringify(data())}
+                      <div class="text-md font-semibold">
+                        {data().data.attributes.name}
+                      </div>
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Description</div>
                       <div class="text-md font-semibold">
-                        {data().description}
+                        {data().data.attributes.content}
                       </div>
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Created</div>
                       <div class="text-md font-semibold">
-                        {new Date(data().date_created).toLocaleDateString()}
+                        {new Date(
+                          data().data.attributes.created_on
+                        ).toLocaleDateString()}
                       </div>
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Status</div>
-                      <div class="text-md font-semibold">{data().status}</div>
+                      <div class="text-md font-semibold">
+                        {data().data.attributes.status}
+                      </div>
                     </div>
                   </div>
                 )}

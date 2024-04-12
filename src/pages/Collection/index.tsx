@@ -27,7 +27,7 @@ const Collection: Component = () => {
           openDetails={setOpenDetails}
           onView={(id: string) => {
             console.log("Viewing article", id);
-            setActiveArticle(id);
+            setActiveCollection(id);
           }}
         />
       </div>
