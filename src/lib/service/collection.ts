@@ -14,6 +14,7 @@ const fetch_collections = async () => {
   const collections = await strapi.find("collections");
 
   console.log("fetching collections", collections);
+  return collections;
 };
 
 const fetch_collection_by_id = async (id: string) => {

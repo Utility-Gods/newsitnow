@@ -25,7 +25,10 @@ const Collection: Component = () => {
       <div class="flex gap-6 flex-col p-6 overflow-hidden h-full">
         <CollectionList
           openDetails={setOpenDetails}
-          setActiveCollection={setActiveCollection}
+          onView={(id: string) => {
+            console.log("Viewing article", id);
+            setActiveArticle(id);
+          }}
         />
       </div>
       <CreateCollectionModal open={openModal()} onOpenChange={setOpenModal} />

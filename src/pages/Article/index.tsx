@@ -1,6 +1,11 @@
 import { fetch_articles } from "@lib/service/article";
 
-import { Component, createResource, createSignal } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createResource,
+  createSignal,
+} from "solid-js";
 import ArticleDetails from "~/components/functional/article/ArticleDetails";
 import ArticleList from "~/components/functional/article/ArticleList";
 import { CreateArticleModal } from "~/components/functional/article/CreateArticle";
@@ -17,6 +22,10 @@ const Article: Component = () => {
   const [activeArticle, setActiveArticle] = createSignal("");
 
   console.log("coming here");
+
+  createEffect(() => {
+    console.log("activeArticle", activeArticle());
+  });
 
   console.log({ list });
 
@@ -36,7 +45,10 @@ const Article: Component = () => {
       <div class="flex gap-6 flex-col p-6 overflow-hidden h-full">
         <ArticleList
           openDetails={setOpenDetails}
-          setActiveArticle={setActiveArticle}
+          onView={(id: string) => {
+            console.log("Viewing article", id);
+            setActiveArticle(id);
+          }}
         />
       </div>
       <CreateArticleModal open={openModal()} onOpenChange={setOpenModal} />

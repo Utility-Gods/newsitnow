@@ -24,21 +24,21 @@ import { fetch_article_by_id } from "@lib/service/article";
 type ArticleDetailsProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  articleId: string;
+  articleId: any;
 };
 
 const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   const [articleId, setArticleId] = createSignal(props.articleId);
-  const [article] = createResource(articleId(), fetch_article_by_id);
+  const [article] = createResource(articleId, fetch_article_by_id);
 
   createEffect(() => {
-    console.log("ArticleDetails createEffect");
+    console.log("ArticleDetails createEffect", props.articleId);
     setArticleId(props.articleId);
-    article();
+    console.log(article(), articleId());
   });
 
   console.log(props);
-  const [loading, setLoading] = createSignal(false);
+  const [loading] = createSignal(false);
   return (
     <>
       <Sheet open={props.open} onOpenChange={props.onOpenChange}>

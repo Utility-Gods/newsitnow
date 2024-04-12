@@ -21,15 +21,13 @@ import { Button } from "@components/ui/button";
 
 export type ArticleListProps = {
   openDetails: (open: boolean) => void;
-  setActiveArticle: (id: string) => void;
+  onView: (id: string) => void;
 };
 
 const ArticleList: Component<ArticleListProps> = (props) => {
-  console.log("ArticleList props", props);
-
+  const merged = mergeProps(props);
   const [articleList] = createResource(fetch_articles);
 
-  createEffect(() => {});
   return (
     <Table>
       <TableCaption>A list of your articles.</TableCaption>
@@ -61,9 +59,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    console.log("Viewing article", c);
-                    props.openDetails(true);
-                    props.setActiveArticle(c.id);
+                    merged.openDetails(true);
+                    merged.onView(c.uuid);
                   }}
                 >
                   View

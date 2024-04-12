@@ -21,12 +21,10 @@ import { Button } from "@components/ui/button";
 
 export type CollectionListProps = {
   openDetails: (open: boolean) => void;
-  setActiveCollection: (id: string) => void;
+  onView: (id: string) => void;
 };
 
 const CollectionList: Component<CollectionListProps> = (props) => {
-  console.log("CollectionList props", props);
-
   const [collectionList] = createResource(fetch_collections);
 
   createEffect(() => {
@@ -56,7 +54,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                 </BadgeDelta>
               </TableCell>
               <TableCell class="text-right">
-                {new Date(c.created_on).toLocaleDateString()}
+                {new Date(c.createdAt).toLocaleDateString()}
               </TableCell>
               <TableCell class="text-right gap-2 flex">
                 <Button
@@ -65,7 +63,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                   onClick={() => {
                     console.log("Viewing collection", c);
                     props.openDetails(true);
-                    props.setActiveCollection(c.id);
+                    props.onView(c.uuid);
                   }}
                 >
                   View
