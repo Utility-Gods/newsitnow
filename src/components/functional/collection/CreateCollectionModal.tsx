@@ -42,7 +42,6 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
 
   const [loading, setLoading] = createSignal(false);
 
-  console.log(Form);
 
   const handleSubmit: SubmitHandler<CreateCollectionForm> = async (
     values,
@@ -50,17 +49,13 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
   ) => {
     setLoading(true);
 
-    console.log({ loading: loading() });
     event.preventDefault();
     try {
-      console.log(values);
       formValues.name = values.name;
       formValues.content = values.content;
       const result = await save_collection(formValues);
 
-      console.log(result);
       if (result?.isOk()) {
-        console.log({ result });
         showToast({
           variant: "success",
           title: "Collection created",
@@ -76,8 +71,6 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
         });
       }
     } catch (e) {
-      console.log("------------", e);
-      console.log(e);
       showToast({
         variant: "error",
         title: "Failed to create collection",

@@ -1,15 +1,8 @@
 import { fetch_articles } from "@lib/service/article";
-import {
-  Component,
-  createEffect,
-  createResource,
-  For,
-  mergeProps,
-} from "solid-js";
+import { Component, createResource, For, mergeProps, Show } from "solid-js";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -28,12 +21,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const merged = mergeProps(props);
   const [articleList] = createResource(fetch_articles);
 
-  createEffect(() => {
-    console.log("ArticleList", articleList());
-  });
   return (
     <Table>
-      <TableCaption>A list of your articles.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead class="w-[100px]">Name</TableHead>
@@ -44,37 +33,46 @@ const ArticleList: Component<ArticleListProps> = (props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <For each={articleList()?.data}>
-          {({ attributes: c }) => (
-            <TableRow>
-              <TableCell class="font-medium">{c.name}</TableCell>
-              <TableCell>{c.content}</TableCell>
-              <TableCell>
-                <BadgeDelta deltaType="moderateIncrease">
-                  {/* {c.status.toUpperCase()} */}
-                </BadgeDelta>
-              </TableCell>
-              <TableCell class="text-right">
-                {new Date(c.createdAt).toLocaleDateString()}
-              </TableCell>
-              <TableCell class="text-right gap-2 flex">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    merged.openDetails(true);
-                    merged.onView(c.uuid);
-                  }}
-                >
-                  View
-                </Button>
-                <Button variant="secondary" size="sm">
-                  Edit
-                </Button>
-              </TableCell>
-            </TableRow>
-          )}
-        </For>
+        <Show when={articleList()?.isErr()}>
+          <TableRow>
+            <TableCell colspan={5} class="text-center text-error-foreground">
+              Error loading articles
+            </TableCell>
+          </TableRow>
+        </Show>
+        <Show when={articleList()?.isOk()}>
+          <For each={articleList()?.value?.data}>
+            {({ attributes: c }) => (
+              <TableRow>
+                <TableCell class="font-medium">{c.name}</TableCell>
+                <TableCell>{c.content}</TableCell>
+                <TableCell>
+                  <BadgeDelta deltaType="moderateIncrease">
+                    {/* {c.status.toUpperCase()} */}
+                  </BadgeDelta>
+                </TableCell>
+                <TableCell class="text-right">
+                  {new Date(c.createdAt).toLocaleDateString()}
+                </TableCell>
+                <TableCell class="text-right gap-2 flex">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      merged.openDetails(true);
+                      merged.onView(c.uuid);
+                    }}
+                  >
+                    View
+                  </Button>
+                  <Button variant="secondary" size="sm">
+                    Edit
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )}
+          </For>
+        </Show>
       </TableBody>
     </Table>
   );

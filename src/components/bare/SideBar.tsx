@@ -8,7 +8,7 @@ const SideBar: Component = () => {
 
   const [path, setPath] = createSignal(location.pathname);
 
-  console.log({ path: path });
+
 
   createEffect(() => {
     setPath(location.pathname);

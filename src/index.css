@@ -34,13 +34,13 @@
     --info-foreground: 17 100% 48%;
 
     --success: 149 90% 90%;
-    --success-foreground: 160 84% 9%;
+    --success-foreground: 149 90% 29%;
 
     --warning: 48 96% 89%;
     --warning-foreground: 25 95% 53%;
 
     --error: 17 100% 91%;
-    --error-foreground: 17 100% 1%;
+    --error-foreground: 17 100% 41%;
 
       --ring: 157 18% 80%;
 

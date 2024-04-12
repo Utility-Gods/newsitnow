@@ -21,14 +21,6 @@ const Article: Component = () => {
   const [openDetails, setOpenDetails] = createSignal(false);
   const [activeArticle, setActiveArticle] = createSignal("");
 
-  console.log("coming here");
-
-  createEffect(() => {
-    console.log("activeArticle", activeArticle());
-  });
-
-  console.log({ list });
-
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden">
       <div class="flex justify-between items-center p-6 ">
@@ -46,7 +38,6 @@ const Article: Component = () => {
         <ArticleList
           openDetails={setOpenDetails}
           onView={(id: string) => {
-            console.log("Viewing article", id);
             setActiveArticle(id);
           }}
         />
@@ -55,7 +46,7 @@ const Article: Component = () => {
       <ArticleDetails
         open={openDetails()}
         onOpenChange={setOpenDetails}
-        articleId={activeArticle()}
+        articleId={activeArticle}
       />
     </div>
   );

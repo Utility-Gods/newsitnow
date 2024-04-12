@@ -1,11 +1,5 @@
 import { fetch_collections } from "@lib/service/collection";
-import {
-  Component,
-  createEffect,
-  createResource,
-  For,
-  mergeProps,
-} from "solid-js";
+import { Component, createResource, For, Show } from "solid-js";
 import {
   Table,
   TableBody,
@@ -27,9 +21,6 @@ export type CollectionListProps = {
 const CollectionList: Component<CollectionListProps> = (props) => {
   const [collectionList] = createResource(fetch_collections);
 
-  createEffect(() => {
-    console.log("CollectionList", collectionList());
-  });
   return (
     <Table>
       <TableCaption>A list of your collections.</TableCaption>
@@ -43,38 +34,46 @@ const CollectionList: Component<CollectionListProps> = (props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <For each={collectionList()?.data}>
-          {({ attributes: c }) => (
-            <TableRow>
-              <TableCell class="font-medium">{c.name}</TableCell>
-              <TableCell>{c.content}</TableCell>
-              <TableCell>
-                <BadgeDelta deltaType="moderateIncrease">
-                  {/* {c.status.toUpperCase()} */}
-                </BadgeDelta>
-              </TableCell>
-              <TableCell class="text-right">
-                {new Date(c.createdAt).toLocaleDateString()}
-              </TableCell>
-              <TableCell class="text-right gap-2 flex">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    console.log("Viewing collection", c);
-                    props.openDetails(true);
-                    props.onView(c.uuid);
-                  }}
-                >
-                  View
-                </Button>
-                <Button variant="secondary" size="sm">
-                  Edit
-                </Button>
-              </TableCell>
-            </TableRow>
-          )}
-        </For>
+        <Show when={collectionList()?.isErr()}>
+          <TableRow>
+            <TableCell colspan={5} class="text-center text-error-foreground">
+              Error loading collections
+            </TableCell>
+          </TableRow>
+        </Show>
+        <Show when={collectionList()?.isOk()}>
+          <For each={collectionList()?.value?.data}>
+            {({ attributes: c }) => (
+              <TableRow>
+                <TableCell class="font-medium">{c.name}</TableCell>
+                <TableCell>{c.content}</TableCell>
+                <TableCell>
+                  <BadgeDelta deltaType="moderateIncrease">
+                    {/* {c.status.toUpperCase()} */}
+                  </BadgeDelta>
+                </TableCell>
+                <TableCell class="text-right">
+                  {new Date(c.createdAt).toLocaleDateString()}
+                </TableCell>
+                <TableCell class="text-right gap-2 flex">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      props.openDetails(true);
+                      props.onView(c.uuid);
+                    }}
+                  >
+                    View
+                  </Button>
+                  <Button variant="secondary" size="sm">
+                    Edit
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )}
+          </For>
+        </Show>
       </TableBody>
     </Table>
   );
