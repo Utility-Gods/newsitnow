@@ -6,7 +6,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
-import { Separator } from "~/components/ui/separator";
 
 import Share from "@lib/icons/share";
 
@@ -23,9 +22,9 @@ import {
 
 import { fetch_article_by_id } from "@lib/service/article";
 import { Button } from "~/components/ui/button";
-import { showToast } from "~/components/ui/toast";
-import { Badge } from "~/components/ui/badge";
+
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import ArticleShare from "./ArticleShare";
 
 type ArticleDetailsProps = {
   open: boolean;
@@ -36,6 +35,7 @@ type ArticleDetailsProps = {
 const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   const [article] = createResource(props.articleId, fetch_article_by_id);
   const [loading] = createSignal(false);
+  const [openShareModal, setOpenShareModal] = createSignal(false);
 
   const article_details = () => article()?.value?.attributes;
 
@@ -45,32 +45,8 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   });
 
   function embed_article() {
-    // here we have to implement the logic to embed the article
-    // first we need to prepare the code to embed the article
-    // then we need to copy the code to clipboard
-    // finally we need to show a toast message to the user
-    console.log("Embed article");
-    const code = `<iframe src="https://example.com/article/${props.articleId}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`;
-    console.log(code);
-    // copy to clipboard
-    navigator.clipboard.writeText(code).then(
-      function () {
-        console.log("Code copied to clipboard");
-        showToast({
-          title: "Code copied to clipboard",
-          description: "You can now paste the code in your website",
-          variant: "success",
-        });
-      },
-      function (err) {
-        console.error("Could not copy text: ", err);
-        showToast({
-          title: "Error copying code",
-          description: "Please try again",
-          variant: "error",
-        });
-      }
-    );
+    // we need to show the Share/Embed dialog
+    setOpenShareModal(true);
   }
   return (
     <>
@@ -134,6 +110,13 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
       <Show when={loading()}>
         <PageSpinner />
       </Show>
+      <ArticleShare
+        article={article()?.value}
+        show={openShareModal()}
+        onShowChange={() => {
+          setOpenShareModal(false);
+        }}
+      />
     </>
   );
 };
