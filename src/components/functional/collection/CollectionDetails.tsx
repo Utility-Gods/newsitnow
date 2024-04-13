@@ -15,6 +15,7 @@ import {
   createEffect,
   createResource,
   createSignal,
+  For,
   mergeProps,
   Show,
 } from "solid-js";
@@ -28,8 +29,10 @@ type CollectionDetailsProps = {
 };
 
 const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
-  const [collectionId, setCollectionId] = createSignal(props.collectionId);
-  const [collection] = createResource(collectionId, fetch_collection_by_id);
+  const [collection] = createResource(
+    props.collectionId,
+    fetch_collection_by_id
+  );
 
   const [loading, setLoading] = createSignal(false);
   return (
@@ -47,31 +50,41 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
               </Callout>
             </SheetTitle>
             <SheetDescription>
-              <Show when={collection()}>
-                {(data) => (
-                  <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
-                    <div class="flex gap-3 items-center">
-                      <div class="text-md font-semibold">Name</div>
-                      <div class="text-md font-semibold">{data().name}</div>
-                    </div>
-                    <div class="flex gap-3 items-center">
-                      <div class="text-md font-semibold">Description</div>
-                      <div class="text-md font-semibold text-truncate">
-                        {data().content}
+              <Show when={collection()?.isErr()}>
+                <div
+                  class="p-400 text
+                -primary-100"
+                >
+                  Error loading article
+                </div>
+              </Show>
+              <Show when={collection()?.isOk()}>
+                <For each={collection()?.values}>
+                  {({ attributes: data }) => (
+                    <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
+                      <div class="flex gap-3 items-center">
+                        <div class="text-md font-semibold">Name</div>
+                        <div class="text-md font-semibold">{data.name}</div>
+                      </div>
+                      <div class="flex gap-3 items-center">
+                        <div class="text-md font-semibold">Description</div>
+                        <div class="text-md font-semibold text-truncate">
+                          {content}
+                        </div>
+                      </div>
+                      <div class="flex gap-3 items-center">
+                        <div class="text-md font-semibold">Created</div>
+                        <div class="text-md font-semibold">
+                          {new Date(data.createdAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                      <div class="flex gap-3 items-center">
+                        <div class="text-md font-semibold">Status</div>
+                        <div class="text-md font-semibold">{data.status}</div>
                       </div>
                     </div>
-                    <div class="flex gap-3 items-center">
-                      <div class="text-md font-semibold">Created</div>
-                      <div class="text-md font-semibold">
-                        {new Date(data().createdAt).toLocaleDateString()}
-                      </div>
-                    </div>
-                    <div class="flex gap-3 items-center">
-                      <div class="text-md font-semibold">Status</div>
-                      <div class="text-md font-semibold">{data().status}</div>
-                    </div>
-                  </div>
-                )}
+                  )}
+                </For>
               </Show>
             </SheetDescription>
           </SheetHeader>

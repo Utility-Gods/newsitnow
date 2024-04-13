@@ -1,5 +1,5 @@
 import { fetch_collections } from "@lib/service/collection";
-import { Component, createResource, For, Show } from "solid-js";
+import { Component, createResource, For, mergeProps, Show } from "solid-js";
 import {
   Table,
   TableBody,
@@ -19,6 +19,7 @@ export type CollectionListProps = {
 };
 
 const CollectionList: Component<CollectionListProps> = (props) => {
+  const merged = mergeProps(props);
   const [collectionList] = createResource(fetch_collections);
 
   return (
@@ -60,8 +61,9 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       variant="outline"
                       size="sm"
                       onClick={() => {
-                        props.openDetails(true);
-                        props.onView(c.uuid);
+                        merged.openDetails(true);
+                        console.log(c);
+                        merged.onView(c.uuid);
                       }}
                     >
                       View

@@ -26,6 +26,7 @@ const Collection: Component = () => {
         <CollectionList
           openDetails={setOpenDetails}
           onView={(id: string) => {
+            console.log(id);
             setActiveCollection(id);
           }}
         />
