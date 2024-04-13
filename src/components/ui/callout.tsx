@@ -28,13 +28,13 @@ const Callout: Component<CalloutProps> = (props) => {
 }
 
 const CalloutTitle: Component<ComponentProps<"h3">> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
-  return <h3 class={cn("font-semibold", props.class)} {...rest} />
-}
+  const [, rest] = splitProps(props, ["class"]);
+  return <h3 class={cn("font-semibold text-md", props.class)} {...rest} />;
+};
 
 const CalloutContent: Component<ComponentProps<"div">> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
-  return <div class={cn("mt-2", props.class)} {...rest} />
-}
+  const [, rest] = splitProps(props, ["class"]);
+  return <div class={cn("mt-1 text-sm", props.class)} {...rest} />;
+};
 
 export { Callout, CalloutTitle, CalloutContent }

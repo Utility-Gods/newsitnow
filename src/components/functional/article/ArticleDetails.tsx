@@ -116,7 +116,6 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                   </div>
                 </div>
               </Show>
-              <Separator />
             </SheetDescription>
             <SheetTitle class="flex items-end justify-end flex-col ">
               <Callout>
