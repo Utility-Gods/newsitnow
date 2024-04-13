@@ -24,10 +24,11 @@ const Article: Component = () => {
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden">
       <div class="flex justify-between items-center p-6 ">
-        <div class="text-2xl font-semibold leading-10">Articles</div>
+        <div class="text-2xl font-bold text-primary leading-10">Articles</div>
 
         <Button
           class="font-bold text-base"
+          variant={"secondary"}
           size="lg"
           onClick={() => setOpenModal(true)}
         >

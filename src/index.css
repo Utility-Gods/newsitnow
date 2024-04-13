@@ -5,9 +5,10 @@
 @layer base {
   :root {
     --background: 240 20% 97%;
-    --foreground: 0 0% 9%;
+    --foreground: 0 0% 0%;
+    
 
-    --text: 0 0% 9%;
+    --text: 0 0% 0%;
 
     --popover: 53 18% 85%;
     --popover-foreground: 184 13% 38%;

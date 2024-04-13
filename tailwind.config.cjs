@@ -141,7 +141,7 @@ module.exports = {
           900: "#d1d1d1",
         },
         text: {
-          DEFAULT: "#161616",
+          DEFAULT: "#",
           500: "hsl(0, 0%, 9%)",
           inverted: "#fff",
         },

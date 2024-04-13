@@ -64,8 +64,8 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
               </Show>
               <Show when={article()?.isOk()}>
                 <div class="mt-4 flex flex-col gap-3 p-400 text-primary-100 rounded-sm ">
-                  <div class="flex justify-between">
-                    <div class="text-2xl font-semibold">
+                  <div class="flex justify-between items-center ">
+                    <div class="text-2xl font-bold text-primary">
                       {article_details().name}
                     </div>
                     <Button variant={"secondary"} onClick={embed_article}>

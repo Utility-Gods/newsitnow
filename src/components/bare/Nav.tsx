@@ -10,7 +10,7 @@ export const Nav: Component = () => {
           <span class="text-text-inverted">ORANGE</span>
           <span class="text-primary">GAS</span>
         </h1>
-        <BadgeDelta deltaType="unchanged">Beta Version</BadgeDelta>
+        <BadgeDelta deltaType="increase">Beta Version</BadgeDelta>
       </nav>
     </header>
   );
