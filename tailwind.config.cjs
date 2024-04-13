@@ -193,7 +193,7 @@ module.exports = {
         "5xl": ["40px", "40px"],
       },
       fontFamily: {
-        sans: ["Lato"],
+        sans: ["Nunito"],
       },
       keyframes: {
         "accordion-down": {
