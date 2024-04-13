@@ -35,7 +35,7 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
   return (
     <>
       <Sheet open={props.open} onOpenChange={props.onOpenChange}>
-        <SheetContent>
+        <SheetContent class="w-[400px] sm:w-[540px]">
           <SheetHeader>
             <SheetTitle>
               <Callout>

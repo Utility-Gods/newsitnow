@@ -22,7 +22,7 @@ const Collection: Component = () => {
           Create Collection
         </Button>
       </div>
-      <div class="flex gap-6 flex-col p-6 overflow-hidden h-full">
+      <div class="flex gap-6 flex-col p-6 overflow-auto h-full">
         <CollectionList
           openDetails={setOpenDetails}
           onView={(id: string) => {

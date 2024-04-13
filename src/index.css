@@ -2,32 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
-      --background: 53 18% 85%
-      --foreground: 157 18% 80%;
+    --background: 240 20% 97%;
+    --foreground: 157 18% 80%;
 
+    --text: 0 0% 9%;
 
-      --popover: 53 18% 85%;
-      --popover-foreground: 184 13% 38%;
+    --popover: 53 18% 85%;
+    --popover-foreground: 184 13% 38%;
 
-      --border: 184 13% 38%;
-      --input: 184 13% 38%;
+    --border: 240 13% 92%;
+    --input: 184 13% 38%;
 
-      --card: 53 18% 85%;
-      --card-foreground: 184 13% 38%;
+    --card: 53 18% 85%;
+    --card-foreground: 184 13% 38%;
 
-      --primary-foreground: 220 57% 12%;
-      --secondary-foreground: 184 13% 38%;
+    --primary-foreground: 220 57% 12%;
+    --secondary-foreground: 184 13% 38%;
 
-      --muted: 60 4.8% 95.9%;
-      --muted-foreground: 25 5.3% 44.7%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
 
-      --accent: 60 4.8% 95.9%;
-      --accent-foreground: 24 9.8% 10%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
 
-      --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
     --info: 17 100% 91%;
@@ -42,42 +42,37 @@
     --error: 17 100% 91%;
     --error-foreground: 17 100% 41%;
 
-      --ring: 157 18% 80%;
+    --ring: 157 18% 80%;
 
-      --radius: 0.5rem;
-
+    --radius: 0.5rem;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
+ 
+
+
+  html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    font-size: 16px;
   }
   body {
-    @apply bg-background text-text;
-    font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+    @apply text-text;
+    background-color: hsl(var(--background));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
-
-html{
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Lato', sans-serif;
-  font-size: 16px;
-}
-body{
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
 }
 
-#root{
+#root {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -91,7 +86,6 @@ body{
   }
 }
 
-
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -100,8 +94,7 @@ body{
   scrollbar-width: none;
 }
 
-.text-truncate{
+.text-truncate {
   max-width: 220px;
   overflow-wrap: break-word;
 }
-

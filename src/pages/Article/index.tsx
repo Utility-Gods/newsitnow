@@ -34,7 +34,7 @@ const Article: Component = () => {
           Create Article
         </Button>
       </div>
-      <div class="flex gap-6 flex-col p-6 overflow-hidden h-full">
+      <div class="flex gap-6 flex-col p-6 overflow-auto h-full ">
         <ArticleList
           openDetails={setOpenDetails}
           onView={(id: string) => {

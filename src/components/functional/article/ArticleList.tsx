@@ -22,59 +22,61 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const [articleList] = createResource(fetch_articles);
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead class="w-1/4">Name</TableHead>
-          <TableHead class="w-[140px]">Description</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead class="text-right">Created</TableHead>
-          <TableHead class="w-1/4 text-right">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <Show when={articleList()?.isErr()}>
+    <div class="shadow-md bg-white">
+      <Table class=" border-border border">
+        <TableHeader>
           <TableRow>
-            <TableCell colspan={5} class="text-center text-error-foreground">
-              Error loading articles
-            </TableCell>
+            <TableHead class="w-1/4">Name</TableHead>
+            <TableHead class="w-[140px]">Description</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead class="text-right">Created</TableHead>
+            <TableHead class="w-1/4 text-right">Actions</TableHead>
           </TableRow>
-        </Show>
-        <Show when={articleList()?.isOk()}>
-          <For each={articleList()?.value?.data}>
-            {({ attributes: c }) => (
-              <TableRow>
-                <TableCell class="font-semibold">{c.name}</TableCell>
-                <TableCell class="text-truncate">{c.content}</TableCell>
-                <TableCell>
-                  <BadgeDelta deltaType="moderateIncrease">
-                    {c.status}
-                  </BadgeDelta>
-                </TableCell>
-                <TableCell class="text-right">
-                  {new Date(c.createdAt).toLocaleDateString()}
-                </TableCell>
-                <TableCell class="text-right gap-2 flex justify-end">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      merged.openDetails(true);
-                      merged.onView(c.uuid);
-                    }}
-                  >
-                    View
-                  </Button>
-                  <Button variant="secondary" size="sm">
-                    Edit
-                  </Button>
-                </TableCell>
-              </TableRow>
-            )}
-          </For>
-        </Show>
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          <Show when={articleList()?.isErr()}>
+            <TableRow>
+              <TableCell colspan={5} class="text-center text-error-foreground">
+                Error loading articles
+              </TableCell>
+            </TableRow>
+          </Show>
+          <Show when={articleList()?.isOk()}>
+            <For each={articleList()?.value?.data}>
+              {({ attributes: c }) => (
+                <TableRow>
+                  <TableCell class="font-semibold">{c.name}</TableCell>
+                  <TableCell class="text-truncate">{c.content}</TableCell>
+                  <TableCell>
+                    <BadgeDelta deltaType="moderateIncrease">
+                      {c.status}
+                    </BadgeDelta>
+                  </TableCell>
+                  <TableCell class="text-right">
+                    {new Date(c.createdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell class="text-right gap-2 flex justify-end">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        merged.openDetails(true);
+                        merged.onView(c.uuid);
+                      }}
+                    >
+                      View
+                    </Button>
+                    <Button variant="secondary" size="sm">
+                      Edit
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              )}
+            </For>
+          </Show>
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 

@@ -90,7 +90,7 @@ module.exports = {
           600: "#eae9db",
           700: "#efeee4",
           800: "#f5f4ed",
-          900: "#faf9f6",
+          900: "hsl(45, 29%, 97%)",
         },
         ash_gray: {
           DEFAULT: "#cad7d0",
@@ -142,7 +142,7 @@ module.exports = {
         },
         text: {
           DEFAULT: "#161616",
-          500: "#161616",
+          500: "hsl(0, 0%, 9%)",
           inverted: "#fff",
         },
 

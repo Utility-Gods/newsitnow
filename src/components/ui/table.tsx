@@ -50,7 +50,7 @@ const TableHead: Component<ComponentProps<"th">> = (props) => {
   return (
     <th
       class={cn(
-        "h-12 px-4 text-left align-baseline font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        "h-12 px-4 text-left align-center font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
         props.class
       )}
       {...rest}
