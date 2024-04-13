@@ -25,7 +25,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "neverthrow": "^6.1.0",
-    "solid-icons": "^1.1.0",
     "solid-js": "^1.8.11",
     "strapi-sdk-js": "^2.3.3",
     "tailwind-merge": "^2.2.2",

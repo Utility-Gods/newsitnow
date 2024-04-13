@@ -135,10 +135,10 @@ const SheetDescription: Component<SheetPrimitive.DialogDescriptionProps> = (prop
   const [, rest] = splitProps(props, ["class"])
   return (
     <SheetPrimitive.Description
-      class={cn("text-sm text-muted-foreground", props.class)}
+      class={cn(" text-muted-foreground", props.class)}
       {...rest}
     />
-  )
+  );
 }
 
 export {

@@ -57,10 +57,7 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
             </SheetTitle>
             <SheetDescription>
               <Show when={collection()?.isErr()}>
-                <div
-                  class="p-400 text
-                -primary-100"
-                >
+                <div class="p-400 text-primary-100">
                   Error loading collections
                 </div>
               </Show>
