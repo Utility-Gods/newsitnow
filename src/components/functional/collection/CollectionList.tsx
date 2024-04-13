@@ -47,10 +47,12 @@ const CollectionList: Component<CollectionListProps> = (props) => {
               {({ attributes: c }) => (
                 <TableRow>
                   <TableCell class="font-semibold">{c.name}</TableCell>
-                  <TableCell class="text-truncate">{c.content}</TableCell>
+                  <TableCell class="text-truncate">
+                    <div class="allow-3-lines">{c.description}</div>
+                  </TableCell>
                   <TableCell>
                     <BadgeDelta deltaType="moderateIncrease">
-                      {/* {c.status.toUpperCase()} */}
+                      {c.status}
                     </BadgeDelta>
                   </TableCell>
                   <TableCell class="text-right">

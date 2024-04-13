@@ -10,6 +10,5 @@ export interface Collection {
     uuid: string;
     description?: string;
     url?: string;
-    created_on: string;
   };
 }
