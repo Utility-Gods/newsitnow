@@ -25,11 +25,11 @@ const ArticleList: Component<ArticleListProps> = (props) => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead class="w-[100px]">Name</TableHead>
-          <TableHead>Descriptions</TableHead>
+          <TableHead class="w-1/4">Name</TableHead>
+          <TableHead class="w-[140px]">Description</TableHead>
           <TableHead>Status</TableHead>
           <TableHead class="text-right">Created</TableHead>
-          <TableHead class="w-[100px]">Actions</TableHead>
+          <TableHead class="w-1/4 text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -44,17 +44,17 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           <For each={articleList()?.value?.data}>
             {({ attributes: c }) => (
               <TableRow>
-                <TableCell class="font-medium">{c.name}</TableCell>
-                <TableCell>{c.content}</TableCell>
+                <TableCell class="font-semibold">{c.name}</TableCell>
+                <TableCell class="text-truncate">{c.content}</TableCell>
                 <TableCell>
                   <BadgeDelta deltaType="moderateIncrease">
-                    {/* {c.status.toUpperCase()} */}
+                    {c.status}
                   </BadgeDelta>
                 </TableCell>
                 <TableCell class="text-right">
                   {new Date(c.createdAt).toLocaleDateString()}
                 </TableCell>
-                <TableCell class="text-right gap-2 flex">
+                <TableCell class="text-right gap-2 flex justify-end">
                   <Button
                     variant="outline"
                     size="sm"

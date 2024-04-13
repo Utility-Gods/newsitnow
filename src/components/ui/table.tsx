@@ -50,17 +50,25 @@ const TableHead: Component<ComponentProps<"th">> = (props) => {
   return (
     <th
       class={cn(
-        "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        "h-12 px-4 text-left align-baseline font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
         props.class
       )}
       {...rest}
     />
-  )
+  );
 }
 
 const TableCell: Component<ComponentProps<"td">> = (props) => {
   const [, rest] = splitProps(props, ["class"])
-  return <td class={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", props.class)} {...rest} />
+  return (
+    <td
+      class={cn(
+        "p-4 align-baseline [&:has([role=checkbox])]:pr-0",
+        props.class
+      )}
+      {...rest}
+    />
+  );
 }
 
 const TableCaption: Component<ComponentProps<"caption">> = (props) => {

@@ -26,11 +26,11 @@ const CollectionList: Component<CollectionListProps> = (props) => {
       <TableCaption>A list of your collections.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead class="w-[100px]">Name</TableHead>
-          <TableHead>Descriptions</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Description</TableHead>
           <TableHead>Status</TableHead>
           <TableHead class="text-right">Created</TableHead>
-          <TableHead class="w-[100px]">Actions</TableHead>
+          <TableHead class="w-1/4 text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -45,8 +45,8 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           <For each={collectionList()?.value?.data}>
             {({ attributes: c }) => (
               <TableRow>
-                <TableCell class="font-medium">{c.name}</TableCell>
-                <TableCell>{c.content}</TableCell>
+                <TableCell class="font-semibold">{c.name}</TableCell>
+                <TableCell class="text-truncate">{c.content}</TableCell>
                 <TableCell>
                   <BadgeDelta deltaType="moderateIncrease">
                     {/* {c.status.toUpperCase()} */}
@@ -55,7 +55,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                 <TableCell class="text-right">
                   {new Date(c.createdAt).toLocaleDateString()}
                 </TableCell>
-                <TableCell class="text-right gap-2 flex">
+                <TableCell class="text-right gap-2 flex justify-end">
                   <Button
                     variant="outline"
                     size="sm"

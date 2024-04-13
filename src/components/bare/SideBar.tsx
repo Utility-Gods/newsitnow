@@ -18,7 +18,7 @@ const SideBar: Component = () => {
     // JSX code for your component's UI goes here
     <aside
       id="default-sidebar"
-      class="text-text z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="text-text z-40 w-64 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
       <div class="h-full px-3 py-4 overflow-y-auto bg-primary ">

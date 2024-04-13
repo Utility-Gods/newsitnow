@@ -99,3 +99,9 @@ body{
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.text-truncate{
+  max-width: 220px;
+  overflow-wrap: break-word;
+}
+

@@ -56,7 +56,9 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Description</div>
-                      <div class="text-md font-semibold">{data().content}</div>
+                      <div class="text-md font-semibold text-truncate">
+                        {data().content}
+                      </div>
                     </div>
                     <div class="flex gap-3 items-center">
                       <div class="text-md font-semibold">Created</div>
