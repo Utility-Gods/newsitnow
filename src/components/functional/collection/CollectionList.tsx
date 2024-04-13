@@ -44,7 +44,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           </Show>
           <Show when={collectionList()?.isOk()}>
             <For each={collectionList()?.value?.data}>
-              {({ attributes: c }) => (
+              {({ attributes: c, id }) => (
                 <TableRow>
                   <TableCell class="font-semibold">{c.name}</TableCell>
                   <TableCell class="text-truncate">
@@ -65,7 +65,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       onClick={() => {
                         merged.openDetails(true);
                         console.log(c);
-                        merged.onView(c.uuid);
+                        merged.onView(id);
                       }}
                     >
                       View

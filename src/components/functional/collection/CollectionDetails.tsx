@@ -34,6 +34,12 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
     fetch_collection_by_id
   );
 
+  const collection_details = () => collection()?.value?.attributes;
+
+  createEffect(() => {
+    console.log(collection());
+    console.log(collection_details());
+  });
   const [loading, setLoading] = createSignal(false);
   return (
     <>
@@ -55,36 +61,38 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
                   class="p-400 text
                 -primary-100"
                 >
-                  Error loading article
+                  Error loading collections
                 </div>
               </Show>
-              <Show when={collection()?.isOk()}>
-                <For each={collection()?.values}>
-                  {({ attributes: data }) => (
-                    <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Name</div>
-                        <div class="text-md font-semibold">{data.name}</div>
-                      </div>
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Description</div>
-                        <div class="text-md font-semibold text-truncate">
-                          {content}
-                        </div>
-                      </div>
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Created</div>
-                        <div class="text-md font-semibold">
-                          {new Date(data.createdAt).toLocaleDateString()}
-                        </div>
-                      </div>
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Status</div>
-                        <div class="text-md font-semibold">{data.status}</div>
-                      </div>
+              <Show when={collection_details()}>
+                <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Name</div>
+                    <div class="text-md font-semibold">
+                      {collection_details().name}
                     </div>
-                  )}
-                </For>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Description</div>
+                    <div class="text-md font-semibold text-truncate">
+                      {collection_details().description}
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Created</div>
+                    <div class="text-md font-semibold">
+                      {new Date(
+                        collection_details().createdAt
+                      ).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Status</div>
+                    <div class="text-md font-semibold">
+                      {collection_details().status}
+                    </div>
+                  </div>
+                </div>
               </Show>
             </SheetDescription>
           </SheetHeader>

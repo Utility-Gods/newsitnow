@@ -43,7 +43,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           </Show>
           <Show when={articleList()?.isOk()}>
             <For each={articleList()?.value?.data}>
-              {({ attributes: c }) => (
+              {({ attributes: c, id }) => (
                 <TableRow>
                   <TableCell class="font-semibold">{c.name}</TableCell>
                   <TableCell class="text-truncate ">
@@ -63,7 +63,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                       size="sm"
                       onClick={() => {
                         merged.openDetails(true);
-                        merged.onView(c.uuid);
+                        merged.onView(id);
                       }}
                     >
                       View

@@ -30,9 +30,14 @@ type ArticleDetailsProps = {
 
 const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   const [article] = createResource(props.articleId, fetch_article_by_id);
-
-
   const [loading] = createSignal(false);
+
+  const article_details = () => article()?.value?.attributes;
+
+  createEffect(() => {
+    console.log(article());
+    console.log(article_details());
+  });
   return (
     <>
       <Sheet open={props.open} onOpenChange={props.onOpenChange}>
@@ -57,32 +62,34 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                 </div>
               </Show>
               <Show when={article()?.isOk()}>
-                <For each={article()?.values}>
-                  {({ attributes: c }) => (
-                    <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Name</div>
-                        <div class="text-md font-semibold">{c.name}</div>
-                      </div>
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Description</div>
-                        <div class="text-md font-semibold text-truncate">
-                          {c.content}
-                        </div>
-                      </div>
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Created</div>
-                        <div class="text-md font-semibold">
-                          {new Date(c.createdAt).toLocaleDateString()}
-                        </div>
-                      </div>
-                      <div class="flex gap-3 items-center">
-                        <div class="text-md font-semibold">Status</div>
-                        <div class="text-md font-semibold">{c.status}</div>
-                      </div>
+                <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Name</div>
+                    <div class="text-md font-semibold">
+                      {article_details().name}
                     </div>
-                  )}
-                </For>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Description</div>
+                    <div class="text-md font-semibold text-truncate">
+                      {article_details().content}
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Created</div>
+                    <div class="text-md font-semibold">
+                      {new Date(
+                        article_details().createdAt
+                      ).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="text-md font-semibold">Status</div>
+                    <div class="text-md font-semibold">
+                      {article_details().status}
+                    </div>
+                  </div>
+                </div>
               </Show>
             </SheetDescription>
           </SheetHeader>
