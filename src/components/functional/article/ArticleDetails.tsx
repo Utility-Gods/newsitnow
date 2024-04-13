@@ -8,7 +8,7 @@ import {
 } from "~/components/ui/sheet";
 import { Separator } from "~/components/ui/separator";
 
-import CableIcon from "@lib/icons/cable.jsx";
+import Share from "@lib/icons/share";
 
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
@@ -93,8 +93,10 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                       {article_details().name}
                     </div>
                     <Button variant={"secondary"} onClick={embed_article}>
-                      <CableIcon class="w-4 h-4 mr-2" />
-                      <span>Embed</span>
+                      <span>Share</span>
+                      <div class="w-4 h-4 ml-2">
+                        <Share />
+                      </div>
                     </Button>
                   </div>
                   <div class="flex items-center gap-3 text-muted-foreground text-sm">
