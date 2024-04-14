@@ -9,6 +9,8 @@ import { Toaster } from "~/components/ui/toast";
 import PublicHome from "./functional/public/PublicHome";
 import PublicArticle from "./functional/public/PublicArticle";
 import PublicCollection from "./functional/public/PublicCollection";
+import Login from "./functional/auth/Login";
+import Register from "./functional/auth/Register";
 const RouterComponent = () => (
   <>
     <Router>
@@ -16,6 +18,10 @@ const RouterComponent = () => (
         <Route path="" component={Home} />
         <Route path="/article" component={Article} />
         <Route path="/collection" component={Collection} />
+      </Route>
+      <Route path="/auth">
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
       </Route>
       <Route path="/public/:userid" component={Public}>
         <Route path="" component={PublicHome} />

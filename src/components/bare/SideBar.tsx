@@ -89,7 +89,7 @@ const SideBar: Component = () => {
           </li>
           <li>
             <A
-              href="#"
+              href="/auth/login"
               class={`flex items-center p-3    hover:bg-muted    group ${
                 path() === "/signin" ? "text-secondary bg-muted" : "text-text"
               }`}
@@ -114,9 +114,11 @@ const SideBar: Component = () => {
           </li>
           <li>
             <A
-              href="#"
+              href="/auth/register"
               class={`flex items-center p-3    hover:bg-muted    group ${
-                path() === "/signup" ? "text-secondary bg-muted" : "text-text"
+                path() === "/auth/register"
+                  ? "text-secondary bg-muted"
+                  : "text-text"
               }`}
             >
               <svg
