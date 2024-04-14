@@ -90,13 +90,18 @@ const ToastClose: Component<ToastPrimitive.ToastCloseButtonProps> = (props) => {
 
 const ToastTitle: Component<ToastPrimitive.ToastTitleProps> = (props) => {
   const [, rest] = splitProps(props, ["class"])
-  return <ToastPrimitive.Title class={cn("text-sm font-semibold", props.class)} {...rest} />
+  return (
+    <ToastPrimitive.Title
+      class={cn("text-md font-semibold", props.class)}
+      {...rest}
+    />
+  );
 }
 
 const ToastDescription: Component<ToastPrimitive.ToastDescriptionProps> = (props) => {
   const [, rest] = splitProps(props, ["class"])
   return (
-    <ToastPrimitive.content
+    <ToastPrimitive.Description
       class={cn("text-sm opacity-90", props.class)}
       {...rest}
     />
@@ -117,7 +122,9 @@ function showToast(props: {
     >
       <div class="grid gap-1">
         {props.title && <ToastTitle>{props.title}</ToastTitle>}
-        {props.content && <ToastDescription>{props.content}</ToastDescription>}
+        {props.description && (
+          <ToastDescription>{props.description}</ToastDescription>
+        )}
       </div>
       <ToastClose />
     </Toast>

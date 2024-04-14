@@ -79,7 +79,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
         <DialogContent class="sm:max-w-[550px] w-[80%] md:w-[60%]">
           <Form onSubmit={handleSubmit}>
             <DialogHeader>
-              <div class="text-lg font-semibold leading-none tracking-tight">
+              <div class="text-lg font-semibold leading-none tracking-tight text-primary">
                 Create Article
               </div>
               <div class="text-sm text-muted-foreground">
@@ -131,7 +131,9 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
               >
                 Close
               </Button>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit" variant="secondary">
+                Save changes
+              </Button>
             </DialogFooter>
           </Form>
         </DialogContent>

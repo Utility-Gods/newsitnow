@@ -23,7 +23,7 @@ const SideBar: Component = () => {
     >
       <div class="h-full pb-4 overflow-y-auto bg-background ">
         <div class="p-3 text-xl font-semibold text-secondary">
-          Welcome Siddharth
+          Welcome Siddharth,
         </div>
         <ul class="font-medium">
           <li>

@@ -1,9 +1,13 @@
+import API from "@lib/icons/API";
+import Code from "@lib/icons/code";
+import Link from "@lib/icons/link";
 import { Article } from "@lib/types/Article";
 import { createEffect } from "solid-js";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Dialog, DialogContent, DialogHeader } from "~/components/ui/dialog";
 import { Separator } from "~/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import CodeShare from "./share/CodeShare";
 
 interface ArticleShareProps {
   // add props here
@@ -13,10 +17,6 @@ interface ArticleShareProps {
 }
 
 function ArticleShare(props: ArticleShareProps) {
-  createEffect(() => {
-    console.log(props.article);
-  });
-
   return (
     <Dialog open={props.show} onOpenChange={props.onShowChange}>
       <DialogContent class="w-[600px]">
@@ -46,17 +46,27 @@ function ArticleShare(props: ArticleShareProps) {
 
           <Tabs defaultValue="account" class="w-full">
             <TabsList class="grid w-full grid-cols-3">
-              <TabsTrigger value="code">Code</TabsTrigger>
-              <TabsTrigger value="api">API</TabsTrigger>
-              <TabsTrigger value="link">Link</TabsTrigger>
+              <TabsTrigger value="code" class="flex items-center gap-2">
+                <div class="w-4 h-4">
+                  <Code></Code>
+                </div>
+                <div>Code</div>
+              </TabsTrigger>
+              <TabsTrigger value="api" class="flex items-center gap-2">
+                <div class="w-4 h-4">
+                  <API></API>
+                </div>
+                <div>API</div>
+              </TabsTrigger>
+              <TabsTrigger value="link" class="flex items-center gap-2">
+                <div class="w-4 h-4">
+                  <Link></Link>
+                </div>
+                <div>Link</div>
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="code">
-              <div class="text-lg font-semibold leading-none tracking-tight">
-                Code
-              </div>
-              <div class="text-sm text-muted-foreground">
-                Share your article with the world using the code below.
-              </div>
+              <CodeShare articleId={props.article.id}></CodeShare>
             </TabsContent>
             <TabsContent value="api">
               <div class="text-lg font-semibold leading-none tracking-tight">

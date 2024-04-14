@@ -52,7 +52,6 @@
 @layer base {
  
 
-
   html {
     width: 100%;
     height: 100%;
@@ -63,7 +62,7 @@
   }
   body {
     @apply text-text;
-    background-color: hsl(var(--background));
+    @apply bg-muted;
     font-feature-settings: "rlig" 1, "calt" 1;
     width: 100%;
     height: 100%;
@@ -107,4 +106,22 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.code-block {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid;
+    @apply border-l-primary;
+    @apply rounded-sm;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
 }

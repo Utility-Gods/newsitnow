@@ -43,4 +43,31 @@ const fetch_article_by_id = async (id: string) => {
   }
 };
 
-export { fetch_articles, save_article, fetch_article_by_id };
+async function generateEmbedCode(articleId: number): Promise<string> {
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
+
+  // Generate HTML code
+  const htmlCode = `
+          <div id="embedded-article"></div>
+          <script>
+            (function() {
+              var articleId = '${articleId}';
+      
+              // Fetch article data from Strapi API
+              fetch('${strapiUrl}/articles/' + articleId)
+                .then(response => response.json())
+                .then(data => {
+                  var articleContent = data.content; // Adjust the property name based on your Strapi schema
+                  document.getElementById('embedded-article').innerHTML = articleContent;
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            })();
+          </script>
+        `;
+
+  return htmlCode;
+}
+
+export { fetch_articles, save_article, fetch_article_by_id, generateEmbedCode };

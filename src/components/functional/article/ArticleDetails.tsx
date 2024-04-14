@@ -89,7 +89,7 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div class="p-3 max-h-[69vh] overflow-scroll border-border border">
+                  <div class="p-3 max-h-[69vh] overflow-auto border-border border">
                     {article_details().content}
                   </div>
                 </div>
