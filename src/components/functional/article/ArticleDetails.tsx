@@ -41,7 +41,6 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
 
   createEffect(() => {
     console.log(article());
-    console.log(article_details());
   });
 
   function embed_article() {

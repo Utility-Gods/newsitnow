@@ -46,26 +46,35 @@ const fetch_article_by_id = async (id: string) => {
 async function generateEmbedCode(articleId: number): Promise<string> {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
+  const strapiToken = import.meta.env.VITE_STRAPI_API_TOKEN; // Replace with your Strapi API token
   // Generate HTML code
   const htmlCode = `
-          <div id="embedded-article"></div>
-          <script>
-            (function() {
-              var articleId = '${articleId}';
-      
-              // Fetch article data from Strapi API
-              fetch('${strapiUrl}/articles/' + articleId)
-                .then(response => response.json())
-                .then(data => {
-                  var articleContent = data.content; // Adjust the property name based on your Strapi schema
-                  document.getElementById('embedded-article').innerHTML = articleContent;
-                })
-                .catch(error => {
-                  console.error(error);
-                });
-            })();
-          </script>
-        `;
+  <div id="embedded-article"></div>
+  <script>
+  (function() {
+    var articleId = ${articleId};
+  
+    // Fetch article data from Strapi API
+    fetch('${strapiUrl}/api/articles/' + articleId, {
+      headers: {
+        Authorization: 'Bearer ${strapiToken}' // Replace YOUR_AUTH_TOKEN with your actual token
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      var articleContent = data.data.attributes; // Adjust the property name based on your Strapi schema
+      console.log(articleContent);
+      document.getElementById('embedded-article').innerHTML = \` 
+        <div>
+            <h2>\${articleContent.name}</h2>
+            <p>\${articleContent.content}</p>
+            <p>Date: \${new Date(articleContent.createdAt).toLocaleDateString()}</p>
+        </div>
+      \`;
+    });
+  })();
+  </script>
+  `;
 
   return htmlCode;
 }

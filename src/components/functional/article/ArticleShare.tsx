@@ -2,10 +2,8 @@ import API from "@lib/icons/API";
 import Code from "@lib/icons/code";
 import Link from "@lib/icons/link";
 import { Article } from "@lib/types/Article";
-import { createEffect } from "solid-js";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Dialog, DialogContent, DialogHeader } from "~/components/ui/dialog";
-import { Separator } from "~/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import CodeShare from "./share/CodeShare";
 
