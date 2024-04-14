@@ -18,15 +18,18 @@ const SideBar: Component = () => {
     // JSX code for your component's UI goes here
     <aside
       id="default-sidebar"
-      class="text-text z-40 w-64 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="text-text z-40 w-80 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
-      <div class="h-full py-4 overflow-y-auto bg-background ">
-        <ul class="space-y-2 font-medium">
+      <div class="h-full pb-4 overflow-y-auto bg-background ">
+        <div class="p-3 text-xl font-semibold text-secondary">
+          Welcome Siddharth
+        </div>
+        <ul class="font-medium">
           <li>
             <A
               href="#"
-              class={`flex items-center p-2    hover:bg-muted   group ${
+              class={`flex items-center p-3    hover:bg-muted   group ${
                 path() === "/" ? "text-secondary bg-muted" : "text-text"
               }`}
             >
@@ -47,7 +50,7 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/collection"
-              class={`flex items-center p-2    hover:bg-muted    group ${
+              class={`flex items-center p-3    hover:bg-muted    group ${
                 path() === "/collection"
                   ? "text-secondary bg-muted"
                   : "text-text"
@@ -68,7 +71,7 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/article"
-              class={`flex items-center p-2    hover:bg-muted    group ${
+              class={`flex items-center p-3    hover:bg-muted    group ${
                 path() === "/article" ? "text-secondary bg-muted" : "text-text"
               }`}
             >
@@ -87,7 +90,7 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2    hover:bg-muted    group ${
+              class={`flex items-center p-3    hover:bg-muted    group ${
                 path() === "/signin" ? "text-secondary bg-muted" : "text-text"
               }`}
             >
@@ -112,7 +115,7 @@ const SideBar: Component = () => {
           <li>
             <A
               href="#"
-              class={`flex items-center p-2    hover:bg-muted    group ${
+              class={`flex items-center p-3    hover:bg-muted    group ${
                 path() === "/signup" ? "text-secondary bg-muted" : "text-text"
               }`}
             >
