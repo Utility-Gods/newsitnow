@@ -113,7 +113,6 @@
     border-left: 3px solid;
     @apply border-l-primary;
     @apply rounded-sm;
-    @apply text-text;
     page-break-inside: avoid;
     font-family: monospace;
     font-size: 15px;

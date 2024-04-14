@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogHeader } from "~/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import CodeShare from "./share/CodeShare";
 
+import APIShare from "./share/APIShare";
+import LinkShare from "./share/LinkShare";
 interface ArticleShareProps {
   // add props here
   show: boolean;
@@ -67,20 +69,10 @@ function ArticleShare(props: ArticleShareProps) {
               <CodeShare articleId={props.article.id}></CodeShare>
             </TabsContent>
             <TabsContent value="api">
-              <div class="text-lg font-semibold leading-none tracking-tight">
-                API
-              </div>
-              <div class="text-sm text-muted-foreground">
-                Share your article with the world using the API below.
-              </div>
+              <APIShare articleId={props.article.id}></APIShare>
             </TabsContent>
             <TabsContent value="link">
-              <div class="text-lg font-semibold leading-none tracking-tight">
-                Link
-              </div>
-              <div class="text-sm text-muted-foreground">
-                Share your article with the world using the link below.
-              </div>
+              <LinkShare articleId={props.article.id}></LinkShare>
             </TabsContent>
           </Tabs>
         </DialogHeader>
