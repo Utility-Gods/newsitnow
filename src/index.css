@@ -109,20 +109,20 @@
 }
 
 .code-block {
-    background: #f4f4f4;
     border: 1px solid #ddd;
     border-left: 3px solid;
     @apply border-l-primary;
     @apply rounded-sm;
-    color: #666;
+    @apply text-text;
     page-break-inside: avoid;
     font-family: monospace;
     font-size: 15px;
     line-height: 1.6;
     max-width: 100%;
     overflow: auto;
-    padding: 1em 1.5em;
+    @apply p-3;
     display: block;
     word-wrap: break-word;
+    webkit-line-clamp: 3;
     word-break: break-all;
 }
