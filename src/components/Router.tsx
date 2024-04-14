@@ -17,7 +17,7 @@ const RouterComponent = () => (
         <Route path="/article" component={Article} />
         <Route path="/collection" component={Collection} />
       </Route>
-      <Route path="/public" component={Public}>
+      <Route path="/public/:userid" component={Public}>
         <Route path="" component={PublicHome} />
         <Route path="/article">
           <Route path="/:id" component={PublicArticle} />
