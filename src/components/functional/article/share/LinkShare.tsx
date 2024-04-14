@@ -1,9 +1,7 @@
 import {
-  generateEmbedCode,
-  generateRestAPICode,
+  generateArticleShareLink,
   generateRestAPICodeExposed,
 } from "@lib/service/article";
-import { createResource } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
 
@@ -13,11 +11,11 @@ interface LinkShareProps {
 }
 
 function LinkShare(props: LinkShareProps) {
-  const [embedCode] = createResource(props.articleId, generateRestAPICode);
+  const embedCode = () => generateArticleShareLink(props.articleId);
 
-  async function copyCodeSnippet() {
+  function copyCodeSnippet() {
     console.log("Copying code to clipboard");
-    const toCopy = await generateRestAPICodeExposed(props.articleId);
+    const toCopy = generateArticleShareLink(props.articleId);
 
     navigator.clipboard
       .writeText(toCopy as string)
