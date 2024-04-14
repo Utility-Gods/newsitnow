@@ -2,12 +2,8 @@ import { Component } from "solid-js";
 
 export const route = {};
 
-const Public: Component = () => {
-  return (
-    <div>
-      <h1>Public</h1>
-    </div>
-  );
+const Public: Component = (props) => {
+  return <div>{props.children}</div>;
 };
 
 export default Public;

@@ -1,7 +1,8 @@
 import Nav from "@components/bare/Nav";
 import SideBar from "@components/bare/SideBar";
+import { Component } from "solid-js";
 
-const Layout = (props) => (
+const Layout: Component = (props) => (
   <div class="flex flex-col w-full h-full">
     <Nav />
     <div class="w-full gap-3 flex overflow-hidden">
