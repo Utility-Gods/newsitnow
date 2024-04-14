@@ -14,32 +14,33 @@
 
     
 
-    <div id="embedded-article"></div>
-    <script>
-    (function() {
-      var articleId = '14';
-    
-      // Fetch article data from Strapi API
-      fetch('http://localhost:1337/api/articles/' + articleId, {
-        headers: {
-          Authorization: 'Bearer 048b5f4a62ac007c32c3230a0ca2246b5d0b3358c1801696106e4360306f3822f199f454567f6728087494297366db3a1c5fc9ad4cc980ee6710243bb5732b25c90339ae9a82ccaea32e3e7fdaae824d580e240a0ef186b384bf1c818f69544c93cffd61d29c16f1b4a2e97abc7194be596620904679646ba3ba497cba9fbda2' // Replace YOUR_AUTH_TOKEN with your actual token
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        var articleContent = data.data.attributes; // Adjust the property name based on your Strapi schema
-        console.log(articleContent);
-        document.getElementById('embedded-article').innerHTML = ` 
-          <div>
-              <h2>${articleContent.name}</h2>
-              <p>${articleContent.content}</p>
-              <p>Date: ${new Date(articleContent.createdAt).toLocaleDateString()}</p>
-          </div>
-        `;
-      });
-    })();
-    </script>
-    
+   
+  <div id="embedded-article"></div>
+  <script>
+  (function() {
+    var articleId = 15;
+  
+    // Fetch article data from Strapi API
+    fetch('http://localhost:1337/api/articles/' + articleId, {
+      headers: {
+        Authorization: 'Bearer 048b5f4a62ac007c32c3230a0ca2246b5d0b3358c1801696106e4360306f3822f199f454567f6728087494297366db3a1c5fc9ad4cc980ee6710243bb5732b25c90339ae9a82ccaea32e3e7fdaae824d580e240a0ef186b384bf1c818f69544c93cffd61d29c16f1b4a2e97abc7194be596620904679646ba3ba497cba9fbda2' // Replace YOUR_AUTH_TOKEN with your actual token
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      var articleContent = data.data.attributes; // Adjust the property name based on your Strapi schema
+      console.log(articleContent);
+      document.getElementById('embedded-article').innerHTML = ` 
+        <div>
+            <h2>${articleContent.name}</h2>
+            <p>${articleContent.content}</p>
+            <p>Date: ${new Date(articleContent.createdAt).toLocaleDateString()}</p>
+        </div>
+      `;
+    });
+  })();
+  </script>
+  
   
   
 </body>
