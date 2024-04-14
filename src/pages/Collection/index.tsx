@@ -38,7 +38,7 @@ const Collection: Component = () => {
       <CollectionDetails
         open={openDetails()}
         onOpenChange={setOpenDetails}
-        collectionId={activeCollection()}
+        collectionId={activeCollection}
       />
     </div>
   );

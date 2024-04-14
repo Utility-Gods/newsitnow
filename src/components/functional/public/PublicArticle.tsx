@@ -2,7 +2,8 @@ import { Component, createResource, createSignal, Show } from "solid-js";
 
 import { fetch_article_by_id } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
-import Share from "@lib/icons/share";
+
+
 const PublicArticle: Component = (props) => {
   const userId = props.params.userId;
   const articleId = props.params.id;

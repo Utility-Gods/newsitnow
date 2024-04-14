@@ -39,9 +39,6 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
 
   const article_details = () => article()?.value?.attributes;
 
-  createEffect(() => {
-    console.log(article());
-  });
 
   function embed_article() {
     // we need to show the Share/Embed dialog
