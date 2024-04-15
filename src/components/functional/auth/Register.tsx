@@ -1,5 +1,5 @@
 import { RegisterForm, RegisterSchema } from "@lib/schema/forms/register";
-import { register_user } from "@lib/service/auth";
+import { user_register } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
 import { Component, createSignal, Show } from "solid-js";
 import PageSpinner from "~/components/bare/PageSpinner";
@@ -29,7 +29,7 @@ const Register: Component = () => {
     console.log(values);
     event.preventDefault();
     try {
-      const result = await register_user(
+      const result = await user_register(
         values.email,
         values.password,
         values.confirmPassword

@@ -1,7 +1,7 @@
 import { strapi } from "@lib/strapi";
 import { err, ok } from "neverthrow";
 
-const register_user = async (
+const user_register = async (
   email: string,
   password: string,
   confirmPassword: string
@@ -23,4 +23,17 @@ const register_user = async (
   }
 };
 
-export { register_user };
+const user_login = async (email: string, password: string) => {
+  try {
+    const user = await strapi.login({
+      identifier: email,
+      password,
+    });
+    return ok(user);
+  } catch (e) {
+    console.log(e);
+    return err(e?.error?.message ?? e?.error ?? e ?? "An error occurred");
+  }
+};
+
+export { user_register, user_login };

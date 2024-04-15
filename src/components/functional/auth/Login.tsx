@@ -1,6 +1,8 @@
 import { LoginForm, LoginSchema } from "@lib/schema/forms/login";
+import { user_login } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
-import { Component, createSignal } from "solid-js";
+import { Component, createSignal, Show } from "solid-js";
+import PageSpinner from "~/components/bare/PageSpinner";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -12,6 +14,7 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { showToast } from "~/components/ui/toast";
 
 const Login: Component = () => {
   const [, { Form, Field, FieldArray }] = createForm<LoginForm>({
@@ -25,9 +28,25 @@ const Login: Component = () => {
 
     event.preventDefault();
     try {
-      // Do something with the form values
+      const result = await user_login(values.email, values.password);
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+      showToast({
+        variant: "success",
+        title: "Login Successful",
+        description: "Welcome back",
+      });
+      console.log(result.value);
+      localStorage.setItem("user", JSON.stringify(result.value));
     } catch (error) {
       console.error(error);
+      showToast({
+        variant: "error",
+        title: "Error",
+        description: error as string,
+      });
     } finally {
       setLoading(false);
     }
@@ -84,6 +103,7 @@ const Login: Component = () => {
                       <Input
                         {...props}
                         id="password"
+                        type="password"
                         area-invalid={field.error ? "true" : "false"}
                         required
                       />
@@ -108,6 +128,9 @@ const Login: Component = () => {
           </CardFooter>
         </Form>
       </Card>
+      <Show when={loading()}>
+        <PageSpinner />
+      </Show>
     </div>
   );
 };
