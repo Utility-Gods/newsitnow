@@ -22,7 +22,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const [articleList] = createResource(fetch_articles);
 
   return (
-    <div class="shadow-md bg-white">
+    <div class="shadow-md bg-background">
       <Table class=" border-border border">
         <TableHeader>
           <TableRow>

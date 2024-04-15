@@ -45,6 +45,8 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
     values,
     event
   ) => {
+
+    console;
     setLoading(true);
 
     event.preventDefault();
