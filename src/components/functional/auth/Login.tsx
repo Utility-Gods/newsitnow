@@ -41,6 +41,7 @@ const Login: Component = () => {
         variant: "success",
         title: "Login Successful",
         description: "Welcome back",
+        duration: 5000,
       });
       console.log(result.value);
       sessionStorage.setItem("user", JSON.stringify(result.value));
@@ -51,6 +52,7 @@ const Login: Component = () => {
         variant: "error",
         title: "Error",
         description: error as string,
+        duration: 5000,
       });
     } finally {
       setLoading(false);
