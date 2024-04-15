@@ -1,10 +1,13 @@
 import { strapi } from "@lib/strapi";
 import { Article } from "@lib/types/Article";
+import { get_token } from "@lib/utils";
 import { err, ok } from "neverthrow";
 
 const fetch_articles = async () => {
   try {
-    const articles = await strapi.find<Article[]>("articles");
+    const articles = await strapi.find<Article[]>("articles", {
+      populate: "*",
+    });
     console.log("fetching articles", articles);
     return ok(articles);
   } catch (e) {
@@ -81,7 +84,7 @@ async function generateEmbedCode(articleId: number): Promise<string> {
 async function generateEmbedCodeExposed(articleId: number): Promise<string> {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
-  const strapiToken = import.meta.env.VITE_STRAPI_API_TOKEN; // Replace with your Strapi API token
+  const strapiToken = get_token(); // Replace with your Strapi API token
   // Generate HTML code
   const htmlCode = `
   <div id="embedded-article"></div>
@@ -117,7 +120,7 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
 function generateRestAPICode(articleId: number): string {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
-  const strapiToken = import.meta.env.VITE_STRAPI_API_TOKEN; // Replace with your Strapi API token
+  const strapiToken = get_token(); // Replace with your Strapi API token
 
   const restAPICode = `
   fetch('${strapiUrl}/api/articles/' + ${articleId}, {
@@ -137,7 +140,7 @@ function generateRestAPICode(articleId: number): string {
 function generateRestAPICodeExposed(articleId: number): string {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
-  const strapiToken = import.meta.env.VITE_STRAPI_API_TOKEN; // Replace with your Strapi API token
+  const strapiToken = get_token(); // Replace with your Strapi API token
 
   const restAPICode = `
   fetch('${strapiUrl}/api/articles/' + ${articleId}, {
