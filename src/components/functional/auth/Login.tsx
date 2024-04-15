@@ -1,6 +1,7 @@
 import { LoginForm, LoginSchema } from "@lib/schema/forms/login";
 import { user_login } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
+import { useNavigate } from "@solidjs/router";
 import { Component, createSignal, Show } from "solid-js";
 import PageSpinner from "~/components/bare/PageSpinner";
 import { Button } from "~/components/ui/button";
@@ -23,7 +24,10 @@ const Login: Component = () => {
 
   const [loading, setLoading] = createSignal(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (values: LoginForm, event: Event) => {
+    console.log(values);
     setLoading(true);
 
     event.preventDefault();
@@ -39,7 +43,8 @@ const Login: Component = () => {
         description: "Welcome back",
       });
       console.log(result.value);
-      localStorage.setItem("user", JSON.stringify(result.value));
+      sessionStorage.setItem("user", JSON.stringify(result.value));
+      navigate("/", { replace: true });
     } catch (error) {
       console.error(error);
       showToast({
