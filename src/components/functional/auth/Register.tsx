@@ -1,5 +1,5 @@
 import { RegisterForm, RegisterSchema } from "@lib/schema/forms/register";
-import { user_register } from "@lib/service/auth";
+import { send_verification_email, user_register } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
 import { Component, createSignal, Show } from "solid-js";
 import PageSpinner from "~/components/bare/PageSpinner";
@@ -42,6 +42,22 @@ const Register: Component = () => {
       showToast({
         variant: "success",
         title: "Registeration Successful",
+        description: "Please check your email to verify your account.",
+      });
+
+      const sendVerificationEmailResult = await send_verification_email(
+        values.email
+      );
+
+      if (sendVerificationEmailResult.isErr()) {
+        throw sendVerificationEmailResult.error;
+      }
+
+      console.log(result.value);
+
+      showToast({
+        variant: "success",
+        title: "Verification Email Sent",
         description: "Please check your email to verify your account.",
       });
       // Do something with the form values

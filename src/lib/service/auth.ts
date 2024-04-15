@@ -37,4 +37,14 @@ const user_login = async (email: string, password: string) => {
   }
 };
 
-export { user_register, user_login };
+
+const send_verification_email = async (email: string, token: string) => {
+  try {
+    const result = await strapi.sendEmailConfirmation({ email });
+    return ok(result);
+  } catch (e) {
+    console.log(e);
+    return err(e?.error?.message ?? e?.error ?? e ?? "An error occurred");
+  }
+};
+export { user_register, user_login, send_verification_email };
