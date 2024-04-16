@@ -1,5 +1,12 @@
 import { delete_article, fetch_articles } from "@lib/service/article";
-import { Component, createResource, For, mergeProps, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createResource,
+  For,
+  mergeProps,
+  Show,
+} from "solid-js";
 import {
   Table,
   TableBody,
@@ -22,6 +29,10 @@ export type ArticleListProps = {
 const ArticleList: Component<ArticleListProps> = (props) => {
   const merged = mergeProps(props);
   const [articleList] = createResource(fetch_articles);
+
+  createEffect(() => {
+    console.log("fetching articles", articleList());
+  });
 
   async function handle_delete_article(id: string) {
     console.log("deleting article", id);
@@ -76,8 +87,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
             </TableRow>
           </Show>
           <Show when={articleList()?.isOk()}>
-            <For each={articleList()?.value?.data}>
-              {({ attributes: c, id }) => (
+            <For each={articleList()?.value}>
+              {(c) => (
                 <TableRow>
                   <TableCell class="font-semibold">{c.name}</TableCell>
                   <TableCell class="text-truncate ">
@@ -108,7 +119,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                     <Button
                       variant="destructive"
                       size="icon"
-                      onClick={() => handle_delete_article(id)}
+                      onClick={() => handle_delete_article(c.id)}
                     >
                       <div class="w-4 h-4">
                         <Trash />

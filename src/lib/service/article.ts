@@ -15,11 +15,6 @@ const fetch_articles = async () => {
 
     const articles = await strapi.find<Article[]>("articles", {
       populate: "*",
-      filters: {
-        where: {
-          $or: [{ author: { id: user.id } }],
-        },
-      },
     });
     console.log("fetching articles", articles);
     return ok(articles);
