@@ -1,7 +1,7 @@
 import {
   generateEmbedCode,
   generateEmbedCodeExposed,
-} from "@lib/service/article";
+} from "@lib/utils/article";
 import { createResource } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";

@@ -1,7 +1,7 @@
 import {
   generateCollectionShareLink,
   generateRestAPICodeExposed,
-} from "@lib/service/collection";
+} from "@lib/utils/collection";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
 

@@ -54,6 +54,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
       formValues.name = values.name;
       formValues.content = values.content;
       const result = await save_article(formValues);
+      console.log({ result });
 
       if (result.isErr()) {
         throw result.error;
@@ -64,6 +65,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
         description: "The article has been created successfully",
       });
     } catch (e) {
+      console.log(e);
       showToast({
         variant: "error",
         title: "Failed to create article",

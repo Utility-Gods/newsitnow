@@ -1,7 +1,7 @@
 import {
   generateArticleShareLink,
   generateRestAPICodeExposed,
-} from "@lib/service/article";
+} from "@lib/utils/article";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
 
