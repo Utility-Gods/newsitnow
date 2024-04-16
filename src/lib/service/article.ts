@@ -1,12 +1,25 @@
 import { strapi } from "@lib/strapi";
 import { Article } from "@lib/types/Article";
-import { get_token } from "@lib/utils";
+import { get_token, get_user } from "@lib/utils";
 import { err, ok } from "neverthrow";
 
 const fetch_articles = async () => {
   try {
+    const token = get_token();
+
+    const user = get_user();
+
+    console.log("fetching user", user);
+
+    strapi.setToken(token);
+
     const articles = await strapi.find<Article[]>("articles", {
       populate: "*",
+      filters: {
+        where: {
+          $or: [{ author: { id: user.id } }],
+        },
+      },
     });
     console.log("fetching articles", articles);
     return ok(articles);

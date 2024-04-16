@@ -14,3 +14,11 @@ export function get_token() {
   const parsed = JSON.parse(user);
   return parsed.jwt;
 }
+
+export function get_user() {
+  const user = sessionStorage.getItem("user");
+  if (!user) {
+    return null;
+  }
+  return JSON.parse(user);
+}

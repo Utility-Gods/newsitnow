@@ -26,6 +26,7 @@ const user_register = async (
 const user_login = async (email: string, password: string) => {
   try {
     console.log(email, password);
+    strapi.removeToken();
     const user = await strapi.login({
       identifier: email,
       password,
