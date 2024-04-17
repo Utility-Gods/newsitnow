@@ -28,20 +28,19 @@ export type ArticleListProps = {
 
 const ArticleList: Component<ArticleListProps> = (props) => {
   const merged = mergeProps(props);
-  const [articleList] = createResource(fetch_articles);
+  const [articleList, { refetch }] = createResource(fetch_articles);
 
   createEffect(() => {
     console.log("fetching articles", articleList());
   });
 
   async function handle_delete_article(id: string) {
-    console.log("deleting article", id);
     try {
       const result = await delete_article(id);
 
       console.log("deleting article", result);
       if (result?.isOk()) {
-        fetch_articles();
+        refetch();
         showToast({
           variant: "success",
           title: "Article deleted",
@@ -72,7 +71,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
         <TableHeader>
           <TableRow>
             <TableHead class="w-1/4">Name</TableHead>
-            <TableHead class="w-[140px]">Description</TableHead>
+            <TableHead class="w-1/4">Description</TableHead>
             <TableHead>Status</TableHead>
             <TableHead class="text-right">Created</TableHead>
             <TableHead class="w-1/4 text-right">Actions</TableHead>
@@ -87,10 +86,19 @@ const ArticleList: Component<ArticleListProps> = (props) => {
             </TableRow>
           </Show>
           <Show when={articleList()?.isOk()}>
+            <Show when={articleList()?.value.length === 0}>
+              <TableRow>
+                <TableCell colspan={5} class="text-center">
+                  No articles found
+                </TableCell>
+              </TableRow>
+            </Show>
             <For each={articleList()?.value}>
               {(c) => (
                 <TableRow>
-                  <TableCell class="font-semibold">{c.name}</TableCell>
+                  <TableCell class="font-semibold">
+                    <div class="allow-3-lines">{c.name}</div>
+                  </TableCell>
                   <TableCell class="text-truncate ">
                     <div class="allow-3-lines">{c.content}</div>
                   </TableCell>
@@ -108,7 +116,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                       size="sm"
                       onClick={() => {
                         merged.openDetails(true);
-                        merged.onView(id);
+                        merged.onView(c.id);
                       }}
                     >
                       View
@@ -116,6 +124,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                     <Button variant="secondary" size="sm">
                       Edit
                     </Button>
+
                     <Button
                       variant="destructive"
                       size="icon"

@@ -59,7 +59,7 @@ const fetch_article_by_id = async (id: string) => {
 const delete_article = async (id: string) => {
   const token = get_token();
   if (!id) {
-    return;
+    return err("No id provided");
   }
 
   try {

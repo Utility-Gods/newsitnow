@@ -1,7 +1,4 @@
-import { strapi } from "@lib/strapi";
-import { Article } from "@lib/types/Article";
 import { get_token } from "@lib/utils";
-import { err, ok } from "neverthrow";
 
 async function generateEmbedCode(articleId: number): Promise<string> {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
@@ -12,17 +9,14 @@ async function generateEmbedCode(articleId: number): Promise<string> {
     <script>
     (function() {
       var articleId = ${articleId};
-    
-      // Fetch article data from Strapi API
       fetch('${strapiUrl}/api/articles/' + articleId, {
         headers: {
-          Authorization: 'Bearer <Your Access Token>' // Replace YOUR_AUTH_TOKEN with your actual token
+          Authorization: 'Bearer <Your Access Token>'
         }
       })
       .then(response => response.json())
       .then(data => {
-        var articleContent = data.data.attributes; // Adjust the property name based on your Strapi schema
-        console.log(articleContent);
+        var articleContent = data.data.attributes; 
         document.getElementById('embedded-article').innerHTML = \` 
           <div>
               <h2>\${articleContent.name}</h2>
@@ -48,17 +42,14 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
     <script>
     (function() {
       var articleId = ${articleId};
-    
-      // Fetch article data from Strapi API
       fetch('${strapiUrl}/api/articles/' + articleId, {
         headers: {
-          Authorization: 'Bearer ${strapiToken}' // Replace YOUR_AUTH_TOKEN with your actual token
+          Authorization: 'Bearer ${strapiToken}'
         }
       })
       .then(response => response.json())
       .then(data => {
-        var articleContent = data.data.attributes; // Adjust the property name based on your Strapi schema
-        console.log(articleContent);
+        var articleContent = data.data.attributes;
         document.getElementById('embedded-article').innerHTML = \` 
           <div>
               <h2>\${articleContent.name}</h2>
