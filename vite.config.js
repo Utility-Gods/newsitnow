@@ -15,6 +15,9 @@ export default defineConfig({
     solidPlugin(),
     tsconfigPaths(),
   ],
+  optimizeDeps: {
+    include: ["quill"],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./"),

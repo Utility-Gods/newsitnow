@@ -7,6 +7,7 @@ import {
   SheetTrigger,
 } from "~/components/ui/sheet";
 
+
 import Share from "@lib/icons/share";
 
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
@@ -31,6 +32,7 @@ type ArticleDetailsProps = {
   onOpenChange: (open: boolean) => void;
   articleId: any;
 };
+
 
 const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   const [article] = createResource(props.articleId, fetch_article_by_id);

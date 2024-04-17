@@ -1,4 +1,11 @@
-import { Component, createSignal, mergeProps, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createSignal,
+  mergeProps,
+  onMount,
+  Show,
+} from "solid-js";
 import { createForm, SubmitHandler, valiForm } from "@modular-forms/solid";
 import { showToast } from "~/components/ui/toast";
 
@@ -21,6 +28,8 @@ import {
 } from "@lib/schema/forms/create_article";
 import { save_article } from "@lib/service/article";
 
+import EditorJS, { OutputData } from "@editorjs/editorjs";
+
 type CreateArticleModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -41,11 +50,43 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
 
   const [loading, setLoading] = createSignal(false);
 
+  const [editorIsReady, setReady] = createSignal(false);
+
+  // temporary random id solution for testing
+
+  let editorData: OutputData;
+
+  const randomHolderId = "myHolder"; //(Math.floor(Math.random() * 100) + 1).toString();
+
+  const createEditor = async () => {
+    const instance = new EditorJS({
+      autofocus: true,
+      holder: randomHolderId,
+      data: editorData,
+    });
+
+    console.log(instance);
+    await instance.isReady;
+    setReady(true);
+  };
+
+  let isEditorReady = false;
+
+  createEffect(() => {
+    // check if the randomHolderId div
+    if (document.getElementById(randomHolderId) && !isEditorReady) {
+      console.log("element found");
+      createEditor();
+      isEditorReady = true;
+    } else {
+      console.log("no element found");
+    }
+  });
+
   const handleSubmit: SubmitHandler<CreateArticleForm> = async (
     values,
     event
   ) => {
-
     console;
     setLoading(true);
 
@@ -125,6 +166,13 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                     </div>
                   )}
                 </Field>
+              </div>
+              <div class="grid grid-cols-4 items-center gap-4">
+                <div
+                  id={randomHolderId}
+                  class="rounded-md border border-slate-100 px-16"
+                ></div>
+                <Show when={!editorIsReady()}>loading...</Show>
               </div>
             </div>
             <DialogFooter>
