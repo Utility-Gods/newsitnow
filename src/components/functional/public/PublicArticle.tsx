@@ -14,7 +14,7 @@ const PublicArticle: Component = (props) => {
   const article_details = () => article()?.value?.attributes;
 
   return (
-    <div class="flex flex-col flex-1 flex-grow overflow-hidden w-[69%] m-auto p-6">
+    <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3  w-[69%] m-auto p-6">
       <Show when={article()?.isErr()}>
         <div class="p-4 text-primary-100">Error loading article</div>
       </Show>

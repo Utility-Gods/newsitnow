@@ -1,5 +1,12 @@
-import { fetch_collections } from "@lib/service/collection";
-import { Component, createResource, For, mergeProps, Show } from "solid-js";
+import { delete_collection, fetch_collections } from "@lib/service/collection";
+import {
+  Component,
+  createEffect,
+  createResource,
+  For,
+  mergeProps,
+  Show,
+} from "solid-js";
 import {
   Table,
   TableBody,
@@ -12,6 +19,8 @@ import {
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
+import { showToast } from "~/components/ui/toast";
+import Trash from "@lib/icons/Trash";
 
 export type CollectionListProps = {
   openDetails: (open: boolean) => void;
@@ -20,7 +29,41 @@ export type CollectionListProps = {
 
 const CollectionList: Component<CollectionListProps> = (props) => {
   const merged = mergeProps(props);
-  const [collectionList] = createResource(fetch_collections);
+  const [collectionList, { refetch }] = createResource(fetch_collections);
+
+  createEffect(() => {
+    console.log("fetching collections", collectionList());
+  });
+  async function handle_delete_collection(id: string) {
+    try {
+      const result = await delete_collection(id);
+
+      console.log("deleting collection", result);
+      if (result?.isOk()) {
+        refetch();
+        showToast({
+          variant: "success",
+          title: "Collection deleted",
+          description: "Collection has been deleted successfully",
+        });
+      }
+
+      if (result?.isErr()) {
+        showToast({
+          title: "Some error occured",
+          description: "Could not delete collection, please try again later",
+          variant: "error",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      showToast({
+        variant: "error",
+        title: "Failed to delete collection",
+        description: "An error occurred while deleting the collection",
+      });
+    }
+  }
 
   return (
     <div class="shadow-md bg-white">
@@ -43,6 +86,13 @@ const CollectionList: Component<CollectionListProps> = (props) => {
             </TableRow>
           </Show>
           <Show when={collectionList()?.isOk()}>
+            <Show when={collectionList()?.value?.data.length === 0}>
+              <TableRow>
+                <TableCell colspan={5} class="text-center">
+                  No collections found
+                </TableCell>
+              </TableRow>
+            </Show>
             <For each={collectionList()?.value?.data}>
               {({ attributes: c, id }) => (
                 <TableRow>
@@ -72,6 +122,15 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                     </Button>
                     <Button variant="secondary" size="sm">
                       Edit
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      onClick={() => handle_delete_collection(id)}
+                    >
+                      <div class="w-4 h-4">
+                        <Trash />
+                      </div>
                     </Button>
                   </TableCell>
                 </TableRow>

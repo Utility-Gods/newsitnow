@@ -10,8 +10,8 @@ const Collection: Component = () => {
   const [activeCollection, setActiveCollection] = createSignal("");
 
   return (
-    <div class="flex flex-col flex-1 flex-grow overflow-hidden">
-      <div class="flex justify-between items-center p-6 ">
+    <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
+      <div class="flex justify-between items-center p-3  ">
         <div class="text-2xl font-bold text-primary leading-10">
           Collections
         </div>
@@ -25,7 +25,7 @@ const Collection: Component = () => {
           Create Collection
         </Button>
       </div>
-      <div class="flex gap-6 flex-col p-6 overflow-auto h-full">
+      <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
         <CollectionList
           openDetails={setOpenDetails}
           onView={(id: string) => {
