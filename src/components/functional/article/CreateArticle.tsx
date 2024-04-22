@@ -28,7 +28,8 @@ import {
 } from "@lib/schema/forms/create_article";
 import { save_article } from "@lib/service/article";
 
-import EditorJS, { OutputData } from "@editorjs/editorjs";
+import Quill from "quill";
+import { SolidQuill } from "solid-quill";
 
 type CreateArticleModalProps = {
   open: boolean;
@@ -46,54 +47,25 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
   const formValues = {
     name: "",
     content: "",
+    text: {},
   };
 
   const [loading, setLoading] = createSignal(false);
 
   const [editorIsReady, setReady] = createSignal(false);
 
-  // temporary random id solution for testing
-
-  let editorData: OutputData;
-
-  const randomHolderId = "myHolder"; //(Math.floor(Math.random() * 100) + 1).toString();
-
-  const createEditor = async () => {
-    const instance = new EditorJS({
-      autofocus: true,
-      holder: randomHolderId,
-      data: editorData,
-    });
-
-    console.log(instance);
-    await instance.isReady;
-    setReady(true);
-  };
-
-  let isEditorReady = false;
-
-  createEffect(() => {
-    // check if the randomHolderId div
-    if (document.getElementById(randomHolderId) && !isEditorReady) {
-      console.log("element found");
-      createEditor();
-      isEditorReady = true;
-    } else {
-      console.log("no element found");
-    }
-  });
-
   const handleSubmit: SubmitHandler<CreateArticleForm> = async (
     values,
     event
   ) => {
-    console;
+    console.log("submitting", values);
     setLoading(true);
 
     event.preventDefault();
     try {
       formValues.name = values.name;
-      formValues.content = values.content;
+      formValues.content = "values.content";
+      formValues.text = quill.getContents();
       const result = await save_article(formValues);
       console.log({ result });
 
@@ -118,11 +90,13 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
     }
   };
 
+  let quill: Quill;
+
   return (
     <>
       <Dialog open={merged.open} onOpenChange={merged.onOpenChange}>
-        <DialogContent class="sm:max-w-[550px] w-[80%] md:w-[60%]">
-          <Form onSubmit={handleSubmit}>
+        <DialogContent class="sm:max-w-[60%] w-[80%] h-[60vw]">
+          <Form onSubmit={handleSubmit} class="flex flex-col">
             <DialogHeader>
               <div class="text-lg font-semibold leading-none tracking-tight text-primary">
                 Create Article
@@ -131,14 +105,14 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                 Create a new article and press save when you're done.
               </div>
             </DialogHeader>
-            <div class="grid gap-4 py-4">
-              <div class="grid grid-cols-4 items-center gap-4">
+            <div class="flex flex-col gap-4 py-4 flex-1">
+              <div class="items-center gap-4">
                 <Label for="name" class="text-right">
-                  Name
+                  Title
                 </Label>
                 <Field name="name">
                   {(field, props) => (
-                    <div class="flex flex-col col-span-3 gap-1">
+                    <div class="flex flex-col gap-1">
                       <Input
                         {...props}
                         id="name"
@@ -167,12 +141,17 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                   )}
                 </Field>
               </div>
-              <div class="grid grid-cols-4 items-center gap-4">
-                <div
-                  id={randomHolderId}
-                  class="rounded-md border border-slate-100 px-16"
-                ></div>
-                <Show when={!editorIsReady()}>loading...</Show>
+              <div class="items-center gap-4">
+                <Label for="name" class="text-right">
+                  Content
+                </Label>
+                {/* <SolidQuill
+                  placeholder="Write something here..."
+                  ref={quill}
+                  onTextChange={() => {
+                    console.log(quill.getContents());
+                  }}
+                /> */}
               </div>
             </div>
             <DialogFooter>
@@ -196,3 +175,4 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
     </>
   );
 };
+

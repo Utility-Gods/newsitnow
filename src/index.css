@@ -125,3 +125,6 @@
     webkit-line-clamp: 3;
     word-break: break-all;
 }
+.ql-editor{
+  height:420px;
+}
