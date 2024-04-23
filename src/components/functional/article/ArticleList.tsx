@@ -121,7 +121,14 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                     >
                       View
                     </Button>
-                    <Button variant="secondary" size="sm">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => {
+                        merged.openDetails(true);
+                        merged.onView(c.id);
+                      }}
+                    >
                       Edit
                     </Button>
 

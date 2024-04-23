@@ -6,7 +6,12 @@ import {
   onMount,
   Show,
 } from "solid-js";
-import { createForm, SubmitHandler, valiForm } from "@modular-forms/solid";
+import {
+  createForm,
+  setValue,
+  SubmitHandler,
+  valiForm,
+} from "@modular-forms/solid";
 import { showToast } from "~/components/ui/toast";
 
 import PageSpinner from "~/components/bare/PageSpinner";
@@ -35,13 +40,16 @@ type CreateArticleModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
-export const CreateArticleModal: Component<CreateArticleModalProps> = (
-  props
-) => {
+export const CreateArticleModal: Component<CreateArticleModalProps> = (props) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
-  const [, { Form, Field, FieldArray }] = createForm<CreateArticleForm>({
-    validate: valiForm(CreateArticleSchema),
+  const [articleForm, { Form, Field, FieldArray }] =
+    createForm<CreateArticleForm>({
+      validate: valiForm(CreateArticleSchema),
+    });
+
+  createEffect(() => {
+    console.log({ formValues });
   });
 
   const formValues = {
@@ -64,8 +72,8 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
     event.preventDefault();
     try {
       formValues.name = values.name;
-      formValues.content = "values.content";
-      formValues.text = quill.getContents();
+      formValues.content = values.content;
+      formValues.text = values.text;
       const result = await save_article(formValues);
       console.log({ result });
 
@@ -142,16 +150,29 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                 </Field>
               </div>
               <div class="items-center gap-4">
-                <Label for="name" class="text-right">
+                <Label for="text" class="text-right">
                   Content
                 </Label>
-                {/* <SolidQuill
-                  placeholder="Write something here..."
-                  ref={quill}
-                  onTextChange={() => {
-                    console.log(quill.getContents());
-                  }}
-                /> */}
+
+                <Field name="text">
+                  {(field, props) => (
+                    <div class="flex flex-col gap-1">
+                      <SolidQuill
+                        readonly={true}
+                        id="text"
+                        placeholder="Write something here..."
+                        ref={quill}
+                        onTextChange={() => {}}
+                      />
+
+                      {field.error && (
+                        <span class="text-secondary text-sm">
+                          {field.error}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </Field>
               </div>
             </div>
             <DialogFooter>
@@ -175,4 +196,3 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
     </>
   );
 };
-

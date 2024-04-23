@@ -126,5 +126,5 @@
     word-break: break-all;
 }
 .ql-editor{
-  height:420px;
+  height:320px !important;
 }

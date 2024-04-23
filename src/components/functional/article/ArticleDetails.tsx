@@ -18,6 +18,7 @@ import {
   createEffect,
   createResource,
   createSignal,
+  onMount,
   Show,
 } from "solid-js";
 
@@ -26,13 +27,14 @@ import { Button } from "~/components/ui/button";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import ArticleShare from "./ArticleShare";
+import Quill from "quill";
+import { SolidQuill } from "solid-quill";
 
 type ArticleDetailsProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   articleId: any;
 };
-
 
 const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
   const [article] = createResource(props.articleId, fetch_article_by_id);
@@ -41,7 +43,15 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
 
   const article_details = () => article()?.value?.attributes;
 
+  createEffect(() => {
+    console.log("article details----------", quill);
+    if (quill) {
+      console.log("setting quill value");
+      quill.clipboard.dangerouslyPasteHTML(article_details().text);
+    }
+  });
 
+  let quill: Quill;
   function embed_article() {
     // we need to show the Share/Embed dialog
     setOpenShareModal(true);
@@ -88,7 +98,24 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                     </div>
                   </div>
                   <div class="p-3 max-h-[69vh] overflow-auto border-border border">
-                    {article_details().content}
+                    <SolidQuill
+                      id="text"
+                      readOnly={true}
+                      toolBar={false}
+                      onReady={(q) => {
+                        console.log("quill ready", q);
+                        q.clipboard.dangerouslyPasteHTML(
+                          0,
+                          article_details().text,
+                          "api"
+                        );
+                      }}
+                      placeholder="Write something here..."
+                      ref={quill}
+                      onTextChange={() => {
+                        setValue(articleForm, "text", quill.getContents());
+                      }}
+                    />
                   </div>
                 </div>
               </Show>
