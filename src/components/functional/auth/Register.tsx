@@ -45,22 +45,6 @@ const Register: Component = () => {
         description: "Please check your email to verify your account.",
       });
 
-      const sendVerificationEmailResult = await send_verification_email(
-        values.email
-      );
-
-      if (sendVerificationEmailResult.isErr()) {
-        throw sendVerificationEmailResult.error;
-      }
-
-      console.log(result.value);
-
-      showToast({
-        variant: "success",
-        title: "Verification Email Sent",
-        description: "Please check your email to verify your account.",
-      });
-      // Do something with the form values
     } catch (error) {
       console.error(error);
       showToast({
