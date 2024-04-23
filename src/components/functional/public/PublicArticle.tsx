@@ -40,9 +40,10 @@ const PublicArticle: Component = (props) => {
               </div>
             </div>
           </div>
-          <div class="p-3 max-h-[69vh] overflow-auto border-border border">
-            {article_details().content}
-          </div>
+          <div
+            class="p-3 max-h-[69vh] overflow-auto border-border border"
+            innerHTML={article_details().text}
+          ></div>
         </div>
       </Show>
     </div>

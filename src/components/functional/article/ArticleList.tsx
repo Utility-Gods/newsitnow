@@ -97,10 +97,10 @@ const ArticleList: Component<ArticleListProps> = (props) => {
               {(c) => (
                 <TableRow>
                   <TableCell class="font-semibold">
-                    <div class="allow-3-lines">{c.name}</div>
+                    <div class="allow-3-lines text-md">{c.name}</div>
                   </TableCell>
                   <TableCell class="text-truncate ">
-                    <div class="allow-3-lines">{c.content}</div>
+                    <div class="allow-3-lines" innerHTML={c.text}></div>
                   </TableCell>
                   <TableCell>
                     <BadgeDelta deltaType="moderateIncrease">
