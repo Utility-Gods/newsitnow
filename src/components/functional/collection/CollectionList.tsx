@@ -85,16 +85,17 @@ const CollectionList: Component<CollectionListProps> = (props) => {
               </TableCell>
             </TableRow>
           </Show>
+
           <Show when={collectionList()?.isOk()}>
-            <Show when={collectionList()?.value?.data.length === 0}>
+            <Show when={collectionList()?.value?.length === 0}>
               <TableRow>
                 <TableCell colspan={5} class="text-center">
                   No collections found
                 </TableCell>
               </TableRow>
             </Show>
-            <For each={collectionList()?.value?.data}>
-              {({ attributes: c, id }) => (
+            <For each={collectionList()?.value}>
+              {(c) => (
                 <TableRow>
                   <TableCell class="font-semibold">{c.name}</TableCell>
                   <TableCell class="text-truncate">
@@ -115,7 +116,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       onClick={() => {
                         merged.openDetails(true);
                         console.log(c);
-                        merged.onView(id);
+                        merged.onView(c.id);
                       }}
                     >
                       View
@@ -126,7 +127,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                     <Button
                       variant="destructive"
                       size="icon"
-                      onClick={() => handle_delete_collection(id)}
+                      onClick={() => handle_delete_collection(c.id)}
                     >
                       <div class="w-4 h-4">
                         <Trash />

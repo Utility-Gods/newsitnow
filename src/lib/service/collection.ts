@@ -6,7 +6,15 @@ import { err, ok } from "neverthrow";
 
 const fetch_collections = async () => {
   try {
-    const result = await strapi.find<Collection[]>("collections");
+    const token = get_token();
+
+    strapi.setToken(token);
+
+    const result = await strapi.find<Collection[]>("collections", {
+      populate: "*",
+    });
+
+    console.log("fetching collections", result);
     return ok(result);
   } catch (e) {
     console.log(e);
@@ -16,11 +24,14 @@ const fetch_collections = async () => {
 
 const save_collection = async (data: any) => {
   try {
+    strapi.setToken(get_token());
     const result = await strapi.create<Collection>("collections", data);
-    if (!result.data) {
-      return err(result.data);
+
+    console.log("saving collection", result);
+    if (!result) {
+      return err(result);
     }
-    return ok(result.data);
+    return ok(result);
   } catch (e) {
     console.log(e);
     return err(e);

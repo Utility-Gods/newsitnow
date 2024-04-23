@@ -6,7 +6,7 @@ export const CreateCollectionSchema = v.object({
     v.maxLength(200, "Name must be at most 200 characters long"),
   ]),
   description: v.string([
-    v.minLength(200, "Description must be at least 3 characters long"),
+    v.minLength(10, "Description must be at least 10 characters long"),
   ]),
 });
 

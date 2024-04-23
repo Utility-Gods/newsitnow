@@ -51,9 +51,9 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
 
     event.preventDefault();
     try {
-      formValues.name = values.name;
-      formValues.content = values.content;
-      const result = await save_collection(formValues);
+      const result = await save_collection(values);
+
+      console.log("submitting", result);
 
       if (result?.isOk()) {
         showToast({
