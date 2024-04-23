@@ -4,9 +4,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "~/components/ui/sheet";
-
 
 import Share from "@lib/icons/share";
 
@@ -27,8 +25,7 @@ import { Button } from "~/components/ui/button";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import ArticleShare from "./ArticleShare";
-import Quill from "quill";
-import { SolidQuill } from "solid-quill";
+
 
 type ArticleDetailsProps = {
   open: boolean;
@@ -43,15 +40,6 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
 
   const article_details = () => article()?.value?.attributes;
 
-  createEffect(() => {
-    console.log("article details----------", quill);
-    if (quill) {
-      console.log("setting quill value");
-      quill.clipboard.dangerouslyPasteHTML(article_details().text);
-    }
-  });
-
-  let quill: Quill;
   function embed_article() {
     // we need to show the Share/Embed dialog
     setOpenShareModal(true);
@@ -98,24 +86,7 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                     </div>
                   </div>
                   <div class="p-3 max-h-[69vh] overflow-auto border-border border">
-                    <SolidQuill
-                      id="text"
-                      readOnly={true}
-                      toolBar={false}
-                      onReady={(q) => {
-                        console.log("quill ready", q);
-                        q.clipboard.dangerouslyPasteHTML(
-                          0,
-                          article_details().text,
-                          "api"
-                        );
-                      }}
-                      placeholder="Write something here..."
-                      ref={quill}
-                      onTextChange={() => {
-                        setValue(articleForm, "text", quill.getContents());
-                      }}
-                    />
+                    <div innerHTML={article_details().text} />
                   </div>
                 </div>
               </Show>
