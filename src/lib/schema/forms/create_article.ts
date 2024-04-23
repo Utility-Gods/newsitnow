@@ -5,8 +5,7 @@ export const CreateArticleSchema = v.object({
     v.minLength(3, "Name must be at least 3 characters long"),
     v.maxLength(200, "Name must be at most 200 characters long"),
   ]),
-  content: v.string(),
-  text: v.object({}),
+  text: v.string([v.minLength(3, "Text must be at least 20 characters long")]),
 });
 
 export type CreateArticleForm = v.Input<typeof CreateArticleSchema>;

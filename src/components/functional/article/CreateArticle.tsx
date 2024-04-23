@@ -136,19 +136,6 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (props) =>
                   )}
                 </Field>
               </div>
-              <div class="grid grid-cols-4 items-center gap-4">
-                <Label for="content" class="text-right">
-                  Description
-                </Label>
-                <Field name="content">
-                  {(field, props) => (
-                    <div class="flex flex-col col-span-3 gap-1">
-                      <Textarea {...props} id="content" rows="3" required />
-                      <span class="text-secondary text-sm">{field.error}</span>
-                    </div>
-                  )}
-                </Field>
-              </div>
               <div class="items-center gap-4">
                 <Label for="text" class="text-right">
                   Content
@@ -158,11 +145,12 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (props) =>
                   {(field, props) => (
                     <div class="flex flex-col gap-1">
                       <SolidQuill
-                        readonly={true}
                         id="text"
                         placeholder="Write something here..."
                         ref={quill}
-                        onTextChange={() => {}}
+                        onTextChange={() => {
+                          setValue(articleForm, "text", quill.root.innerHTML);
+                        }}
                       />
 
                       {field.error && (
