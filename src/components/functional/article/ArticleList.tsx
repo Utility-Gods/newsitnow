@@ -121,7 +121,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                     >
                       View
                     </Button>
-                    <Button
+                    {/* <Button
                       variant="secondary"
                       size="sm"
                       onClick={() => {
@@ -130,7 +130,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                       }}
                     >
                       Edit
-                    </Button>
+                    </Button> */}
 
                     <Button
                       variant="destructive"

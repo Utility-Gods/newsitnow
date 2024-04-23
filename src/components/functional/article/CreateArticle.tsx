@@ -71,10 +71,11 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (props) =>
 
     event.preventDefault();
     try {
-      formValues.name = values.name;
-      formValues.content = values.content;
-      formValues.text = values.text;
-      const result = await save_article(formValues);
+    
+      const result = await save_article({
+        ...values,
+        status: "Draft",
+      });
       console.log({ result });
 
       if (result.isErr()) {

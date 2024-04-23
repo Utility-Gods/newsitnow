@@ -20,7 +20,7 @@ import {
   CreateCollectionSchema,
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
-import { ok, err } from "neverthrow";
+
 
 type CreateCollectionModalProps = {
   open: boolean;
@@ -42,7 +42,6 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
 
   const [loading, setLoading] = createSignal(false);
 
-
   const handleSubmit: SubmitHandler<CreateCollectionForm> = async (
     values,
     event
@@ -51,7 +50,10 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
 
     event.preventDefault();
     try {
-      const result = await save_collection(values);
+      const result = await save_collection({
+        ...values,
+        status: "Draft",
+      });
 
       console.log("submitting", result);
 

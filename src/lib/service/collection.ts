@@ -23,6 +23,7 @@ const fetch_collections = async () => {
 };
 
 const save_collection = async (data: any) => {
+  console.log("sending this payload", data);
   try {
     strapi.setToken(get_token());
     const result = await strapi.create<Collection>("collections", data);
