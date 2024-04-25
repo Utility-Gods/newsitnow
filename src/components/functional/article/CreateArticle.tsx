@@ -3,7 +3,6 @@ import {
   createEffect,
   createSignal,
   mergeProps,
-  onMount,
   Show,
 } from "solid-js";
 import {
@@ -18,15 +17,12 @@ import PageSpinner from "~/components/bare/PageSpinner";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Textarea } from "~/components/ui/textarea";
 import {
   CreateArticleForm,
   CreateArticleSchema,
@@ -39,14 +35,16 @@ import { SolidQuill } from "solid-quill";
 type CreateArticleModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onClose: () => void;
 };
-export const CreateArticleModal: Component<CreateArticleModalProps> = (props) => {
+export const CreateArticleModal: Component<CreateArticleModalProps> = (
+  props,
+) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
-  const [articleForm, { Form, Field, FieldArray }] =
-    createForm<CreateArticleForm>({
-      validate: valiForm(CreateArticleSchema),
-    });
+  const [articleForm, { Form, Field }] = createForm<CreateArticleForm>({
+    validate: valiForm(CreateArticleSchema),
+  });
 
   createEffect(() => {
     console.log({ formValues });
@@ -60,18 +58,15 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (props) =>
 
   const [loading, setLoading] = createSignal(false);
 
-  const [editorIsReady, setReady] = createSignal(false);
-
   const handleSubmit: SubmitHandler<CreateArticleForm> = async (
     values,
-    event
+    event,
   ) => {
     console.log("submitting", values);
     setLoading(true);
 
     event.preventDefault();
     try {
-    
       const result = await save_article({
         ...values,
         status: "Draft",
@@ -86,6 +81,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (props) =>
         title: "Article created",
         description: "The article has been created successfully",
       });
+      merged.onClose();
     } catch (e) {
       console.log(e);
       showToast({

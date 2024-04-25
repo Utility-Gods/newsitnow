@@ -26,11 +26,11 @@ import { Button } from "~/components/ui/button";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import ArticleShare from "./ArticleShare";
 
-
 type ArticleDetailsProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   articleId: any;
+  refetchArticles: () => void;
 };
 
 const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
@@ -80,7 +80,7 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                     <div class="flex gap-2 items-center">
                       <div class="">
                         {new Date(
-                          article_details().createdAt
+                          article_details().createdAt,
                         ).toLocaleDateString()}
                       </div>
                     </div>

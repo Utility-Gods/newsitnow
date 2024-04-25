@@ -24,11 +24,14 @@ import { showToast } from "~/components/ui/toast";
 export type ArticleListProps = {
   openDetails: (open: boolean) => void;
   onView: (id: string) => void;
+  articleList: any;
+  refetch: () => void;
 };
 
 const ArticleList: Component<ArticleListProps> = (props) => {
   const merged = mergeProps(props);
-  const [articleList, { refetch }] = createResource(fetch_articles);
+
+  const { articleList, refetch } = merged;
 
   createEffect(() => {
     console.log("fetching articles", articleList());
