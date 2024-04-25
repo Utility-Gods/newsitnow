@@ -6,21 +6,25 @@ import {
   For,
   mergeProps,
   Show,
+  createSignal,
 } from "solid-js";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
 
+import Share from "@lib/icons/share";
+import CollectionShare from "./CollectionShare";
+
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
+import { A } from "@solidjs/router";
 
 export type CollectionListProps = {
   openDetails: (open: boolean) => void;
@@ -30,6 +34,7 @@ export type CollectionListProps = {
 const CollectionList: Component<CollectionListProps> = (props) => {
   const merged = mergeProps(props);
   const [collectionList, { refetch }] = createResource(fetch_collections);
+  const [openShareModal, setOpenShareModal] = createSignal(false);
 
   createEffect(() => {
     console.log("fetching collections", collectionList());
@@ -65,6 +70,14 @@ const CollectionList: Component<CollectionListProps> = (props) => {
     }
   }
 
+  const [activeCollection, setActiveCollection] = createSignal(null);
+
+  function embed_collection(c) {
+    setActiveCollection(c);
+    console.log(activeCollection());
+    setOpenShareModal(true);
+  }
+
   return (
     <div class="shadow-md bg-white">
       <Table>
@@ -97,7 +110,14 @@ const CollectionList: Component<CollectionListProps> = (props) => {
             <For each={collectionList()?.value}>
               {(c) => (
                 <TableRow>
-                  <TableCell class="font-semibold">{c.name}</TableCell>
+                  <TableCell class="font-semibold">
+                    <A
+                      href={`/collection/${c.id}`}
+                      class="underline text-primary-foreground underline-offset-2"
+                    >
+                      {c.name}
+                    </A>
+                  </TableCell>
                   <TableCell class="text-truncate">
                     <div class="allow-3-lines">{c.description}</div>
                   </TableCell>
@@ -121,9 +141,16 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                     >
                       View
                     </Button>
-                    <Button variant="secondary" size="sm">
-                      Edit
+                    <Button
+                      variant={"secondary"}
+                      size="sm"
+                      onClick={() => embed_collection(c)}
+                    >
+                      <span>Share</span>
                     </Button>
+                    {/* <Button variant="secondary" size="sm">
+                      Edit
+                    </Button> */}
                     <Button
                       variant="destructive"
                       size="icon"
@@ -140,6 +167,18 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           </Show>
         </TableBody>
       </Table>
+      <CollectionShare
+        collection={{
+          id: activeCollection()?.id,
+          attributes: {
+            ...activeCollection(),
+          },
+        }}
+        show={openShareModal()}
+        onShowChange={() => {
+          setOpenShareModal(false);
+        }}
+      />
     </div>
   );
 };

@@ -1,25 +1,17 @@
+import { A, useLocation, useNavigate } from "@solidjs/router";
+
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "~/components/ui/sheet";
 
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 import PageSpinner from "../../bare/PageSpinner";
-import {
-  Component,
-  createEffect,
-  createResource,
-  createSignal,
-  For,
-  mergeProps,
-  Show,
-  Signal,
-} from "solid-js";
+import { Component, createResource, createSignal, Show } from "solid-js";
 
 import { Button } from "~/components/ui/button";
 import { fetch_collection_by_id } from "@lib/service/collection";
@@ -37,7 +29,7 @@ type CollectionDetailsProps = {
 const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
   const [collection] = createResource(
     props.collectionId,
-    fetch_collection_by_id
+    fetch_collection_by_id,
   );
 
   const collection_details = () => collection()?.value?.attributes;
@@ -63,7 +55,9 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
                 <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
                   <div class="flex justify-between items-center ">
                     <div class="text-2xl font-bold text-primary">
-                      {collection_details().name}
+                      <A href={`/collections/${collection_details().id}`}>
+                        {collection_details().name}
+                      </A>
                     </div>
                     <Button variant={"secondary"} onClick={embed_collection}>
                       <span>Share</span>
@@ -81,7 +75,7 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
                     <div class="flex gap-2 items-center">
                       <div class="">
                         {new Date(
-                          collection_details().createdAt
+                          collection_details().createdAt,
                         ).toLocaleDateString()}
                       </div>
                     </div>

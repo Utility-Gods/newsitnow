@@ -4,8 +4,8 @@ import { fetch_collection_by_id } from "@lib/service/collection";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 
 const PublicCollection: Component = (props) => {
-  const userId = props.params.userId;
-  const collectionId = props.params.id;
+  // const userId = props.params.userId;
+  // const collectionId = props.params.id;
 
   const [collection] = createResource(props.params.id, fetch_collection_by_id);
   const [loading] = createSignal(false);

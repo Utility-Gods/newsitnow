@@ -4,6 +4,7 @@ import Home from "@pages/Home";
 import Public from "@pages/Public";
 import Article from "@pages/Article";
 import Collection from "@pages/Collection";
+import CollectionView from "@pages/Collection/CollectionView.tsx";
 import Layout from "./Layout";
 import { Toaster } from "~/components/ui/toast";
 import PublicHome from "./functional/public/PublicHome";
@@ -12,6 +13,7 @@ import PublicCollection from "./functional/public/PublicCollection";
 import Login from "./functional/auth/Login";
 import Register from "./functional/auth/Register";
 import Verify from "./functional/auth/Verify";
+
 const RouterComponent = () => (
   <>
     <Router>
@@ -19,6 +21,7 @@ const RouterComponent = () => (
         <Route path="" component={Home} />
         <Route path="/article" component={Article} />
         <Route path="/collection" component={Collection} />
+        <Route path="/collection/:id" component={CollectionView} />
       </Route>
       <Route path="/auth">
         <Route path="/login" component={Login} />

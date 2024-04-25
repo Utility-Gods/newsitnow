@@ -8,6 +8,7 @@ const Layout: Component = (props) => {
   const user = sessionStorage.getItem("user");
 
   createEffect(() => {
+    console.log(user);
     if (!user) {
       navigate("/auth/login", { replace: true });
     }

@@ -54,8 +54,6 @@ const fetch_collection_by_id = async (id: string) => {
   }
 };
 
-
-
 const delete_collection = async (id: string) => {
   const token = get_token();
   if (!id) {
@@ -64,7 +62,9 @@ const delete_collection = async (id: string) => {
 
   try {
     strapi.setToken(token);
-    const result = await strapi.delete<Collection>("collections", id);
+    const result = await strapi.delete<Collection>("collections", id, {
+      populate: "*",
+    });
     if (!result) {
       return err(result);
     }
