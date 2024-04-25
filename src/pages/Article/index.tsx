@@ -1,11 +1,6 @@
 import { fetch_articles } from "@lib/service/article";
 
-import {
-  Component,
-  createEffect,
-  createResource,
-  createSignal,
-} from "solid-js";
+import { Component, createResource, createSignal } from "solid-js";
 import ArticleDetails from "~/components/functional/article/ArticleDetails";
 import ArticleList from "~/components/functional/article/ArticleList";
 import { CreateArticleModal } from "~/components/functional/article/CreateArticle";
@@ -15,8 +10,6 @@ export const route = {
   load: () => fetch_articles,
 };
 const Article: Component = () => {
-  const [list] = createResource(fetch_articles);
-
   const [openModal, setOpenModal] = createSignal(false);
   const [openDetails, setOpenDetails] = createSignal(false);
   const [activeArticle, setActiveArticle] = createSignal("");

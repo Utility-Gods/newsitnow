@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for newsitnow on 2024-04-23T23:27:36+05:30
+# fly.toml app configuration file generated for newsitnow-proud-firefly-7308 on 2024-04-23T23:31:49+05:30
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'newsitnow'
+app = 'newsitnow-proud-firefly-7308'
 primary_region = 'sin'
 
 [build]
