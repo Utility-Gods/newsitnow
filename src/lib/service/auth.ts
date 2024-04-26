@@ -47,7 +47,6 @@ const user_register = async (
 
 const user_login = async (email: string, password: string) => {
   try {
-    console.log({ API_URL });
     const localAuthEffect = () =>
       Effect.tryPromise({
         try: () =>
