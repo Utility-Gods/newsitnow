@@ -65,16 +65,19 @@ const Login: Component = () => {
       <Card class="w-full sm:w-[540px] bg-background shadow-md">
         <CardHeader>
           <CardTitle>
-            <h1 class="text-3xl font-black  gap-1 flex leading-10">
-              <span class="text-text">ORANGE</span>
-              <span class="text-primary">GAS</span>
-            </h1>
-          </CardTitle>
-          <CardDescription>
-            <div class="text-sm text-muted-foreground">
-              Login to your account
+            <div class="flex items-start justify-between">
+              <div class="text-3xl font-bold">Login</div>
+              <div class="text-3xl font-black flex flex-col items-end justify-between">
+                <div class="">
+                  <span class="text-text">ORANGE</span>
+                  <span class="text-primary">GAS</span>
+                </div>
+                <div class="text-md text-muted-foreground">
+                  Own your content.
+                </div>
+              </div>
             </div>
-          </CardDescription>
+          </CardTitle>
         </CardHeader>
         <Form onSubmit={handleSubmit}>
           <CardContent>
@@ -123,13 +126,15 @@ const Login: Component = () => {
             </div>
           </CardContent>
           <CardFooter class="justify-end gap-3">
-            <div>
-              New to Orange Gas?{" "}
-              <a class="underline underline-offset-2" href="/auth/register">
+            <div class="flex gap-1">
+              <div>New to Orange Gas? </div>
+              <a
+                class="underline underline-offset-2 hover:text-primary"
+                href="/auth/register"
+              >
                 Register
               </a>
             </div>
-
             <Button type="submit" variant="secondary">
               Login
             </Button>

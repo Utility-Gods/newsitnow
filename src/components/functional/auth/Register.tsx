@@ -61,16 +61,19 @@ const Register: Component = () => {
       <Card class="w-full sm:w-[540px] bg-background shadow-md">
         <CardHeader>
           <CardTitle>
-            <h1 class="text-3xl font-black  gap-1 flex leading-10">
-              <span class="text-text">ORANGE</span>
-              <span class="text-primary">GAS</span>
-            </h1>
-          </CardTitle>
-          <CardDescription>
-            <div class="text-sm text-muted-foreground">
-              Register to your account
+            <div class="flex items-start justify-between">
+              <div class="text-3xl font-bold">Register</div>
+              <div class="text-3xl font-black flex flex-col items-end justify-between">
+                <div class="">
+                  <span class="text-text">ORANGE</span>
+                  <span class="text-primary">GAS</span>
+                </div>
+                <div class="text-md text-muted-foreground">
+                  Own your content.
+                </div>
+              </div>
             </div>
-          </CardDescription>
+          </CardTitle>
         </CardHeader>
         <Form onSubmit={handleSubmit}>
           <CardContent>
@@ -137,10 +140,13 @@ const Register: Component = () => {
               </div>
             </div>
           </CardContent>
-          <CardFooter class="justify-end gap-3">
-            <div>
-              Already have an account?{" "}
-              <a class="underline underline-offset-2" href="/auth/login">
+          <CardFooter class="justify-end gap-3 flex">
+            <div class="flex gap-1">
+              <div>Already have an account? </div>
+              <a
+                class="underline underline-offset-2 hover:text-primary"
+                href="/auth/login"
+              >
                 Login
               </a>
             </div>
