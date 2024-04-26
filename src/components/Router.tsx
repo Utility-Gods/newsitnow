@@ -4,7 +4,7 @@ import Home from "@pages/Home";
 import Public from "@pages/Public";
 import Article from "@pages/Article";
 import Collection from "@pages/Collection";
-import CollectionView from "@pages/Collection/CollectionView.tsx";
+import CollectionView from "@pages/Collection/CollectionView";
 import Layout from "./Layout";
 import { Toaster } from "~/components/ui/toast";
 import PublicHome from "./functional/public/PublicHome";
