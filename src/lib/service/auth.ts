@@ -2,7 +2,9 @@ import { err, ok } from "neverthrow";
 import { Effect } from "effect";
 
 // Assuming you are using this format for your environment variable
+const API_URL = import.meta.env.VITE_STRAPI_URL as string;
 
+console.log({ API_URL });
 const user_register = async (
   email: string,
   password: string,
@@ -45,7 +47,6 @@ const user_register = async (
 
 const user_login = async (email: string, password: string) => {
   try {
-    const API_URL = import.meta.env.VITE_STRAPI_URL as string;
     console.log({ API_URL });
     const localAuthEffect = () =>
       Effect.tryPromise({

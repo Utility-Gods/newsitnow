@@ -10,7 +10,6 @@ LABEL fly_launch_runtime="Vite"
 WORKDIR /app
 
 # Set production environment
-ENV NODE_ENV="production"
 
 # Install pnpm
 ARG PNPM_VERSION=8.15.4
