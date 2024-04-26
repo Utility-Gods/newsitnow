@@ -82,6 +82,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
         description: "The article has been created successfully",
       });
       merged.onClose();
+      merged.onOpenChange(false);
     } catch (e) {
       console.log(e);
       showToast({
@@ -90,7 +91,6 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
         description: "An error occurred while creating the article",
       });
     } finally {
-      merged.onOpenChange(false);
       setLoading(false);
     }
   };
