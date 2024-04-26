@@ -16,8 +16,8 @@ async function generateEmbedCode(articleId: number): Promise<string> {
       })
       .then(response => response.json())
       .then(data => {
-        var articleContent = data.data.attributes; 
-        document.getElementById('embedded-article').innerHTML = \` 
+        var articleContent = data.data.attributes;
+        document.getElementById('embedded-article').innerHTML = \`
           <div>
               <h2>\${articleContent.name}</h2>
               <p>\${articleContent.content}</p>
@@ -50,7 +50,7 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
       .then(response => response.json())
       .then(data => {
         var articleContent = data.data.attributes;
-        document.getElementById('embedded-article').innerHTML = \` 
+        document.getElementById('embedded-article').innerHTML = \`
           <div>
               <h2>\${articleContent.name}</h2>
               <p>\${articleContent.content}</p>
@@ -73,7 +73,7 @@ function generateRestAPICode(articleId: number): string {
   const restAPICode = `
     fetch('${strapiUrl}/api/articles/' + ${articleId}, {
       headers: {
-        Authorization: 'Bearer <Your Access Token>'
+        Authorization:"Bearer ${strapiToken}"
       }
     })
     .then(response => response.json())
@@ -106,7 +106,7 @@ function generateRestAPICodeExposed(articleId: number): string {
 
 function generateArticleShareLink(
   articleId: number,
-  userId: number = 12
+  userId: number = 12,
 ): string {
   const origin = import.meta.env.VITE_ORIGIN; // Replace with your Strapi API URL
 
