@@ -24,8 +24,9 @@ export function get_user() {
 }
 
 export function check_token_validity() {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
+  console.log({ token });
   if (!token) {
     return false;
   }

@@ -16,6 +16,10 @@ import Register from "./functional/auth/Register";
 const RouterComponent = () => (
   <>
     <Router>
+      <Route
+        path="*"
+        component={() => <div>404 - looks like you're lost</div>}
+      />
       <Route path="/" component={Layout}>
         <Route path="" component={Home} />
         <Route path="/article" component={Article} />
