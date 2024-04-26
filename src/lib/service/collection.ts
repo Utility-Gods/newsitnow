@@ -1,6 +1,9 @@
 import { get_token } from "@lib/utils";
 import { err, ok } from "neverthrow";
 
+// Assuming BASE_URL is the environment variable containing your API URL.
+const BASE_URL = import.meta.env.VITE_STRAPI_URL as string;
+
 const fetch_collections = async () => {
   try {
     const token = get_token();
@@ -8,7 +11,7 @@ const fetch_collections = async () => {
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch("http://localhost:1337/api/collections", {
+    const response = await fetch(`${BASE_URL}/api/collections`, {
       headers: reqHeaders,
       method: "GET",
     });
@@ -32,7 +35,7 @@ const save_collection = async (data: any) => {
     reqHeaders.append("Authorization", `Bearer ${token}`);
     reqHeaders.append("Content-Type", "application/json");
 
-    const response = await fetch("http://localhost:1337/api/collections", {
+    const response = await fetch(`${BASE_URL}/api/collections`, {
       method: "POST",
       headers: reqHeaders,
       body: JSON.stringify({ data }),
@@ -62,13 +65,10 @@ const fetch_collection_by_id = async (id: string) => {
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(
-      `http://localhost:1337/api/collections/${id}`,
-      {
-        headers: reqHeaders,
-        method: "GET",
-      },
-    );
+    const response = await fetch(`${BASE_URL}/api/collections/${id}`, {
+      headers: reqHeaders,
+      method: "GET",
+    });
 
     const result = await response.json();
 
@@ -93,13 +93,10 @@ const delete_collection = async (id: string) => {
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(
-      `http://localhost:1337/api/collections/${id}`,
-      {
-        headers: reqHeaders,
-        method: "DELETE",
-      },
-    );
+    const response = await fetch(`${BASE_URL}/api/collections/${id}`, {
+      headers: reqHeaders,
+      method: "DELETE",
+    });
 
     const result = await response.json();
 

@@ -1,7 +1,7 @@
 import { RegisterForm, RegisterSchema } from "@lib/schema/forms/register";
 import { user_register } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
-import { Component, createSignal, Show } from "solid-js";
+import { Component, Show, createSignal } from "solid-js";
 import PageSpinner from "~/components/bare/PageSpinner";
 import { Button } from "~/components/ui/button";
 import {

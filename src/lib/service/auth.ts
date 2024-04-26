@@ -1,6 +1,9 @@
 import { err, ok } from "neverthrow";
 import { Effect } from "effect";
 
+// Assuming you are using this format for your environment variable
+const API_URL = import.meta.env.VITE_STRAPI_URL as string;
+
 const user_register = async (
   email: string,
   password: string,
@@ -14,7 +17,8 @@ const user_register = async (
     const localAuthRegisterEffect = () =>
       Effect.tryPromise({
         try: () =>
-          fetch("http://localhost:1337/api/auth/local/register", {
+          fetch(`${API_URL}/api/auth/local/register`, {
+            // Updated here
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -42,15 +46,14 @@ const user_register = async (
 
 const user_login = async (email: string, password: string) => {
   try {
-    // use fetch to call /api/auth/local
     const localAuthEffect = () =>
       Effect.tryPromise({
         try: () =>
-          fetch("http://localhost:1337/api/auth/local", {
+          fetch(`${API_URL}/api/auth/local`, {
+            // Updated here
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             credentials: "include",
             body: JSON.stringify({
@@ -58,7 +61,7 @@ const user_login = async (email: string, password: string) => {
               password,
             }),
           }),
-        catch: (unknown) => new Error(`something went wrong ${unknown}`), // remap the error
+        catch: (unknown) => new Error(`something went wrong ${unknown}`),
       });
 
     const res = Effect.runPromise(localAuthEffect());
@@ -89,7 +92,8 @@ const get_refresh_token = async () => {
     const getRefreshToken = () =>
       Effect.tryPromise({
         try: () =>
-          fetch("http://localhost:1337/api/token/refresh", {
+          fetch(`${API_URL}/api/token/refresh`, {
+            // Updated here
             method: "POST",
             headers: {
               "Content-Type": "application/json",
