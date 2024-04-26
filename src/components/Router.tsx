@@ -12,7 +12,6 @@ import PublicArticle from "./functional/public/PublicArticle";
 import PublicCollection from "./functional/public/PublicCollection";
 import Login from "./functional/auth/Login";
 import Register from "./functional/auth/Register";
-import Verify from "./functional/auth/Verify";
 
 const RouterComponent = () => (
   <>
@@ -26,7 +25,6 @@ const RouterComponent = () => (
       <Route path="/auth">
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/verify/:token" component={Verify}></Route>
       </Route>
       <Route path="/public/:userid" component={Public}>
         <Route path="" component={PublicHome} />
