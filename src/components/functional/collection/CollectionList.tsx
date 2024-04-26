@@ -25,6 +25,7 @@ import { Button } from "@components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
 import { A } from "@solidjs/router";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export type CollectionListProps = {
   openDetails: (open: boolean) => void;
@@ -91,6 +92,18 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
+          <Show when={collectionList.loading}>
+            <TableRow>
+              <TableCell colspan={5}>
+                <Skeleton height={16} radius={10} />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colspan={5}>
+                <Skeleton height={16} radius={10} />
+              </TableCell>
+            </TableRow>
+          </Show>
           <Show when={collectionList()?.isErr()}>
             <TableRow>
               <TableCell colspan={5} class="text-center text-error-foreground">
@@ -98,7 +111,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
               </TableCell>
             </TableRow>
           </Show>
-
           <Show when={collectionList()?.isOk()}>
             <Show when={collectionList()?.value?.length === 0}>
               <TableRow>
