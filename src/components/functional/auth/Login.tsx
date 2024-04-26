@@ -34,6 +34,7 @@ const Login: Component = () => {
     try {
       const result = await user_login(values.email, values.password);
 
+      console.log({ result });
       if (result.isErr()) {
         throw result.error;
       }
