@@ -8,6 +8,7 @@ import {
   createEffect,
 } from "solid-js";
 import BreadCrumb from "~/components/bare/BreadCrumb";
+import PageSkeleton from "~/components/bare/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Separator } from "~/components/ui/separator";
 
@@ -15,28 +16,25 @@ type CollectionViewProps = {};
 
 const CollectionView: Component = (props: CollectionViewProps) => {
   const [collection] = createResource(props.params.id, fetch_collection_by_id);
-  const [loading] = createSignal(false);
 
   createEffect(() => {
     console.log(collection());
   });
 
-  const collection_details = () => collection()?.value?.attributes;
+  const collection_details = () => collection()?.value;
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
-      <Show when={collection()?.isErr()}>
-        <div class="p-4 text-primary-100">Error loading collection</div>
-      </Show>
-      <Show when={loading()}>
-        <div class="p-4 text-primary-100">Loading collection</div>
-      </Show>
       <BreadCrumb
         crumbs={[
           { href: "/", label: "Home" },
           { href: "/collection", label: "Collection" },
         ]}
       />
+
+      <Show when={collection.loading}>
+        <PageSkeleton />
+      </Show>
       <Show when={collection()?.isOk()}>
         <div class="flex p-3 flex-col gap-3 ">
           <div class="flex justify-between items-center">
@@ -61,6 +59,9 @@ const CollectionView: Component = (props: CollectionViewProps) => {
           <div class="overflow-auto">{collection_details().description}</div>
           <Separator />
         </div>
+      </Show>
+      <Show when={collection()?.isErr()}>
+        <div class="p-4 text-primary-100">Error loading collection</div>
       </Show>
     </div>
   );

@@ -8,9 +8,8 @@ import PageSkeleton from "~/components/bare/PageSkeleton";
 
 const ArticleView: Component = (props) => {
   const [article] = createResource(props.params.id, fetch_article_by_id);
-  const [loading] = createSignal(false);
 
-  const article_details = () => article()?.value?.attributes;
+  const article_details = () => article()?.value;
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
@@ -24,9 +23,6 @@ const ArticleView: Component = (props) => {
         <PageSkeleton />
       </Show>
 
-      <Show when={article()?.isErr()}>
-        <div class="p-4 text-primary-100">Error loading article</div>
-      </Show>
       <Show when={article()?.isOk()}>
         <div class="mt-4 flex flex-col gap-3 p-400 text-primary-100 rounded-sm ">
           <div class="flex justify-between items-center ">
@@ -51,6 +47,9 @@ const ArticleView: Component = (props) => {
             innerHTML={article_details().text}
           ></div>
         </div>
+      </Show>
+      <Show when={article()?.isErr()}>
+        <div class="p-4 text-primary-100">Error loading article</div>
       </Show>
     </div>
   );

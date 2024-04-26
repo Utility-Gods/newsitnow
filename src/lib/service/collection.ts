@@ -72,11 +72,13 @@ const fetch_collection_by_id = async (id: string) => {
 
     const result = await response.json();
 
-    if (!response.ok || !result.data) {
-      return err(result.data);
+    console.log("fetching collection by id", result);
+
+    if (!response.ok || !result) {
+      return err(result);
     }
 
-    return ok(result.data);
+    return ok(result);
   } catch (e) {
     console.log(e);
     return err(e);
