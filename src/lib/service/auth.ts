@@ -50,8 +50,8 @@ const user_login = async (email: string, password: string) => {
 
     console.log({ user });
     if (user) {
-      localStorage.setItem("token", user.jwt);
-      localStorage.setItem("user", JSON.stringify(user.user));
+      sessionStorage.setItem("token", user.jwt);
+      sessionStorage.setItem("user", JSON.stringify(user.user));
       return ok(user);
     }
 
@@ -67,7 +67,7 @@ const user_login = async (email: string, password: string) => {
 const get_refresh_token = async () => {
   try {
     const data = {
-      refreshToken: localStorage.getItem("token"),
+      refreshToken: sessionStorage.getItem("token"),
     };
 
     const getRefreshToken = () =>
@@ -88,7 +88,7 @@ const get_refresh_token = async () => {
     console.log(res);
     const token = await res.then((res) => res.json());
     console.log(token);
-    localStorage.setItem("token", token.jwt);
+    sessionStorage.setItem("token", token.jwt);
   } catch (err) {
     console.log(err);
   }
