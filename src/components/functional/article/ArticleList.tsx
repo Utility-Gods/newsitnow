@@ -13,6 +13,7 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import Trash from "@lib/icons/Trash";
 import { showToast } from "~/components/ui/toast";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export type ArticleListProps = {
   openDetails: (open: boolean) => void;
@@ -74,6 +75,19 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
+          <Show when={articleList.loading}>
+            <TableRow>
+              <TableCell colspan={5}>
+                <Skeleton height={16} radius={10} />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colspan={5}>
+                <Skeleton height={16} radius={10} />
+              </TableCell>
+            </TableRow>
+          </Show>
+
           <Show when={articleList()?.isErr()}>
             <TableRow>
               <TableCell colspan={5} class="text-center text-error-foreground">
