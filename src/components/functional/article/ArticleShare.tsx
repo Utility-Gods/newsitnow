@@ -20,7 +20,7 @@ function ArticleShare(props: ArticleShareProps) {
   return (
     <Dialog open={props.show} onOpenChange={props.onShowChange}>
       <DialogContent class="w-[600px]">
-        <DialogHeader class="space-y-1.5">
+        <DialogHeader class="space-y-1.5 overflow-hidden">
           <div class="bg-muted p-3 w-full">
             <div class="flex items-center gap-3">
               <div class="text-primary font-bold text-md">
@@ -35,7 +35,7 @@ function ArticleShare(props: ArticleShareProps) {
                 <div class="flex gap-2 items-center">
                   <div class="">
                     {new Date(
-                      props.article.attributes.createdAt
+                      props.article.attributes.createdAt,
                     ).toLocaleDateString()}
                   </div>
                 </div>

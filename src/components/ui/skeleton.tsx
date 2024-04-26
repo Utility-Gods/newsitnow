@@ -10,7 +10,7 @@ const Skeleton: Component<SkeletonPrimitive.SkeletonProps> = (props) => {
   return (
     <SkeletonPrimitive.Root
       class={cn(
-        "bg-secondary/20 data-[animate='true']:animate-pulse ",
+        "bg-secondary/10 data-[animate='true']:animate-pulse ",
         props.class,
       )}
       {...rest}

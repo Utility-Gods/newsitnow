@@ -17,7 +17,6 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-import Share from "@lib/icons/share";
 import CollectionShare from "./CollectionShare";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
