@@ -3,7 +3,6 @@ import { Effect } from "effect";
 
 // Assuming you are using this format for your environment variable
 
-console.log({ API_URL });
 const user_register = async (
   email: string,
   password: string,
