@@ -1,4 +1,3 @@
-import { strapi } from "@lib/strapi";
 import { err, ok } from "neverthrow";
 import { Effect } from "effect";
 
@@ -12,11 +11,28 @@ const user_register = async (
       return err("Passwords do not match");
     }
 
-    const user = await strapi.register({
-      email,
-      password,
-      username: email,
-    });
+    const localAuthRegisterEffect = () =>
+      Effect.tryPromise({
+        try: () =>
+          fetch("http://localhost:1337/api/auth/local/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+              email,
+              password,
+              username: email,
+            }),
+          }),
+        catch: (unknown) => new Error(`something went wrong ${unknown}`),
+      });
+
+    const res = Effect.runPromise(localAuthRegisterEffect());
+    const user = await res.then((res) => res.json());
+
+    console.log({ user });
     return ok(user);
   } catch (e) {
     console.log(e);
@@ -94,29 +110,4 @@ const get_refresh_token = async () => {
   }
 };
 
-const send_verification_email = async (email: string, token: string) => {
-  try {
-    const result = await strapi.sendEmailConfirmation({ email });
-    return ok(result);
-  } catch (e) {
-    console.log(e);
-    return err(e?.error?.message ?? e?.error ?? e ?? "An error occurred");
-  }
-};
-
-const verify_email = async (token: string) => {
-  try {
-    const result = await strapi.authenticateProvider("provider", token);
-    return ok(result);
-  } catch (e) {
-    console.log(e);
-    return err(e?.error?.message ?? e?.error ?? e ?? "An error occurred");
-  }
-};
-export {
-  user_register,
-  user_login,
-  send_verification_email,
-  verify_email,
-  get_refresh_token,
-};
+export { user_register, user_login, get_refresh_token };
