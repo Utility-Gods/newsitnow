@@ -1,22 +1,31 @@
-import { strapi } from "@lib/strapi";
-import { Article } from "@lib/types/Article";
-import { get_token, get_user } from "@lib/utils";
+import { get_token } from "@lib/utils";
+import { Effect } from "effect";
 import { err, ok } from "neverthrow";
 
 const fetch_articles = async () => {
   try {
     const token = get_token();
 
-    const user = get_user();
+    const reqHeaders = new Headers();
 
-    console.log("fetching user", user);
+    reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    strapi.setToken(token);
+    console.log({ reqHeaders });
 
-    const articles = await strapi.find<Article[]>("articles", {
-      populate: "*",
-    });
-    console.log("fetching articles", articles);
+    const getArticleEffect = () =>
+      Effect.tryPromise({
+        try: () =>
+          fetch("http://localhost:1337/api/articles", {
+            headers: reqHeaders,
+            method: "GET",
+          }),
+        catch: (unknown) => new Error(`something went wrong ${unknown}`),
+      });
+
+    const res = Effect.runPromise(getArticleEffect());
+
+    const articles = await res.then((res) => res.json());
+
     return ok(articles);
   } catch (e) {
     console.log(e);
@@ -26,12 +35,27 @@ const fetch_articles = async () => {
 
 const save_article = async (data: any) => {
   try {
-    const result = await strapi.create<Article>("articles", data);
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+    reqHeaders.append("Content-Type", "application/json");
+
+    const response = await fetch("http://localhost:1337/api/articles", {
+      method: "POST",
+      headers: reqHeaders,
+      body: JSON.stringify({ data }),
+    });
+
+    const result = await response.json();
+
     console.log("saving article", result);
 
-    if (!result) {
+    if (!response.ok) {
       return err(result);
     }
+
     return ok(result);
   } catch (e) {
     console.log(e);
@@ -45,10 +69,23 @@ const fetch_article_by_id = async (id: string) => {
   }
 
   try {
-    const result = await strapi.findOne<Article>("articles", id);
-    if (!result.data) {
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(`http://localhost:1337/api/articles/${id}`, {
+      headers: reqHeaders,
+      method: "GET",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.data) {
       return err(result.data);
     }
+
     return ok(result.data);
   } catch (e) {
     console.log(e);
@@ -63,11 +100,21 @@ const delete_article = async (id: string) => {
   }
 
   try {
-    strapi.setToken(token);
-    const result = await strapi.delete<Article>("articles", id);
-    if (!result) {
+    const reqHeaders = new Headers();
+
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(`http://localhost:1337/api/articles/${id}`, {
+      headers: reqHeaders,
+      method: "DELETE",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.data) {
       return err(result);
     }
+
     return ok(result.data);
   } catch (e) {
     console.log(e);

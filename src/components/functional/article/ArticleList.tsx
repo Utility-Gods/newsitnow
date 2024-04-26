@@ -1,12 +1,5 @@
 import { delete_article, fetch_articles } from "@lib/service/article";
-import {
-  Component,
-  createEffect,
-  createResource,
-  For,
-  mergeProps,
-  Show,
-} from "solid-js";
+import { Component, createEffect, For, mergeProps, Show } from "solid-js";
 import {
   Table,
   TableBody,
