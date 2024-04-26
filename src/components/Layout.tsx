@@ -11,14 +11,14 @@ const Layout: Component = (props) => {
 
   const isTokenValid = check_token_validity();
 
-  if (!isTokenValid) {
-    showToast({
-      title: "Session expired, please login again",
-      variant: "error",
-      duration: 5000,
-    });
-    navigate("/auth/login", { replace: true });
-  }
+  // if (!isTokenValid) {
+  //   showToast({
+  //     title: "Session expired, please login again",
+  //     variant: "error",
+  //     duration: 5000,
+  //   });
+  //   navigate("/auth/login", { replace: true });
+  // }
 
   createEffect(() => {
     console.log(user);

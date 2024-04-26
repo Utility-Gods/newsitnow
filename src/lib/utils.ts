@@ -8,12 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function get_token() {
-  const user = sessionStorage.getItem("user");
-  if (!user) {
+  const token = sessionStorage.getItem("token");
+  if (!token) {
     return null;
   }
-  const parsed = JSON.parse(user);
-  return parsed.jwt;
+  return token;
 }
 
 export function get_user() {

@@ -1,18 +1,19 @@
-import { strapi } from "@lib/strapi";
-import { Collection } from "@lib/types/Collection";
 import { get_token } from "@lib/utils";
-
 import { err, ok } from "neverthrow";
 
 const fetch_collections = async () => {
   try {
     const token = get_token();
 
-    strapi.setToken(token);
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const result = await strapi.find<Collection[]>("collections", {
-      populate: "*",
+    const response = await fetch("http://localhost:1337/api/collections", {
+      headers: reqHeaders,
+      method: "GET",
     });
+
+    const result = await response.json();
 
     console.log("fetching collections", result);
     return ok(result);
@@ -25,11 +26,22 @@ const fetch_collections = async () => {
 const save_collection = async (data: any) => {
   console.log("sending this payload", data);
   try {
-    strapi.setToken(get_token());
-    const result = await strapi.create<Collection>("collections", data);
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+    reqHeaders.append("Content-Type", "application/json");
+
+    const response = await fetch("http://localhost:1337/api/collections", {
+      method: "POST",
+      headers: reqHeaders,
+      body: JSON.stringify({ data }),
+    });
+
+    const result = await response.json();
 
     console.log("saving collection", result);
-    if (!result) {
+    if (!response.ok) {
       return err(result);
     }
     return ok(result);
@@ -38,15 +50,32 @@ const save_collection = async (data: any) => {
     return err(e);
   }
 };
+
 const fetch_collection_by_id = async (id: string) => {
   if (!id) {
     return;
   }
+
   try {
-    const result = await strapi.findOne<Collection>("collections", id);
-    if (!result.data) {
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(
+      `http://localhost:1337/api/collections/${id}`,
+      {
+        headers: reqHeaders,
+        method: "GET",
+      },
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.data) {
       return err(result.data);
     }
+
     return ok(result.data);
   } catch (e) {
     console.log(e);
@@ -61,13 +90,23 @@ const delete_collection = async (id: string) => {
   }
 
   try {
-    strapi.setToken(token);
-    const result = await strapi.delete<Collection>("collections", id, {
-      populate: "*",
-    });
-    if (!result) {
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(
+      `http://localhost:1337/api/collections/${id}`,
+      {
+        headers: reqHeaders,
+        method: "DELETE",
+      },
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.data) {
       return err(result);
     }
+
     return ok(result.data);
   } catch (e) {
     console.log(e);
