@@ -12,6 +12,7 @@ import PublicArticle from "./functional/public/PublicArticle";
 import PublicCollection from "./functional/public/PublicCollection";
 import Login from "./functional/auth/Login";
 import Register from "./functional/auth/Register";
+import ArticleView from "~/pages/Article/ArticleView";
 
 const RouterComponent = () => (
   <>
@@ -23,6 +24,7 @@ const RouterComponent = () => (
       <Route path="/" component={Layout}>
         <Route path="" component={Home} />
         <Route path="/article" component={Article} />
+        <Route path="/article/:id" component={ArticleView} />
         <Route path="/collection" component={Collection} />
         <Route path="/collection/:id" component={CollectionView} />
       </Route>

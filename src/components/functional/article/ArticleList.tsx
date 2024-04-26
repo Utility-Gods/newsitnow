@@ -1,5 +1,12 @@
 import { delete_article, fetch_articles } from "@lib/service/article";
-import { Component, createEffect, For, mergeProps, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createSignal,
+  For,
+  mergeProps,
+  Show,
+} from "solid-js";
 import {
   Table,
   TableBody,
@@ -14,6 +21,8 @@ import { Button } from "@components/ui/button";
 import Trash from "@lib/icons/Trash";
 import { showToast } from "~/components/ui/toast";
 import { Skeleton } from "~/components/ui/skeleton";
+import ArticleShare from "./ArticleShare";
+import { A } from "@solidjs/router";
 
 export type ArticleListProps = {
   openDetails: (open: boolean) => void;
@@ -26,6 +35,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const merged = mergeProps(props);
 
   const { articleList, refetch } = merged;
+  const [openShareModal, setOpenShareModal] = createSignal(false);
 
   createEffect(() => {
     console.log("fetching articles", articleList());
@@ -60,6 +70,14 @@ const ArticleList: Component<ArticleListProps> = (props) => {
         description: "An error occurred while deleting the article",
       });
     }
+  }
+
+  const [activeArticle, setActiveArticle] = createSignal(null);
+
+  function embed_article(c) {
+    setActiveArticle(c);
+    console.log(activeArticle());
+    setOpenShareModal(true);
   }
 
   return (
@@ -107,7 +125,14 @@ const ArticleList: Component<ArticleListProps> = (props) => {
               {(c) => (
                 <TableRow>
                   <TableCell class="font-semibold">
-                    <div class="allow-3-lines text-md">{c.name}</div>
+                    <div class="allow-3-lines text-md">
+                      <A
+                        href={`/article/${c.id}`}
+                        class="underline text-primary-foreground underline-offset-2"
+                      >
+                        {c.name}
+                      </A>
+                    </div>
                   </TableCell>
                   <TableCell class="text-truncate ">
                     <div class="allow-3-lines" innerHTML={c.text}></div>
@@ -131,16 +156,14 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                     >
                       View
                     </Button>
-                    {/* <Button
-                      variant="secondary"
+
+                    <Button
+                      variant={"secondary"}
                       size="sm"
-                      onClick={() => {
-                        merged.openDetails(true);
-                        merged.onView(c.id);
-                      }}
+                      onClick={() => embed_article(c)}
                     >
-                      Edit
-                    </Button> */}
+                      <span>Share</span>
+                    </Button>
 
                     <Button
                       variant="destructive"
@@ -158,6 +181,18 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           </Show>
         </TableBody>
       </Table>
+      <ArticleShare
+        article={{
+          id: activeArticle()?.id,
+          attributes: {
+            ...activeArticle(),
+          },
+        }}
+        show={openShareModal()}
+        onShowChange={() => {
+          setOpenShareModal(false);
+        }}
+      />
     </div>
   );
 };
