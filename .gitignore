@@ -3,5 +3,4 @@ dist
 yarn.error.log
 pnpm-lock.json
 package-lock.json
-yarn.lock
 yarn-error.log
