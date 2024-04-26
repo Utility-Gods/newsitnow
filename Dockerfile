@@ -25,7 +25,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
 # Install node modules
-COPY --link package.json pnpm-lock.yaml yarn.lock ./
+COPY --link package.json yarn.lock ./
 RUN pnpm install --prod=false
 
 # Copy application code
