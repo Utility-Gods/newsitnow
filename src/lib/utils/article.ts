@@ -10,9 +10,6 @@ async function generateEmbedCode(articleId: number): Promise<string> {
     (function() {
       var articleId = ${articleId};
       fetch('${strapiUrl}/api/articles/' + articleId, {
-        headers: {
-          Authorization: 'Bearer <Your Access Token>'
-        }
       })
       .then(response => response.json())
       .then(data => {
@@ -42,11 +39,7 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
     <script>
     (function() {
       var articleId = ${articleId};
-      fetch('${strapiUrl}/api/articles/' + articleId, {
-        headers: {
-          Authorization: 'Bearer ${strapiToken}'
-        }
-      })
+      fetch('${strapiUrl}/api/articles/' + articleId)
       .then(response => response.json())
       .then(data => {
         var articleContent = data.data.attributes;
@@ -71,11 +64,7 @@ function generateRestAPICode(articleId: number): string {
   const strapiToken = get_token(); // Replace with your Strapi API token
 
   const restAPICode = `
-    fetch('${strapiUrl}/api/articles/' + ${articleId}, {
-      headers: {
-        Authorization:"Bearer ${strapiToken}"
-      }
-    })
+    fetch('${strapiUrl}/api/articles/' + ${articleId})
     .then(response => response.json())
     .then(data => {
       console.log(data);

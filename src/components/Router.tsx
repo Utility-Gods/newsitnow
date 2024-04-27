@@ -32,7 +32,7 @@ const RouterComponent = () => (
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </Route>
-      <Route path="/public/:userid" component={Public}>
+      <Route path="/public/:user_id" component={Public}>
         <Route path="" component={PublicHome} />
         <Route path="/article">
           <Route path="/:id" component={PublicArticle} />
