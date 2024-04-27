@@ -125,7 +125,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
               {(c) => (
                 <TableRow>
                   <TableCell class="font-semibold">
-                    <div class="allow-3-lines text-md">
+                    <div class="allow-3-lines">
                       <A
                         href={`/article/${c.id}`}
                         class="underline text-primary-foreground underline-offset-2"

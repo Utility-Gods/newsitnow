@@ -11,7 +11,6 @@ const Layout: Component = (props) => {
 
   const isTokenValid = check_token_validity();
 
-  console.log({ isTokenValid });
   if (!isTokenValid) {
     showToast({
       title: "Session expired, please login again",
@@ -22,7 +21,6 @@ const Layout: Component = (props) => {
   }
 
   createEffect(() => {
-    console.log(user);
     if (!user) {
       navigate("/auth/login", { replace: true });
     }
