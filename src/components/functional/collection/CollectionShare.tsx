@@ -36,7 +36,7 @@ function CollectionShare(props: CollectionShareProps) {
                 <div class="flex gap-2 items-center">
                   <div class="">
                     {new Date(
-                      props.collection.attributes.createdAt
+                      props.collection.attributes.createdAt,
                     ).toLocaleDateString()}
                   </div>
                 </div>
