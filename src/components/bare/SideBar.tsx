@@ -20,6 +20,7 @@ const SideBar: Component = () => {
 
   function handleLogOut() {
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
     navigate("/auth/login", { replace: true });
   }
 

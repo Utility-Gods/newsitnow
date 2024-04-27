@@ -66,7 +66,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
           </div>
           <div class="overflow-auto">{collection_details().description}</div>
 
-          <Show when={collection_details().articles.length === 0}>
+          <Show when={collection_details()?.articles?.length === 0}>
             <div class="flex flex-col gap-6  items-center w-full h-full">
               <div class="p-4 text-primary-100 w-full">
                 <Empty message="No articles found" />
@@ -82,7 +82,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
         </div>
 
         <Separator />
-        <Show when={collection_details().articles.length}>
+        <Show when={collection_details()?.articles?.length}>
           <div class="flex flex-col gap-6 p-3">
             <div class="w-full flex items-center justify-between">
               <div class="text-xl font-bold text-text underline underline-offset-2">
