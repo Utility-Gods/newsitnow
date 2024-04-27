@@ -44,86 +44,95 @@ const CollectionView: Component = (props: CollectionViewProps) => {
         <PageSkeleton />
       </Show>
       <Show when={collection()?.isOk()}>
-        <div class="flex p-3 flex-col">
-          <div class="flex justify-between items-center">
-            <div class="flex items-center text-2xl font-bold text-primary leading-10">
-              {collection_details().name}
+        <Show
+          when={Object.keys(collection_details()).length > 0}
+          fallback={
+            <div class="p-4 text-primary-100 w-full">
+              <Empty message="No collection found" />
             </div>
-            <div class="flex items-center gap-3 text-muted-foreground text-sm">
-              <div class="flex gap-2 items-center">
-                <BadgeDelta deltaType="increase">
-                  {collection_details().status}
-                </BadgeDelta>
+          }
+        >
+          <div class="flex p-3 flex-col">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center text-2xl font-bold text-primary leading-10">
+                {collection_details().name}
               </div>
-              <div class="flex gap-2 items-center">
-                <div class="">
-                  {new Date(
-                    collection_details().createdAt,
-                  ).toLocaleDateString()}
+              <div class="flex items-center gap-3 text-muted-foreground text-sm">
+                <div class="flex gap-2 items-center">
+                  <BadgeDelta deltaType="increase">
+                    {collection_details().status}
+                  </BadgeDelta>
+                </div>
+                <div class="flex gap-2 items-center">
+                  <div class="">
+                    {new Date(
+                      collection_details().createdAt,
+                    ).toLocaleDateString()}
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="overflow-auto">{collection_details().description}</div>
+
+            <Show when={collection_details()?.articles?.length === 0}>
+              <div class="flex flex-col gap-6  items-center w-full h-full">
+                <div class="p-4 text-primary-100 w-full">
+                  <Empty message="No articles found" />
+                </div>
+                <Button
+                  variant={"secondary"}
+                  onClick={() => setShowAttachArticle(true)}
+                >
+                  + Add Article
+                </Button>
+              </div>
+            </Show>
           </div>
-          <div class="overflow-auto">{collection_details().description}</div>
 
-          <Show when={collection_details()?.articles?.length === 0}>
-            <div class="flex flex-col gap-6  items-center w-full h-full">
-              <div class="p-4 text-primary-100 w-full">
-                <Empty message="No articles found" />
+          <Separator />
+          <Show when={collection_details()?.articles?.length}>
+            <div class="flex flex-col gap-6 p-3">
+              <div class="w-full flex items-center justify-between">
+                <div class="text-xl font-bold text-text underline underline-offset-2">
+                  Attached Articles
+                </div>
+                <Button
+                  variant={"secondary"}
+                  onClick={() => setShowAttachArticle(true)}
+                >
+                  + Add Article
+                </Button>
               </div>
-              <Button
-                variant={"secondary"}
-                onClick={() => setShowAttachArticle(true)}
-              >
-                + Add Article
-              </Button>
-            </div>
-          </Show>
-        </div>
 
-        <Separator />
-        <Show when={collection_details()?.articles?.length}>
-          <div class="flex flex-col gap-6 p-3">
-            <div class="w-full flex items-center justify-between">
-              <div class="text-xl font-bold text-text underline underline-offset-2">
-                Attached Articles
-              </div>
-              <Button
-                variant={"secondary"}
-                onClick={() => setShowAttachArticle(true)}
-              >
-                + Add Article
-              </Button>
-            </div>
-
-            <For each={collection_details()?.articles}>
-              {(article) => (
-                <div class="flex p-4 flex-col gap-3 bg-white">
-                  <div class="flex justify-between items-center">
-                    <div class="flex items-center text-2xl font-bold text-primary leading-10">
-                      {article.name}
-                    </div>
-                    <div class="flex items center gap-3 text-muted-foreground text-sm">
-                      <div class="flex gap-2 items-center">
-                        <BadgeDelta deltaType="increase">
-                          {article.status}
-                        </BadgeDelta>
+              <For each={collection_details()?.articles}>
+                {(article) => (
+                  <div class="flex p-4 flex-col gap-3 bg-white">
+                    <div class="flex justify-between items-center">
+                      <div class="flex items-center text-2xl font-bold text-primary leading-10">
+                        {article.name}
                       </div>
-                      <div class="flex gap-2 items-center">
-                        <div class="">
-                          {new Date(article.createdAt).toLocaleDateString()}
+                      <div class="flex items center gap-3 text-muted-foreground text-sm">
+                        <div class="flex gap-2 items-center">
+                          <BadgeDelta deltaType="increase">
+                            {article.status}
+                          </BadgeDelta>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                          <div class="">
+                            {new Date(article.createdAt).toLocaleDateString()}
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="overflow-auto allow-3-lines"
+                      innerHTML={article.text}
+                    ></div>
                   </div>
-                  <div
-                    class="overflow-auto allow-3-lines"
-                    innerHTML={article.text}
-                  ></div>
-                </div>
-              )}
-            </For>
-          </div>
+                )}
+              </For>
+            </div>
+          </Show>
         </Show>
       </Show>
       <Show when={collection()?.isErr()}>
