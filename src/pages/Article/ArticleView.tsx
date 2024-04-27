@@ -3,7 +3,6 @@ import { Component, createResource, createSignal, Show } from "solid-js";
 import { fetch_article_by_id } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import BreadCrumb from "~/components/bare/BreadCrumb";
-import { Skeleton } from "~/components/ui/skeleton";
 import PageSkeleton from "~/components/bare/PageSkeleton";
 
 const ArticleView: Component = (props) => {

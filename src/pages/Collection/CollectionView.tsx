@@ -7,6 +7,7 @@ import {
   Show,
   createSignal,
   createEffect,
+  For,
 } from "solid-js";
 import BreadCrumb from "~/components/bare/BreadCrumb";
 import Empty from "~/components/bare/Empty";
@@ -43,7 +44,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
         <PageSkeleton />
       </Show>
       <Show when={collection()?.isOk()}>
-        <div class="flex p-3 flex-col gap-3 h-full">
+        <div class="flex p-3 flex-col">
           <div class="flex justify-between items-center">
             <div class="flex items-center text-2xl font-bold text-primary leading-10">
               {collection_details().name}
@@ -64,37 +65,69 @@ const CollectionView: Component = (props: CollectionViewProps) => {
             </div>
           </div>
           <div class="overflow-auto">{collection_details().description}</div>
-          <Separator />
-          <div class="flex flex-col gap-6  items-center w-full h-full">
-            <Show when={collection_details().articles.length === 0}>
+
+          <Show when={collection_details().articles.length === 0}>
+            <div class="flex flex-col gap-6  items-center w-full h-full">
               <div class="p-4 text-primary-100 w-full">
                 <Empty message="No articles found" />
               </div>
-            </Show>
-            <Button
-              variant={"secondary"}
-              onClick={() => setShowAttachArticle(true)}
-            >
-              + Add Article
-            </Button>
-            {/* <Callout>
-              <CalloutTitle>Detais</CalloutTitle>
-              <CalloutContent>
-                You can view the details of the collection here and find the
-                code to embed the collection in your website.
-              </CalloutContent>
-            </Callout> */}
-          </div>
+              <Button
+                variant={"secondary"}
+                onClick={() => setShowAttachArticle(true)}
+              >
+                + Add Article
+              </Button>
+            </div>
+          </Show>
         </div>
+
+        <Show when={collection_details().articles.length}>
+          <div class="flex flex-col gap-6 p-4">
+            <div class="w-full text-right">
+              <Button
+                variant={"secondary"}
+                onClick={() => setShowAttachArticle(true)}
+              >
+                + Add Article
+              </Button>
+            </div>
+            <For each={collection_details()?.articles}>
+              {(article) => (
+                <div class="flex p-3 flex-col gap-3 bg-white">
+                  <div class="flex justify-between items-center">
+                    <div class="flex items-center text-2xl font-bold text-primary leading-10">
+                      {article.name}
+                    </div>
+                    <div class="flex items center gap-3 text-muted-foreground text-sm">
+                      <div class="flex gap-2 items-center">
+                        <BadgeDelta deltaType="increase">
+                          {article.status}
+                        </BadgeDelta>
+                      </div>
+                      <div class="flex gap-2 items-center">
+                        <div class="">
+                          {new Date(article.createdAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="overflow-auto allow-3-lines">{article.text}</div>
+                </div>
+              )}
+            </For>
+          </div>
+        </Show>
       </Show>
       <Show when={collection()?.isErr()}>
         <div class="p-4 text-primary-100">Error loading collection</div>
       </Show>
-      <ArticleAttach
-        collection={collection}
-        show={showAttachArticle()}
-        onShowChange={() => setShowAttachArticle(false)}
-      />
+      <Show when={showAttachArticle()}>
+        <ArticleAttach
+          collection={collection}
+          show={showAttachArticle()}
+          onShowChange={() => setShowAttachArticle(false)}
+        />
+      </Show>
     </div>
   );
 };

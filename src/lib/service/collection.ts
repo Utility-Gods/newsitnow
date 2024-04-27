@@ -54,6 +54,33 @@ const save_collection = async (data: any) => {
   }
 };
 
+const update_collection = async (data: any) => {
+  console.log("sending this payload", data);
+  try {
+    const token = get_token();
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+    reqHeaders.append("Content-Type", "application/json");
+
+    const response = await fetch(`${BASE_URL}/api/collections/${data.id}`, {
+      method: "PUT",
+      headers: reqHeaders,
+      body: JSON.stringify({ data }),
+    });
+
+    const result = await response.json();
+
+    console.log("updating collection", result);
+    if (!response.ok) {
+      return err(result);
+    }
+    return ok(result);
+  } catch (e) {
+    console.log(e);
+    return err(e);
+  }
+};
+
 const fetch_collection_by_id = async (id: string) => {
   if (!id) {
     return;
@@ -116,6 +143,7 @@ const delete_collection = async (id: string) => {
 export {
   fetch_collections,
   save_collection,
+  update_collection,
   fetch_collection_by_id,
   delete_collection,
 };
