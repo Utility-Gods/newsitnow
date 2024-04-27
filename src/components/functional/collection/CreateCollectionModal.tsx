@@ -6,10 +6,8 @@ import PageSpinner from "~/components/bare/PageSpinner";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -21,13 +19,12 @@ import {
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
 
-
 type CreateCollectionModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
-  props
+  props,
 ) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
@@ -44,7 +41,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
 
   const handleSubmit: SubmitHandler<CreateCollectionForm> = async (
     values,
-    event
+    event,
   ) => {
     setLoading(true);
 

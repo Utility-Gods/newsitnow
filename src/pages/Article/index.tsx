@@ -3,7 +3,7 @@ import { fetch_articles } from "@lib/service/article";
 import { Component, createResource, createSignal } from "solid-js";
 import ArticleDetails from "~/components/functional/article/ArticleDetails";
 import ArticleList from "~/components/functional/article/ArticleList";
-import { CreateArticleModal } from "~/components/functional/article/CreateArticle";
+import { CreateArticleModal } from "~/components/functional/article/ArticleCreate";
 import { Button } from "~/components/ui/button";
 
 export const route = {
