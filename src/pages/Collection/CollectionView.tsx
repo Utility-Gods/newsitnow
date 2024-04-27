@@ -81,9 +81,13 @@ const CollectionView: Component = (props: CollectionViewProps) => {
           </Show>
         </div>
 
+        <Separator />
         <Show when={collection_details().articles.length}>
-          <div class="flex flex-col gap-6 p-4">
-            <div class="w-full text-right">
+          <div class="flex flex-col gap-6 p-3">
+            <div class="w-full flex items-center justify-between">
+              <div class="text-xl font-bold text-text underline underline-offset-2">
+                Attached Articles
+              </div>
               <Button
                 variant={"secondary"}
                 onClick={() => setShowAttachArticle(true)}
@@ -91,9 +95,10 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                 + Add Article
               </Button>
             </div>
+
             <For each={collection_details()?.articles}>
               {(article) => (
-                <div class="flex p-3 flex-col gap-3 bg-white">
+                <div class="flex p-4 flex-col gap-3 bg-white">
                   <div class="flex justify-between items-center">
                     <div class="flex items-center text-2xl font-bold text-primary leading-10">
                       {article.name}
@@ -111,7 +116,10 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                       </div>
                     </div>
                   </div>
-                  <div class="overflow-auto allow-3-lines">{article.text}</div>
+                  <div
+                    class="overflow-auto allow-3-lines"
+                    innerHTML={article.text}
+                  ></div>
                 </div>
               )}
             </For>
