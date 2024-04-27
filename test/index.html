@@ -28,9 +28,6 @@
 
       // Fetch collection data from Strapi API
       fetch('http://localhost:1337/api/collections/' + collectionId, {
-        headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE0MjMzMDg2LCJleHAiOjE3MTQ0MDU4ODZ9.8hXY8MvHITfvEjV_Xhx-q6uKUgBU_A71id4iWAFP2WQ' // Replace YOUR_AUTH_TOKEN with your actual token
-        }
       })
       .then(response => response.json())
       .then(data => {

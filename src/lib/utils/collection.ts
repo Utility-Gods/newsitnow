@@ -11,7 +11,7 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
          var collectionId = 6;
 
          // Fetch collection data from Strapi API
-         fetch('http://localhost:1337/api/collections/' + collectionId, {
+         fetch('\${strapiUrl}/api/collections/' + collectionId, {
            headers: {
              Authorization: 'Bearer <Auth_token>' // Replace YOUR_AUTH_TOKEN with your actual token
            }
@@ -49,8 +49,7 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
 
 async function generateEmbedCodeExposed(collectionId: number): Promise<string> {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
-
-  const strapiToken = get_token(); // Replace with your Strapi API token
+  // Replace with your Strapi API token
   // Generate HTML code
   const htmlCode = `
 
@@ -60,10 +59,7 @@ async function generateEmbedCodeExposed(collectionId: number): Promise<string> {
            var collectionId = 6;
 
            // Fetch collection data from Strapi API
-           fetch('http://localhost:1337/api/collections/' + collectionId, {
-             headers: {
-               Authorization: 'Bearer ${strapiToken}' // Replace YOUR_AUTH_TOKEN with your actual token
-             }
+           fetch('${strapiUrl}/api/collections/' + collectionId, {
            })
            .then(response => response.json())
            .then(data => {
@@ -99,8 +95,6 @@ async function generateEmbedCodeExposed(collectionId: number): Promise<string> {
 function generateRestAPICode(collectionId: number): string {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
-  const strapiToken = get_token(); // Replace with your Strapi API token
-
   const restAPICode = `
     fetch('${strapiUrl}/api/collections/' + ${collectionId}, {
       headers: {
@@ -122,11 +116,7 @@ function generateRestAPICodeExposed(collectionId: number): string {
   const strapiToken = get_token(); // Replace with your Strapi API token
 
   const restAPICode = `
-    fetch('${strapiUrl}/api/collections/' + ${collectionId}, {
-      headers: {
-        Authorization: 'Bearer ${strapiToken}'
-      }
-    })
+    fetch('${strapiUrl}/api/collections/' + ${collectionId})
     .then(response => response.json())
     .then(data => {
       console.log(data);

@@ -2,6 +2,7 @@ import Share from "@lib/icons/share";
 import { fetch_collection_by_id } from "@lib/service/collection";
 import { Collection } from "@lib/types/Collection";
 import { get_user_id } from "@lib/utils";
+import { A } from "@solidjs/router";
 
 import {
   Component,
@@ -128,8 +129,8 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                 {(article) => (
                   <div class="flex p-4 flex-col gap-3 bg-white">
                     <div class="flex justify-between items-center">
-                      <div class="flex items-center text-2xl font-bold text-primary leading-10">
-                        {article.name}
+                      <div class="flex items-center text-2xl font-bold text-primary underline underline-offset-2 leading-10">
+                        <A href={`/article/${article.id}`}>{article.name}</A>
                       </div>
                       <div class="flex items center gap-3 text-muted-foreground text-sm">
                         <div class="flex gap-2 items-center">
