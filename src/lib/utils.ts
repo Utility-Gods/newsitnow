@@ -23,6 +23,16 @@ export function get_user() {
   return JSON.parse(user);
 }
 
+export function get_user_id() {
+  const user = get_user();
+
+  console.log({ user });
+  if (!user.user) {
+    return null;
+  }
+  return user.user.id;
+}
+
 export function check_token_validity() {
   const token = sessionStorage.getItem("token");
 

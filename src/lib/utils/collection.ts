@@ -6,30 +6,42 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
   // Generate HTML code
   const htmlCode = `
     <div id="embedded-collection"></div>
-    <script>
-    (function() {
-      var collectionId = ${collectionId};
-    
-      // Fetch collection data from Strapi API
-      fetch('${strapiUrl}/api/collections/' + collectionId, {
-        headers: {
-          Authorization: 'Bearer <Your Access Token>' // Replace YOUR_AUTH_TOKEN with your actual token
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        var collectionContent = data.data.attributes; // Adjust the property name based on your Strapi schema
-        console.log(collectionContent);
-        document.getElementById('embedded-collection').innerHTML = \` 
-          <div>
-              <h2>\${collectionContent.name}</h2>
-              <p>\${collectionContent.content}</p>
-              <p>Date: \${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
-          </div>
-        \`;
-      });
-    })();
-    </script>
+       <script>
+       (function() {
+         var collectionId = 6;
+
+         // Fetch collection data from Strapi API
+         fetch('http://localhost:1337/api/collections/' + collectionId, {
+           headers: {
+             Authorization: 'Bearer <Auth_token>' // Replace YOUR_AUTH_TOKEN with your actual token
+           }
+         })
+         .then(response => response.json())
+         .then(data => {
+           console.log({data})
+           var collectionContent = data; // Adjust the property name based on your Strapi schema
+           console.log(collectionContent);
+           document.getElementById('embedded-collection').innerHTML = \`
+             <div>
+                 <h2>\${collectionContent.name}</h2>
+                 <p>\${collectionContent.description}</p>
+                 <p>Date: \${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
+             </div>
+           \`;
+           // loop through collectionContent.articles and append them to innerHTML
+
+           collectionContent.articles.forEach(article => {
+             document.getElementById('embedded-collection').innerHTML += \`
+               <div>
+                   <h3>\${article.name}</h3>
+                   <p>\${article.text}</p>
+                   <p>Date: \${new Date(article.createdAt).toLocaleDateString()}</p>
+               </div>
+             \`;
+           });
+         });
+       })();
+       </script>
     `;
 
   return htmlCode;
@@ -41,32 +53,45 @@ async function generateEmbedCodeExposed(collectionId: number): Promise<string> {
   const strapiToken = get_token(); // Replace with your Strapi API token
   // Generate HTML code
   const htmlCode = `
-    <div id="embedded-collection"></div>
-    <script>
-    (function() {
-      var collectionId = ${collectionId};
-    
-      // Fetch collection data from Strapi API
-      fetch('${strapiUrl}/api/collections/' + collectionId, {
-        headers: {
-          Authorization: 'Bearer ${strapiToken}' // Replace YOUR_AUTH_TOKEN with your actual token
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        var collectionContent = data.data.attributes; // Adjust the property name based on your Strapi schema
-        console.log(collectionContent);
-        document.getElementById('embedded-collection').innerHTML = \` 
-          <div>
-              <h2>\${collectionContent.name}</h2>
-              <p>\${collectionContent.content}</p>
-              <p>Date: \${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
-          </div>
-        \`;
-      });
-    })();
-    </script>
-    `;
+
+      <div id="embedded-collection"></div>
+         <script>
+         (function() {
+           var collectionId = 6;
+
+           // Fetch collection data from Strapi API
+           fetch('http://localhost:1337/api/collections/' + collectionId, {
+             headers: {
+               Authorization: 'Bearer ${strapiToken}' // Replace YOUR_AUTH_TOKEN with your actual token
+             }
+           })
+           .then(response => response.json())
+           .then(data => {
+             console.log({data})
+             var collectionContent = data; // Adjust the property name based on your Strapi schema
+             console.log(collectionContent);
+             document.getElementById('embedded-collection').innerHTML = \`
+               <div>
+                   <h2>\${collectionContent.name}</h2>
+                   <p>\${collectionContent.description}</p>
+                   <p>Date: \${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
+               </div>
+             \`;
+             // loop through collectionContent.articles and append them to innerHTML
+
+             collectionContent.articles.forEach(article => {
+               document.getElementById('embedded-collection').innerHTML += \`
+                 <div>
+                     <h3>\${article.name}</h3>
+                     <p>\${article.text}</p>
+                     <p>Date: \${new Date(article.createdAt).toLocaleDateString()}</p>
+                 </div>
+               \`;
+             });
+           });
+         })();
+         </script>
+      `;
 
   return htmlCode;
 }
@@ -113,7 +138,7 @@ function generateRestAPICodeExposed(collectionId: number): string {
 
 function generateCollectionShareLink(
   collectionId: number,
-  userId: number = 12
+  userId: number = 12,
 ): string {
   const origin = import.meta.env.VITE_ORIGIN; // Replace with your Strapi API URL
 
