@@ -10,10 +10,9 @@ LABEL fly_launch_runtime="Vite"
 WORKDIR /app
 
 # Set production environment
-
-# Install pnpm
-ARG PNPM_VERSION=8.15.4
-RUN npm install -g pnpm@$PNPM_VERSION
+ENV NODE_ENV="production"
+ARG YARN_VERSION=1.22.19
+RUN npm install -g yarn@$YARN_VERSION --force
 
 
 # Throw-away build stage to reduce size of final image
@@ -25,21 +24,20 @@ RUN apt-get update -qq && \
 
 # Install node modules
 COPY --link package.json yarn.lock ./
-RUN pnpm install --prod=false
+RUN yarn install --frozen-lockfile --production=false
 
 # Copy application code
 COPY --link . .
-
 
 # Set environment variables during the build process
 ENV VITE_STRAPI_URL="https://orange-gas-strapi.fly.dev"
 ENV VITE_ORIGIN="https://orangegas.in"
 
 # Build application
-RUN pnpm run build
+RUN yarn run build
 
 # Remove development dependencies
-RUN pnpm prune --prod
+RUN yarn install --production=true
 
 
 # Final stage for app image
@@ -47,7 +45,7 @@ FROM nginx
 
 # Copy built application
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 80

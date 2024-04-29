@@ -4,7 +4,7 @@
   "description": "front-end for news it now CMS",
   "author": "admin@utilitygods.com",
   "scripts": {
-    "start": "vite",
+    "start": "export PORT=3000 && node ./dist",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
