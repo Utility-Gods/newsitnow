@@ -24,7 +24,6 @@ const user_register = async (
             headers: {
               "Content-Type": "application/json",
             },
-            credentials: "include",
             body: JSON.stringify({
               email,
               password,
