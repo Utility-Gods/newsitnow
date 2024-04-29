@@ -48,29 +48,45 @@ const user_register = async (
 
 const user_login = async (email: string, password: string) => {
   try {
-    const localAuthEffect = () =>
-      Effect.tryPromise({
-        try: () =>
-          fetch(`${API_URL}/api/auth/local`, {
-            // Updated here
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({
-              identifier: email,
-              password,
-            }),
-          }),
-        catch: (unknown) => new Error(`something went wrong ${unknown}`),
-      });
+    // const localAuthEffect = () =>
+    //   Effect.tryPromise({
+    //     try: () =>
+    //       fetch(`${API_URL}/api/auth/local`, {
+    //         // Updated here
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         credentials: "include",
+    //         body: JSON.stringify({
+    //           identifier: email,
+    //           password,
+    //         }),
+    //       }),
+    //     catch: (unknown) => new Error(`something went wrong ${unknown}`),
+    //   });
 
-    const res = Effect.runPromise(localAuthEffect());
-    const user = await res.then((res) => res.json());
+    const res = await fetch(`${API_URL}/api/auth/local`, {
+      // Updated here
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        identifier: email,
+        password,
+      }),
+    });
+
+    if (!res.ok) {
+      console.log(res);
+      return err("An error occurred");
+    }
+    const user = await res.json();
 
     console.log({ user });
-    if (user.data) {
+    if (user) {
       sessionStorage.setItem("token", user.jwt);
       sessionStorage.setItem("user", JSON.stringify(user.user));
       return ok(user);
