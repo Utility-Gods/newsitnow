@@ -30,9 +30,10 @@ RUN pnpm install --prod=false
 # Copy application code
 COPY --link . .
 
+
 # Set environment variables during the build process
-ENV VITE_STRAPI_URL=$VITE_STRAPI_URL
-ENV VITE_STRAPI_URL=$VITE_ORIGIN
+ENV VITE_STRAPI_URL="https://orange-gas-strapi.fly.dev"
+ENV VITE_ORIGIN="https://orangegas.in"
 
 # Build application
 RUN pnpm run build
