@@ -1,6 +1,6 @@
 import Nav from "@components/bare/Nav";
 import SideBar from "@components/bare/SideBar";
-import { check_token_validity } from "@lib/utils";
+import { check_token_validity, get_token } from "@lib/utils";
 import { useNavigate } from "@solidjs/router";
 import { Component, createEffect } from "solid-js";
 import { showToast } from "./ui/toast";
@@ -9,9 +9,10 @@ const Layout: Component = (props) => {
   const navigate = useNavigate();
   const user = sessionStorage.getItem("user");
 
+  const token = get_token();
   const isTokenValid = check_token_validity();
 
-  if (!isTokenValid) {
+  if (!isTokenValid && token) {
     showToast({
       title: "Session expired, please login again",
       variant: "error",
