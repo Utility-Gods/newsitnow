@@ -70,7 +70,7 @@ const user_login = async (email: string, password: string) => {
     const user = await res.then((res) => res.json());
 
     console.log({ user });
-    if (user) {
+    if (user.data) {
       sessionStorage.setItem("token", user.jwt);
       sessionStorage.setItem("user", JSON.stringify(user.user));
       return ok(user);
