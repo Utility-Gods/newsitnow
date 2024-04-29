@@ -8,7 +8,6 @@ import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -18,7 +17,7 @@ import { Label } from "~/components/ui/label";
 import { showToast } from "~/components/ui/toast";
 
 const Login: Component = () => {
-  const [, { Form, Field, FieldArray }] = createForm<LoginForm>({
+  const [, { Form, Field }] = createForm<LoginForm>({
     validate: valiForm(LoginSchema),
   });
 
