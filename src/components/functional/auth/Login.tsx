@@ -45,7 +45,7 @@ const Login: Component = () => {
       });
       console.log(result.value);
       sessionStorage.setItem("user", JSON.stringify(result.value));
-      navigate("/", { replace: true });
+      navigate("/app", { replace: true });
     } catch (error) {
       console.error(error);
       showToast({

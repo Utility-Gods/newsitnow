@@ -123,7 +123,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                 <TableRow>
                   <TableCell class="font-semibold">
                     <A
-                      href={`/collection/${c.id}`}
+                      href={`${c.id}`}
                       class="underline text-primary-foreground underline-offset-2"
                     >
                       {c.name}

@@ -40,9 +40,9 @@ function APIShare(props: APIShareProps) {
   }
   return (
     <div class="flex flex-col gap-2">
-      <pre class="border-2 p-3 bg-muted  code-block text-muted-foreground">
+      <div class="border-2 p-3 bg-muted  code-block text-muted-foreground allow-3-lines">
         {embedCode()}
-      </pre>
+      </div>
 
       <Button variant="outline" onClick={copyCodeSnippet}>
         Copy

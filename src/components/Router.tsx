@@ -14,7 +14,7 @@ import Login from "./functional/auth/Login";
 import Register from "./functional/auth/Register";
 import ArticleView from "~/pages/Article/ArticleView";
 import ArticleCreate from "~/pages/Article/ArticleCreate";
-
+import AppHome from "@pages/App";
 const RouterComponent = () => (
   <>
     <Router>
@@ -22,8 +22,11 @@ const RouterComponent = () => (
         path="*"
         component={() => <div>404 - looks like you're lost</div>}
       />
-      <Route path="/" component={Layout}>
+      <Route path="/">
         <Route path="" component={Home} />
+      </Route>
+      <Route path="/app" component={Layout}>
+        <Route path="" component={AppHome} />
         <Route path="/article" component={Article} />
         <Route path="/article/:id" component={ArticleView} />
         <Route path="/collection" component={Collection} />
