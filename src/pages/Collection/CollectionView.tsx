@@ -66,29 +66,27 @@ const CollectionView: Component = (props: CollectionViewProps) => {
             </div>
           }
         >
-          <div class="p-3  border-border border flex items-center justify-between flex-shrink-0">
-            <div class="flex flex-col gap-3">
-              <div class="flex items-center justify-between">
+          <div class="p-3  border-border border bg-muted flex items-center justify-between flex-shrink-0 gap-6">
+            <div class="flex flex-col">
+              <div class="flex gap-3 items-end">
                 <div class="text-2xl font-bold text-secondary">
                   {collection_details().name}
-                  <div class="overflow-auto text-muted-foreground text-sm allow-2-lines">
-                    {collection_details().description}
-                  </div>
                 </div>
-              </div>
-              <div class="flex items-center gap-3 text-muted-foreground text-sm">
-                <div class="flex gap-2 items-center">
-                  <BadgeDelta deltaType="increase">
-                    {collection_details().status}
-                  </BadgeDelta>
-                </div>
-                <div class="flex gap-2 items-center">
+                <div class="flex items-end gap-3 text-muted-foreground text-sm">
                   <div class="">
                     {new Date(
                       collection_details().createdAt,
                     ).toLocaleDateString()}
                   </div>
+                  <div class="flex gap-2 items-center">
+                    <BadgeDelta deltaType="increase">
+                      {collection_details().status}
+                    </BadgeDelta>
+                  </div>
                 </div>
+              </div>
+              <div class="overflow-auto text-muted-foreground text-md clamp-lines line-clamp-3 mt-2">
+                {collection_details().description}
               </div>
             </div>
             <Show when={isAuthor()}>
@@ -111,32 +109,25 @@ const CollectionView: Component = (props: CollectionViewProps) => {
           </div>
 
           <Show when={collection_details()?.articles?.length === 0}>
-            <div class="flex flex-col gap-6  items-center w-full h-full">
-              <div class="p-4 text-primary-100 w-full">
-                <Empty message="No articles found" />
-              </div>
-              <Button
-                variant={"secondary"}
-                onClick={() => setShowAttachArticle(true)}
-              >
-                + Add Article
-              </Button>
+            <div class="p-4 text-primary-100 w-full flex-1">
+              <Empty message="No articles found" />
             </div>
           </Show>
 
           <Show when={collection_details()?.articles?.length}>
             <div class="flex flex-col gap-3">
               <div class="w-full flex items-center justify-between">
-                <div class="font-semibold text-dim_gray px-3">
-                  Articles in this collection
+                <div class="font-regular text-dim_gray px-3 text-sm underline underline-offset-2">
+                  {collection_details()?.articles?.length ?? 0} Articles in this
+                  collection
                 </div>
               </div>
 
               <For each={collection_details()?.articles}>
                 {(article) => (
-                  <div class="flex p-4 flex-col gap-3 bg-white">
+                  <div class="flex p-4 flex-col gap-3 border-border border-b">
                     <div class="flex justify-between items-center">
-                      <div class="flex items-center text-2xl font-bold text-primary underline underline-offset-2 leading-10">
+                      <div class="flex items-center text-md font-regular text-primary underline underline-offset-2 leading-10">
                         <A href={`/app/article/${article.id}`}>
                           {article.name}
                         </A>
