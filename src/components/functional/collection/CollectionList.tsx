@@ -80,7 +80,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
 
   return (
     <div class="shadow-md bg-white">
-      <Table>
+      <Table class="border border-border">
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>

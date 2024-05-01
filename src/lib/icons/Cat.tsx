@@ -5,7 +5,7 @@ export default function Cat() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
+      stroke-width=".5"
       stroke-linecap="round"
       stroke-linejoin="round"
       class="lucide lucide-cat"

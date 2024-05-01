@@ -10,8 +10,10 @@ const ArticleView: Component = (props) => {
 
   const article_details = () => article()?.value;
 
+  const article_image = () => article_details()?.photo?.[0].url ?? null;
+
   return (
-    <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
+    <div class="flex flex-col flex-1 flex-grow overflow-auto no-scrollbar p-3 ">
       <BreadCrumb
         crumbs={[
           { href: "/app/", label: "Home" },
@@ -23,18 +25,20 @@ const ArticleView: Component = (props) => {
       </Show>
 
       <Show when={article()?.isOk()}>
-        <div class="mt-4 flex flex-col gap-3 p-400 text-primary-100 rounded-sm overflow-hidden ">
+        <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm ">
           <div
-            class="bg-image relative flex items-between flex-col justify-end flex-shrink-0"
+            class={`bg-image relative flex items-between flex-col justify-end flex-shrink-0
+                ${article_image() ? "h-[240px]" : ""}
+              `}
             style={{
-              "background-image": `url(${article_details()?.photo?.[0].url ?? ""})`,
+              "background-image": `url(${article_image()})`,
             }}
           >
-            <div class="flex justify-between items-center p-3 bg-white">
+            <div class="flex justify-between items-end p-3 bg-muted">
               <div class="text-2xl font-bold text-primary">
                 {article_details().name}
               </div>
-              <div class="flex items-center gap-3 text-muted-foreground text-sm">
+              <div class="flex items-end gap-3 text-muted-foreground text-sm">
                 <div class="flex gap-2 items-center">
                   <BadgeDelta deltaType="increase">
                     {article_details().status}

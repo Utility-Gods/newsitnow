@@ -111,6 +111,12 @@
     overflow: hidden;
 }
 
+.clamp-lines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .code-block {
     border: 1px solid #ddd;
     border-left: 3px solid;
@@ -135,9 +141,6 @@
     /* Add the blur effect */
     /* filter: blur(8px);
     -webkit-filter: blur(8px); */
-
-    /* Full height */
-    height: 240px;
 
     /* Center and scale the image nicely */
     background-position: center;
