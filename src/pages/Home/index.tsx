@@ -47,7 +47,7 @@ const Home: Component = () => {
       </Nav>
 
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full sm:w-[80%] md:[w-69%] w-full mx-auto">
-        <div class="w-full justify-between items-center gap-3 flex p-12 sm:flex-row flex-col">
+        <div class="w-full justify-between items-center gap-3 flex py-12 sm:flex-row flex-col">
           <div class="flex flex-col gap-3 items-center">
             <h1 class="text-4xl font-bold text-primary text-center">
               Orange Gas
@@ -70,7 +70,7 @@ const Home: Component = () => {
           </div>
         </div>
         <Separator />
-        <div class="flex items-center justify-center p-12 flex-col gap-3">
+        <div class="flex items-center justify-center py-12 flex-col gap-3">
           <div class="text-bold text-secondary text-3xl text-center">
             It is time to change the way you create and manage your content.
           </div>
@@ -79,7 +79,7 @@ const Home: Component = () => {
           </div>
         </div>
         <Separator />
-        <div class="flex items-center justify-center p-12 gap-3 flex-col sm:flex-row">
+        <div class="flex items-center justify-center py-12 gap-3 flex-col sm:flex-row">
           <div class="flex sm:w-1/2 items-center flex-col gap-3">
             <div class="text-bold text-secondary text-3xl text-center">
               Create your content
@@ -94,7 +94,7 @@ const Home: Component = () => {
           </div>
         </div>
 
-        <div class="flex items-center justify-center p-12 gap-3 flex-col sm:flex-row">
+        <div class="flex items-center justify-center py-12 gap-3 flex-col sm:flex-row">
           <div>
             <img src="/images/4.png" alt="hero" class="w-full" />
           </div>
@@ -109,7 +109,7 @@ const Home: Component = () => {
           </div>
         </div>
         <Separator />
-        <div class="flex items-center justify-center p-12 gap-3">
+        <div class="flex items-center justify-center py-12 gap-3">
           <div class="flex items-center flex-col gap-3">
             <div class="text-bold text-secondary text-3xl text-center">
               It is free for now.
