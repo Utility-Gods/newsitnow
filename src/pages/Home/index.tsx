@@ -47,12 +47,12 @@ const Home: Component = () => {
       </Nav>
 
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full sm:w-[80%] md:[w-69%] w-full mx-auto">
-        <div class="w-full justify-between items-center gap-3 flex p-12">
+        <div class="w-full justify-between items-center gap-3 flex p-12 sm:flex-row flex-col">
           <div class="flex flex-col gap-3 items-center">
-            <h1 class="text-4xl font-bold text-primary">
-              Welcome to Orange Gas
+            <h1 class="text-4xl font-bold text-primary text-center">
+              Orange Gas
             </h1>
-            <p class="text-lg text-muted-foreground text-center w-[69%]">
+            <p class="text-lg text-muted-foreground text-center sm:w-[69%]">
               Orange Gas is a general purpose CMS to empower the way you create
             </p>
             <Button
@@ -71,7 +71,7 @@ const Home: Component = () => {
         </div>
         <Separator />
         <div class="flex items-center justify-center p-12 flex-col gap-3">
-          <div class="text-bold text-secondary text-3xl">
+          <div class="text-bold text-secondary text-3xl text-center">
             It is time to change the way you create and manage your content.
           </div>
           <div>
@@ -79,22 +79,22 @@ const Home: Component = () => {
           </div>
         </div>
         <Separator />
-        <div class="flex items-center justify-center p-12 gap-3">
-          <div class="flex w-1/2 items-center flex-col gap-3">
+        <div class="flex items-center justify-center p-12 gap-3 flex-col sm:flex-row">
+          <div class="flex sm:w-1/2 items-center flex-col gap-3">
             <div class="text-bold text-secondary text-3xl text-center">
               Create your content
             </div>
-            <div class="text-md text-muted-foreground text-center w-[50%]">
+            <div class="text-md text-muted-foreground text-center sm:w-[50%] w-full">
               You can create collection of articles, blogs, or any kind of rich
               text content, with ease.
             </div>
           </div>
-          <div class="w-1/2">
+          <div class="sm:w-1/2">
             <img src="/images/15.png" alt="hero" class="w-full" />
           </div>
         </div>
 
-        <div class="flex items-center justify-center p-12 gap-3">
+        <div class="flex items-center justify-center p-12 gap-3 flex-col sm:flex-row">
           <div>
             <img src="/images/4.png" alt="hero" class="w-full" />
           </div>
@@ -102,7 +102,7 @@ const Home: Component = () => {
             <div class="text-bold text-secondary text-3xl text-center">
               And Share it with the world
             </div>
-            <div class="text-md text-muted-foreground text-center w-[50%]">
+            <div class="text-md text-muted-foreground text-center sm:w-[50%]">
               and let it do the rest. Once it is set up you can focus on
               creating content, just like that.
             </div>
