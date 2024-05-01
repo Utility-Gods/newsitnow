@@ -1,4 +1,5 @@
 import { Component, createSignal } from "solid-js";
+import BreadCrumb from "~/components/bare/BreadCrumb";
 import CollectionDetails from "~/components/functional/collection/CollectionDetails";
 import CollectionList from "~/components/functional/collection/CollectionList";
 import { CreateCollectionModal } from "~/components/functional/collection/CreateCollectionModal";
@@ -11,6 +12,12 @@ const Collection: Component = () => {
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
+      <BreadCrumb
+        crumbs={[
+          { href: "/", label: "Home" },
+          { href: "/collection", label: "Collections" },
+        ]}
+      />
       <div class="flex justify-between items-center p-3  ">
         <div class="text-2xl font-bold text-primary leading-10">
           Collections
