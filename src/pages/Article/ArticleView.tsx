@@ -25,9 +25,9 @@ const ArticleView: Component = (props) => {
       <Show when={article()?.isOk()}>
         <div class="mt-4 flex flex-col gap-3 p-400 text-primary-100 rounded-sm overflow-hidden ">
           <div
-            class="bg-image relative flex items-between flex-col justify-end flex-shrink-0"
+            class="bg-image bg-white relative flex items-between flex-col justify-end flex-shrink-0"
             style={{
-              "background-image": `url(${article_details().photo[0].url})`,
+              "background-image": `url(${article_details()?.photo?.[0].url ?? ""})`,
             }}
           >
             <div class="flex justify-between items-center p-3 bg-white">
