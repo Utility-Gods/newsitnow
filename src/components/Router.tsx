@@ -13,6 +13,7 @@ import PublicCollection from "./functional/public/PublicCollection";
 import Login from "./functional/auth/Login";
 import Register from "./functional/auth/Register";
 import ArticleView from "~/pages/Article/ArticleView";
+import ArticleCreate from "~/pages/Article/ArticleCreate";
 
 const RouterComponent = () => (
   <>
@@ -27,6 +28,7 @@ const RouterComponent = () => (
         <Route path="/article/:id" component={ArticleView} />
         <Route path="/collection" component={Collection} />
         <Route path="/collection/:id" component={CollectionView} />
+        <Route path="/article/create" component={ArticleCreate} />
       </Route>
       <Route path="/auth">
         <Route path="/login" component={Login} />

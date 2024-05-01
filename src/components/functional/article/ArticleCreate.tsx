@@ -33,15 +33,8 @@ import Quill from "quill";
 import { SolidQuill } from "solid-quill";
 import { upload_image } from "@lib/service/common";
 
-type CreateArticleModalProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onClose: () => void;
-};
-export const CreateArticleModal: Component<CreateArticleModalProps> = (
-  props,
-) => {
-  const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
+export const ArticleCreate: Component = (props) => {
+  const merged = mergeProps({ open: false, onOpenChange: () => { } }, props);
 
   const [articleForm, { Form, Field }] = createForm<CreateArticleForm>({
     validate: valiForm(CreateArticleSchema),
@@ -134,7 +127,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
   return (
     <>
       <Dialog open={merged.open} onOpenChange={merged.onOpenChange}>
-        <DialogContent class="sm:max-w-[60%] w-[80%] h-[60vw]">
+        <DialogContent class="sm:max-w-[60%] w-[80%]  max-h-[60vh]">
           <Form onSubmit={handleSubmit} class="flex flex-col">
             <DialogHeader>
               <div class="text-lg font-semibold leading-none tracking-tight text-primary">
@@ -151,7 +144,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                 </Label>
                 <Field name="name">
                   {(field, props) => (
-                    <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1 h-full">
                       <Input
                         {...props}
                         id="name"
@@ -172,7 +165,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                   Image
                 </Label>
 
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1 flex-1">
                   <Input
                     onChange={async (e) => {
                       const file = e.target.files[0];
@@ -187,7 +180,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                   </Input>
                 </div>
               </div>
-              <div class="items-center gap-4">
+              <div class="items-center gap-4 flex-1">
                 <Label for="text" class="text-right">
                   Content
                 </Label>

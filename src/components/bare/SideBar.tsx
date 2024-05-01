@@ -27,17 +27,17 @@ const SideBar: Component = () => {
     // JSX code for your component's UI goes here
     <aside
       id="default-sidebar"
-      class="text-text z-40 w-80 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="text-white z-40 w-80 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
-      <div class="h-full pb-4 overflow-y-auto bg-background ">
-        <div class="p-3 text-md font-bold text-secondary">Welcome {name}</div>
+      <div class="h-full pb-4 overflow-y-auto bg-secondary ">
+        <div class="p-3 text-md font-bold text-white">Welcome {name}</div>
         <ul class="font-medium">
           {/* <li>
             <A
               href="#"
-              class={`flex items-center p-3    hover:bg-muted   group ${
-                path() === "/" ? "text-secondary bg-muted" : "text-text"
+              class={`flex items-center p-3    hover:bg-white hover:text-text   group ${
+                path() === "/" ? "text-text bg-white" : "text-white"
               }`}
             >
               <svg
@@ -57,14 +57,12 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/collection"
-              class={`flex items-center p-3    hover:bg-muted    group ${
-                path() === "/collection"
-                  ? "text-secondary bg-muted"
-                  : "text-text"
+              class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
+                path() === "/collection" ? "text-text bg-white" : "text-white"
               }`}
             >
               <svg
-                class="flex-shrink-0 w-5 h-5 text-text transition duration-75  group- "
+                class="flex-shrink-0 w-5 h-5  transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -78,12 +76,12 @@ const SideBar: Component = () => {
           <li>
             <A
               href="/article"
-              class={`flex items-center p-3    hover:bg-muted    group ${
-                path() === "/article" ? "text-secondary bg-muted" : "text-text"
+              class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
+                path() === "/article" ? "text-text bg-white" : "text-white"
               }`}
             >
               <svg
-                class="flex-shrink-0 w-5 h-5 text-text transition duration-75  group- "
+                class="flex-shrink-0 w-5 h-5 transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -97,12 +95,12 @@ const SideBar: Component = () => {
           <li>
             <div
               onClick={() => handleLogOut()}
-              class={`flex items-center cursor-pointer p-3 w-full  hover:bg-muted    group ${
-                path() === "/signin" ? "text-secondary bg-muted" : "text-text"
+              class={`flex items-center cursor-pointer p-3 w-full  hover:bg-white hover:text-text    group ${
+                path() === "/signin" ? "text-text bg-white" : "text-white"
               }`}
             >
               <svg
-                class="flex-shrink-0 w-5 h-5 text-text transition duration-75  group- "
+                class="flex-shrink-0 w-5 h-5 transition duration-75  group- "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
