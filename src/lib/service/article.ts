@@ -35,6 +35,7 @@ const fetch_articles = async () => {
 
 const save_article = async (data: any) => {
   try {
+    console.log({ data });
     const token = get_token();
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);

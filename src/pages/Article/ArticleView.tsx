@@ -23,7 +23,7 @@ const ArticleView: Component = (props) => {
       </Show>
 
       <Show when={article()?.isOk()}>
-        <div class="mt-4 flex flex-col gap-3 p-400 text-primary-100 rounded-sm ">
+        <div class="mt-4 flex flex-col gap-3 p-400 text-primary-100 rounded-sm overflow-hidden ">
           <div class="flex justify-between items-center ">
             <div class="text-2xl font-bold text-primary">
               {article_details().name}
@@ -41,10 +41,9 @@ const ArticleView: Component = (props) => {
               </div>
             </div>
           </div>
-          <div
-            class="p-3 max-h-[69vh] overflow-auto border-border border"
-            innerHTML={article_details().text}
-          ></div>
+          <div class="p-3 border-border border max-h-full overflow-auto no-scrollbar">
+            <div class="" innerHTML={article_details().text}></div>
+          </div>
         </div>
       </Show>
       <Show when={article()?.isErr()}>

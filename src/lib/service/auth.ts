@@ -48,31 +48,12 @@ const user_register = async (
 
 const user_login = async (email: string, password: string) => {
   try {
-    // const localAuthEffect = () =>
-    //   Effect.tryPromise({
-    //     try: () =>
-    //       fetch(`${API_URL}/api/auth/local`, {
-    //         // Updated here
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //         credentials: "include",
-    //         body: JSON.stringify({
-    //           identifier: email,
-    //           password,
-    //         }),
-    //       }),
-    //     catch: (unknown) => new Error(`something went wrong ${unknown}`),
-    //   });
-
     const res = await fetch(`${API_URL}/api/auth/local`, {
       // Updated here
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
       body: JSON.stringify({
         identifier: email,
         password,
