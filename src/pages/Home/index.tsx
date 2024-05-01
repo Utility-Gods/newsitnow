@@ -52,9 +52,8 @@ const Home: Component = () => {
             <h1 class="text-4xl font-bold text-primary">
               Welcome to Orange Gas
             </h1>
-            <p class="text-lg text-muted-foreground text-center">
+            <p class="text-lg text-muted-foreground text-center w-[69%]">
               Orange Gas is a general purpose CMS to empower the way you create
-              and manage your content.
             </p>
             <Button
               class="font-bold text-base"
@@ -76,22 +75,37 @@ const Home: Component = () => {
             It is time to change the way you create and manage your content.
           </div>
           <div>
-            <img src="images/3.png" alt="hero" class="w-full" />
+            <img src="images/14.png" alt="hero" class="w-full" />
           </div>
         </div>
         <Separator />
         <div class="flex items-center justify-center p-12 gap-3">
+          <div class="flex w-1/2 items-center flex-col gap-3">
+            <div class="text-bold text-secondary text-3xl text-center">
+              Create your content
+            </div>
+            <div class="text-md text-muted-foreground text-center w-[50%]">
+              You can create collection of articles, blogs, or any kind of rich
+              text content, with ease.
+            </div>
+          </div>
+          <div class="w-1/2">
+            <img src="images/15.png" alt="hero" class="w-full" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center p-12 gap-3">
+          <div>
+            <img src="images/4.png" alt="hero" class="w-full" />
+          </div>
           <div class="flex items-center flex-col gap-3">
             <div class="text-bold text-secondary text-3xl text-center">
-              Just configure it one time.
+              And Share it with the world
             </div>
             <div class="text-md text-muted-foreground text-center w-[50%]">
               and let it do the rest. Once it is set up you can focus on
               creating content, just like that.
             </div>
-          </div>
-          <div>
-            <img src="images/4.png" alt="hero" class="w-full" />
           </div>
         </div>
         <Separator />
