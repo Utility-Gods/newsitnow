@@ -1,6 +1,5 @@
 import { Component } from "solid-js";
 
-import { BadgeDelta } from "../ui/badge-delta";
 import { A } from "@solidjs/router";
 
 export const Nav: Component = (props) => {

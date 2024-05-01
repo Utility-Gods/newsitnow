@@ -66,7 +66,7 @@ const Home: Component = () => {
             </Button>
           </div>
           <div class="relative overflow-hidden shadow-lg">
-            <img src="images/12.png" alt="hero" class="w-full" />
+            <img src="/images/12.png" alt="hero" class="w-full" />
           </div>
         </div>
         <Separator />
@@ -75,7 +75,7 @@ const Home: Component = () => {
             It is time to change the way you create and manage your content.
           </div>
           <div>
-            <img src="images/14.png" alt="hero" class="w-full" />
+            <img src="/images/14.png" alt="hero" class="w-full" />
           </div>
         </div>
         <Separator />
@@ -90,13 +90,13 @@ const Home: Component = () => {
             </div>
           </div>
           <div class="w-1/2">
-            <img src="images/15.png" alt="hero" class="w-full" />
+            <img src="/images/15.png" alt="hero" class="w-full" />
           </div>
         </div>
 
         <div class="flex items-center justify-center p-12 gap-3">
           <div>
-            <img src="images/4.png" alt="hero" class="w-full" />
+            <img src="/images/4.png" alt="hero" class="w-full" />
           </div>
           <div class="flex items-center flex-col gap-3">
             <div class="text-bold text-secondary text-3xl text-center">
