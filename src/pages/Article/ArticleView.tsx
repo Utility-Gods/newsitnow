@@ -27,7 +27,7 @@ const ArticleView: Component = (props) => {
           <div
             class="bg-image relative flex items-between flex-col justify-end flex-shrink-0"
             style={{
-              "background-image": `url(${article_details().photo[0].url})`,
+              "background-image": `url(${article_details()?.photo?.[0].url ?? ""})`,
             }}
           >
             <div class="flex justify-between items-center p-3 bg-white">

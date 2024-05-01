@@ -95,30 +95,6 @@ function ArticleAttach(props: ArticleAttachProps) {
               Attach new articles to your collection and press save when you're
               done.
             </div>
-            {/* <Show when={collection()}>
-            <div class="bg-muted p-3 w-full">
-              <div class="flex items-center gap-3">
-                <div class="text-primary-foreground font-bold text-md">
-                  {collection().value.name}
-                </div>
-                <div class="flex items-center gap-3 text-muted-foreground text-sm">
-                  <div class="flex gap-2 items-center">
-                    <BadgeDelta deltaType="increase">
-                      {collection().value.status}
-                    </BadgeDelta>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <div class="">
-                      {new Date(
-                        collection().value.createdAt,
-                      ).toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="allow-3-lines">{collection().value.description}</div>
-            </div>
-          </Show> */}
           </DialogHeader>
           <Show when={articleList.loading}>
             <PageSkeleton />

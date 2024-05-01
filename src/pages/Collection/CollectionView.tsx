@@ -46,7 +46,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
   }
 
   return (
-    <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
+    <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-6">
       <BreadCrumb
         crumbs={[
           { href: "/", label: "Home" },
@@ -66,62 +66,69 @@ const CollectionView: Component = (props: CollectionViewProps) => {
             </div>
           }
         >
-          <div class="flex p-3 flex-col">
-            <div class="flex justify-between">
-              <div class="flex flex-col">
-                <div class="flex items-center text-2xl font-bold text-secondary leading-10">
+          <div class="p-3  border-border border flex items-center justify-between flex-shrink-0">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-secondary">
                   {collection_details().name}
+                  <div class="overflow-auto text-muted-foreground text-sm">
+                    {collection_details().description}
+                  </div>
                 </div>
               </div>
-              <Show when={isAuthor()}>
-                <div class="flex gap-3">
-                  <Button
-                    variant={"outline"}
-                    onClick={() => setShowAttachArticle(true)}
-                  >
-                    + Add Article
-                  </Button>
-                  <Button variant={"secondary"} onClick={embed_collection}>
-                    {" "}
-                    <div class="w-4 h-4 mr-2">
-                      <Share />
-                    </div>
-                    <span>Share</span>
-                  </Button>
+              <div class="flex items-center gap-3 text-muted-foreground text-sm">
+                <div class="flex gap-2 items-center">
+                  <BadgeDelta deltaType="increase">
+                    {collection_details().status}
+                  </BadgeDelta>
                 </div>
-              </Show>
-            </div>
-
-            <div class="overflow-auto text-muted-foreground">
-              {collection_details().description}
-            </div>
-            <div class="flex gap-2 items-center">
-              <div class="">
-                {new Date(collection_details().createdAt).toLocaleDateString()}
+                <div class="flex gap-2 items-center">
+                  <div class="">
+                    {new Date(
+                      collection_details().createdAt,
+                    ).toLocaleDateString()}
+                  </div>
+                </div>
               </div>
             </div>
-
-            <Show when={collection_details()?.articles?.length === 0}>
-              <div class="flex flex-col gap-6  items-center w-full h-full">
-                <div class="p-4 text-primary-100 w-full">
-                  <Empty message="No articles found" />
-                </div>
+            <Show when={isAuthor()}>
+              <div class="flex gap-3">
                 <Button
-                  variant={"secondary"}
+                  variant={"outline"}
                   onClick={() => setShowAttachArticle(true)}
                 >
                   + Add Article
+                </Button>
+                <Button variant={"secondary"} onClick={embed_collection}>
+                  {" "}
+                  <div class="w-4 h-4 mr-2">
+                    <Share />
+                  </div>
+                  <span>Share</span>
                 </Button>
               </div>
             </Show>
           </div>
 
-          <Separator />
+          <Show when={collection_details()?.articles?.length === 0}>
+            <div class="flex flex-col gap-6  items-center w-full h-full">
+              <div class="p-4 text-primary-100 w-full">
+                <Empty message="No articles found" />
+              </div>
+              <Button
+                variant={"secondary"}
+                onClick={() => setShowAttachArticle(true)}
+              >
+                + Add Article
+              </Button>
+            </div>
+          </Show>
+
           <Show when={collection_details()?.articles?.length}>
-            <div class="flex flex-col gap-6 p-3">
+            <div class="flex flex-col gap-3">
               <div class="w-full flex items-center justify-between">
-                <div class="text-xl font-bold text-text underline underline-offset-2">
-                  List of Attached Articles
+                <div class="font-semibold text-dim_gray px-3">
+                  Articles in this collection
                 </div>
               </div>
 
@@ -155,17 +162,19 @@ const CollectionView: Component = (props: CollectionViewProps) => {
             </div>
           </Show>
         </Show>
+        <Show when={showAttachArticle()}>
+          <ArticleAttach
+            collection={collection}
+            show={showAttachArticle()}
+            onShowChange={() => setShowAttachArticle(false)}
+          />
+        </Show>
       </Show>
+
       <Show when={collection()?.isErr()}>
         <div class="p-4 text-primary-100">Error loading collection</div>
       </Show>
-      <Show when={showAttachArticle()}>
-        <ArticleAttach
-          collection={collection}
-          show={showAttachArticle()}
-          onShowChange={() => setShowAttachArticle(false)}
-        />
-      </Show>
+
       <CollectionShare
         collection={collection}
         show={openShareModal()}
