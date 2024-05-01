@@ -12,6 +12,7 @@ import {
   valiForm,
 } from "@modular-forms/solid";
 import { showToast } from "~/components/ui/toast";
+import { Button } from "~/components/ui/button";
 
 import PageSpinner from "~/components/bare/PageSpinner";
 import {
@@ -20,7 +21,6 @@ import {
   DialogFooter,
   DialogHeader,
 } from "~/components/ui/dialog";
-import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -31,6 +31,7 @@ import { save_article } from "@lib/service/article";
 
 import Quill from "quill";
 import { SolidQuill } from "solid-quill";
+import { upload_image } from "@lib/service/common";
 
 type CreateArticleModalProps = {
   open: boolean;
@@ -52,11 +53,43 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
 
   const formValues = {
     name: "",
-    content: "",
+    photo: [],
     text: {},
   };
 
   const [loading, setLoading] = createSignal(false);
+
+  createEffect(() => {
+    console.log({ articleForm });
+  });
+
+  const uploadImage = async (file: File) => {
+    console.log({ file });
+    setLoading(true);
+    const res = await upload_image(file);
+    setLoading(false);
+    if (res.isErr()) {
+      console.log(res.error);
+      showToast({
+        variant: "error",
+        duration: 5000,
+        title: "Failed to upload image",
+        description: "An error occurred while uploading the image",
+      });
+    }
+
+    if (res.isOk()) {
+      console.log(res.value);
+      showToast({
+        variant: "success",
+        duration: 5000,
+        title: "Image uploaded",
+        description: "The image has been uploaded successfully",
+      });
+      formValues.photo = res.value;
+      console.log({ formValues });
+    }
+  };
 
   const handleSubmit: SubmitHandler<CreateArticleForm> = async (
     values,
@@ -69,6 +102,7 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
     try {
       const result = await save_article({
         ...values,
+        photo: formValues.photo,
         status: "Draft",
       });
       console.log({ result });
@@ -132,6 +166,26 @@ export const CreateArticleModal: Component<CreateArticleModalProps> = (
                     </div>
                   )}
                 </Field>
+              </div>
+              <div class="items-center gap-4">
+                <Label for="photo" class="text-right">
+                  Image
+                </Label>
+
+                <div class="flex flex-col gap-1">
+                  <Input
+                    onChange={async (e) => {
+                      const file = e.target.files[0];
+                      if (!file) return;
+                      uploadImage(file);
+                    }}
+                    accept="image/png, image/jpeg"
+                    id="image"
+                    type="file"
+                  >
+                    Upload Image
+                  </Input>
+                </div>
               </div>
               <div class="items-center gap-4">
                 <Label for="text" class="text-right">
