@@ -56,7 +56,7 @@ const SideBar: Component = () => {
 
           <li>
             <A
-              href="/collection"
+              href="collection"
               class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
                 path() === "/collection" ? "text-text bg-white" : "text-white"
               }`}
@@ -75,7 +75,7 @@ const SideBar: Component = () => {
           </li>
           <li>
             <A
-              href="/article"
+              href="article"
               class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
                 path() === "/article" ? "text-text bg-white" : "text-white"
               }`}

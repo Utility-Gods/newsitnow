@@ -21,8 +21,8 @@ const Article: Component = () => {
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
       <BreadCrumb
         crumbs={[
-          { href: "/", label: "Home" },
-          { href: "/article", label: "Article" },
+          { href: "/app", label: "Home" },
+          { href: "/app/article", label: "Article" },
         ]}
       />
       <div class="flex justify-between items-center p-3 ">
@@ -31,11 +31,7 @@ const Article: Component = () => {
           class="font-bold text-base"
           variant={"secondary"}
           size="lg"
-          onClick={() =>
-            navigate("/article/create", {
-              replace: true,
-            })
-          }
+          onClick={() => navigate("create")}
         >
           Create Article
         </Button>

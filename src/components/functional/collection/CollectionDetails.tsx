@@ -55,7 +55,7 @@ const CollectionDetails: Component<CollectionDetailsProps> = (props) => {
                 <div class="mt-4 flex flex-col gap-4 p-400 text-primary-100 rounded-sm ">
                   <div class="flex justify-between items-center ">
                     <div class="text-2xl font-bold text-primary">
-                      <A href={`/collections/${collection_details().id}`}>
+                      <A href={`${collection_details().id}`}>
                         {collection_details().name}
                       </A>
                     </div>

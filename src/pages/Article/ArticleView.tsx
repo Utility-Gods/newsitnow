@@ -14,8 +14,8 @@ const ArticleView: Component = (props) => {
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
       <BreadCrumb
         crumbs={[
-          { href: "/", label: "Home" },
-          { href: "/article", label: "Article" },
+          { href: "/app/", label: "Home" },
+          { href: "/app/article", label: "Article" },
         ]}
       />
       <Show when={article.loading}>

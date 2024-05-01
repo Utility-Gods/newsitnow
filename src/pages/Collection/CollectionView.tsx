@@ -49,8 +49,8 @@ const CollectionView: Component = (props: CollectionViewProps) => {
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-6">
       <BreadCrumb
         crumbs={[
-          { href: "/", label: "Home" },
-          { href: "/collection", label: "Collection" },
+          { href: "/app", label: "Home" },
+          { href: "/app/collection", label: "Collections" },
         ]}
       />
 
@@ -137,7 +137,9 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                   <div class="flex p-4 flex-col gap-3 bg-white">
                     <div class="flex justify-between items-center">
                       <div class="flex items-center text-2xl font-bold text-primary underline underline-offset-2 leading-10">
-                        <A href={`/article/${article.id}`}>{article.name}</A>
+                        <A href={`/app/article/${article.id}`}>
+                          {article.name}
+                        </A>
                       </div>
                       <div class="flex items center gap-3 text-muted-foreground text-sm">
                         <div class="flex gap-2 items-center">
