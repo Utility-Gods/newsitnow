@@ -69,15 +69,14 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
           variant: "error",
         });
       }
+      merged.onOpenChange(false);
+      setLoading(false);
     } catch (e) {
       showToast({
         variant: "error",
         title: "Failed to create collection",
         description: "An error occurred while creating the collection",
       });
-    } finally {
-      merged.onOpenChange(false);
-      setLoading(false);
     }
   };
 

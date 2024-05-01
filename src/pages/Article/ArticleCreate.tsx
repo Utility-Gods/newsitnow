@@ -31,8 +31,6 @@ import BreadCrumb from "~/components/bare/BreadCrumb";
 import { useNavigate } from "@solidjs/router";
 
 const ArticleCreate: Component = (props) => {
-  const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
-
   const navigate = useNavigate();
   const [articleForm, { Form, Field }] = createForm<CreateArticleForm>({
     validate: valiForm(CreateArticleSchema),
@@ -106,8 +104,6 @@ const ArticleCreate: Component = (props) => {
         title: "Article created",
         description: "The article has been created successfully",
       });
-      merged.onClose();
-      merged.onOpenChange(false);
     } catch (e) {
       console.log(e);
       showToast({
@@ -201,21 +197,21 @@ const ArticleCreate: Component = (props) => {
               )}
             </Field>
           </div>
+          <div class="flex gap-3 items-center justify-end mt-3">
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={() => {
+                navigate("/article");
+              }}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" size={"lg"} variant="secondary">
+              Save changes
+            </Button>
+          </div>
         </Form>
-        <div class="flex gap-3 items-center justify-end">
-          <Button
-            variant="ghost"
-            type="button"
-            onClick={() => {
-              navigate("/article");
-            }}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" size={"lg"} variant="secondary">
-            Save changes
-          </Button>
-        </div>
       </div>
 
       <Show when={loading()}>

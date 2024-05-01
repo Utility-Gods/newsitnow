@@ -71,7 +71,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
               <div class="flex items-center justify-between">
                 <div class="text-2xl font-bold text-secondary">
                   {collection_details().name}
-                  <div class="overflow-auto text-muted-foreground text-sm">
+                  <div class="overflow-auto text-muted-foreground text-sm allow-2-lines">
                     {collection_details().description}
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
               </div>
             </div>
             <Show when={isAuthor()}>
-              <div class="flex gap-3">
+              <div class="flex gap-3 flex-shrink-0">
                 <Button
                   variant={"outline"}
                   onClick={() => setShowAttachArticle(true)}

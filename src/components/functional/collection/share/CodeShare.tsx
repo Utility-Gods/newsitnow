@@ -39,7 +39,7 @@ function CodeShare(props: CodeShareProps) {
   }
   return (
     <div class="flex flex-col gap-2">
-      <div class="border-2 p-3 bg-muted  code-block text-muted-foreground">
+      <div class="border-2 p-3 bg-muted  code-block text-muted-foreground allow-3-lines">
         {embedCode()}
       </div>
 
