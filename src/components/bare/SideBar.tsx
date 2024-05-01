@@ -1,6 +1,5 @@
 import { A, useLocation, useNavigate } from "@solidjs/router";
 import { Component, createEffect, createSignal } from "solid-js";
-import { Button } from "../ui/button";
 
 const SideBar: Component = () => {
   // Implement your component logic here
@@ -34,7 +33,7 @@ const SideBar: Component = () => {
       <div class="h-full pb-4 overflow-y-auto bg-background ">
         <div class="p-3 text-md font-bold text-secondary">Welcome {name}</div>
         <ul class="font-medium">
-          <li>
+          {/* <li>
             <A
               href="#"
               class={`flex items-center p-3    hover:bg-muted   group ${
@@ -53,7 +52,7 @@ const SideBar: Component = () => {
               </svg>
               <span class="ms-3">Home</span>
             </A>
-          </li>
+          </li> */}
 
           <li>
             <A

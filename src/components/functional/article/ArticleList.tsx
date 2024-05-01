@@ -23,6 +23,7 @@ import { showToast } from "~/components/ui/toast";
 import { Skeleton } from "~/components/ui/skeleton";
 import ArticleShare from "./ArticleShare";
 import { A } from "@solidjs/router";
+import PageSpinner from "~/components/bare/PageSpinner";
 
 export type ArticleListProps = {
   openDetails: (open: boolean) => void;
@@ -37,12 +38,14 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const { articleList, refetch } = merged;
   const [openShareModal, setOpenShareModal] = createSignal(false);
 
+  const [loading, setLoading] = createSignal(false);
   createEffect(() => {
     console.log("fetching articles", articleList());
   });
 
   async function handle_delete_article(id: string) {
     try {
+      setLoading(true);
       const result = await delete_article(id);
 
       console.log("deleting article", result);
@@ -69,6 +72,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
         title: "Failed to delete article",
         description: "An error occurred while deleting the article",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -82,6 +87,9 @@ const ArticleList: Component<ArticleListProps> = (props) => {
 
   return (
     <div class="shadow-md bg-background">
+      <Show when={loading()}>
+        <PageSpinner />
+      </Show>
       <Table class=" border-border border">
         <TableHeader>
           <TableRow>

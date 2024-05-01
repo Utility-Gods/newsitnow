@@ -1,6 +1,14 @@
+import { useNavigate } from "@solidjs/router";
 import { Component } from "solid-js";
 
 const Home: Component = () => {
+  // currently we just reroute this page to collections
+
+  const navigate = useNavigate();
+
+  navigate("/collection", {
+    replace: true,
+  });
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
       <div class="flex justify-between items-center p-3  ">
