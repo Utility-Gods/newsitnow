@@ -2,7 +2,7 @@ import { RegisterForm, RegisterSchema } from "@lib/schema/forms/register";
 import { user_register } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
 import { Component, Show, createSignal } from "solid-js";
-import PageSpinner from "~/components/bare/PageSpinner";
+import PageSpinner from "~/components/bare/common/PageSkeleton";
 import { Button } from "~/components/ui/button";
 import {
   Card,

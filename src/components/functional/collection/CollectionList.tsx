@@ -24,7 +24,7 @@ import { Button } from "@components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
 import { A } from "@solidjs/router";
-import TableRowSkeleton from "~/components/bare/TableRowSkeleton";
+import TableRowSkeleton from "@components/bare/common/TableRowSkeleton";
 
 export type CollectionListProps = {
   openDetails: (open: boolean) => void;

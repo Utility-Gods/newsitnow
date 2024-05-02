@@ -1,4 +1,4 @@
-import Loader from "@components/bare/Loader";
+import Loader from "@components/bare/common/Loader";
 
 const PageSpinner = () => {
   return (

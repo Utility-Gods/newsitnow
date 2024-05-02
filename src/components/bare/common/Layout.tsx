@@ -1,9 +1,10 @@
-import Nav from "@components/bare/Nav";
-import SideBar from "@components/bare/SideBar";
 import { check_token_validity, get_token } from "@lib/utils";
 import { useNavigate } from "@solidjs/router";
 import { Component, createEffect } from "solid-js";
-import { showToast } from "./ui/toast";
+
+import SideBar from "@components/bare/common/SideBar";
+import { showToast } from "@components/ui/toast";
+import Nav from "~/components/bare/common/Nav";
 
 const Layout: Component = (props) => {
   const navigate = useNavigate();

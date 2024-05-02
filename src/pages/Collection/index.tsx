@@ -1,6 +1,6 @@
 import { fetch_collections } from "@lib/service/collection";
 import { Component, createResource, createSignal } from "solid-js";
-import BreadCrumb from "~/components/bare/BreadCrumb";
+import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import CollectionDetails from "~/components/functional/collection/CollectionDetails";
 import CollectionList from "~/components/functional/collection/CollectionList";
 import { CreateCollectionModal } from "~/components/functional/collection/CreateCollectionModal";

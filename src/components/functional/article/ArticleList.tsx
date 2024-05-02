@@ -1,4 +1,4 @@
-import { delete_article, fetch_articles } from "@lib/service/article";
+import { delete_article } from "@lib/service/article";
 import {
   Component,
   createEffect,
@@ -20,11 +20,12 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import Trash from "@lib/icons/Trash";
 import { showToast } from "~/components/ui/toast";
-import { Skeleton } from "~/components/ui/skeleton";
+
 import ArticleShare from "./ArticleShare";
 import { A } from "@solidjs/router";
-import PageSpinner from "~/components/bare/PageSpinner";
-import TableRowSkeleton from "~/components/bare/TableRowSkeleton";
+import PageSpinner from "~/components/bare/common/PageSpinner";
+
+import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
 
 export type ArticleListProps = {
   openDetails: (open: boolean) => void;

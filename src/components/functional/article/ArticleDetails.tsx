@@ -10,7 +10,7 @@ import Share from "@lib/icons/share";
 
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
-import PageSpinner from "@components/bare/PageSpinner";
+import PageSpinner from "@components/bare/common/PageSpinner";
 import {
   Component,
   createEffect,

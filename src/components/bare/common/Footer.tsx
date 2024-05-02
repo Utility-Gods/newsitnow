@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 
 export const Footer: Component = () => {
   return (
-    <div class="flex items-center justify-center gap-2 p-3 font-semibold text-center text-gray-300 bg-secondary-100">
+    <div class="flex items-center justify-center gap-2 p-3 font-semibold text-center text-gray-300 bg-secondary">
       <div class="w-full max-w-screen-xl p-4 py-6 mx-auto lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">

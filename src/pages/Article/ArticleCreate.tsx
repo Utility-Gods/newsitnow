@@ -8,7 +8,7 @@ import {
 import { showToast } from "~/components/ui/toast";
 import { Button } from "~/components/ui/button";
 
-import PageSpinner from "~/components/bare/PageSpinner";
+import PageSpinner from "~/components/bare/common/PageSkeleton";
 
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -21,7 +21,7 @@ import { save_article } from "@lib/service/article";
 import Quill from "quill";
 import { SolidQuill } from "solid-quill";
 import { upload_image } from "@lib/service/common";
-import BreadCrumb from "~/components/bare/BreadCrumb";
+import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import { useNavigate } from "@solidjs/router";
 
 const ArticleCreate: Component = (props) => {

@@ -9,7 +9,7 @@ import CodeShare from "./share/CodeShare";
 
 import APIShare from "./share/APIShare";
 import LinkShare from "./share/LinkShare";
-import PageSkeleton from "~/components/bare/PageSkeleton";
+import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { Show, createEffect } from "solid-js";
 
 interface CollectionShareProps {
