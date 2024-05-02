@@ -1,5 +1,5 @@
 import { get_user } from "@lib/utils";
-import { useNavigate } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
 import { Component } from "solid-js";
 
@@ -21,28 +21,16 @@ const Layout: Component = (props) => {
         <Show
           when={isLogged}
           fallback={
-            <Button
-              class="font-bold text-base"
-              onClick={() => {
-                navigate("/auth/login");
-              }}
-              variant={"secondary"}
-              size="lg"
-            >
+            <A href="/auth/login" class="text-white">
               Login
-            </Button>
+            </A>
           }
         >
-          <Button
-            class="font-bold text-base"
-            onClick={() => {
-              navigate("/app");
-            }}
-            variant={"secondary"}
-            size="lg"
-          >
-            Go to App
-          </Button>
+          <div>
+            <A href="/app" class="text-white">
+              Go to App
+            </A>
+          </div>
         </Show>
       </Nav>
 

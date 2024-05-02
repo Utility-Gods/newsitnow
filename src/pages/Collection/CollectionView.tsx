@@ -19,7 +19,6 @@ import ArticleAttach from "~/components/functional/article/ArticleAttach";
 import CollectionShare from "~/components/functional/collection/CollectionShare";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
-import { Separator } from "~/components/ui/separator";
 
 type CollectionViewProps = {};
 

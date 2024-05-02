@@ -31,7 +31,9 @@ const SideBar: Component = () => {
       aria-label="Sidebar"
     >
       <div class="h-full pb-4 overflow-y-auto bg-secondary ">
-        <div class="p-3 text-md font-bold text-white">Welcome {name}</div>
+        <div class="p-3 text-md font-bold text-white truncate">
+          Welcome {name}
+        </div>
         <ul class="font-medium">
           {/* <li>
             <A
