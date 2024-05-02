@@ -22,6 +22,7 @@ import { save_collection } from "@lib/service/collection";
 type CreateCollectionModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  refetch: () => void;
 };
 export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
   props,
@@ -60,6 +61,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
           title: "Collection created",
           description: "Collection has been created successfully",
         });
+        merged.refetch();
       }
 
       if (result?.isErr()) {
@@ -72,6 +74,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       merged.onOpenChange(false);
       setLoading(false);
     } catch (e) {
+      console.log(e);
       showToast({
         variant: "error",
         title: "Failed to create collection",

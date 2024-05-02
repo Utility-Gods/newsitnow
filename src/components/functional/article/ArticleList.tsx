@@ -24,6 +24,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 import ArticleShare from "./ArticleShare";
 import { A } from "@solidjs/router";
 import PageSpinner from "~/components/bare/PageSpinner";
+import TableRowSkeleton from "~/components/bare/TableRowSkeleton";
 
 export type ArticleListProps = {
   openDetails: (open: boolean) => void;
@@ -101,19 +102,6 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <Show when={articleList.loading}>
-            <TableRow>
-              <TableCell colspan={5}>
-                <Skeleton height={16} radius={10} />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colspan={5}>
-                <Skeleton height={16} radius={10} />
-              </TableCell>
-            </TableRow>
-          </Show>
-
           <Show when={articleList()?.isErr()}>
             <TableRow>
               <TableCell colspan={5} class="text-center text-error-foreground">
@@ -121,71 +109,73 @@ const ArticleList: Component<ArticleListProps> = (props) => {
               </TableCell>
             </TableRow>
           </Show>
-          <Show when={articleList()?.isOk()}>
-            <Show when={articleList()?.value.length === 0}>
-              <TableRow>
-                <TableCell colspan={5} class="text-center">
-                  No articles found
-                </TableCell>
-              </TableRow>
-            </Show>
-            <For each={articleList()?.value}>
-              {(c) => (
+          <Show when={!articleList.loading} fallback={<TableRowSkeleton />}>
+            <Show when={articleList()?.isOk()}>
+              <Show when={articleList()?.value.length === 0}>
                 <TableRow>
-                  <TableCell class="font-semibold">
-                    <div class="allow-3-lines">
-                      <A
-                        href={`${c.id}`}
-                        class="underline text-primary-foreground underline-offset-2"
-                      >
-                        {c.name}
-                      </A>
-                    </div>
-                  </TableCell>
-                  <TableCell class="text-truncate ">
-                    <div class="allow-3-lines" innerHTML={c.text}></div>
-                  </TableCell>
-                  <TableCell>
-                    <BadgeDelta deltaType="moderateIncrease">
-                      {c.status}
-                    </BadgeDelta>
-                  </TableCell>
-                  <TableCell class="text-right">
-                    {new Date(c.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell class="text-right gap-2 flex justify-end">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        merged.openDetails(true);
-                        merged.onView(c.id);
-                      }}
-                    >
-                      View
-                    </Button>
-
-                    <Button
-                      variant={"secondary"}
-                      size="sm"
-                      onClick={() => embed_article(c)}
-                    >
-                      <span>Share</span>
-                    </Button>
-
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      onClick={() => handle_delete_article(c.id)}
-                    >
-                      <div class="w-4 h-4">
-                        <Trash />
-                      </div>
-                    </Button>
+                  <TableCell colspan={5} class="text-center">
+                    No articles found
                   </TableCell>
                 </TableRow>
-              )}
-            </For>
+              </Show>
+              <For each={articleList()?.value}>
+                {(c) => (
+                  <TableRow>
+                    <TableCell class="font-semibold">
+                      <div class="allow-3-lines">
+                        <A
+                          href={`${c.id}`}
+                          class="underline text-primary-foreground underline-offset-2"
+                        >
+                          {c.name}
+                        </A>
+                      </div>
+                    </TableCell>
+                    <TableCell class="text-truncate ">
+                      <div class="allow-3-lines" innerHTML={c.text}></div>
+                    </TableCell>
+                    <TableCell>
+                      <BadgeDelta deltaType="moderateIncrease">
+                        {c.status}
+                      </BadgeDelta>
+                    </TableCell>
+                    <TableCell class="text-right">
+                      {new Date(c.createdAt).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell class="text-right gap-2 flex justify-end">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          merged.openDetails(true);
+                          merged.onView(c.id);
+                        }}
+                      >
+                        View
+                      </Button>
+
+                      <Button
+                        variant={"secondary"}
+                        size="sm"
+                        onClick={() => embed_article(c)}
+                      >
+                        <span>Share</span>
+                      </Button>
+
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => handle_delete_article(c.id)}
+                      >
+                        <div class="w-4 h-4">
+                          <Trash />
+                        </div>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </For>
+            </Show>
           </Show>
         </TableBody>
       </Table>
