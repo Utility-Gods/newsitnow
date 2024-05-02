@@ -1,10 +1,4 @@
-import {
-  Component,
-  createEffect,
-  createSignal,
-  mergeProps,
-  Show,
-} from "solid-js";
+import { Component, createEffect, createSignal, Show } from "solid-js";
 import {
   createForm,
   setValue,
@@ -104,6 +98,7 @@ const ArticleCreate: Component = (props) => {
         title: "Article created",
         description: "The article has been created successfully",
       });
+      navigate("/app/article");
     } catch (e) {
       console.log(e);
       showToast({

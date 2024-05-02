@@ -7,9 +7,6 @@ import ArticleDetails from "~/components/functional/article/ArticleDetails";
 import ArticleList from "~/components/functional/article/ArticleList";
 import { Button } from "~/components/ui/button";
 
-export const route = {
-  load: () => fetch_articles,
-};
 const Article: Component = () => {
   const navigate = useNavigate();
 
