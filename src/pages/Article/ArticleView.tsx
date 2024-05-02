@@ -2,8 +2,8 @@ import { Component, createResource, createSignal, Show } from "solid-js";
 
 import { fetch_article_by_id } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
-import BreadCrumb from "~/components/bare/BreadCrumb";
-import PageSkeleton from "~/components/bare/PageSkeleton";
+import BreadCrumb from "~/components/bare/common/BreadCrumb";
+import PageSkeleton from "~/components/bare/common/PageSkeleton";
 
 const ArticleView: Component = (props) => {
   const [article] = createResource(props.params.id, fetch_article_by_id);

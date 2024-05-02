@@ -5,16 +5,20 @@ import Public from "@pages/Public";
 import Article from "@pages/Article";
 import Collection from "@pages/Collection";
 import CollectionView from "@pages/Collection/CollectionView";
-import Layout from "./Layout";
+
 import { Toaster } from "~/components/ui/toast";
-import PublicHome from "./functional/public/PublicHome";
-import PublicArticle from "./functional/public/PublicArticle";
-import PublicCollection from "./functional/public/PublicCollection";
-import Login from "./functional/auth/Login";
-import Register from "./functional/auth/Register";
-import ArticleView from "~/pages/Article/ArticleView";
-import ArticleCreate from "~/pages/Article/ArticleCreate";
+
+import PublicArticle from "@components/functional/public/PublicArticle";
+import PublicCollection from "@components/functional/public/PublicCollection";
+import Login from "@components/functional/auth/Login";
+import Register from "@components/functional/auth/Register";
+import ArticleView from "@pages/Article/ArticleView";
+import ArticleCreate from "@pages/Article/ArticleCreate";
+import Documentation from "@pages/Home/Documentation";
+import HomeLayout from "@pages/Home/Layout";
 import AppHome from "@pages/App";
+import Layout from "@components/bare/common/Layout";
+import PublicHome from "@components/functional/public/PublicHome";
 const RouterComponent = () => (
   <>
     <Router>
@@ -22,8 +26,9 @@ const RouterComponent = () => (
         path="*"
         component={() => <div>404 - looks like you're lost</div>}
       />
-      <Route path="/">
+      <Route path="/" component={HomeLayout}>
         <Route path="" component={Home} />
+        <Route path="documentation" component={Documentation} />
       </Route>
       <Route path="/app" component={Layout}>
         <Route path="" component={AppHome} />

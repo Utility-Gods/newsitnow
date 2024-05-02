@@ -4,7 +4,7 @@ import { fetch_collection_by_id } from "@lib/service/collection";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { For } from "solid-js";
 import { Separator } from "~/components/ui/separator";
-import Empty from "~/components/bare/Empty";
+import Empty from "~/components/bare/common/Empty";
 import { A } from "@solidjs/router";
 
 const PublicCollection: Component = (props) => {

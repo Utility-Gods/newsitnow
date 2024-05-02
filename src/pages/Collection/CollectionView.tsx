@@ -12,9 +12,9 @@ import {
   createEffect,
   For,
 } from "solid-js";
-import BreadCrumb from "~/components/bare/BreadCrumb";
-import Empty from "~/components/bare/Empty";
-import PageSkeleton from "~/components/bare/PageSkeleton";
+import BreadCrumb from "~/components/bare/common/BreadCrumb";
+import Empty from "~/components/bare/common/Empty";
+import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import ArticleAttach from "~/components/functional/article/ArticleAttach";
 import CollectionShare from "~/components/functional/collection/CollectionShare";
 import { BadgeDelta } from "~/components/ui/badge-delta";

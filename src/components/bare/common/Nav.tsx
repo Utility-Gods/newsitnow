@@ -15,7 +15,14 @@ export const Nav: Component = (props) => {
           </A>
           <div class="text-md text-muted">Own your content.</div>
         </div>
-        {props.children}
+        <div class="flex gap-3 items-center">
+          <div>
+            <A href="/documentation" class="text-primary">
+              Documentation
+            </A>
+          </div>
+          {props.children}
+        </div>
       </nav>
     </header>
   );

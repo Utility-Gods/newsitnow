@@ -2,7 +2,7 @@ import { fetch_articles } from "@lib/service/article";
 import { useNavigate } from "@solidjs/router";
 
 import { Component, createResource, createSignal } from "solid-js";
-import BreadCrumb from "~/components/bare/BreadCrumb";
+import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import ArticleDetails from "~/components/functional/article/ArticleDetails";
 import ArticleList from "~/components/functional/article/ArticleList";
 import { Button } from "~/components/ui/button";

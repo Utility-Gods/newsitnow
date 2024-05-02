@@ -2,7 +2,7 @@ import { Component, createSignal, mergeProps, Show } from "solid-js";
 import { createForm, SubmitHandler, valiForm } from "@modular-forms/solid";
 import { showToast } from "~/components/ui/toast";
 
-import PageSpinner from "~/components/bare/PageSpinner";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 import {
   Dialog,
   DialogContent,

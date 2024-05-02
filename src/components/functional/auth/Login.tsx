@@ -3,7 +3,7 @@ import { user_login } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
 import { useNavigate } from "@solidjs/router";
 import { Component, createSignal, Show } from "solid-js";
-import PageSpinner from "~/components/bare/PageSpinner";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 import { Button } from "~/components/ui/button";
 import {
   Card,

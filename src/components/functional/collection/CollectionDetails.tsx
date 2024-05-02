@@ -10,7 +10,6 @@ import {
 
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
-import PageSpinner from "../../bare/PageSpinner";
 import { Component, createResource, createSignal, Show } from "solid-js";
 
 import { Button } from "~/components/ui/button";
@@ -19,6 +18,7 @@ import { fetch_collection_by_id } from "@lib/service/collection";
 import Share from "@lib/icons/share";
 import CollectionShare from "./CollectionShare";
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 
 type CollectionDetailsProps = {
   open: boolean;
