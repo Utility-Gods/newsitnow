@@ -14,11 +14,14 @@ import Login from "@components/functional/auth/Login";
 import Register from "@components/functional/auth/Register";
 import ArticleView from "@pages/Article/ArticleView";
 import ArticleCreate from "@pages/Article/ArticleCreate";
-import Documentation from "@pages/Home/Documentation";
 import HomeLayout from "@pages/Home/Layout";
 import AppHome from "@pages/App";
 import Layout from "@components/bare/common/Layout";
 import PublicHome from "@components/functional/public/PublicHome";
+import DLayout from "@pages/Documentation/Layout";
+import DArticle from "@pages/Documentation/Article";
+import DCollection from "@pages/Documentation/Collection";
+import DHome from "@pages/Documentation/Home";
 const RouterComponent = () => (
   <>
     <Router>
@@ -28,7 +31,11 @@ const RouterComponent = () => (
       />
       <Route path="/" component={HomeLayout}>
         <Route path="" component={Home} />
-        <Route path="documentation" component={Documentation} />
+        <Route path="/documentation" component={DLayout}>
+          <Route path="" component={DHome} />
+          <Route path="/article" component={DArticle} />
+          <Route path="/collection" component={DCollection} />
+        </Route>
       </Route>
       <Route path="/app" component={Layout}>
         <Route path="" component={AppHome} />
