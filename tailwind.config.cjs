@@ -4,6 +4,14 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 module.exports = {
   darkMode: ["class", '[data-kb-theme="dark"]'],
   content: ["./src/**/*.{ts,tsx}"],
+  layers: {
+    "no-tailwindcss": {
+      // Add any styles you want to disable here
+      ".no-tailwindcss": {
+        all: "unset",
+      },
+    },
+  },
   theme: {
     container: {
       center: true,
