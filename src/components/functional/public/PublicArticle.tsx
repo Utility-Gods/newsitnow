@@ -41,7 +41,7 @@ const PublicArticle: Component = (props) => {
               </div>
             </div>
             <div
-              class="p-3 border-border border"
+              class="p-3 border-border border no-tailwindcss"
               innerHTML={article_details().text}
             ></div>
           </div>

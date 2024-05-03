@@ -33,7 +33,7 @@ const RouterComponent = () => (
         <Route path="" component={Home} />
         <Route path="/documentation" component={DLayout}>
           <Route path="" component={DHome} />
-          <Route path="/article" component={DArticle} />
+          <Route path="/article/:id" component={DArticle} />
           <Route path="/collection" component={DCollection} />
         </Route>
       </Route>
