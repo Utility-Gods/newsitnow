@@ -8,7 +8,7 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
     <div id="embedded-collection"></div>
        <script>
        (function() {
-         var collectionId = 6;
+         var collectionId = ${collectionId};
 
          // Fetch collection data from Strapi API
          fetch('\${strapiUrl}/api/collections/' + collectionId, {
@@ -56,7 +56,7 @@ async function generateEmbedCodeExposed(collectionId: number): Promise<string> {
       <div id="embedded-collection"></div>
          <script>
          (function() {
-           var collectionId = 6;
+           var collectionId = ${collectionId};
 
            // Fetch collection data from Strapi API
            fetch('${strapiUrl}/api/collections/' + collectionId, {
