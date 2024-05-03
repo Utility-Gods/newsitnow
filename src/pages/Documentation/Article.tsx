@@ -22,16 +22,14 @@ const Article: Component = (props) => {
   console.log(articleId(), props);
   const [article, { refetch }] = createResource(articleId(), fetch_articles);
   return (
-    <div>
-      <Show when={!article.loading} fallback={<PageSkeleton></PageSkeleton>}>
-        <Show when={article()}>
-          <div>
-            <div>{article().name}</div>
-            <div data-remove-styles innerHTML={article().text}></div>
-          </div>
-        </Show>
+    <Show when={!article.loading} fallback={<PageSkeleton></PageSkeleton>}>
+      <Show when={article()}>
+        <div class="ql-editor">
+          <div>{article().name}</div>
+          <div innerHTML={article().text}></div>
+        </div>
       </Show>
-    </div>
+    </Show>
   );
 };
 

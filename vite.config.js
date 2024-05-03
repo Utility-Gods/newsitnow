@@ -32,10 +32,5 @@ export default defineConfig({
   },
   build: {
     target: "esnext",
-    rollupOptions: {
-      input: {
-        main: "./documentation/index.html",
-      },
-    },
   },
 });
