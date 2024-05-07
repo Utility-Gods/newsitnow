@@ -22,7 +22,17 @@ const Collection: Component = () => {
     console.log(collections());
   });
   return (
+<<<<<<< Updated upstream
     <div>
+=======
+    <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-6">
+      <BreadCrumb
+        crumbs={[
+          { href: "", label: "Documentation" },
+          { href: "/documentation/collection", label: "Collections" },
+        ]}
+      />
+>>>>>>> Stashed changes
       <Show
         when={!collections.loading}
         fallback={<PageSkeleton></PageSkeleton>}
