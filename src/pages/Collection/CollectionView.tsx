@@ -97,7 +97,6 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                   + Add Article
                 </Button>
                 <Button variant={"secondary"} onClick={embed_collection}>
-                  {" "}
                   <div class="w-4 h-4 mr-2">
                     <Share />
                   </div>
