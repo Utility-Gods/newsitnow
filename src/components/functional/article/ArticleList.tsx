@@ -16,6 +16,15 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import Trash from "@lib/icons/Trash";
@@ -26,6 +35,10 @@ import { A, useNavigate } from "@solidjs/router";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 
 import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
+import ThreeDots from "@lib/icons/ThreeDots";
+import Share from "@lib/icons/share";
+import Edit from "@lib/icons/Edit";
+import Link from "@lib/icons/link";
 
 export type ArticleListProps = {
   articleList: any;
@@ -99,7 +112,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
             <TableHead class="w-1/4">Description</TableHead>
             <TableHead>Status</TableHead>
             <TableHead class="text-right">Created</TableHead>
-            <TableHead class="w-1/4 text-right">Actions</TableHead>
+            <TableHead class="text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -144,34 +157,54 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                       {new Date(c.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell class="text-right gap-2 flex justify-end">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          console.log("navigating to", c);
-                          navigate(`${c.id}`);
-                        }}
-                      >
-                        View
-                      </Button>
-
-                      <Button
-                        variant={"secondary"}
-                        size="sm"
-                        onClick={() => embed_article(c)}
-                      >
-                        <span>Share</span>
-                      </Button>
-
-                      <Button
-                        variant="destructive"
-                        size="icon"
-                        onClick={() => handle_delete_article(c.id)}
-                      >
-                        <div class="w-4 h-4">
-                          <Trash />
-                        </div>
-                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <div class="w-6 h-6">
+                            <ThreeDots />
+                          </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem
+                            class="text-primary-foreground flex items-center gap-2"
+                            onClick={() => {
+                              console.log("navigating to", c);
+                              navigate(`${c.id}`);
+                            }}
+                          >
+                            <div class="w-4 h-4">
+                              <Link />
+                            </div>
+                            View
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => {}}
+                            class="text-primary-foreground flex items-center gap-2"
+                          >
+                            <div class="w-4 h-4">
+                              <Edit />
+                            </div>
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => embed_article(c)}
+                            class="text-primary-foreground flex items-center gap-2"
+                          >
+                            <div class="w-4 h-4">
+                              <Share />
+                            </div>
+                            Share
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            class="text-primary-foreground flex items-center gap-2"
+                            onClick={() => handle_delete_article(c.id)}
+                          >
+                            <div class="w-4 h-4">
+                              <Trash />
+                            </div>
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 )}

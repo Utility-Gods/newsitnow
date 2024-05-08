@@ -442,10 +442,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kobalte/core@^0.12.6":
-  version "0.12.6"
-  resolved "https://registry.yarnpkg.com/@kobalte/core/-/core-0.12.6.tgz#767ac17932111e44e46490eb48700cdd9ee21b1c"
-  integrity sha512-+Ta2o2wEqZ2fCqLMkvjT40VHNmcFKdGe8TNDVQbbMPk66qoU6g/DDRFR/Ib7eAjb+C95VoIyk6zaafos2VOo0w==
+"@kobalte/core@^0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@kobalte/core/-/core-0.13.1.tgz#84d289f8fda21fc91ce55e36ca5a12a3ce72cf89"
+  integrity sha512-ROFTM2EZhOS+PxCTD+a2LKvzi8ZA7uiDvAt9/rAHzlaAykJPWXCpRuB/PYKiA7iPssGU3Fno3GT5bgRoZAc3KQ==
   dependencies:
     "@floating-ui/dom" "^1.5.1"
     "@internationalized/date" "^3.4.0"
