@@ -20,8 +20,8 @@ import { update_article } from "@lib/service/article";
 
 import Quill from "quill";
 import { SolidQuill } from "solid-quill";
-import { upload_image } from "@lib/service/common";
 import { useNavigate } from "@solidjs/router";
+import ImageUpload from "../common/ImageUpload";
 
 type ArticleUpdateProps = {
   article: any;
@@ -48,34 +48,6 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
   createEffect(() => {
     console.log({ articleForm });
   });
-
-  const uploadImage = async (file: File) => {
-    console.log({ file });
-    setLoading(true);
-    const res = await upload_image(file);
-    setLoading(false);
-    if (res.isErr()) {
-      console.log(res.error);
-      showToast({
-        variant: "error",
-        duration: 5000,
-        title: "Failed to upload image",
-        description: "An error occurred while uploading the image",
-      });
-    }
-
-    if (res.isOk()) {
-      console.log(res.value);
-      showToast({
-        variant: "success",
-        duration: 5000,
-        title: "Image uploaded",
-        description: "The image has been uploaded successfully",
-      });
-      formValues.photo = res.value;
-      console.log({ formValues });
-    }
-  };
 
   const handleSubmit: SubmitHandler<UpdateArticleForm> = async (
     values,
@@ -127,6 +99,16 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
         <Form onSubmit={handleSubmit} class="flex flex-col">
           <div class="items-center gap-4">
+            <div class="flex flex-col gap-1 flex-1">
+              <ImageUpload
+                value={formValues.photo[0].url ?? ""}
+                onUpload={(url) => {
+                  formValues.photo = url;
+                }}
+              />
+            </div>
+          </div>
+          <div class="items-center gap-4">
             <Label for="name" class="text-right">
               Title
             </Label>
@@ -147,26 +129,7 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
               )}
             </Field>
           </div>
-          <div class="items-center gap-4">
-            <Label for="photo" class="text-right">
-              Image
-            </Label>
 
-            <div class="flex flex-col gap-1 flex-1">
-              <Input
-                onChange={async (e) => {
-                  const file = e.target.files[0];
-                  if (!file) return;
-                  uploadImage(file);
-                }}
-                accept="image/png, image/jpeg"
-                id="image"
-                type="file"
-              >
-                Upload Image
-              </Input>
-            </div>
-          </div>
           <div class="items-center gap-4 flex-1">
             <Label for="text" class="text-right">
               Content

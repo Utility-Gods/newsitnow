@@ -23,6 +23,7 @@ import { SolidQuill } from "solid-quill";
 import { upload_image } from "@lib/service/common";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import { useNavigate } from "@solidjs/router";
+import ImageUpload from "~/components/functional/common/ImageUpload";
 
 const ArticleCreate: Component = (props) => {
   const navigate = useNavigate();
@@ -129,6 +130,15 @@ const ArticleCreate: Component = (props) => {
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
         <Form onSubmit={handleSubmit} class="flex flex-col">
           <div class="items-center gap-4">
+            <div class="flex flex-col gap-1 flex-1">
+              <ImageUpload
+                onUpload={(url) => {
+                  formValues.photo = url;
+                }}
+              />
+            </div>
+          </div>
+          <div class="items-center gap-4">
             <Label for="name" class="text-right">
               Title
             </Label>
@@ -148,26 +158,7 @@ const ArticleCreate: Component = (props) => {
               )}
             </Field>
           </div>
-          <div class="items-center gap-4">
-            <Label for="photo" class="text-right">
-              Image
-            </Label>
 
-            <div class="flex flex-col gap-1 flex-1">
-              <Input
-                onChange={async (e) => {
-                  const file = e.target.files[0];
-                  if (!file) return;
-                  uploadImage(file);
-                }}
-                accept="image/png, image/jpeg"
-                id="image"
-                type="file"
-              >
-                Upload Image
-              </Input>
-            </div>
-          </div>
           <div class="items-center gap-4 flex-1">
             <Label for="text" class="text-right">
               Content
