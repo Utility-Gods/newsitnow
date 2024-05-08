@@ -20,13 +20,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
-import { Button } from "@components/ui/button";
+
 import Trash from "@lib/icons/Trash";
 import { showToast } from "~/components/ui/toast";
 
@@ -179,6 +177,10 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                           <DropdownMenuItem
                             onClick={() => {}}
                             class="text-primary-foreground flex items-center gap-2"
+                            onClick={() => {
+                              console.log("navigating to", c);
+                              navigate(`${c.id}?edit=true`);
+                            }}
                           >
                             <div class="w-4 h-4">
                               <Edit />
