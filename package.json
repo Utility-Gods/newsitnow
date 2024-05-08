@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.29.1",
-    "@kobalte/core": "^0.12.6",
+    "@kobalte/core": "^0.13.1",
     "@modular-forms/solid": "^0.20.0",
     "@solidjs/router": "^0.13.1",
     "autoprefixer": "^10.4.19",

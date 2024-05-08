@@ -1,3 +1,4 @@
+import Photo from "@lib/icons/Photo";
 import { A, useLocation, useNavigate } from "@solidjs/router";
 import { Component, createEffect, createSignal } from "solid-js";
 
@@ -21,6 +22,10 @@ const SideBar: Component = () => {
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("token");
     navigate("/auth/login", { replace: true });
+  }
+
+  function matchPath(path: string) {
+    return location.pathname === path || location.pathname.startsWith(path);
   }
 
   return (
@@ -60,7 +65,9 @@ const SideBar: Component = () => {
             <A
               href="collection"
               class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
-                path() === "/collection" ? "text-text bg-white" : "text-white"
+                matchPath("/app/collection")
+                  ? "text-text bg-white"
+                  : "text-white"
               }`}
             >
               <svg
@@ -79,7 +86,7 @@ const SideBar: Component = () => {
             <A
               href="article"
               class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
-                path() === "/article" ? "text-text bg-white" : "text-white"
+                matchPath("/app/article") ? "text-text bg-white" : "text-white"
               }`}
             >
               <svg
@@ -95,10 +102,23 @@ const SideBar: Component = () => {
             </A>
           </li>
           <li>
+            <A
+              href="article"
+              class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
+                matchPath("/app/media") ? "text-text bg-white" : "text-white"
+              }`}
+            >
+              <div class="w-5 h-5">
+                <Photo />{" "}
+              </div>
+              <span class="flex-1 ms-3 whitespace-nowrap">Media</span>
+            </A>
+          </li>
+          <li>
             <div
               onClick={() => handleLogOut()}
               class={`flex items-center cursor-pointer p-3 w-full  hover:bg-white hover:text-text    group ${
-                path() === "/signin" ? "text-text bg-white" : "text-white"
+                matchPath("/app/signin") ? "text-text bg-white" : "text-white"
               }`}
             >
               <svg

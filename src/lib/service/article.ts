@@ -61,6 +61,34 @@ const save_article = async (data: any) => {
   }
 };
 
+const update_article = async (data: any) => {
+  try {
+    console.log("sending this payload", data);
+    const token = get_token();
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+    reqHeaders.append("Content-Type", "application/json");
+
+    const response = await fetch(`${API_URL}/api/articles/${data.id}`, {
+      method: "PUT",
+      headers: reqHeaders,
+      body: JSON.stringify({ data }),
+    });
+
+    const result = await response.json();
+    console.log("updating article", result);
+
+    if (!response.ok) {
+      return err(result);
+    }
+
+    return ok(result);
+  } catch (e) {
+    console.log(e);
+    return err(e);
+  }
+};
+
 const fetch_article_by_id = async (id: string) => {
   if (!id) {
     return;
@@ -117,4 +145,10 @@ const delete_article = async (id: string) => {
   }
 };
 
-export { fetch_articles, save_article, fetch_article_by_id, delete_article };
+export {
+  fetch_articles,
+  save_article,
+  update_article,
+  fetch_article_by_id,
+  delete_article,
+};

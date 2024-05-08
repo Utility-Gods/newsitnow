@@ -1,15 +1,12 @@
 import { fetch_collections } from "@lib/service/collection";
 import { Component, createResource, createSignal } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
-import CollectionDetails from "~/components/functional/collection/CollectionDetails";
 import CollectionList from "~/components/functional/collection/CollectionList";
 import { CreateCollectionModal } from "~/components/functional/collection/CreateCollectionModal";
 import { Button } from "~/components/ui/button";
 
 const Collection: Component = () => {
   const [openModal, setOpenModal] = createSignal(false);
-  const [openDetails, setOpenDetails] = createSignal(false);
-  const [activeCollection, setActiveCollection] = createSignal("");
   const [collectionList, { refetch }] = createResource(fetch_collections);
 
   return (
@@ -35,25 +32,12 @@ const Collection: Component = () => {
         </Button>
       </div>
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
-        <CollectionList
-          collectionList={collectionList}
-          refetch={refetch}
-          openDetails={setOpenDetails}
-          onView={(id: string) => {
-            console.log(id);
-            setActiveCollection(id);
-          }}
-        />
+        <CollectionList collectionList={collectionList} refetch={refetch} />
       </div>
       <CreateCollectionModal
         open={openModal()}
         onOpenChange={setOpenModal}
         refetch={refetch}
-      />
-      <CollectionDetails
-        open={openDetails()}
-        onOpenChange={setOpenDetails}
-        collectionId={activeCollection}
       />
     </div>
   );

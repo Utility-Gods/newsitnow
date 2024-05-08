@@ -1,8 +1,7 @@
-import { delete_collection, fetch_collections } from "@lib/service/collection";
+import { delete_collection } from "@lib/service/collection";
 import {
   Component,
   createEffect,
-  createResource,
   For,
   mergeProps,
   Show,
@@ -19,16 +18,27 @@ import {
 
 import CollectionShare from "./CollectionShare";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
-import { A } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import TableRowSkeleton from "@components/bare/common/TableRowSkeleton";
+import ThreeDots from "@lib/icons/ThreeDots";
+import Link from "@lib/icons/link";
+import Edit from "@lib/icons/Edit";
+import Share from "@lib/icons/share";
 
 export type CollectionListProps = {
-  openDetails: (open: boolean) => void;
-  onView: (id: string) => void;
   collectionList: any;
   refetch: () => void;
 };
@@ -36,6 +46,8 @@ export type CollectionListProps = {
 const CollectionList: Component<CollectionListProps> = (props) => {
   const merged = mergeProps(props);
   const { collectionList, refetch } = merged;
+
+  const navigate = useNavigate();
   const [openShareModal, setOpenShareModal] = createSignal(false);
 
   createEffect(() => {
@@ -89,7 +101,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
             <TableHead>Description</TableHead>
             <TableHead>Status</TableHead>
             <TableHead class="text-right">Created</TableHead>
-            <TableHead class="w-1/4 text-right">Actions</TableHead>
+            <TableHead class=" text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -132,36 +144,54 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       {new Date(c.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell class="text-right gap-2 flex justify-end">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          merged.openDetails(true);
-                          console.log(c);
-                          merged.onView(c.id);
-                        }}
-                      >
-                        View
-                      </Button>
-                      <Button
-                        variant={"secondary"}
-                        size="sm"
-                        onClick={() => embed_collection(c)}
-                      >
-                        <span>Share</span>
-                      </Button>
-                      {/* <Button variant="secondary" size="sm">
-                      Edit
-                    </Button> */}
-                      <Button
-                        variant="destructive"
-                        size="icon"
-                        onClick={() => handle_delete_collection(c.id)}
-                      >
-                        <div class="w-4 h-4">
-                          <Trash />
-                        </div>
-                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <div class="w-6 h-6">
+                            <ThreeDots />
+                          </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem
+                            class="text-primary-foreground flex items-center gap-2"
+                            onClick={() => {
+                              console.log("navigating to", c);
+                              navigate(`${c.id}`);
+                            }}
+                          >
+                            <div class="w-4 h-4">
+                              <Link />
+                            </div>
+                            View
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => {}}
+                            class="text-primary-foreground flex items-center gap-2"
+                          >
+                            <div class="w-4 h-4">
+                              <Edit />
+                            </div>
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => embed_collection(c)}
+                            class="text-primary-foreground flex items-center gap-2"
+                          >
+                            <div class="w-4 h-4">
+                              <Share />
+                            </div>
+                            Share
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                            onClick={() => handle_delete_collection(c.id)}
+                          >
+                            <div class="w-4 h-4">
+                              <Trash />
+                            </div>
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 )}
