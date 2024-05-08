@@ -22,14 +22,12 @@ import Trash from "@lib/icons/Trash";
 import { showToast } from "~/components/ui/toast";
 
 import ArticleShare from "./ArticleShare";
-import { A } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 
 import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
 
 export type ArticleListProps = {
-  openDetails: (open: boolean) => void;
-  onView: (id: string) => void;
   articleList: any;
   refetch: () => void;
 };
@@ -38,6 +36,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const merged = mergeProps(props);
 
   const { articleList, refetch } = merged;
+
+  const navigate = useNavigate();
   const [openShareModal, setOpenShareModal] = createSignal(false);
 
   const [loading, setLoading] = createSignal(false);
@@ -148,8 +148,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          merged.openDetails(true);
-                          merged.onView(c.id);
+                          console.log("navigating to", c);
+                          navigate(`${c.id}`);
                         }}
                       >
                         View

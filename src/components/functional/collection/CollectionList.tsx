@@ -1,8 +1,7 @@
-import { delete_collection, fetch_collections } from "@lib/service/collection";
+import { delete_collection } from "@lib/service/collection";
 import {
   Component,
   createEffect,
-  createResource,
   For,
   mergeProps,
   Show,
@@ -23,12 +22,10 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
-import { A } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import TableRowSkeleton from "@components/bare/common/TableRowSkeleton";
 
 export type CollectionListProps = {
-  openDetails: (open: boolean) => void;
-  onView: (id: string) => void;
   collectionList: any;
   refetch: () => void;
 };
@@ -36,6 +33,8 @@ export type CollectionListProps = {
 const CollectionList: Component<CollectionListProps> = (props) => {
   const merged = mergeProps(props);
   const { collectionList, refetch } = merged;
+
+  const navigate = useNavigate();
   const [openShareModal, setOpenShareModal] = createSignal(false);
 
   createEffect(() => {
@@ -136,9 +135,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          merged.openDetails(true);
-                          console.log(c);
-                          merged.onView(c.id);
+                          navigate(`${c.id}`);
                         }}
                       >
                         View

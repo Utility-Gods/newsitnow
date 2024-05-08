@@ -1,17 +1,13 @@
 import { fetch_articles } from "@lib/service/article";
 import { useNavigate } from "@solidjs/router";
 
-import { Component, createResource, createSignal } from "solid-js";
+import { Component, createResource } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
-import ArticleDetails from "~/components/functional/article/ArticleDetails";
 import ArticleList from "~/components/functional/article/ArticleList";
 import { Button } from "~/components/ui/button";
 
 const Article: Component = () => {
   const navigate = useNavigate();
-
-  const [openDetails, setOpenDetails] = createSignal(false);
-  const [activeArticle, setActiveArticle] = createSignal("");
   const [articleList, { refetch }] = createResource(fetch_articles);
 
   return (
@@ -34,22 +30,8 @@ const Article: Component = () => {
         </Button>
       </div>
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full ">
-        <ArticleList
-          articleList={articleList}
-          refetch={refetch}
-          openDetails={setOpenDetails}
-          onView={(id: string) => {
-            setActiveArticle(id);
-          }}
-        />
+        <ArticleList articleList={articleList} refetch={refetch} />
       </div>
-
-      <ArticleDetails
-        open={openDetails()}
-        onOpenChange={setOpenDetails}
-        articleId={activeArticle}
-        refetchArticles={refetch}
-      />
     </div>
   );
 };
