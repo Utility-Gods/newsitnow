@@ -162,7 +162,3 @@
     padding: 20px;
     text-align: center;
 }
-
-[data-remove-styles] * {
-    all: initial;
-}

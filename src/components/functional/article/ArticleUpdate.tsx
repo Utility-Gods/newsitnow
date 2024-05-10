@@ -91,17 +91,12 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
 
   return (
     <>
-      <div class="flex justify-between items-center p-3 ">
-        <div class="text-2xl font-bold text-primary leading-10">
-          Update article
-        </div>
-      </div>
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
         <Form onSubmit={handleSubmit} class="flex flex-col">
           <div class="items-center gap-4">
             <div class="flex flex-col gap-1 flex-1">
               <ImageUpload
-                value={formValues.photo[0].url ?? ""}
+                value={formValues.photo?.[0]?.url ?? ""}
                 onUpload={(url) => {
                   formValues.photo = url;
                 }}
