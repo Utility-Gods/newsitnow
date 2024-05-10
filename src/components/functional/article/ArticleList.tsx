@@ -107,10 +107,10 @@ const ArticleList: Component<ArticleListProps> = (props) => {
         <TableHeader>
           <TableRow>
             <TableHead class="w-1/4">Name</TableHead>
-            <TableHead class="w-1/4">Description</TableHead>
+            {/* <TableHead class="w-1/4">Description</TableHead> */}
             <TableHead>Status</TableHead>
             <TableHead class="text-right">Created</TableHead>
-            <TableHead class="text-right"></TableHead>
+            <TableHead class="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -134,18 +134,21 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                 {(c) => (
                   <TableRow>
                     <TableCell class="font-semibold">
-                      <div class="allow-3-lines">
+                      <div class="clamp-lines line-clamp-1">
                         <A
                           href={`${c.id}`}
-                          class="underline text-primary-foreground underline-offset-2"
+                          class="underline text-primary underline-offset-2"
                         >
                           {c.name}
                         </A>
                       </div>
                     </TableCell>
-                    <TableCell class="text-truncate ">
-                      <div class="allow-3-lines" innerHTML={c.text}></div>
-                    </TableCell>
+                    {/* <TableCell class="text-truncate ">
+                      <div
+                        class="clamp-lines line-clamp-2"
+                        innerHTML={c.text}
+                      ></div>
+                    </TableCell> */}
                     <TableCell>
                       <BadgeDelta deltaType="moderateIncrease">
                         {c.status}
@@ -197,7 +200,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                             Share
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            class="text-primary-foreground flex items-center gap-2"
+                            class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
                             onClick={() => handle_delete_article(c.id)}
                           >
                             <div class="w-4 h-4">
