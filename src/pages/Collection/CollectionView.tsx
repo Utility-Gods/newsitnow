@@ -21,6 +21,7 @@ import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import ArticleAttach from "~/components/functional/article/ArticleAttach";
 import CollectionShare from "~/components/functional/collection/CollectionShare";
+import AreYouSure from "~/components/functional/common/AreYouSure";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
@@ -49,6 +50,8 @@ const CollectionView: Component = (props: CollectionViewProps) => {
   };
 
   const [openShareModal, setOpenShareModal] = createSignal(false);
+
+  const [openPublishModal, setOpenPublishModal] = createSignal(false);
 
   function embed_collection() {
     if (!isPublished()) {
@@ -191,7 +194,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                     <Button
                       variant={"secondary"}
                       onClick={() => {
-                        changeStatus("Published");
+                        setOpenPublishModal(true);
                       }}
                     >
                       Publish
@@ -208,7 +211,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
             </Show>
 
             <Show when={collection_details()?.articles?.length}>
-              <div class="flex flex-col">
+              <div class="flex flex-col gap-3">
                 <div class="w-full flex items-center justify-between">
                   <div class="font-regular text-dim_gray px-3 text-sm underline underline-offset-2">
                     {collection_details()?.articles?.length ?? 0} Articles in
@@ -218,7 +221,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
 
                 <For each={collection_details()?.articles}>
                   {(article) => (
-                    <div class="flex p-4 flex-col gap-3 border-border border-b">
+                    <div class="flex p-4 flex-col gap-3 border-border border bg-muted">
                       <div class="flex justify-between items-center">
                         <div class="flex items-center text-md font-regular text-primary underline underline-offset-2 leading-10">
                           <A href={`/app/article/${article.id}`}>
@@ -244,10 +247,6 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="overflow-auto allow-3-lines"
-                        innerHTML={article.text}
-                      ></div>
                     </div>
                   )}
                 </For>
@@ -274,6 +273,17 @@ const CollectionView: Component = (props: CollectionViewProps) => {
       <Show when={loading()}>
         <PageSpinner />
       </Show>
+
+      <AreYouSure
+        show={openPublishModal()}
+        onSubmit={() => {
+          changeStatus("Published");
+        }}
+        message="Are you sure you want to publish this collection?"
+        onOpenChange={() => {
+          setOpenPublishModal(false);
+        }}
+      />
 
       <CollectionShare
         collection={collection_details}

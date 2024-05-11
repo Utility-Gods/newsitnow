@@ -11,14 +11,7 @@ import Share from "@lib/icons/share";
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 import PageSpinner from "@components/bare/common/PageSpinner";
-import {
-  Component,
-  createEffect,
-  createResource,
-  createSignal,
-  onMount,
-  Show,
-} from "solid-js";
+import { Component, createResource, createSignal, Show } from "solid-js";
 
 import { fetch_article_by_id } from "@lib/service/article";
 import { Button } from "~/components/ui/button";

@@ -3,8 +3,9 @@ import { Component, createEffect, createResource, Show } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
-const fetch_collections = async () => {
+const fetch_collections = async (id) => {
   try {
     const res = await fetch("http://localhost:1337/api/collections/" + 18);
     if (!res.ok) {
@@ -31,6 +32,14 @@ const Collection: Component = () => {
           { href: "/documentation/collection", label: "Collections" },
         ]}
       />
+      <Callout>
+        <CalloutTitle>Notice</CalloutTitle>
+        <CalloutContent>
+          Only for the purpose of demonstation we are also showing you the
+          unpublished content. But on the same time it also gives you the idea
+          of how you can manage your content.
+        </CalloutContent>
+      </Callout>
       <Show
         when={!collections.loading}
         fallback={<PageSkeleton></PageSkeleton>}
@@ -42,6 +51,7 @@ const Collection: Component = () => {
                 <div class="text-2xl font-bold text-secondary">
                   {collections().name}
                 </div>
+
                 <div class="flex items-end gap-3 text-muted-foreground text-sm">
                   <div class="">
                     {new Date(collections().createdAt).toLocaleDateString()}
@@ -49,7 +59,7 @@ const Collection: Component = () => {
                   <div class="flex gap-2 items-center">
                     <BadgeDelta
                       deltaType={
-                        collections().status === "published"
+                        collections().status === "Published"
                           ? "increase"
                           : "decrease"
                       }
@@ -75,7 +85,8 @@ const Collection: Component = () => {
 
               <For each={collections()?.articles}>
                 {(article) => (
-                  <div class="flex p-4 flex-col gap-3 border-border border-b">
+                  <div class="flex p-4 flex-col gap-3 border-border border bg-muted">
+                    {" "}
                     <div class="flex justify-between items-center">
                       <div class="flex items-center text-md font-regular text-primary underline underline-offset-2 leading-10">
                         <A href={`/documentation/article/${article.id}`}>
@@ -86,7 +97,7 @@ const Collection: Component = () => {
                         <div class="flex gap-2 items-center">
                           <BadgeDelta
                             deltaType={
-                              article.status === "published"
+                              article.status === "Published"
                                 ? "increase"
                                 : "decrease"
                             }
@@ -101,10 +112,6 @@ const Collection: Component = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="overflow-auto allow-3-lines"
-                      innerHTML={article.text}
-                    ></div>
                   </div>
                 )}
               </For>

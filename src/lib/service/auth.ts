@@ -61,8 +61,10 @@ const user_login = async (email: string, password: string) => {
     });
 
     if (!res.ok) {
-      console.log(res);
-      return err("An error occurred");
+      console.log("not ok");
+      const error = await res.json();
+      console.log(error.error.message);
+      return err(error.error.message);
     }
     const user = await res.json();
 

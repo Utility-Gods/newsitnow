@@ -21,6 +21,7 @@ import { showToast } from "~/components/ui/toast";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import Share from "@lib/icons/share";
 import ArticleShare from "~/components/functional/article/ArticleShare";
+import AreYouSure from "~/components/functional/common/AreYouSure";
 
 const ArticleView: Component = (props) => {
   const [urlParams, setParams] = useSearchParams();
@@ -37,6 +38,7 @@ const ArticleView: Component = (props) => {
 
   const [openShareModal, setOpenShareModal] = createSignal(false);
 
+  const [openPublishModal, setOpenPublishModal] = createSignal(false);
   createEffect(() => {
     console.log("article", article_details());
   });
@@ -48,10 +50,10 @@ const ArticleView: Component = (props) => {
   };
 
   function embed_article() {
-    if(!isPublished()){
+    if (!isPublished()) {
       showToast({
         title: "Can not share article",
-        description:"please publish the article first",
+        description: "please publish the article first",
         variant: "warning",
         duration: 20000,
       });
@@ -104,7 +106,7 @@ const ArticleView: Component = (props) => {
     }
   }
   return (
-    <div class="flex flex-col flex-1 flex-grow  p-3 overflow-auto">
+    <div class="flex flex-col flex-1 flex-grow  p-3 overflow-hidden">
       <div class="flex items-center justify-between">
         <BreadCrumb
           crumbs={[
@@ -194,7 +196,7 @@ const ArticleView: Component = (props) => {
                       <Button
                         variant={"secondary"}
                         onClick={() => {
-                          changeStatus("Published");
+                          setOpenPublishModal(true);
                         }}
                       >
                         Publish
@@ -236,6 +238,17 @@ const ArticleView: Component = (props) => {
       <Show when={loading()}>
         <PageSpinner />
       </Show>
+
+      <AreYouSure
+        show={openPublishModal()}
+        onSubmit={() => {
+          changeStatus("Published");
+        }}
+        message="Are you sure you want to publish this article?"
+        onOpenChange={() => {
+          setOpenPublishModal(false);
+        }}
+      />
     </div>
   );
 };

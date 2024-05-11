@@ -1,7 +1,27 @@
+import Book from "@lib/icons/Book";
 import { A, useLocation } from "@solidjs/router";
+import { Show } from "solid-js";
+import { For } from "solid-js";
+import { createResource } from "solid-js";
 import { Component, createEffect, createSignal } from "solid-js";
+import PageSkeleton from "../common/PageSkeleton";
+
+const fetch_collections = async () => {
+  try {
+    const res = await fetch("http://localhost:1337/api/collections/" + 18);
+    if (!res.ok) {
+      throw new Error("Failed to fetch collections");
+    }
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
 
 const SideBar: Component = () => {
+  const [collections, { refetch }] = createResource(fetch_collections);
+
   const location = useLocation();
 
   const [path, setPath] = createSignal(location.pathname);
@@ -10,6 +30,15 @@ const SideBar: Component = () => {
     setPath(location.pathname);
   });
 
+  function matchPath(path: string) {
+    return (
+      location.pathname === path ||
+      location.pathname.startsWith(path) ||
+      path.startsWith(location.pathname) ||
+      location.pathname.includes(path)
+    );
+  }
+
   return (
     // JSX code for your component's UI goes here
     <aside
@@ -17,14 +46,23 @@ const SideBar: Component = () => {
       class="text-white z-40 w-80 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
-      <div class="h-full pb-4 overflow-y-auto bg-secondary ">
-        <div class="p-3 text-md font-bold text-white">Documentation</div>
+      <div class="h-full pb-4 overflow-y-auto bg-primary-900/10">
+        <A href="/documentation">
+          <div class="p-3 text-md font-black text-secondary truncate flex gap-3 items-center">
+            <div class="w-6 h-6">
+              <Book />
+            </div>
+            Documentation
+          </div>
+        </A>
         <ul class="font-medium">
           <li>
             <A
               href="collection"
-              class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
-                path() === "collection" ? "text-text bg-white" : "text-white"
+              class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                matchPath("/documentation/collection")
+                  ? "text-secondary-foreground bg-secondary"
+                  : "text-secondary"
               }`}
             >
               <svg
@@ -38,6 +76,28 @@ const SideBar: Component = () => {
               </svg>
               <span class="flex-1 ms-3 whitespace-nowrap">Collections</span>
             </A>
+            <ul class="pl-3">
+              <Show when={collections()}>
+                <For each={collections().articles} fallback={<PageSkeleton />}>
+                  {(article) => (
+                    <li>
+                      <A
+                        href={`article/${article.id}`}
+                        class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                          matchPath(`article/${article.id}`)
+                            ? "text-secondary-foreground bg-secondary"
+                            : "text-secondary"
+                        }`}
+                      >
+                        <span class="flex-1 ms-3 whitespace-nowrap">
+                          {article.name}
+                        </span>
+                      </A>
+                    </li>
+                  )}
+                </For>
+              </Show>
+            </ul>
           </li>
         </ul>
       </div>

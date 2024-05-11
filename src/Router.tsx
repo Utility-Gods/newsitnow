@@ -22,6 +22,8 @@ import DLayout from "@pages/Documentation/Layout";
 import DArticle from "@pages/Documentation/Article";
 import DCollection from "@pages/Documentation/Collection";
 import DHome from "@pages/Documentation/Home";
+import BlogLayout from "./pages/Blog/Layout";
+import BlogHome from "./pages/Blog/Home";
 const RouterComponent = () => (
   <>
     <Router>
@@ -35,6 +37,9 @@ const RouterComponent = () => (
           <Route path="" component={DHome} />
           <Route path="/article/:id" component={DArticle} />
           <Route path="/collection" component={DCollection} />
+        </Route>
+        <Route path="/blog" component={BlogLayout}>
+          <Route path="" component={BlogHome} />
         </Route>
       </Route>
       <Route path="/app" component={Layout}>

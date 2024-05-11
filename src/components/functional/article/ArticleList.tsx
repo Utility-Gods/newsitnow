@@ -289,7 +289,10 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
-                            onClick={() => handle_delete_article(c.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handle_delete_article(c.id);
+                            }}
                           >
                             <div class="w-4 h-4">
                               <Trash />

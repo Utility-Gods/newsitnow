@@ -183,15 +183,11 @@ const CollectionList: Component<CollectionListProps> = (props) => {
               </Show>
               <For each={collectionList()?.value}>
                 {(c) => (
-                  <TableRow>
-                    <TableCell class="font-semibold">
-                      <A
-                        href={`${c.id}`}
-                        class="underline text-primary-foreground underline-offset-2"
-                      >
-                        {c.name}
-                      </A>
-                    </TableCell>
+                  <TableRow
+                    onClick={() => navigate(`${c.id}`)}
+                    class="cursor-pointer"
+                  >
+                    <TableCell class="font-semibold">{c.name}</TableCell>
                     <TableCell class="text-truncate">
                       <div class="allow-3-lines">{c.description}</div>
                     </TableCell>
@@ -213,7 +209,8 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                         fallback={
                           <Button
                             variant={"destructive"}
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               changeStatus(c, "Draft");
                             }}
                           >
@@ -223,7 +220,8 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       >
                         <Button
                           variant={"secondary"}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             changeStatus(c, "Published");
                           }}
                         >
@@ -239,7 +237,8 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                         <DropdownMenuContent>
                           <DropdownMenuItem
                             class="text-primary-foreground flex items-center gap-2"
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               console.log("navigating to", c);
                               navigate(`${c.id}`);
                             }}
@@ -259,7 +258,10 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                             Edit
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={() => embed_collection(c)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              embed_collection(c);
+                            }}
                             class="text-primary-foreground flex items-center gap-2"
                           >
                             <div class="w-4 h-4">
@@ -269,7 +271,10 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
-                            onClick={() => handle_delete_collection(c.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handle_delete_collection(c.id);
+                            }}
                           >
                             <div class="w-4 h-4">
                               <Trash />

@@ -33,8 +33,8 @@ const Login: Component = () => {
     try {
       const result = await user_login(values.email, values.password);
 
-      console.log({ result });
       if (result.isErr()) {
+        console.log(result.error);
         throw result.error;
       }
       showToast({
@@ -43,11 +43,10 @@ const Login: Component = () => {
         description: "Welcome back",
         duration: 5000,
       });
-      console.log(result.value);
-      sessionStorage.setItem("user", JSON.stringify(result.value));
+      if (result?.value)
+        sessionStorage.setItem("user", JSON.stringify(result.value));
       navigate("/app", { replace: true });
     } catch (error) {
-      console.error(error);
       showToast({
         variant: "error",
         title: "Error",
