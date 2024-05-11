@@ -35,7 +35,7 @@ function CollectionShare(props: CollectionShareProps) {
 
           <div class="bg-muted p-3 w-full">
             <div class="flex items-center gap-3">
-              <div class="text-primary font-bold text-md">
+              <div class="text-primary font-bold text-md truncate">
                 {collection_details().name}
               </div>
               <div class="flex items-center gap-3 text-muted-foreground text-sm">

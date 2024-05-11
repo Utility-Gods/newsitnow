@@ -48,10 +48,10 @@ const ArticleView: Component = (props) => {
   };
 
   function embed_article() {
-    if(!isPublished()){
+    if (!isPublished()) {
       showToast({
         title: "Can not share article",
-        description:"please publish the article first",
+        description: "please publish the article first",
         variant: "warning",
         duration: 20000,
       });
@@ -104,7 +104,7 @@ const ArticleView: Component = (props) => {
     }
   }
   return (
-    <div class="flex flex-col flex-1 flex-grow  p-3 overflow-auto">
+    <div class="flex flex-col flex-1 flex-grow  p-3 overflow-hidden">
       <div class="flex items-center justify-between">
         <BreadCrumb
           crumbs={[

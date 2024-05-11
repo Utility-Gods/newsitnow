@@ -23,7 +23,7 @@ function ArticleShare(props: ArticleShareProps) {
         <DialogHeader class="space-y-1.5 overflow-hidden">
           <div class="bg-muted p-3 w-full">
             <div class="flex items-center gap-3">
-              <div class="text-primary font-bold text-md">
+              <div class="text-primary font-bold text-md truncate">
                 {props.article.attributes.name}
               </div>
               <div class="flex items-center gap-3 text-muted-foreground text-sm">
