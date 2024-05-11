@@ -21,6 +21,7 @@ import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import ArticleAttach from "~/components/functional/article/ArticleAttach";
 import CollectionShare from "~/components/functional/collection/CollectionShare";
+import AreYouSure from "~/components/functional/common/AreYouSure";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
@@ -49,6 +50,8 @@ const CollectionView: Component = (props: CollectionViewProps) => {
   };
 
   const [openShareModal, setOpenShareModal] = createSignal(false);
+
+  const [openPublishModal, setOpenPublishModal] = createSignal(false);
 
   function embed_collection() {
     if (!isPublished()) {
@@ -191,7 +194,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                     <Button
                       variant={"secondary"}
                       onClick={() => {
-                        changeStatus("Published");
+                        setOpenPublishModal(true);
                       }}
                     >
                       Publish
@@ -270,6 +273,17 @@ const CollectionView: Component = (props: CollectionViewProps) => {
       <Show when={loading()}>
         <PageSpinner />
       </Show>
+
+      <AreYouSure
+        show={openPublishModal()}
+        onSubmit={() => {
+          changeStatus("Published");
+        }}
+        message="Are you sure you want to publish this collection?"
+        onOpenChange={() => {
+          setOpenPublishModal(false);
+        }}
+      />
 
       <CollectionShare
         collection={collection_details}

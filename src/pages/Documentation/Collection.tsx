@@ -3,6 +3,7 @@ import { Component, createEffect, createResource, Show } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 const fetch_collections = async (id) => {
   try {
@@ -31,6 +32,14 @@ const Collection: Component = () => {
           { href: "/documentation/collection", label: "Collections" },
         ]}
       />
+      <Callout>
+        <CalloutTitle>Notice</CalloutTitle>
+        <CalloutContent>
+          Only for the purpose of demonstation we are also showing you the
+          unpublished content. But on the same time it also gives you the idea
+          of how you can manage your content.
+        </CalloutContent>
+      </Callout>
       <Show
         when={!collections.loading}
         fallback={<PageSkeleton></PageSkeleton>}
@@ -42,6 +51,7 @@ const Collection: Component = () => {
                 <div class="text-2xl font-bold text-secondary">
                   {collections().name}
                 </div>
+
                 <div class="flex items-end gap-3 text-muted-foreground text-sm">
                   <div class="">
                     {new Date(collections().createdAt).toLocaleDateString()}

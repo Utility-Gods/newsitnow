@@ -31,7 +31,6 @@ const SideBar: Component = () => {
   });
 
   function matchPath(path: string) {
-    console.log(location.pathname, path);
     return (
       location.pathname === path ||
       location.pathname.startsWith(path) ||
@@ -48,12 +47,14 @@ const SideBar: Component = () => {
       aria-label="Sidebar"
     >
       <div class="h-full pb-4 overflow-y-auto bg-primary-900/10">
-        <div class="p-3 text-md font-black text-secondary truncate flex gap-3 items-center">
-          <div class="w-6 h-6">
-            <Book />
+        <A href="/documentation">
+          <div class="p-3 text-md font-black text-secondary truncate flex gap-3 items-center">
+            <div class="w-6 h-6">
+              <Book />
+            </div>
+            Documentation
           </div>
-          Documentation
-        </div>
+        </A>
         <ul class="font-medium">
           <li>
             <A
