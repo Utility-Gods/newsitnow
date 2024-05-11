@@ -49,7 +49,7 @@ const Collection: Component = () => {
                   <div class="flex gap-2 items-center">
                     <BadgeDelta
                       deltaType={
-                        collections().status === "published"
+                        collections().status === "Published"
                           ? "increase"
                           : "decrease"
                       }

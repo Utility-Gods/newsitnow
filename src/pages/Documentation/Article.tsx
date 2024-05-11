@@ -36,7 +36,7 @@ const Article: Component = (props) => {
       <BreadCrumb
         crumbs={[
           { href: "/documentation/", label: "Home" },
-          { href: "/documentation/collections", label: "Collections" },
+          { href: "/documentation/collection", label: "Collections" },
         ]}
       />
       <Show when={article.loading}>
@@ -58,6 +58,15 @@ const Article: Component = (props) => {
                 {article().name}
               </div>
               <div class="flex items-end gap-3 text-muted-foreground text-sm">
+                <div class="flex gap-2 items-center">
+                  <BadgeDelta
+                    deltaType={
+                      article().status === "Published" ? "increase" : "decrease"
+                    }
+                  >
+                    {article().status}
+                  </BadgeDelta>
+                </div>
                 <div class="flex gap-2 items-center">
                   <div class="">
                     {new Date(article().createdAt).toLocaleDateString()}
