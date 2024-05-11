@@ -47,7 +47,13 @@ const Collection: Component = () => {
                     {new Date(collections().createdAt).toLocaleDateString()}
                   </div>
                   <div class="flex gap-2 items-center">
-                    <BadgeDelta deltaType="increase">
+                    <BadgeDelta
+                      deltaType={
+                        collections().status === "published"
+                          ? "increase"
+                          : "decrease"
+                      }
+                    >
                       {collections().status}
                     </BadgeDelta>
                   </div>
@@ -78,7 +84,13 @@ const Collection: Component = () => {
                       </div>
                       <div class="flex items center gap-3 text-muted-foreground text-sm">
                         <div class="flex gap-2 items-center">
-                          <BadgeDelta deltaType="increase">
+                          <BadgeDelta
+                            deltaType={
+                              article.status === "published"
+                                ? "increase"
+                                : "decrease"
+                            }
+                          >
                             {article.status}
                           </BadgeDelta>
                         </div>

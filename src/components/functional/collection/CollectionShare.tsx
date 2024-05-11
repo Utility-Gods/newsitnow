@@ -42,7 +42,13 @@ function CollectionShare(props: CollectionShareProps) {
                 </div>
                 <div class="flex items-center gap-3 text-muted-foreground text-sm">
                   <div class="flex gap-2 items-center">
-                    <BadgeDelta deltaType="increase">
+                    <BadgeDelta
+                      deltaType={
+                        collection_details().status === "Published"
+                          ? "increase"
+                          : "decrease"
+                      }
+                    >
                       {collection_details().status}
                     </BadgeDelta>
                   </div>

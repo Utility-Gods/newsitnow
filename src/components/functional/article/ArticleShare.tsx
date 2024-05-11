@@ -28,7 +28,13 @@ function ArticleShare(props: ArticleShareProps) {
               </div>
               <div class="flex items-center gap-3 text-muted-foreground text-sm">
                 <div class="flex gap-2 items-center">
-                  <BadgeDelta deltaType="increase">
+                  <BadgeDelta
+                    deltaType={
+                      props.article.attributes.status === "Published"
+                        ? "increase"
+                        : "decrease"
+                    }
+                  >
                     {props.article.attributes.status}
                   </BadgeDelta>
                 </div>

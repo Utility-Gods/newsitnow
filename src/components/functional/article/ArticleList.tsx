@@ -1,4 +1,4 @@
-import { delete_article } from "@lib/service/article";
+import { delete_article, update_article } from "@lib/service/article";
 import {
   Component,
   createEffect,
@@ -37,6 +37,8 @@ import ThreeDots from "@lib/icons/ThreeDots";
 import Share from "@lib/icons/share";
 import Edit from "@lib/icons/Edit";
 import Link from "@lib/icons/link";
+import { Button } from "~/components/ui/button";
+import { Article } from "@lib/types/Article";
 
 export type ArticleListProps = {
   articleList: any;
@@ -98,6 +100,53 @@ const ArticleList: Component<ArticleListProps> = (props) => {
     setOpenShareModal(true);
   }
 
+  function isPublished(status: string): boolean {
+    return status === "Published";
+  }
+
+  async function changeStatus(article: Article, status: string) {
+    console.log("publishing article");
+    try {
+      setLoading(true);
+      const result = await update_article({
+        ...article,
+        status,
+      });
+
+      if (result.isOk()) {
+        console.log("article published");
+        showToast({
+          title: "Article status changed to " + status,
+          description: "Article has been published",
+          variant: "success",
+          duration: 5000,
+        });
+        refetch();
+      }
+
+      if (result.isErr()) {
+        console.log("error publishing article");
+        showToast({
+          title: "Error",
+          description: "Error changing article status",
+          variant: "error",
+          duration: 5000,
+        });
+      }
+    } catch (e) {
+      console.log("error publishing article", e);
+      showToast({
+        title: "Error",
+        description: "Error changing article status",
+        variant: "error",
+        duration: 5000,
+      });
+    } finally {
+      console.log("done");
+      setLoading(false);
+    }
+  }
+
   return (
     <div class="shadow-md bg-background">
       <Show when={loading()}>
@@ -132,16 +181,12 @@ const ArticleList: Component<ArticleListProps> = (props) => {
               </Show>
               <For each={articleList()?.value}>
                 {(c) => (
-                  <TableRow>
+                  <TableRow
+                    onClick={() => navigate(`${c.id}`)}
+                    class="cursor-pointer"
+                  >
                     <TableCell class="font-semibold">
-                      <div class="clamp-lines line-clamp-1">
-                        <A
-                          href={`${c.id}`}
-                          class="underline text-primary underline-offset-2"
-                        >
-                          {c.name}
-                        </A>
-                      </div>
+                      <div class="clamp-lines line-clamp-1">{c.name}</div>
                     </TableCell>
                     {/* <TableCell class="text-truncate ">
                       <div
@@ -162,6 +207,30 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                       {new Date(c.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell class="text-right gap-2 flex justify-end">
+                      <Show
+                        when={!isPublished(c.status)}
+                        fallback={
+                          <Button
+                            variant={"destructive"}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              changeStatus(c, "Draft");
+                            }}
+                          >
+                            Unpublish
+                          </Button>
+                        }
+                      >
+                        <Button
+                          variant={"secondary"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            changeStatus(c, "Published");
+                          }}
+                        >
+                          Publish
+                        </Button>
+                      </Show>
                       <DropdownMenu>
                         <DropdownMenuTrigger>
                           <div class="w-6 h-6">

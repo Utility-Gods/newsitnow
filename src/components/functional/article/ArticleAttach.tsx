@@ -142,7 +142,13 @@ function ArticleAttach(props: ArticleAttachProps) {
                   </div>
                   <div class="flex items center gap-3 text-muted-foreground text-sm">
                     <div class="flex gap-2 items-center">
-                      <BadgeDelta deltaType="increase">
+                      <BadgeDelta
+                        deltaType={
+                          article.status === "Published"
+                            ? "increase"
+                            : "decrease"
+                        }
+                      >
                         {article.status}
                       </BadgeDelta>
                     </div>
