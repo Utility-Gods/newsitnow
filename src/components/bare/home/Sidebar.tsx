@@ -19,8 +19,22 @@ const fetch_collections = async () => {
   }
 };
 
+const fetch_blogs = async () => {
+  try {
+    const res = await fetch("http://localhost:1337/api/collections/" + 20);
+    if (!res.ok) {
+      throw new Error("Failed to fetch collections");
+    }
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
 const SideBar: Component = () => {
   const [collections, { refetch }] = createResource(fetch_collections);
+  const [blogs, { refetch: refetchBlogs }] = createResource(fetch_blogs);
 
   const location = useLocation();
 
@@ -58,7 +72,7 @@ const SideBar: Component = () => {
         <ul class="font-medium">
           <li>
             <A
-              href="collection"
+              href="/documentation/collection"
               class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                 matchPath("/documentation/collection")
                   ? "text-secondary-foreground bg-secondary"
@@ -82,7 +96,60 @@ const SideBar: Component = () => {
                   {(article) => (
                     <li>
                       <A
-                        href={`article/${article.id}`}
+                        href={`/documentation/article/${article.id}`}
+                        class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                          matchPath(`article/${article.id}`)
+                            ? "text-secondary-foreground bg-secondary"
+                            : "text-secondary"
+                        }`}
+                      >
+                        <span class="flex-1 ms-3 whitespace-nowrap">
+                          {article.name}
+                        </span>
+                      </A>
+                    </li>
+                  )}
+                </For>
+              </Show>
+            </ul>
+          </li>
+        </ul>
+        <A href="/blog">
+          <div class="p-3 text-md font-black text-secondary truncate flex gap-3 items-center">
+            <div class="w-6 h-6">
+              <Book />
+            </div>
+            Blog
+          </div>
+        </A>
+        <ul class="font-medium">
+          <li>
+            <A
+              href="/blog/collection"
+              class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                matchPath("/documentation/blog")
+                  ? "text-secondary-foreground bg-secondary"
+                  : "text-secondary"
+              }`}
+            >
+              <svg
+                class="flex-shrink-0 w-5 h-5  transition duration-75  group- "
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 18"
+              >
+                <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+              </svg>
+              <span class="flex-1 ms-3 whitespace-nowrap">Blog</span>
+            </A>
+            <ul class="pl-3">
+              <Show when={blogs()}>
+                <For each={blogs().articles} fallback={<PageSkeleton />}>
+                  {(article) => (
+                    <li>
+                      <A
+                        href={`/blog/article/${article.id}`}
                         class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                           matchPath(`article/${article.id}`)
                             ? "text-secondary-foreground bg-secondary"

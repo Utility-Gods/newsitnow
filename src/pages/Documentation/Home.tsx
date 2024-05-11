@@ -24,7 +24,7 @@ const DHome: Component = () => {
       <div class="text-xl font-semibold">Documentation</div>
 
       <Callout>
-        <CalloutTitle>Notice</CalloutTitle>
+        <CalloutTitle>Fold the space</CalloutTitle>
         <CalloutContent>
           This whole documentation was created using the Orange Gas Platform.
         </CalloutContent>
