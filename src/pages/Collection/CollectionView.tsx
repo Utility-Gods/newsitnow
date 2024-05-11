@@ -113,7 +113,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
           </Show>
 
           <Show when={collection_details()?.articles?.length}>
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col">
               <div class="w-full flex items-center justify-between">
                 <div class="font-regular text-dim_gray px-3 text-sm underline underline-offset-2">
                   {collection_details()?.articles?.length ?? 0} Articles in this

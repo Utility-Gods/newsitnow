@@ -11,7 +11,7 @@ import { Button } from "~/components/ui/button";
 import PageSpinner from "~/components/bare/common/PageSkeleton";
 
 import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+
 import {
   CreateArticleForm,
   CreateArticleSchema,
@@ -105,6 +105,7 @@ const ArticleCreate: Component = (props) => {
       showToast({
         variant: "error",
         title: "Failed to create article",
+        duration: 5000,
         description: "An error occurred while creating the article",
       });
     } finally {
@@ -128,61 +129,63 @@ const ArticleCreate: Component = (props) => {
         </div>
       </div>
       <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
-        <Form onSubmit={handleSubmit} class="flex flex-col">
-          <div class="items-center gap-4">
-            <div class="flex flex-col gap-1 flex-1">
+        <Form onSubmit={handleSubmit} class="flex flex-col h-full">
+          <div class="flex-1 overflow-scroll gap-2 flex flex-col no-scrollbar">
+            <div class="">
               <ImageUpload
                 onUpload={(url) => {
                   formValues.photo = url;
                 }}
               />
             </div>
-          </div>
-          <div class="items-center gap-4">
-            <Label for="name" class="text-right">
-              Title
-            </Label>
-            <Field name="name">
-              {(field, props) => (
-                <div class="flex flex-col gap-1 h-full">
-                  <Input
-                    {...props}
-                    id="name"
-                    area-invalid={field.error ? "true" : "false"}
-                    required
-                  />
-                  {field.error && (
-                    <span class="text-secondary text-sm">{field.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
+            <div class="items-center gap-4">
+              {/* <Label for="name" class="text-right">
+                Title
+              </Label> */}
+              <Field name="name">
+                {(field, props) => (
+                  <div class="flex flex-col gap-1 h-full">
+                    <Input
+                      placeholder="Title"
+                      {...props}
+                      id="name"
+                      area-invalid={field.error ? "true" : "false"}
+                      required
+                    />
+                    {field.error && (
+                      <span class="text-secondary text-sm">{field.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+            </div>
+
+            <div class="items-center gap-4 flex-1">
+              {/* <Label for="text" class="text-right">
+                Content
+              </Label> */}
+
+              <Field name="text">
+                {(field, props) => (
+                  <div class="flex flex-col">
+                    <SolidQuill
+                      id="text"
+                      placeholder="Write something here..."
+                      ref={quill}
+                      onTextChange={() => {
+                        setValue(articleForm, "text", quill.root.innerHTML);
+                      }}
+                    />
+
+                    {field.error && (
+                      <span class="text-secondary text-sm">{field.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+            </div>
           </div>
 
-          <div class="items-center gap-4 flex-1">
-            <Label for="text" class="text-right">
-              Content
-            </Label>
-
-            <Field name="text">
-              {(field, props) => (
-                <div class="flex flex-col gap-1">
-                  <SolidQuill
-                    id="text"
-                    placeholder="Write something here..."
-                    ref={quill}
-                    onTextChange={() => {
-                      setValue(articleForm, "text", quill.root.innerHTML);
-                    }}
-                  />
-
-                  {field.error && (
-                    <span class="text-secondary text-sm">{field.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
-          </div>
           <div class="flex gap-3 items-center justify-end mt-3">
             <Button
               variant="ghost"
