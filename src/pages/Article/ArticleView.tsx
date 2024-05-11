@@ -53,7 +53,7 @@ const ArticleView: Component = (props) => {
         title: "Can not share article",
         description:"please publish the article first",
         variant: "warning",
-        duration: 29000,
+        duration: 20000,
       });
       return;
     }
@@ -211,7 +211,7 @@ const ArticleView: Component = (props) => {
           </Show>
           <Show when={editMode()}>
             <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm h-full">
-              1Update article={article_details()} />
+              <ArticleUpdate article={article_details()} />
             </div>
           </Show>
         </Show>

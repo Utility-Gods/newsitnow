@@ -78,7 +78,7 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
         title: "Article updated",
         description: "The article has been updated successfully",
       });
-      // navigate("/app/article");
+      navigate("/app/article");
     } catch (e) {
       console.log(e);
       showToast({
