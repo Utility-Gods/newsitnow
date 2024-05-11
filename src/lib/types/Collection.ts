@@ -10,4 +10,5 @@ export interface Collection {
   description?: string;
   url?: string;
   createdAt: string;
+  status: string;
 }

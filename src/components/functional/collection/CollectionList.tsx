@@ -22,8 +22,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 
@@ -91,12 +89,20 @@ const CollectionList: Component<CollectionListProps> = (props) => {
     }
   }
 
-  const [activeCollection, setActiveCollection] = createSignal(null);
+  const [activeCollection, setActiveCollection] = createSignal<Collection>();
 
-  function embed_collection(c) {
-    setActiveCollection(c);
-    console.log(activeCollection());
-    setOpenShareModal(true);
+  function embed_collection(c: Collection) {
+    if (c.status === "Published") {
+      setActiveCollection(c);
+      setOpenShareModal(true);
+      console.log("Embedding collection", activeCollection());
+    } else {
+      showToast({
+        title: "Collection not published",
+        description: "Please publish the collection to share it",
+        variant: "error",
+      });
+    }
   }
 
   function isPublished(status: string): boolean {
@@ -285,12 +291,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
         <PageSpinner />
       </Show>
       <CollectionShare
-        collection={{
-          id: activeCollection()?.id,
-          attributes: {
-            ...activeCollection(),
-          },
-        }}
+        collection={activeCollection}
         show={openShareModal()}
         onShowChange={() => {
           setOpenShareModal(false);
