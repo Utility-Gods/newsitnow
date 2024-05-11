@@ -158,6 +158,7 @@ const ArticleView: Component = (props) => {
                       when={showPublishBtn()}
                       fallback={
                         <Button
+                          variant={"destructive"}
                           onClick={() => {
                             changeStatus("Draft");
                           }}

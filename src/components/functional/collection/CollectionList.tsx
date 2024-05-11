@@ -136,7 +136,11 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       <div class="allow-3-lines">{c.description}</div>
                     </TableCell>
                     <TableCell>
-                      <BadgeDelta deltaType="moderateIncrease">
+                      <BadgeDelta
+                        deltaType={
+                          c.status === "Published" ? "increase" : "decrease"
+                        }
+                      >
                         {c.status}
                       </BadgeDelta>
                     </TableCell>
