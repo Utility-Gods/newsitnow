@@ -27,25 +27,23 @@ type ArticleUpdateProps = {
 };
 const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
   const { article } = props;
+
+  console.log({ article });
   const navigate = useNavigate();
+
+  const formValues = {
+    name: article.name,
+    photo: article.photo ?? [],
+    text: article.text,
+  };
   const [articleForm, { Form, Field }] = createForm<UpdateArticleForm>({
     validate: valiForm(UpdateArticleSchema),
-    initialValues: {
-      name: article.name,
-      photo: article.photo,
-      text: article.text,
-    },
+    initialValues: formValues,
   });
 
   createEffect(() => {
     console.log({ formValues, article });
   });
-
-  const formValues = {
-    name: article.name,
-    photo: article.photo,
-    text: article.text,
-  };
 
   const [loading, setLoading] = createSignal(false);
 
@@ -101,7 +99,7 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
             <div class="items-center gap-4">
               <div class="flex flex-col gap-1 flex-1">
                 <ImageUpload
-                  value={formValues.photo[0] ?? {}}
+                  value={formValues?.photo[0] ?? {}}
                   onUpload={(url) => {
                     formValues.photo = url;
                   }}
