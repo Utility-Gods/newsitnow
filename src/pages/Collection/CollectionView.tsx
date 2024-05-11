@@ -1,5 +1,8 @@
 import Share from "@lib/icons/share";
-import { fetch_collection_by_id } from "@lib/service/collection";
+import {
+  fetch_collection_by_id,
+  update_collection,
+} from "@lib/service/collection";
 import { Collection } from "@lib/types/Collection";
 import { get_user_id } from "@lib/utils";
 import { A } from "@solidjs/router";
@@ -15,10 +18,12 @@ import {
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 import ArticleAttach from "~/components/functional/article/ArticleAttach";
 import CollectionShare from "~/components/functional/collection/CollectionShare";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
+import { showToast } from "~/components/ui/toast";
 
 type CollectionViewProps = {};
 
@@ -34,6 +39,8 @@ const CollectionView: Component = (props: CollectionViewProps) => {
     console.log(collection());
   });
 
+  const [loading, setLoading] = createSignal(false);
+
   const collection_details: () => Collection = () => collection()?.value;
 
   const isAuthor = () => {
@@ -44,7 +51,66 @@ const CollectionView: Component = (props: CollectionViewProps) => {
   const [openShareModal, setOpenShareModal] = createSignal(false);
 
   function embed_collection() {
+    if (!isPublished()) {
+      showToast({
+        title: "Error",
+        description: "Please publish the collection first",
+        variant: "error",
+        duration: 5000,
+      });
+      return;
+    }
     setOpenShareModal(true);
+  }
+
+  function isPublished() {
+    if (!collection_details()) {
+      return false;
+    }
+    return collection_details()?.status === "Published";
+  }
+
+  async function changeStatus(status: string) {
+    console.log("publishing Collection");
+    try {
+      setLoading(true);
+      const result = await update_collection({
+        ...collection_details(),
+        status,
+      });
+
+      if (result.isOk()) {
+        console.log("collectionpublished");
+        showToast({
+          title: "Collection status changed to " + status,
+          description: "Article has been published",
+          variant: "success",
+          duration: 5000,
+        });
+        refetch();
+      }
+
+      if (result.isErr()) {
+        console.log("error publishing Collection");
+        showToast({
+          title: "Error",
+          description: "Error changing Collection status",
+          variant: "error",
+          duration: 5000,
+        });
+      }
+    } catch (e) {
+      console.log("error publishing Collection", e);
+      showToast({
+        title: "Error",
+        description: "Error changing Collection status",
+        variant: "error",
+        duration: 5000,
+      });
+    } finally {
+      console.log("done");
+      setLoading(false);
+    }
   }
 
   return (
@@ -79,7 +145,13 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                       ).toLocaleDateString()}
                     </div>
                     <div class="flex gap-2 items-center">
-                      <BadgeDelta deltaType="increase">
+                      <BadgeDelta
+                        deltaType={
+                          collection_details().status === "Published"
+                            ? "increase"
+                            : "decrease"
+                        }
+                      >
                         {collection_details().status}
                       </BadgeDelta>
                     </div>
@@ -103,6 +175,28 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                     </div>
                     <span>Share</span>
                   </Button>
+                  <Show
+                    when={!isPublished()}
+                    fallback={
+                      <Button
+                        variant={"destructive"}
+                        onClick={() => {
+                          changeStatus("Draft");
+                        }}
+                      >
+                        Unpublish
+                      </Button>
+                    }
+                  >
+                    <Button
+                      variant={"secondary"}
+                      onClick={() => {
+                        changeStatus("Published");
+                      }}
+                    >
+                      Publish
+                    </Button>
+                  </Show>
                 </div>
               </Show>
             </div>
@@ -133,7 +227,13 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                         </div>
                         <div class="flex items center gap-3 text-muted-foreground text-sm">
                           <div class="flex gap-2 items-center">
-                            <BadgeDelta deltaType="increase">
+                            <BadgeDelta
+                              deltaType={
+                                article.status === "Published"
+                                  ? "increase"
+                                  : "decrease"
+                              }
+                            >
                               {article.status}
                             </BadgeDelta>
                           </div>
@@ -169,6 +269,10 @@ const CollectionView: Component = (props: CollectionViewProps) => {
         <Show when={collection()?.isErr()}>
           <div class="p-4 text-primary-100">Error loading collection</div>
         </Show>
+      </Show>
+
+      <Show when={loading()}>
+        <PageSpinner />
       </Show>
 
       <CollectionShare

@@ -1,4 +1,4 @@
-import { delete_collection } from "@lib/service/collection";
+import { delete_collection, update_collection } from "@lib/service/collection";
 import {
   Component,
   createEffect,
@@ -37,6 +37,8 @@ import ThreeDots from "@lib/icons/ThreeDots";
 import Link from "@lib/icons/link";
 import Edit from "@lib/icons/Edit";
 import Share from "@lib/icons/share";
+import { Collection } from "@lib/types/Collection";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 
 export type CollectionListProps = {
   collectionList: any;
@@ -47,14 +49,17 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   const merged = mergeProps(props);
   const { collectionList, refetch } = merged;
 
+  const [loading, setLoading] = createSignal(false);
   const navigate = useNavigate();
   const [openShareModal, setOpenShareModal] = createSignal(false);
 
   createEffect(() => {
     console.log("fetching collections", collectionList());
   });
+
   async function handle_delete_collection(id: string) {
     try {
+      setLoading(true);
       const result = await delete_collection(id);
 
       console.log("deleting collection", result);
@@ -81,6 +86,8 @@ const CollectionList: Component<CollectionListProps> = (props) => {
         title: "Failed to delete collection",
         description: "An error occurred while deleting the collection",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -90,6 +97,53 @@ const CollectionList: Component<CollectionListProps> = (props) => {
     setActiveCollection(c);
     console.log(activeCollection());
     setOpenShareModal(true);
+  }
+
+  function isPublished(status: string): boolean {
+    return status === "Published";
+  }
+
+  async function changeStatus(collection: Collection, status: string) {
+    console.log("publishing Collection");
+    try {
+      setLoading(true);
+      const result = await update_collection({
+        ...collection,
+        status,
+      });
+
+      if (result.isOk()) {
+        console.log("collectionpublished");
+        showToast({
+          title: "Collection status changed to " + status,
+          description: "Article has been published",
+          variant: "success",
+          duration: 5000,
+        });
+        refetch();
+      }
+
+      if (result.isErr()) {
+        console.log("error publishing Collection");
+        showToast({
+          title: "Error",
+          description: "Error changing Collection status",
+          variant: "error",
+          duration: 5000,
+        });
+      }
+    } catch (e) {
+      console.log("error publishing Collection", e);
+      showToast({
+        title: "Error",
+        description: "Error changing Collection status",
+        variant: "error",
+        duration: 5000,
+      });
+    } finally {
+      console.log("done");
+      setLoading(false);
+    }
   }
 
   return (
@@ -136,7 +190,11 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       <div class="allow-3-lines">{c.description}</div>
                     </TableCell>
                     <TableCell>
-                      <BadgeDelta deltaType="moderateIncrease">
+                      <BadgeDelta
+                        deltaType={
+                          c.status === "Published" ? "increase" : "decrease"
+                        }
+                      >
                         {c.status}
                       </BadgeDelta>
                     </TableCell>
@@ -144,6 +202,28 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       {new Date(c.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell class="text-right gap-2 flex justify-end">
+                      <Show
+                        when={!isPublished(c.status)}
+                        fallback={
+                          <Button
+                            variant={"destructive"}
+                            onClick={() => {
+                              changeStatus(c, "Draft");
+                            }}
+                          >
+                            Unpublish
+                          </Button>
+                        }
+                      >
+                        <Button
+                          variant={"secondary"}
+                          onClick={() => {
+                            changeStatus(c, "Published");
+                          }}
+                        >
+                          Publish
+                        </Button>
+                      </Show>
                       <DropdownMenu>
                         <DropdownMenuTrigger>
                           <div class="w-6 h-6">
@@ -200,6 +280,10 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           </Show>
         </TableBody>
       </Table>
+
+      <Show when={loading()}>
+        <PageSpinner />
+      </Show>
       <CollectionShare
         collection={{
           id: activeCollection()?.id,

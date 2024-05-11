@@ -1,4 +1,10 @@
-import { type Component, createEffect, createResource, Show } from "solid-js";
+import {
+  type Component,
+  createEffect,
+  createResource,
+  Show,
+  createSignal,
+} from "solid-js";
 
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
@@ -12,9 +18,12 @@ import ArticleUpdate from "~/components/functional/article/ArticleUpdate";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
 
+import PageSpinner from "~/components/bare/common/PageSpinner";
+
 const ArticleView: Component = (props) => {
   const [urlParams, setParams] = useSearchParams();
 
+  const [loading, setLoading] = createSignal(false);
   const editMode = () => urlParams["edit"] == "true";
 
   const [article, { refetch }] = createResource(
@@ -36,30 +45,44 @@ const ArticleView: Component = (props) => {
 
   async function changeStatus(status: string) {
     console.log("publishing article");
-    const result = await update_article({
-      ...article_details(),
-      status,
-    });
-
-    if (result.isOk()) {
-      console.log("article published");
-      showToast({
-        title: "Article status changed to " + status,
-        description: "Article has been published",
-        variant: "success",
-        duration: 5000,
+    try {
+      setLoading(true);
+      const result = await update_article({
+        ...article_details(),
+        status,
       });
-      refetch();
-    }
 
-    if (result.isErr()) {
-      console.log("error publishing article");
+      if (result.isOk()) {
+        console.log("article published");
+        showToast({
+          title: "Article status changed to " + status,
+          description: "Article has been published",
+          variant: "success",
+          duration: 5000,
+        });
+        refetch();
+      }
+
+      if (result.isErr()) {
+        console.log("error publishing article");
+        showToast({
+          title: "Error",
+          description: "Error changing article status",
+          variant: "error",
+          duration: 5000,
+        });
+      }
+    } catch (e) {
+      console.log("error publishing article", e);
       showToast({
         title: "Error",
         description: "Error changing article status",
         variant: "error",
         duration: 5000,
       });
+    } finally {
+      console.log("done");
+      setLoading(false);
     }
   }
   return (
@@ -113,7 +136,13 @@ const ArticleView: Component = (props) => {
                   </div>
                   <div class="flex  gap-3 text-muted-foreground items-center text-sm">
                     <div class="flex gap-2 items-center">
-                      <BadgeDelta deltaType="increase">
+                      <BadgeDelta
+                        deltaType={
+                          article_details().status === "Published"
+                            ? "increase"
+                            : "decrease"
+                        }
+                      >
                         {article_details().status}
                       </BadgeDelta>
                     </div>
@@ -129,6 +158,7 @@ const ArticleView: Component = (props) => {
                       when={showPublishBtn()}
                       fallback={
                         <Button
+                          variant={"destructive"}
                           onClick={() => {
                             changeStatus("Draft");
                           }}
@@ -164,6 +194,10 @@ const ArticleView: Component = (props) => {
         <Show when={article()?.isErr()}>
           <div class="p-4 text-primary-100">Error loading article</div>
         </Show>
+      </Show>
+
+      <Show when={loading()}>
+        <PageSpinner />
       </Show>
     </div>
   );
