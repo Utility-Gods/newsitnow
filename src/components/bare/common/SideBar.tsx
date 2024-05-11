@@ -32,19 +32,19 @@ const SideBar: Component = () => {
     // JSX code for your component's UI goes here
     <aside
       id="default-sidebar"
-      class="text-white z-40 w-80 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="text-secondary z-40 w-80 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
-      <div class="h-full pb-4 overflow-y-auto bg-secondary ">
-        <div class="p-3 text-md font-bold text-white truncate">
+      <div class="h-full pb-4 overflow-y-auto bg-primary-900/10">
+        <div class="p-3 text-md font-bold text-secondary truncate">
           Welcome {name}
         </div>
         <ul class="font-medium">
           {/* <li>
             <A
               href="#"
-              class={`flex items-center p-3    hover:bg-white hover:text-text   group ${
-                path() === "/" ? "text-text bg-white" : "text-white"
+              class={`flex items-center p-3   hover:bg-secondary hover:text-secondary-foreground   group ${
+                path() === "/" ? "text-secondary-foreground bg-secondary" : "text-secondary"
               }`}
             >
               <svg
@@ -64,10 +64,10 @@ const SideBar: Component = () => {
           <li>
             <A
               href="collection"
-              class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
+              class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                 matchPath("/app/collection")
-                  ? "text-text bg-white"
-                  : "text-white"
+                  ? "text-secondary-foreground bg-secondary"
+                  : "text-secondary"
               }`}
             >
               <svg
@@ -85,8 +85,10 @@ const SideBar: Component = () => {
           <li>
             <A
               href="article"
-              class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
-                matchPath("/app/article") ? "text-text bg-white" : "text-white"
+              class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                matchPath("/app/article")
+                  ? "text-secondary-foreground bg-secondary"
+                  : "text-secondary"
               }`}
             >
               <svg
@@ -104,8 +106,10 @@ const SideBar: Component = () => {
           <li>
             <A
               href="article"
-              class={`flex items-center p-3    hover:bg-white hover:text-text    group ${
-                matchPath("/app/media") ? "text-text bg-white" : "text-white"
+              class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                matchPath("/app/media")
+                  ? "text-secondary-foreground bg-secondary"
+                  : "text-secondary"
               }`}
             >
               <div class="w-5 h-5">
@@ -117,8 +121,10 @@ const SideBar: Component = () => {
           <li>
             <div
               onClick={() => handleLogOut()}
-              class={`flex items-center cursor-pointer p-3 w-full  hover:bg-white hover:text-text    group ${
-                matchPath("/app/signin") ? "text-text bg-white" : "text-white"
+              class={`flex items-center cursor-pointer p-3 w-full  hover:bg-secondary hover:text-secondary-foreground    group ${
+                matchPath("/app/signin")
+                  ? "text-secondary-foreground bg-secondary"
+                  : "text-secondary"
               }`}
             >
               <svg
