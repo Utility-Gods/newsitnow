@@ -8,10 +8,9 @@ import {
 import { showToast } from "~/components/ui/toast";
 import { Button } from "~/components/ui/button";
 
-import PageSpinner from "~/components/bare/common/PageSkeleton";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 
 import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
 import {
   UpdateArticleForm,
   UpdateArticleSchema,
@@ -31,6 +30,11 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
   const navigate = useNavigate();
   const [articleForm, { Form, Field }] = createForm<UpdateArticleForm>({
     validate: valiForm(UpdateArticleSchema),
+    initialValues: {
+      name: article.name,
+      photo: article.photo,
+      text: article.text,
+    },
   });
 
   createEffect(() => {
@@ -74,7 +78,7 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
         title: "Article updated",
         description: "The article has been updated successfully",
       });
-      navigate("/app/article");
+      // navigate("/app/article");
     } catch (e) {
       console.log(e);
       showToast({
