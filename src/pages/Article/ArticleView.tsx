@@ -1,17 +1,16 @@
-import { Component, createEffect, createResource, Show } from "solid-js";
+import { type Component, createEffect, createResource, Show } from "solid-js";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
 import { fetch_article_by_id } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { useNavigate, useSearchParams } from "@solidjs/router";
-import ArticleCreate from "./ArticleCreate";
+
 import ArticleUpdate from "~/components/functional/article/ArticleUpdate";
 
 const ArticleView: Component = (props) => {
-  const navigate = useNavigate();
   const [urlParams, setParams] = useSearchParams();
   console.log({ ...urlParams });
 
@@ -28,7 +27,7 @@ const ArticleView: Component = (props) => {
   const article_image = () => article_details()?.photo?.[0].url ?? null;
 
   return (
-    <div class="flex flex-col flex-1 flex-grow overflow-auto no-scrollbar p-3 ">
+    <div class="flex flex-col flex-1 flex-grow  p-3 overflow-auto">
       <div class="flex items-center justify-between">
         <BreadCrumb
           crumbs={[
@@ -65,7 +64,7 @@ const ArticleView: Component = (props) => {
 
       <Show when={article()?.isOk()}>
         <Show when={!editMode()}>
-          <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm ">
+          <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm overflow-auto">
             <div
               class={`bg-image relative flex items-between flex-col justify-end flex-shrink-0
                 ${article_image() ? "h-[240px]" : ""}
@@ -95,13 +94,13 @@ const ArticleView: Component = (props) => {
               </div>
             </div>
 
-            <div class="p-3 max-h-full overflow-auto no-scrollbar">
+            <div class="p-3 max-h-full ">
               <div class="" innerHTML={article_details().text}></div>
             </div>
           </div>
         </Show>
         <Show when={editMode()}>
-          <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm ">
+          <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm h-full">
             <ArticleUpdate article={article_details()} />
           </div>
         </Show>

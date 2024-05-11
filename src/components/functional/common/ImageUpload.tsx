@@ -1,13 +1,14 @@
-import Photo from "@lib/icons/Photo";
+import Upload from "@lib/icons/Upload";
 import { upload_image } from "@lib/service/common";
+import { Show } from "solid-js";
 
-import { Component, createSignal } from "solid-js";
+import { type Component, createSignal, createEffect } from "solid-js";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { showToast } from "~/components/ui/toast";
 
 type ImageUploadProps = {
-  value?: string;
+  value?: Record<string, string>;
   onUpload: (url: string) => void;
 };
 
@@ -16,7 +17,11 @@ const ImageUpload: Component = (props: ImageUploadProps) => {
 
   const { value, onUpload } = props;
 
-  console.log({ value });
+  const [imageURL, setImageURL] = createSignal(value);
+
+  createEffect(() => {
+    console.log({ value, imageURL: imageURL() });
+  });
 
   const uploadImage = async (file: File) => {
     console.log({ file });
@@ -34,7 +39,7 @@ const ImageUpload: Component = (props: ImageUploadProps) => {
     }
 
     if (res.isOk()) {
-      console.log(res.value);
+      console.log(res.value[0]);
       showToast({
         variant: "success",
         duration: 5000,
@@ -42,31 +47,36 @@ const ImageUpload: Component = (props: ImageUploadProps) => {
         description: "The image has been uploaded successfully",
       });
       onUpload(res.value);
+      setImageURL(res.value[0] ?? "");
     }
   };
 
   return (
     <div
-      class="w-full relative h-[220px] bg-muted flex items-center justify-center border-border border"
-      style={
-        value
-          ? {
-              "background-image": `url(${value})`,
-              "background-size": "cover",
-              "background-position": "center",
-            }
-          : {}
-      }
+      class="w-full relative flex items-center gap-3"
+      // style={
+      //   imageURL()
+      //     ? {
+      //         "background-image": `url(${imageURL()})`,
+      //         "background-size": "cover",
+      //         "background-position": "center",
+      //       }
+      //     : {}
+      // }
     >
       <Label
         for="image_ImageUpload"
-        class="w-full flex gap-3 cursor-pointer items-center justify-center h-full  text-xl p-3 bg-secondry backdrop-blur-sm blur-none font-semibold text-secondary text-center "
+        class="cursor-pointer flex gap-3 bg-secondary rounded-sm text-secondary-foreground p-3 font-semibold "
       >
-        <div class="w-6 h-6">
-          <Photo />
+        <div class="w-4 h-4">
+          <Upload />
         </div>
         <div>{loading() ? "Uploading..." : "Upload Image"}</div>
       </Label>
+      <Show when={imageURL()}>
+        <img src={imageURL().url} class="w-12 h-12" />
+        <span class="text-secondary">{imageURL().name}</span>
+      </Show>
       <Input
         hidden
         class="hidden"

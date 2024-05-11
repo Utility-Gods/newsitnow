@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, Show } from "solid-js";
+import { type Component, createEffect, createSignal, Show } from "solid-js";
 import {
   createForm,
   setValue,
@@ -24,7 +24,7 @@ import { useNavigate } from "@solidjs/router";
 import ImageUpload from "../common/ImageUpload";
 
 type ArticleUpdateProps = {
-  article: any;
+  article: Record<string, any>;
 };
 const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
   const { article } = props;
@@ -91,64 +91,60 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
 
   return (
     <>
-      <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
-        <Form onSubmit={handleSubmit} class="flex flex-col">
-          <div class="items-center gap-4">
-            <div class="flex flex-col gap-1 flex-1">
-              <ImageUpload
-                value={formValues.photo?.[0]?.url ?? ""}
-                onUpload={(url) => {
-                  formValues.photo = url;
-                }}
-              />
+      <div class="flex gap-4 flex-col p-3 overflow-auto h-[90%]">
+        <Form onSubmit={handleSubmit} class="flex flex-col gap-3 h-full">
+          <div class="flex-1 overflow-scroll gap-2 flex flex-col no-scrollbar ">
+            <div class="items-center gap-4">
+              <div class="flex flex-col gap-1 flex-1">
+                <ImageUpload
+                  value={formValues.photo[0] ?? {}}
+                  onUpload={(url) => {
+                    formValues.photo = url;
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <div class="items-center gap-4">
-            <Label for="name" class="text-right">
-              Title
-            </Label>
-            <Field name="name">
-              {(field, props) => (
-                <div class="flex flex-col gap-1 h-full">
-                  <Input
-                    {...props}
-                    id="name"
-                    area-invalid={field.error ? "true" : "false"}
-                    required
-                    value={formValues.name}
-                  />
-                  {field.error && (
-                    <span class="text-secondary text-sm">{field.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
-          </div>
+            <div class="items-center gap-4">
+              <Field name="name">
+                {(field, props) => (
+                  <div class="flex flex-col gap-1 h-full">
+                    <Input
+                      placeholder="Title"
+                      {...props}
+                      id="name"
+                      area-invalid={field.error ? "true" : "false"}
+                      required
+                      value={formValues.name}
+                    />
+                    {field.error && (
+                      <span class="text-secondary text-sm">{field.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+            </div>
 
-          <div class="items-center gap-4 flex-1">
-            <Label for="text" class="text-right">
-              Content
-            </Label>
+            <div class="items-center gap-4 flex-1">
+              <Field name="text">
+                {(field, props) => (
+                  <div class="flex flex-col">
+                    <SolidQuill
+                      id="text"
+                      placeholder="Write something here..."
+                      ref={quill}
+                      onTextChange={() => {
+                        setValue(articleForm, "text", quill.root.innerHTML);
+                      }}
+                      innerHTML={formValues.text}
+                    />
 
-            <Field name="text">
-              {(field, props) => (
-                <div class="flex flex-col gap-1">
-                  <SolidQuill
-                    id="text"
-                    placeholder="Write something here..."
-                    ref={quill}
-                    onTextChange={() => {
-                      setValue(articleForm, "text", quill.root.innerHTML);
-                    }}
-                    innerHTML={formValues.text}
-                  />
-
-                  {field.error && (
-                    <span class="text-secondary text-sm">{field.error}</span>
-                  )}
-                </div>
-              )}
-            </Field>
+                    {field.error && (
+                      <span class="text-secondary text-sm">{field.error}</span>
+                    )}
+                  </div>
+                )}
+              </Field>
+            </div>
           </div>
           <div class="flex gap-3 items-center justify-end mt-3">
             <Button
