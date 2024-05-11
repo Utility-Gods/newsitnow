@@ -20,7 +20,11 @@ const fetch_articles = async (id: string) => {
 const Article: Component = (props) => {
   const articleId = () => props.params.id;
 
-  const [article] = createResource(articleId(), fetch_articles);
+  createEffect(() => {
+    console.log(articleId(), article());
+  });
+
+  const [article] = createResource(articleId, fetch_articles);
 
   const article_image = () => article()?.photo?.[0].url ?? null;
 

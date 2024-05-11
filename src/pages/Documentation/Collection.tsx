@@ -4,7 +4,7 @@ import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 
-const fetch_collections = async () => {
+const fetch_collections = async (id) => {
   try {
     const res = await fetch("http://localhost:1337/api/collections/" + 18);
     if (!res.ok) {
@@ -75,7 +75,8 @@ const Collection: Component = () => {
 
               <For each={collections()?.articles}>
                 {(article) => (
-                  <div class="flex p-4 flex-col gap-3 border-border border-b">
+                  <div class="flex p-4 flex-col gap-3 border-border border bg-muted">
+                    {" "}
                     <div class="flex justify-between items-center">
                       <div class="flex items-center text-md font-regular text-primary underline underline-offset-2 leading-10">
                         <A href={`/documentation/article/${article.id}`}>
@@ -86,7 +87,7 @@ const Collection: Component = () => {
                         <div class="flex gap-2 items-center">
                           <BadgeDelta
                             deltaType={
-                              article.status === "published"
+                              article.status === "Published"
                                 ? "increase"
                                 : "decrease"
                             }
@@ -101,10 +102,6 @@ const Collection: Component = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="overflow-auto allow-3-lines"
-                      innerHTML={article.text}
-                    ></div>
                   </div>
                 )}
               </For>

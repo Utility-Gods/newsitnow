@@ -208,7 +208,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
             </Show>
 
             <Show when={collection_details()?.articles?.length}>
-              <div class="flex flex-col">
+              <div class="flex flex-col gap-3">
                 <div class="w-full flex items-center justify-between">
                   <div class="font-regular text-dim_gray px-3 text-sm underline underline-offset-2">
                     {collection_details()?.articles?.length ?? 0} Articles in
@@ -218,7 +218,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
 
                 <For each={collection_details()?.articles}>
                   {(article) => (
-                    <div class="flex p-4 flex-col gap-3 border-border border-b">
+                    <div class="flex p-4 flex-col gap-3 border-border border bg-muted">
                       <div class="flex justify-between items-center">
                         <div class="flex items-center text-md font-regular text-primary underline underline-offset-2 leading-10">
                           <A href={`/app/article/${article.id}`}>
@@ -244,10 +244,6 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="overflow-auto allow-3-lines"
-                        innerHTML={article.text}
-                      ></div>
                     </div>
                   )}
                 </For>
