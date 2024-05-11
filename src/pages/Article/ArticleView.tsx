@@ -136,7 +136,13 @@ const ArticleView: Component = (props) => {
                   </div>
                   <div class="flex  gap-3 text-muted-foreground items-center text-sm">
                     <div class="flex gap-2 items-center">
-                      <BadgeDelta deltaType="increase">
+                      <BadgeDelta
+                        deltaType={
+                          article_details().status === "Published"
+                            ? "increase"
+                            : "decrease"
+                        }
+                      >
                         {article_details().status}
                       </BadgeDelta>
                     </div>

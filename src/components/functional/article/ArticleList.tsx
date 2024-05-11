@@ -150,7 +150,11 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                       ></div>
                     </TableCell> */}
                     <TableCell>
-                      <BadgeDelta deltaType="moderateIncrease">
+                      <BadgeDelta
+                        deltaType={
+                          c.status === "Published" ? "increase" : "decrease"
+                        }
+                      >
                         {c.status}
                       </BadgeDelta>
                     </TableCell>

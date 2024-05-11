@@ -1,27 +1,36 @@
-import type { Component, JSXElement } from "solid-js"
-import { splitProps } from "solid-js"
+import type { Component, JSXElement } from "solid-js";
+import { splitProps } from "solid-js";
 
-import type { VariantProps } from "class-variance-authority"
-import { cva } from "class-variance-authority"
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 
-import { cn } from "~/lib/utils"
-import type { BadgeProps } from "~/components/ui/badge"
-import { Badge } from "~/components/ui/badge"
+import { cn } from "~/lib/utils";
+import type { BadgeProps } from "~/components/ui/badge";
+import { Badge } from "~/components/ui/badge";
 
-type DeltaType = "increase" | "moderateIncrease" | "unchanged" | "moderateDecrease" | "decrease"
+type DeltaType =
+  | "increase"
+  | "moderateIncrease"
+  | "unchanged"
+  | "moderateDecrease"
+  | "decrease";
 
 const badgeDeltaVariants = cva("", {
   variants: {
     variant: {
       success: "bg-success text-success-foreground hover:bg-success",
       warning: "bg-warning text-warning-foreground hover:bg-warning",
-      error: "bg-error text-error-foreground hover:bg-error"
-    }
-  }
-})
-type DeltaVariant = NonNullable<VariantProps<typeof badgeDeltaVariants>["variant"]>
+      error: "bg-error text-error-foreground hover:bg-error",
+    },
+  },
+});
+type DeltaVariant = NonNullable<
+  VariantProps<typeof badgeDeltaVariants>["variant"]
+>;
 
-const iconMap: { [key in DeltaType]: (props: { class?: string }) => JSXElement } = {
+const iconMap: {
+  [key in DeltaType]: (props: { class?: string }) => JSXElement;
+} = {
   increase: (props) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -99,25 +108,27 @@ const iconMap: { [key in DeltaType]: (props: { class?: string }) => JSXElement }
       <path d="M18 13l-6 6" />
       <path d="M6 13l6 6" />
     </svg>
-  )
-}
+  ),
+};
 
 const variantMap: { [key in DeltaType]: DeltaVariant } = {
   increase: "success",
   moderateIncrease: "success",
   unchanged: "warning",
   moderateDecrease: "error",
-  decrease: "error"
-}
+  decrease: "error",
+};
 
 export interface BadgeDeltaProps extends Omit<BadgeProps, "variant"> {
-  deltaType: DeltaType
+  deltaType: DeltaType;
 }
 
 const BadgeDelta: Component<BadgeDeltaProps> = (props) => {
-  const [, rest] = splitProps(props, ["class", "children", "deltaType"])
-  const Icon = iconMap[props.deltaType]
-  const variant = variantMap[props.deltaType]
+  const [, rest] = splitProps(props, ["class", "children", "deltaType"]);
+  const Icon = iconMap[props.deltaType];
+  const variant = variantMap[props.deltaType];
+
+  console.log("variant", variant);
 
   return (
     <Badge class={cn(badgeDeltaVariants({ variant }), props.class)} {...rest}>
@@ -126,7 +137,7 @@ const BadgeDelta: Component<BadgeDeltaProps> = (props) => {
         {props.children}
       </span>
     </Badge>
-  )
-}
+  );
+};
 
-export { BadgeDelta }
+export { BadgeDelta };
