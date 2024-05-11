@@ -92,9 +92,19 @@ const ArticleList: Component<ArticleListProps> = (props) => {
     }
   }
 
-  const [activeArticle, setActiveArticle] = createSignal(null);
+  const [activeArticle, setActiveArticle] = createSignal<Article>();
 
-  function embed_article(c) {
+  function embed_article(c: Article) {
+    if (!isPublished(c.status)) {
+      showToast({
+        title: "Can not share article",
+        description: "Please publish the article first before sharing",
+        variant: "warning",
+        duration: 20000,
+      });
+      return;
+    }
+
     setActiveArticle(c);
     console.log(activeArticle());
     setOpenShareModal(true);
@@ -240,7 +250,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                         <DropdownMenuContent>
                           <DropdownMenuItem
                             class="text-primary-foreground flex items-center gap-2"
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               console.log("navigating to", c);
                               navigate(`${c.id}`);
                             }}
@@ -253,7 +264,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                           <DropdownMenuItem
                             onClick={() => {}}
                             class="text-primary-foreground flex items-center gap-2"
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               console.log("navigating to", c);
                               navigate(`${c.id}?edit=true`);
                             }}
@@ -264,7 +276,10 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                             Edit
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={() => embed_article(c)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              embed_article(c);
+                            }}
                             class="text-primary-foreground flex items-center gap-2"
                           >
                             <div class="w-4 h-4">

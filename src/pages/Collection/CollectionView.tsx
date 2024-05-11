@@ -53,10 +53,10 @@ const CollectionView: Component = (props: CollectionViewProps) => {
   function embed_collection() {
     if (!isPublished()) {
       showToast({
-        title: "Error",
+        title: "Cannot share collection",
         description: "Please publish the collection first",
-        variant: "error",
-        duration: 5000,
+        variant: "warning",
+        duration: 20000,
       });
       return;
     }
