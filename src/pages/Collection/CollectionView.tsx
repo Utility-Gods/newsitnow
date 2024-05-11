@@ -276,7 +276,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
       </Show>
 
       <CollectionShare
-        collection={collection}
+        collection={collection_details}
         show={openShareModal()}
         onShowChange={() => {
           setOpenShareModal(false);
