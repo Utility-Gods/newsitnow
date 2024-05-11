@@ -21,6 +21,11 @@ export const Nav: Component = (props) => {
               Documentation
             </A>
           </div>
+          <div>
+            <A href="/blog" class="text-primary">
+              Blog
+            </A>
+          </div>
           {props.children}
         </div>
       </nav>
