@@ -2,26 +2,66 @@ import { type Component, createEffect, createResource, Show } from "solid-js";
 
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-import { fetch_article_by_id } from "@lib/service/article";
+import { fetch_article_by_id, update_article } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { useSearchParams } from "@solidjs/router";
 
 import ArticleUpdate from "~/components/functional/article/ArticleUpdate";
+import { Button } from "~/components/ui/button";
+import { showToast } from "~/components/ui/toast";
 
 const ArticleView: Component = (props) => {
   const [urlParams, setParams] = useSearchParams();
-  console.log({ ...urlParams });
 
   const editMode = () => urlParams["edit"] == "true";
 
-  const [article] = createResource(props.params.id, fetch_article_by_id);
+  const [article, { refetch }] = createResource(
+    props.params.id,
+    fetch_article_by_id,
+  );
 
   const article_details = () => article()?.value;
 
+  createEffect(() => {
+    console.log("article", article_details());
+  });
   const article_image = () => article_details()?.photo?.[0].url ?? null;
 
+  const showPublishBtn = () => {
+    if (!article_details()) return false;
+    return article_details()?.status === "Draft";
+  };
+
+  async function changeStatus(status: string) {
+    console.log("publishing article");
+    const result = await update_article({
+      ...article_details(),
+      status,
+    });
+
+    if (result.isOk()) {
+      console.log("article published");
+      showToast({
+        title: "Article status changed to " + status,
+        description: "Article has been published",
+        variant: "success",
+        duration: 5000,
+      });
+      refetch();
+    }
+
+    if (result.isErr()) {
+      console.log("error publishing article");
+      showToast({
+        title: "Error",
+        description: "Error changing article status",
+        variant: "error",
+        duration: 5000,
+      });
+    }
+  }
   return (
     <div class="flex flex-col flex-1 flex-grow  p-3 overflow-auto">
       <div class="flex items-center justify-between">
@@ -31,6 +71,7 @@ const ArticleView: Component = (props) => {
             { href: "/app/article", label: "Article" },
           ]}
         />
+
         <Tabs
           defaultValue={editMode() ? "edit" : "view"}
           onChange={(e) => {
@@ -70,12 +111,13 @@ const ArticleView: Component = (props) => {
                   <div class="text-2xl font-bold text-primary">
                     {article_details().name}
                   </div>
-                  <div class="flex items-end gap-3 text-muted-foreground text-sm">
+                  <div class="flex  gap-3 text-muted-foreground items-center text-sm">
                     <div class="flex gap-2 items-center">
                       <BadgeDelta deltaType="increase">
                         {article_details().status}
                       </BadgeDelta>
                     </div>
+
                     <div class="flex gap-2 items-center">
                       <div class="">
                         {new Date(
@@ -83,6 +125,27 @@ const ArticleView: Component = (props) => {
                         ).toLocaleDateString()}
                       </div>
                     </div>
+                    <Show
+                      when={showPublishBtn()}
+                      fallback={
+                        <Button
+                          onClick={() => {
+                            changeStatus("Draft");
+                          }}
+                        >
+                          Unpublish
+                        </Button>
+                      }
+                    >
+                      <Button
+                        variant={"secondary"}
+                        onClick={() => {
+                          changeStatus("Published");
+                        }}
+                      >
+                        Publish
+                      </Button>
+                    </Show>
                   </div>
                 </div>
               </div>

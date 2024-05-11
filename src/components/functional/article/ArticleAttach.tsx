@@ -20,6 +20,7 @@ interface ArticleAttachProps {
   collection: any;
   show: boolean;
   onShowChange: (show: boolean) => void;
+  onUpdate: () => void;
 }
 
 function ArticleAttach(props: ArticleAttachProps) {
@@ -53,6 +54,7 @@ function ArticleAttach(props: ArticleAttachProps) {
       if (result.isOk()) {
         setLoading(false);
         props.onShowChange(false);
+        props.onUpdate();
         showToast({
           title: "Success",
           description: "Articles attached successfully",
