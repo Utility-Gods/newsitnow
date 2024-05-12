@@ -32,7 +32,7 @@ const SideBar: Component = () => {
     // JSX code for your component's UI goes here
     <aside
       id="default-sidebar"
-      class="text-secondary z-40 w-80 flex-shrink-0 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      class="text-secondary z-40 w-80 flex-shrink-0 h-screen"
       aria-label="Sidebar"
     >
       <div class="h-full pb-4 overflow-y-auto bg-primary-900/10">
