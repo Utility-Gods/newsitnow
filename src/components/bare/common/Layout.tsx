@@ -8,7 +8,7 @@ import Nav from "~/components/bare/common/Nav";
 
 const Layout: Component = (props) => {
   const navigate = useNavigate();
-  const user = sessionStorage.getItem("user");
+  const user = localStorage.getItem("user");
 
   const token = get_token();
   const isTokenValid = check_token_validity();
@@ -30,7 +30,7 @@ const Layout: Component = (props) => {
   return (
     <div class="flex flex-col w-full h-full">
       <Nav />
-      <div class="w-full gap-3 flex overflow-hidden">
+      <div class="w-full gap-3 flex">
         <SideBar />
         <div class="flex flex-1 w-full">{props.children}</div>
       </div>

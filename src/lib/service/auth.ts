@@ -70,8 +70,8 @@ const user_login = async (email: string, password: string) => {
 
     console.log({ user });
     if (user) {
-      sessionStorage.setItem("token", user.jwt);
-      sessionStorage.setItem("user", JSON.stringify(user.user));
+      localStorage.setItem("token", user.jwt);
+      localStorage.setItem("user", JSON.stringify(user.user));
       return ok(user);
     }
 
@@ -87,7 +87,7 @@ const user_login = async (email: string, password: string) => {
 const get_refresh_token = async () => {
   try {
     const data = {
-      refreshToken: sessionStorage.getItem("token"),
+      refreshToken: localStorage.getItem("token"),
     };
 
     const getRefreshToken = () =>
@@ -109,7 +109,7 @@ const get_refresh_token = async () => {
     console.log(res);
     const token = await res.then((res) => res.json());
     console.log(token);
-    sessionStorage.setItem("token", token.jwt);
+    localStorage.setItem("token", token.jwt);
   } catch (err) {
     console.log(err);
   }

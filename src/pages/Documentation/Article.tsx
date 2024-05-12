@@ -49,43 +49,41 @@ const Article: Component = (props) => {
           { href: "/documentation/collection", label: "Collections" },
         ]}
       />
-      <Show when={article.loading}>
-        <PageSkeleton />
-      </Show>
-
-      <Show when={article()} keyed={true}>
-        <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm ">
-          <div
-            class={`bg-image relative flex items-between flex-col justify-end flex-shrink-0
+      <Show when={!article.loading} fallback={<PageSkeleton />}>
+        <Show when={article()}>
+          <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm ">
+            <div
+              class={`bg-image relative flex items-between flex-col justify-end flex-shrink-0
                 ${article_image() ? "h-[240px]" : ""}
               `}
-            style={{
-              "background-image": `url(${article_image()})`,
-            }}
-          >
-            <div class="flex justify-between items-end p-3 bg-muted">
-              <div class="text-2xl font-bold text-primary">
-                {article().name}
-              </div>
-              <div class="flex items-end gap-3 text-muted-foreground text-sm">
-                <div class="flex gap-2 items-center">
-                  <BadgeDelta deltaType={delta_type()}>
-                    {article_status()}
-                  </BadgeDelta>
+              style={{
+                "background-image": `url(${article_image()})`,
+              }}
+            >
+              <div class="flex justify-between items-end p-3 bg-muted">
+                <div class="text-2xl font-bold text-primary">
+                  {article().name}
                 </div>
-                <div class="flex gap-2 items-center">
-                  <div class="">
-                    {new Date(article().createdAt).toLocaleDateString()}
+                <div class="flex items-end gap-3 text-muted-foreground text-sm">
+                  <div class="flex gap-2 items-center">
+                    <BadgeDelta deltaType={delta_type()}>
+                      {article_status()}
+                    </BadgeDelta>
+                  </div>
+                  <div class="flex gap-2 items-center">
+                    <div class="">
+                      {new Date(article().createdAt).toLocaleDateString()}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="p-3 max-h-full overflow-auto no-scrollbar ql-editor">
-            <div class="" innerHTML={article().text}></div>
+            <div class="p-3 max-h-full overflow-auto no-scrollbar ql-editor">
+              <div class="" innerHTML={article().text}></div>
+            </div>
           </div>
-        </div>
+        </Show>
       </Show>
     </div>
   );

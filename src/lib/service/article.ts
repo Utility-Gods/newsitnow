@@ -145,10 +145,35 @@ const delete_article = async (id: string) => {
   }
 };
 
+const count_articles = async () => {
+  try {
+    const token = get_token();
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(`${API_URL}/api/articles`, {
+      headers: reqHeaders,
+      method: "GET",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result) {
+      return err(result);
+    }
+
+    return ok(result);
+  } catch (e) {
+    console.log(e);
+    return err(e);
+  }
+};
+
 export {
   fetch_articles,
   save_article,
   update_article,
   fetch_article_by_id,
   delete_article,
+  count_articles,
 };

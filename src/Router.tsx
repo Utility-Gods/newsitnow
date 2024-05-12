@@ -25,6 +25,7 @@ import DHome from "@pages/Documentation/Home";
 import BlogLayout from "./pages/Blog/Layout";
 import BlogHome from "./pages/Blog/Home";
 import BlogCollection from "./pages/Blog/BlogCollection";
+import Plan from "./pages/Plan";
 const RouterComponent = () => (
   <>
     <Router>
@@ -52,6 +53,7 @@ const RouterComponent = () => (
         <Route path="/collection" component={Collection} />
         <Route path="/collection/:id" component={CollectionView} />
         <Route path="/article/create" component={ArticleCreate} />
+        <Route path="/plan" component={Plan} />
       </Route>
       <Route path="/auth">
         <Route path="/login" component={Login} />

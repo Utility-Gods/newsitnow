@@ -92,7 +92,7 @@ const ArticleCreate: Component = (props) => {
       console.log({ result });
 
       if (result.isErr()) {
-        throw result.error;
+        throw result.error.error;
       }
       showToast({
         variant: "success",
@@ -104,9 +104,9 @@ const ArticleCreate: Component = (props) => {
       console.log(e);
       showToast({
         variant: "error",
-        title: "Failed to create article",
-        duration: 5000,
-        description: "An error occurred while creating the article",
+        title: e.message ?? "Failed to create article",
+        description:
+          e.details.message ?? "An error occurred while creating the article",
       });
     } finally {
       setLoading(false);
@@ -130,8 +130,8 @@ const ArticleCreate: Component = (props) => {
       </div>
 
       <Show when={!loading()} children fallback={<PageSpinner />}>
-        <div class="flex gap-4 flex-col p-3 overflow-auto h-full">
-          <Form onSubmit={handleSubmit} class="flex flex-col h-full">
+        <div class="flex gap-4 flex-col p-3 overflow-auto">
+          <Form onSubmit={handleSubmit} class="flex flex-col">
             <div class="flex-1 overflow-scroll gap-2 flex flex-col no-scrollbar">
               <div class="">
                 <ImageUpload

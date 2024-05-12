@@ -1,7 +1,7 @@
 import { LoginForm, LoginSchema } from "@lib/schema/forms/login";
 import { user_login } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
-import { useNavigate } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import { Component, createSignal, Show } from "solid-js";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import { Button } from "~/components/ui/button";
@@ -44,7 +44,7 @@ const Login: Component = () => {
         duration: 5000,
       });
       if (result?.value)
-        sessionStorage.setItem("user", JSON.stringify(result.value));
+        localStorage.setItem("user", JSON.stringify(result.value));
       navigate("/app", { replace: true });
     } catch (error) {
       showToast({
@@ -66,10 +66,10 @@ const Login: Component = () => {
             <div class="flex items-start justify-between">
               <div class="text-3xl font-bold">Login</div>
               <div class="text-3xl font-black flex flex-col items-end justify-between">
-                <div class="">
+                <A href="/">
                   <span class="text-text">ORANGE</span>
                   <span class="text-primary">GAS</span>
-                </div>
+                </A>
                 <div class="text-md text-muted-foreground">
                   Own your content.
                 </div>

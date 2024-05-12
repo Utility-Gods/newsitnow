@@ -1,13 +1,13 @@
 import { RegisterForm, RegisterSchema } from "@lib/schema/forms/register";
 import { user_register } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
+import { A } from "@solidjs/router";
 import { Component, Show, createSignal } from "solid-js";
-import PageSpinner from "~/components/bare/common/PageSkeleton";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -64,10 +64,10 @@ const Register: Component = () => {
             <div class="flex items-start justify-between">
               <div class="text-3xl font-bold">Register</div>
               <div class="text-3xl font-black flex flex-col items-end justify-between">
-                <div class="">
+                <A href="/">
                   <span class="text-text">ORANGE</span>
                   <span class="text-primary">GAS</span>
-                </div>
+                </A>{" "}
                 <div class="text-md text-muted-foreground">
                   Own your content.
                 </div>

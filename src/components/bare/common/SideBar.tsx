@@ -14,7 +14,7 @@ const SideBar: Component = () => {
 
   const [path, setPath] = createSignal(location.pathname);
 
-  const user = sessionStorage.getItem("user");
+  const user = localStorage.getItem("user");
 
   const name = user ? JSON.parse(user)?.user?.username : "User";
 
@@ -43,8 +43,8 @@ const SideBar: Component = () => {
   });
 
   function handleLogOut() {
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/auth/login", { replace: true });
   }
 
@@ -139,6 +139,27 @@ const SideBar: Component = () => {
                   <Photo />{" "}
                 </div>
                 <span class="flex-1 ms-3 whitespace-nowrap">Media</span>
+              </A>
+            </li>
+            <li>
+              <A
+                href="plan"
+                class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                  matchPath("/app/plan")
+                    ? "text-secondary-foreground bg-secondary"
+                    : "text-secondary"
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path d="M5.566 4.657A4.505 4.505 0 0 1 6.75 4.5h10.5c.41 0 .806.055 1.183.157A3 3 0 0 0 15.75 3h-7.5a3 3 0 0 0-2.684 1.657ZM2.25 12a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3v-6ZM5.25 7.5c-.41 0-.806.055-1.184.157A3 3 0 0 1 6.75 6h10.5a3 3 0 0 1 2.683 1.657A4.505 4.505 0 0 0 18.75 7.5H5.25Z" />
+                </svg>
+
+                <span class="flex-1 ms-3 whitespace-nowrap">Plan</span>
               </A>
             </li>
             <li>
