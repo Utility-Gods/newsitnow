@@ -128,8 +128,6 @@ const BadgeDelta: Component<BadgeDeltaProps> = (props) => {
   const Icon = iconMap[props.deltaType];
   const variant = variantMap[props.deltaType];
 
-  console.log("variant", variant);
-
   return (
     <Badge class={cn(badgeDeltaVariants({ variant }), props.class)} {...rest}>
       <span class="flex gap-1">

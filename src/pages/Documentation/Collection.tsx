@@ -1,13 +1,51 @@
 import { A } from "@solidjs/router";
-import { Component, createEffect, createResource, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createResource,
+  createSignal,
+  Show,
+} from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
+import qs from "qs";
 
-const fetch_collections = async (id) => {
+const fetch_collections = async (status: string) => {
   try {
-    const res = await fetch("http://localhost:1337/api/collections/" + 18);
+    const query = qs.stringify({
+      populate: {
+        creator: {
+          fields: ["id", "username"],
+        },
+        articles: {
+          fields: ["id", "name", "status", "createdAt"],
+          ...(status === "Published"
+            ? {
+                filters: {
+                  status: "Published",
+                },
+              }
+            : {}),
+        },
+      },
+      filters: {
+        id: "18",
+      },
+    });
+
+    const res = await fetch(
+      `http://localhost:1337/api/public-collection?${query}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch collections");
     }
@@ -18,8 +56,11 @@ const fetch_collections = async (id) => {
   }
 };
 
+type Status = "Published" | "All";
+
 const Collection: Component = () => {
-  const [collections, { refetch }] = createResource(fetch_collections);
+  const [status, setStatus] = createSignal<Status>("Published");
+  const [collections, { refetch }] = createResource(status, fetch_collections);
 
   createEffect(() => {
     console.log(collections());
@@ -73,6 +114,19 @@ const Collection: Component = () => {
                 <div class="font-regular text-dim_gray px-3 text-sm underline underline-offset-2">
                   {collections()?.articles?.length ?? 0} Articles in this
                   collection
+                </div>
+                <div class="flex gap-2 items-center">
+                  <Checkbox
+                    checked={status() == "All"}
+                    onChange={() => {
+                      if (status() === "Published") {
+                        setStatus("All");
+                      } else {
+                        setStatus("Published");
+                      }
+                    }}
+                  ></Checkbox>
+                  <Label>Include Drafts</Label>
                 </div>
               </div>
 

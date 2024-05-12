@@ -3,10 +3,30 @@ import { Component, createResource } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import qs from "qs";
 
 const fetch_articles = async (id: string) => {
   try {
-    const res = await fetch("http://localhost:1337/api/articles/" + id, {});
+    const query = qs.stringify({
+      populate: {
+        author: {
+          fields: ["id", "username"],
+        },
+      },
+      filters: {
+        id: id,
+      },
+    });
+
+    const res = await fetch(
+      "http://localhost:1337/api/public-article?" + query,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
     if (!res.ok) {
       return null;
     }
