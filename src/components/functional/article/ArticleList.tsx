@@ -39,6 +39,7 @@ import Edit from "@lib/icons/Edit";
 import Link from "@lib/icons/link";
 import { Button } from "~/components/ui/button";
 import { Article } from "@lib/types/Article";
+import Hidden from "@lib/icons/Hidden";
 
 export type ArticleListProps = {
   articleList: any;
@@ -221,13 +222,12 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                         when={!isPublished(c.status)}
                         fallback={
                           <Button
-                            variant={"destructive"}
                             onClick={(e) => {
                               e.stopPropagation();
-                              changeStatus(c, "Draft");
+                              embed_article(c);
                             }}
                           >
-                            Unpublish
+                            Share
                           </Button>
                         }
                       >
@@ -286,6 +286,18 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                               <Share />
                             </div>
                             Share
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              changeStatus(c, "Draft");
+                            }}
+                          >
+                            <div class="w-4 h-4">
+                              <Hidden />
+                            </div>
+                            Unpublish
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"

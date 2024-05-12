@@ -37,6 +37,7 @@ import Edit from "@lib/icons/Edit";
 import Share from "@lib/icons/share";
 import { Collection } from "@lib/types/Collection";
 import PageSpinner from "~/components/bare/common/PageSpinner";
+import Hidden from "@lib/icons/Hidden";
 
 export type CollectionListProps = {
   collectionList: any;
@@ -208,13 +209,12 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                         when={!isPublished(c.status)}
                         fallback={
                           <Button
-                            variant={"destructive"}
                             onClick={(e) => {
                               e.stopPropagation();
-                              changeStatus(c, "Draft");
+                              embed_collection(c);
                             }}
                           >
-                            Unpublish
+                            Share
                           </Button>
                         }
                       >
@@ -257,6 +257,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                             </div>
                             Edit
                           </DropdownMenuItem>
+
                           <DropdownMenuItem
                             onClick={(e) => {
                               e.stopPropagation();
@@ -268,6 +269,18 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                               <Share />
                             </div>
                             Share
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              changeStatus(c, "Draft");
+                            }}
+                            class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                          >
+                            <div class="w-4 h-4">
+                              <Hidden />
+                            </div>
+                            Unpublish
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"

@@ -3,6 +3,7 @@ import {
   generateRestAPICode,
   generateRestAPICodeExposed,
 } from "@lib/utils/collection";
+import { A } from "@solidjs/router";
 import { createResource } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
@@ -49,9 +50,9 @@ function APIShare(props: APIShareProps) {
       </Button>
       <div class="text-muted-foreground font-semibold text-xs">
         Follow the above steps to add the collection to your app.
-        <a href="#" class="text-primary ml-1">
+        <A href="/documentation/collection" class="text-primary ml-1">
           Learn more
-        </a>
+        </A>
       </div>
     </div>
   );
