@@ -32,14 +32,7 @@ const Collection: Component = () => {
           { href: "/documentation/collection", label: "Collections" },
         ]}
       />
-      <Callout>
-        <CalloutTitle>Notice</CalloutTitle>
-        <CalloutContent>
-          Only for the purpose of demonstation we are also showing you the
-          unpublished content. But on the same time it also gives you the idea
-          of how you can manage your content.
-        </CalloutContent>
-      </Callout>
+
       <Show
         when={!collections.loading}
         fallback={<PageSkeleton></PageSkeleton>}
@@ -119,6 +112,14 @@ const Collection: Component = () => {
           </Show>
         </Show>
       </Show>
+      <Callout>
+        <CalloutTitle>Notice</CalloutTitle>
+        <CalloutContent>
+          Only for the purpose of demonstation we are also showing you the
+          unpublished content. But on the same time it also gives you the idea
+          of how you can manage your content.
+        </CalloutContent>
+      </Callout>
     </div>
   );
 };
