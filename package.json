@@ -29,6 +29,7 @@
     "effect": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "neverthrow": "^6.1.0",
+    "qs": "^6.12.1",
     "quill": "^2.0.0",
     "solid-js": "^1.8.16",
     "solid-quill": "^0.3.4",

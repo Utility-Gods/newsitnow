@@ -65,21 +65,21 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       }
 
       if (result?.isErr()) {
-        showToast({
-          title: "Some error occured",
-          description: "Could not create collection, please try again later",
-          variant: "error",
-        });
+        console.log(result.error);
+        throw result.error.error;
       }
       merged.onOpenChange(false);
-      setLoading(false);
     } catch (e) {
       console.log(e);
       showToast({
         variant: "error",
-        title: "Failed to create collection",
-        description: "An error occurred while creating the collection",
+        title: e.message ?? "Failed to create collection",
+        description:
+          e.details.message ??
+          "An error occurred while creating the collection",
       });
+    } finally {
+      setLoading(false);
     }
   };
 

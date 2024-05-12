@@ -26,7 +26,6 @@ export function get_user() {
 export function get_user_id() {
   const user = get_user();
 
-  console.log({ user });
   if (!user.user) {
     return null;
   }
