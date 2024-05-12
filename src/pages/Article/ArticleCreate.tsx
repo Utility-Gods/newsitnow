@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, Show } from "solid-js";
+import { Component, createEffect, createSignal, onMount, Show } from "solid-js";
 import {
   createForm,
   setValue,
@@ -174,6 +174,41 @@ const ArticleCreate: Component = (props) => {
                     <div class="flex flex-col">
                       <SolidQuill
                         id="text"
+                        onReady={(quill) => {
+                          quill.clipboard.addMatcher(
+                            Node.ELEMENT_NODE,
+                            (node, delta) => {
+                              if (node.style && node.style.fontSize) {
+                                const size = node.style.fontSize;
+                                delta.ops = delta.ops.map((op) => {
+                                  if (
+                                    op.insert &&
+                                    typeof op.insert === "string"
+                                  ) {
+                                    op.attributes = op.attributes || {};
+                                    op.attributes.size = size;
+                                  }
+                                  // Adjusts the background and text color for the Quill editor's content
+                                  op.attributes.background = "none";
+                                  op.attributes.color = "#000000";
+                                  op.attributes.fontSize = node.style.fontSize;
+                                  console.log({ op });
+                                  return op;
+                                });
+                              }
+                              return delta;
+                            },
+                          );
+                        }}
+                        modules={{
+                          toolbar: [
+                            [{ header: "1" }, { header: "2" }],
+                            ["bold", "italic", "underline", "strike"],
+                            [{ list: "ordered" }, { list: "bullet" }],
+                            ["link", "image"],
+                            ["clean"],
+                          ],
+                        }}
                         placeholder="Write something here..."
                         ref={quill}
                         onTextChange={() => {
