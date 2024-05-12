@@ -30,7 +30,7 @@ const Layout: Component = (props) => {
   return (
     <div class="flex flex-col w-full h-full">
       <Nav />
-      <div class="w-full gap-3 flex overflow-hidden">
+      <div class="w-full gap-3 flex">
         <SideBar />
         <div class="flex flex-1 w-full">{props.children}</div>
       </div>
