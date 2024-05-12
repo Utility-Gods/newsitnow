@@ -21,9 +21,10 @@ const upload_image = async (file: File) => {
     });
     if (!res.ok) {
       const error = await res.json();
-      console.log(error);
-      return err("An error occurred");
+      console.log("Fetch article error:", error);
+      throw error.error;
     }
+
     const data = await res.json();
 
     console.log("uploading image", data);

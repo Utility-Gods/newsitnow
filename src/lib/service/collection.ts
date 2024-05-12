@@ -47,12 +47,14 @@ const save_collection = async (data: any) => {
       body: JSON.stringify({ data }),
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch collection error:", error);
+      throw error.error;
+    }
+
     const result = await response.json();
 
-    console.log("saving collection", result);
-    if (!response.ok) {
-      return err(result);
-    }
     return ok(result);
   } catch (e) {
     console.log(e);
@@ -74,12 +76,14 @@ const update_collection = async (data: any) => {
       body: JSON.stringify({ data }),
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch collection error:", error);
+      throw error.error;
+    }
+
     const result = await response.json();
 
-    console.log("updating collection", result);
-    if (!response.ok) {
-      return err(result);
-    }
     return ok(result);
   } catch (e) {
     console.log(e);
@@ -103,13 +107,15 @@ const fetch_collection_by_id = async (id: string) => {
       method: "GET",
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch collection error:", error);
+      throw error.error;
+    }
+
     const result = await response.json();
 
     console.log("fetching collection by id", result);
-
-    if (!response.ok || !result) {
-      return err(result);
-    }
 
     return ok(result);
   } catch (e) {
@@ -133,11 +139,13 @@ const delete_collection = async (id: string) => {
       method: "DELETE",
     });
 
-    const result = await response.json();
-
-    if (!response.ok || !result.data) {
-      return err(result);
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch collection error:", error);
+      throw error.error;
     }
+
+    const result = await response.json();
 
     return ok(result.data);
   } catch (e) {

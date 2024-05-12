@@ -49,12 +49,14 @@ const save_article = async (data: any) => {
       body: JSON.stringify({ data }),
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch article error:", error);
+      throw error.error;
+    }
+
     const result = await response.json();
     console.log("saving article", result);
-
-    if (!response.ok) {
-      return err(result);
-    }
 
     return ok(result);
   } catch (e) {
@@ -77,12 +79,13 @@ const update_article = async (data: any) => {
       body: JSON.stringify({ data }),
     });
 
-    const result = await response.json();
-    console.log("updating article", result);
-
     if (!response.ok) {
-      return err(result);
+      const error = await response.json();
+      console.log("Fetch article error:", error);
+      throw error.error;
     }
+
+    const result = await response.json();
 
     return ok(result);
   } catch (e) {
@@ -106,11 +109,13 @@ const fetch_article_by_id = async (id: string) => {
       method: "GET",
     });
 
-    const result = await response.json();
-
-    if (!response.ok || !result) {
-      return err(result);
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch article error:", error);
+      throw error.error;
     }
+
+    const result = await response.json();
 
     return ok(result);
   } catch (e) {
@@ -134,11 +139,13 @@ const delete_article = async (id: string) => {
       method: "DELETE",
     });
 
-    const result = await response.json();
-
-    if (!response.ok || !result.data) {
-      return err(result);
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch article error:", error);
+      throw error.error;
     }
+
+    const result = await response.json();
 
     return ok(result.data);
   } catch (e) {
@@ -158,11 +165,13 @@ const count_articles = async () => {
       method: "GET",
     });
 
-    const result = await response.json();
-
-    if (!response.ok || !result) {
-      return err(result);
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch article error:", error);
+      throw error.error;
     }
+
+    const result = await response.json();
 
     return ok(result);
   } catch (e) {
