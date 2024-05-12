@@ -61,13 +61,16 @@ const Plan: Component = () => {
                     <div class="flex items-center justify-start space-x-5">
                       <ProgressCircle
                         value={
-                          collections().value.length /
-                            organization().plan.allowed_collection ?? 0
+                          collections()?.value
+                            ? collections()?.value.length /
+                                organization().plan.allowed_collection ?? 0
+                            : 0
                         }
                       />
                       <div>
                         <p class="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-                          Created Collections : {collections().value.length}
+                          Created Collections :{" "}
+                          {collections()?.value.length ?? 0}
                         </p>
                         <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
                           Allowed Collections :{" "}
@@ -80,13 +83,13 @@ const Plan: Component = () => {
                     <div class="flex items-center justify-start space-x-5">
                       <ProgressCircle
                         value={
-                          articleCount().value.length /
+                          articleCount()?.value.length /
                             organization().plan.allowed_articles ?? 0
                         }
                       />
                       <div>
                         <p class="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-                          Article Created- {articleCount().value.length}
+                          Article Created- {articleCount()?.value?.length ?? 0}
                         </p>
                         <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
                           Allowed Articles-{" "}
