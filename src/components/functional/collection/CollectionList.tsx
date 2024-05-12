@@ -169,7 +169,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           <Show when={collectionList()?.isErr()}>
             <TableRow>
               <TableCell colspan={5} class="text-center text-error-foreground">
-                Error loading collections
+                {collectionList()?.error?.message}
               </TableCell>
             </TableRow>
           </Show>

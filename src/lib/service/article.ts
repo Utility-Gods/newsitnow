@@ -10,25 +10,27 @@ const fetch_articles = async () => {
     const token = get_token();
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
-    console.log({ reqHeaders });
 
-    const getArticleEffect = () =>
-      Effect.tryPromise({
-        try: () =>
-          fetch(`${API_URL}/api/articles`, {
-            headers: reqHeaders,
-            method: "GET",
-          }),
-        catch: (unknown) => new Error(`something went wrong ${unknown}`),
-      });
+    const response = await fetch(`${API_URL}/api/articles`, {
+      headers: reqHeaders,
+      method: "GET",
+    }).catch((error) => {
+      console.error("Fetch articles error:", error);
+      throw new Error(`Failed to fetch articles: ${error}`);
+    });
 
-    const res = Effect.runPromise(getArticleEffect());
+    console.log({ response });
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch articles error:", error);
+      throw error.error;
+    }
 
-    const articles = await res.then((res) => res.json());
+    const articles = await response.json();
 
     return ok(articles);
   } catch (e) {
-    console.log(e);
+    console.log(e, "-----------");
     return err(e);
   }
 };

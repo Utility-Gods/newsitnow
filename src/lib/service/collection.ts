@@ -16,6 +16,12 @@ const fetch_collections = async () => {
       method: "GET",
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch collection error:", error);
+      throw error.error;
+    }
+
     const result = await response.json();
 
     console.log("fetching collections", result);
