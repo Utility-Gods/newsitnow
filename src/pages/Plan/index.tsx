@@ -61,10 +61,8 @@ const Plan: Component = () => {
                     <div class="flex items-center justify-start space-x-5">
                       <ProgressCircle
                         value={
-                          collections()?.value
-                            ? collections()?.value.length /
-                                organization().plan.allowed_collection ?? 0
-                            : 0
+                          (100 * collections()?.value.length) /
+                          organization().plan.allowed_collection
                         }
                       />
                       <div>
@@ -83,7 +81,7 @@ const Plan: Component = () => {
                     <div class="flex items-center justify-start space-x-5">
                       <ProgressCircle
                         value={
-                          articleCount()?.value.length /
+                          (100 * articleCount()?.value.length) /
                             organization().plan.allowed_articles ?? 0
                         }
                       />

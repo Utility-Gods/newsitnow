@@ -82,7 +82,6 @@ const SideBar: Component = () => {
   }
 
   return (
-    // JSX code for your component's UI goes here
     <>
       <Show when={isMobile()}>
         <button
@@ -111,7 +110,7 @@ const SideBar: Component = () => {
       >
         <div class="h-full pb-4 overflow-y-auto bg-primary-900/10">
           <A href="/documentation">
-            <div class="p-3 bg-secondary text-secondary-foreground text-md font-black truncate flex gap-3 items-center">
+            <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">
               <div class="w-6 h-6">
                 <Book />
               </div>
@@ -159,7 +158,7 @@ const SideBar: Component = () => {
             </li>
           </ul>
           <A href="/blog">
-            <div class="p-3 bg-secondary text-secondary-foreground text-md font-black truncate flex gap-3 items-center">
+            <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">
               <div class="w-6 h-6">
                 <News />
               </div>
@@ -168,6 +167,17 @@ const SideBar: Component = () => {
           </A>
           <ul class="font-medium">
             <li>
+              <A
+                href="/blog/collection"
+                class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                  matchPath("/blog/collection")
+                    ? "text-secondary-foreground bg-secondary"
+                    : "text-secondary"
+                }`}
+              >
+                <News />
+                <span class="flex-1 ms-3 whitespace-nowrap">Blogs</span>
+              </A>
               <ul class="pl-3">
                 <Show when={blogs()}>
                   <For each={blogs().articles} fallback={<PageSkeleton />}>
