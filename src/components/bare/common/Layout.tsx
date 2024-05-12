@@ -8,7 +8,7 @@ import Nav from "~/components/bare/common/Nav";
 
 const Layout: Component = (props) => {
   const navigate = useNavigate();
-  const user = sessionStorage.getItem("user");
+  const user = localStorage.getItem("user");
 
   const token = get_token();
   const isTokenValid = check_token_validity();

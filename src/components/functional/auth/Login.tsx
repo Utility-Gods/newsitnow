@@ -44,7 +44,7 @@ const Login: Component = () => {
         duration: 5000,
       });
       if (result?.value)
-        sessionStorage.setItem("user", JSON.stringify(result.value));
+        localStorage.setItem("user", JSON.stringify(result.value));
       navigate("/app", { replace: true });
     } catch (error) {
       showToast({

@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function get_token() {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   if (!token) {
     return null;
   }
@@ -16,7 +16,7 @@ export function get_token() {
 }
 
 export function get_user() {
-  const user = sessionStorage.getItem("user");
+  const user = localStorage.getItem("user");
   if (!user) {
     return null;
   }
@@ -34,7 +34,7 @@ export function get_user_id() {
 }
 
 export function check_token_validity() {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   console.log({ token });
   if (!token) {

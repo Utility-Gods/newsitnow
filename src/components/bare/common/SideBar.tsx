@@ -14,7 +14,7 @@ const SideBar: Component = () => {
 
   const [path, setPath] = createSignal(location.pathname);
 
-  const user = sessionStorage.getItem("user");
+  const user = localStorage.getItem("user");
 
   const name = user ? JSON.parse(user)?.user?.username : "User";
 
@@ -43,8 +43,8 @@ const SideBar: Component = () => {
   });
 
   function handleLogOut() {
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/auth/login", { replace: true });
   }
 
