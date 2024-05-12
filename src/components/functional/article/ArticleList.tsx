@@ -177,7 +177,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           <Show when={articleList()?.isErr()}>
             <TableRow>
               <TableCell colspan={5} class="text-center text-error-foreground">
-                Error loading articles
+                {articleList()?.error.message}
               </TableCell>
             </TableRow>
           </Show>

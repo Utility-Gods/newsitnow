@@ -1,7 +1,7 @@
 import { fetch_articles } from "@lib/service/article";
 import { update_collection } from "@lib/service/collection";
 import { For, createResource, createSignal, onMount } from "solid-js";
-import { Show, createEffect } from "solid-js";
+import { Show } from "solid-js";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import { BadgeDelta } from "~/components/ui/badge-delta";
