@@ -98,9 +98,10 @@ const Article: Component = (props) => {
                 </div>
               </div>
             </div>
-
-            <div class="p-3 max-h-full overflow-auto no-scrollbar ql-editor">
-              <div class="" innerHTML={article().text}></div>
+            <div class="ql-snow ">
+              <div class="p-3 max-h-full overflow-auto no-scrollbar ql-editor">
+                <div class="" innerHTML={article().text}></div>
+              </div>
             </div>
           </div>
         </Show>
