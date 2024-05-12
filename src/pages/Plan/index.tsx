@@ -35,7 +35,9 @@ const Plan: Component = () => {
         ]}
       />
       <div class="p-3 ">
-        <div class="text-2xl font-bold text-primary leading-10">Your Plan</div>
+        <div class="text-2xl font-bold text-primary leading-10">
+          Plan details
+        </div>
         <Show when={!userPlan.loading} fallback={<PageSkeleton />}>
           <Show
             when={userPlan()?.isOk()}
@@ -121,7 +123,14 @@ const Plan: Component = () => {
                   </p>
                 </div>
               </Card>
-              <Button onclick={refetch}>Refresh Plan</Button>
+              <div class="flex gap-3">
+                <Button variant="ghost" onclick={refetch}>
+                  Refresh Plan
+                </Button>
+                <Show when={organization().plan.name === "free"}>
+                  <Button>Upgrade Plan</Button>
+                </Show>
+              </div>
             </div>
           </Show>
         </Show>
