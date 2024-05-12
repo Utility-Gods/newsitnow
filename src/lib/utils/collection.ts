@@ -1,5 +1,5 @@
 import { get_token } from "@lib/utils";
-
+import qs from "qs";
 async function generateEmbedCode(collectionId: number): Promise<string> {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
@@ -47,10 +47,15 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
   return htmlCode;
 }
 
-async function generateEmbedCodeExposed(collectionId: number): Promise<string> {
+async function generateEmbedCodeExposed(
+  collectionId: number,
+  includeDrafts: boolean,
+): Promise<string> {
   const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
   // Replace with your Strapi API token
   // Generate HTML code
+
+  const query = includeDrafts ? qs.stringify({ includeDrafts: true }) : "";
   const htmlCode = `
 
       <div id="embedded-collection"></div>

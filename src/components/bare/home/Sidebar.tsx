@@ -140,7 +140,7 @@ const SideBar: Component = () => {
                       <li>
                         <A
                           href={`/documentation/article/${article.id}`}
-                          class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                          class={`block truncate items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                             matchPath(`article/${article.id}`)
                               ? "text-secondary-foreground bg-secondary"
                               : "text-secondary"
@@ -185,7 +185,7 @@ const SideBar: Component = () => {
                       <li>
                         <A
                           href={`/blog/article/${article.id}`}
-                          class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                          class={`block truncate p-3  hover:bg-secondary hover:text-secondary-foreground    group ${
                             matchPath(`article/${article.id}`)
                               ? "text-secondary-foreground bg-secondary"
                               : "text-secondary"

@@ -114,7 +114,7 @@ function ArticleAttach(props: ArticleAttachProps) {
             {/* show a list of articles with check mark to check and select */}
             <For each={articleList()?.value}>
               {(article, index) => (
-                <div class="flex items center gap-3 p-3 bg-muted">
+                <div class="flex items center gap-3 p-3 bg-muted justify-between">
                   <div class="flex items center gap-3">
                     <Checkbox
                       checked={attachedArticlesIdList()?.includes(article.id)}
@@ -135,12 +135,17 @@ function ArticleAttach(props: ArticleAttachProps) {
                       }}
                     />
                     <Label for={`article_attach_label_${index()}`}>
-                      <div class="text-primary-foreground font-bold text-md">
+                      <div class="text-primary-foreground font-bold text-md w-[220px] truncate">
                         {article.name}
                       </div>
                     </Label>
                   </div>
                   <div class="flex items center gap-3 text-muted-foreground text-sm">
+                    <div class="flex gap-2 items-center">
+                      <div class="">
+                        {new Date(article.createdAt).toLocaleDateString()}
+                      </div>
+                    </div>
                     <div class="flex gap-2 items-center">
                       <BadgeDelta
                         deltaType={
@@ -152,12 +157,6 @@ function ArticleAttach(props: ArticleAttachProps) {
                         {article.status}
                       </BadgeDelta>
                     </div>
-                    <div class="flex gap-2 items-center">
-                      <div class="">
-                        {new Date(article.createdAt).toLocaleDateString()}
-                      </div>
-                    </div>
-                    <div class="allow-3-lines">{article.description}</div>
                   </div>
                 </div>
               )}
