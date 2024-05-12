@@ -2,6 +2,7 @@ import {
   generateEmbedCode,
   generateEmbedCodeExposed,
 } from "@lib/utils/collection";
+import { A } from "@solidjs/router";
 import { createResource } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
@@ -48,9 +49,9 @@ function CodeShare(props: CodeShareProps) {
       </Button>
       <div class="text-muted-foreground font-semibold text-xs">
         Copy the code above and add it in your website to embed the collection.
-        <a href="#" class="text-primary ml-1">
+        <A href="/documentation/collection" class="text-primary ml-1">
           Learn more
-        </a>
+        </A>
       </div>
     </div>
   );
