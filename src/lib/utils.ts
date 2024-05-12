@@ -49,3 +49,7 @@ export function check_token_validity() {
   }
   return true;
 }
+
+export function check_if_mobile() {
+  return window.innerWidth < 768;
+}
