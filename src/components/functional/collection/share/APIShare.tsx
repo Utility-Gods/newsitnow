@@ -1,11 +1,13 @@
 import {
-  generateEmbedCode,
   generateRestAPICode,
   generateRestAPICodeExposed,
 } from "@lib/utils/collection";
 import { A } from "@solidjs/router";
-import { createResource } from "solid-js";
+
+import { createResource, createSignal } from "solid-js";
 import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
 import { showToast } from "~/components/ui/toast";
 
 interface APIShareProps {
@@ -16,9 +18,14 @@ interface APIShareProps {
 function APIShare(props: APIShareProps) {
   const [embedCode] = createResource(props.collectionId, generateRestAPICode);
 
+  const [includeDraft, setIncludeDraft] = createSignal<boolean>(false);
+
   async function copyCodeSnippet() {
     console.log("Copying code to clipboard");
-    const toCopy = generateRestAPICodeExposed(props.collectionId);
+    const toCopy = generateRestAPICodeExposed(
+      props.collectionId,
+      includeDraft(),
+    );
 
     navigator.clipboard
       .writeText(toCopy as string)
@@ -45,9 +52,31 @@ function APIShare(props: APIShareProps) {
         {embedCode()}
       </div>
 
-      <Button variant="outline" onClick={copyCodeSnippet}>
-        Copy
-      </Button>
+      <div class="items-top flex flex-col py-2 gap-3 justify-between">
+        <div class="flex gap-1 items-center">
+          <Checkbox
+            id="terms1"
+            onChange={(e) => {
+              console.log(e);
+              setIncludeDraft(true);
+            }}
+          />
+          <div class="grid gap-1.5 leading-none text-sm">
+            <Label for="terms1-input" class="text-muted-foreground">
+              Include draft articles (not recommended)
+              <A
+                href="/documentation/collection"
+                class="text-primary ml-1 text-sm"
+              >
+                Learn more
+              </A>
+            </Label>
+          </div>
+        </div>
+        <Button variant="outline" onClick={copyCodeSnippet}>
+          Copy
+        </Button>
+      </div>
     </div>
   );
 }

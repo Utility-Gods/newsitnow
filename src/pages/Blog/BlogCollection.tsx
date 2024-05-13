@@ -5,20 +5,22 @@ import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
-const fetch_collections = async (id) => {
+async function fetch_collections() {
   try {
     const res = await fetch(
-      "https://orange-gas-strapi.fly.dev/api/collections/" + 20,
+      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfilters%5D%5Bstatus%5D=Published&filters%5Bid%5D=20",
     );
+
     if (!res.ok) {
       throw new Error("Failed to fetch collections");
     }
-    return await res.json();
+
+    return res.json();
   } catch (err) {
     console.log(err);
     return [];
   }
-};
+}
 
 const BlogCollection: Component = () => {
   const [collections, { refetch }] = createResource(fetch_collections);

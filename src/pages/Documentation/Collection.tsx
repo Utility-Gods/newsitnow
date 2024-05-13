@@ -12,49 +12,23 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
-import qs from "qs";
 
-const fetch_collections = async (status: string) => {
+async function fetch_collections() {
   try {
-    const query = qs.stringify({
-      populate: {
-        creator: {
-          fields: ["id", "username"],
-        },
-        articles: {
-          fields: ["id", "name", "status", "createdAt"],
-          ...(status === "Published"
-            ? {
-                filters: {
-                  status: "Published",
-                },
-              }
-            : {}),
-        },
-      },
-      filters: {
-        id: "18",
-      },
-    });
-
     const res = await fetch(
-      `https://orange-gas-strapi.fly.dev/api/public-collection?${query}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfilters%5D%5Bstatus%5D=Published&filters%5Bid%5D=18",
     );
+
     if (!res.ok) {
       throw new Error("Failed to fetch collections");
     }
-    return await res.json();
+
+    return res.json();
   } catch (err) {
     console.log(err);
     return [];
   }
-};
+}
 
 type Status = "Published" | "All";
 
@@ -63,6 +37,7 @@ const Collection: Component = () => {
   const [collections, { refetch }] = createResource(status, fetch_collections);
 
   createEffect(() => {
+    console.log("fetching collections");
     console.log(collections());
   });
   return (

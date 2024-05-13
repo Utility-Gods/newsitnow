@@ -2,8 +2,8 @@ import {
   generateEmbedCode,
   generateEmbedCodeExposed,
 } from "@lib/utils/collection";
-
 import { A } from "@solidjs/router";
+
 import { createResource, createSignal } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
@@ -35,6 +35,7 @@ function CodeShare(props: CodeShareProps) {
           variant: "success",
           title: "Success",
           description: "Code copied to clipboard successfully",
+          duration: 3000,
         });
       })
       .catch((error) => {
@@ -42,6 +43,7 @@ function CodeShare(props: CodeShareProps) {
         showToast({
           variant: "error",
           title: "Failed to copy code",
+          duration: 3000,
           description: "An error occurred while copying the code to clipboard",
         });
       });
@@ -62,10 +64,13 @@ function CodeShare(props: CodeShareProps) {
           />
           <div class="grid gap-1.5 leading-none text-sm">
             <Label for="terms1-input" class="text-muted-foreground">
-              Include draft articles (not recommended){" "}
-              <a href="#" class="text-primary ml-1 text-sm">
+              Include draft articles (not recommended)
+              <A
+                href="/documentation/collection"
+                class="text-primary ml-1 text-sm"
+              >
                 Learn more
-              </a>
+              </A>
             </Label>
           </div>
         </div>
