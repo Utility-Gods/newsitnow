@@ -65,8 +65,8 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       }
 
       if (result?.isErr()) {
-        console.log(result.error);
-        throw result.error.error;
+        console.log(result.error, "----------");
+        throw result.error;
       }
       merged.onOpenChange(false);
     } catch (e) {

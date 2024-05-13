@@ -92,7 +92,7 @@ const ArticleCreate: Component = (props) => {
       console.log({ result });
 
       if (result.isErr()) {
-        throw result.error.error;
+        throw result.error;
       }
       showToast({
         variant: "success",
