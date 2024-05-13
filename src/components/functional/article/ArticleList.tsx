@@ -68,6 +68,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
         showToast({
           variant: "success",
           title: "Article deleted",
+          duration: 5000,
           description: "Article has been deleted successfully",
         });
       }
@@ -75,6 +76,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
       if (result?.isErr()) {
         showToast({
           title: "Some error occured",
+          duration: 5000,
           description: "Could not delete article, please try again later",
           variant: "error",
         });
@@ -84,6 +86,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
       showToast({
         variant: "error",
         title: "Failed to delete article",
+        duration: 5000,
         description: "An error occurred while deleting the article",
       });
     } finally {
@@ -223,7 +226,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                       </Show>
                       <DropdownMenu>
                         <DropdownMenuTrigger>
-                          <div class="w-6 h-6">
+                          <div class="w-6 h-6 rotate-90">
                             <ThreeDots />
                           </div>
                         </DropdownMenuTrigger>

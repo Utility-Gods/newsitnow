@@ -51,7 +51,7 @@ function CodeShare(props: CodeShareProps) {
       <div class="border-2 p-3 bg-muted  code-block text-muted-foreground ">
         {embedCode()}
       </div>
-      <div class="items-top flex space-x-2 py-2 items-center justify-between">
+      <div class="items-top flex flex-col py-2 gap-3 justify-between">
         <div class="flex gap-1 items-center">
           <Checkbox
             id="terms1"
@@ -60,22 +60,18 @@ function CodeShare(props: CodeShareProps) {
               setIncludeDraft(true);
             }}
           />
-          <div class="grid gap-1.5 leading-none">
+          <div class="grid gap-1.5 leading-none text-sm">
             <Label for="terms1-input" class="text-muted-foreground">
-              Include Draft
+              Include draft articles (not recommended){" "}
+              <a href="#" class="text-primary ml-1 text-sm">
+                Learn more
+              </a>
             </Label>
           </div>
         </div>
         <Button variant="outline" onClick={copyCodeSnippet}>
           Copy
         </Button>
-      </div>
-
-      <div class="text-muted-foreground font-semibold text-xs">
-        Copy the code above and add it in your website to embed the collection.
-        <A href="/documentation/collection" class="text-primary ml-1">
-          Learn more
-        </A>
       </div>
     </div>
   );
