@@ -1,16 +1,19 @@
-import type { Component } from "solid-js"
-import { splitProps } from "solid-js"
+import type { Component } from "solid-js";
+import { splitProps } from "solid-js";
 
-import { Checkbox as CheckboxPrimitive } from "@kobalte/core"
+import { Checkbox as CheckboxPrimitive } from "@kobalte/core";
 
-import { cn } from "~/lib/utils"
+import { cn } from "~/lib/utils";
 
 const Checkbox: Component<CheckboxPrimitive.CheckboxRootProps> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+  const [, rest] = splitProps(props, ["class"]);
   return (
-    <CheckboxPrimitive.Root class={cn("items-top group flex space-x-2", props.class)} {...rest}>
+    <CheckboxPrimitive.Root
+      class={cn("items-top group flex space-x-2", props.class)}
+      {...rest}
+    >
       <CheckboxPrimitive.Input />
-      <CheckboxPrimitive.Control class="peer size-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[checked]:border-none data-[checked]:bg-primary data-[checked]:text-primary-foreground">
+      <CheckboxPrimitive.Control class="peer size-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[checked]:border-none data-[checked]:bg-secondary data-[checked]:text-secondary-foreground">
         <CheckboxPrimitive.Indicator>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +30,7 @@ const Checkbox: Component<CheckboxPrimitive.CheckboxRootProps> = (props) => {
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Control>
     </CheckboxPrimitive.Root>
-  )
-}
+  );
+};
 
-export { Checkbox }
+export { Checkbox };

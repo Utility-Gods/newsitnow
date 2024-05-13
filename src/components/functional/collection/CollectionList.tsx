@@ -64,6 +64,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
         showToast({
           variant: "success",
           title: "Collection deleted",
+          duration: 5000,
           description: "Collection has been deleted successfully",
         });
       }
@@ -71,6 +72,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
       if (result?.isErr()) {
         showToast({
           title: "Some error occured",
+          duration: 5000,
           description: "Could not delete collection, please try again later",
           variant: "error",
         });
@@ -79,6 +81,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
       console.log(e);
       showToast({
         variant: "error",
+        duration: 5000,
         title: "Failed to delete collection",
         description: "An error occurred while deleting the collection",
       });
@@ -211,7 +214,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                       </Show>
                       <DropdownMenu>
                         <DropdownMenuTrigger>
-                          <div class="w-6 h-6">
+                          <div class="w-6 h-6 rotate-90">
                             <ThreeDots />
                           </div>
                         </DropdownMenuTrigger>

@@ -154,7 +154,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                     variant={"outline"}
                     onClick={() => setShowAttachArticle(true)}
                   >
-                    + Add Article
+                    + Attach Article
                   </Button>
                   <Button>
                     <A href="share" class="flex items-center gap-1">

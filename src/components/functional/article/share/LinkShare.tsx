@@ -45,12 +45,6 @@ function LinkShare(props: LinkShareProps) {
       <Button variant="outline" onClick={copyCodeSnippet}>
         Copy
       </Button>
-      <div class="text-muted-foreground font-semibold text-xs">
-        Share the above link to share the article.
-        <a href="#" class="text-primary ml-1">
-          Learn more
-        </a>
-      </div>
     </div>
   );
 }

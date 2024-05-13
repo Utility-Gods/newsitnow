@@ -48,12 +48,6 @@ function APIShare(props: APIShareProps) {
       <Button variant="outline" onClick={copyCodeSnippet}>
         Copy
       </Button>
-      <div class="text-muted-foreground font-semibold text-xs">
-        Follow the above steps to add the article to your app.
-        <a href="#" class="text-primary ml-1">
-          Learn more
-        </a>
-      </div>
     </div>
   );
 }
