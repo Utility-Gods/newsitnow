@@ -7,7 +7,9 @@ import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 const fetch_collections = async (id) => {
   try {
-    const res = await fetch("http://localhost:1337/api/collections/" + 20);
+    const res = await fetch(
+      "https://orange-gas-strapi.fly.dev/api/collections/" + 20,
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch collections");
     }

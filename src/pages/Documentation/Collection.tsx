@@ -38,7 +38,7 @@ const fetch_collections = async (status: string) => {
     });
 
     const res = await fetch(
-      `http://localhost:1337/api/public-collection?${query}`,
+      `https://orange-gas-strapi.fly.dev/api/public-collection?${query}`,
       {
         method: "GET",
         headers: {
