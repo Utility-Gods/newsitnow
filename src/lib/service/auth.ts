@@ -4,9 +4,6 @@ import { Effect } from "effect";
 // Assuming you are using this format for your environment variable
 const API_URL = import.meta.env.VITE_STRAPI_URL as string;
 
-console.log({ API_URL });
-
-console.log("--------", JSON.stringify(import.meta.env, null, 2));
 const user_register = async (
   email: string,
   password: string,
