@@ -13,7 +13,9 @@ import News from "@lib/icons/News";
 
 const fetch_collections = async () => {
   try {
-    const res = await fetch("http://localhost:1337/api/collections/" + 18);
+    const res = await fetch(
+      "https://orange-gas-strapi.fly.dev/api/collections/" + 18,
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch collections");
     }
@@ -26,7 +28,9 @@ const fetch_collections = async () => {
 
 const fetch_blogs = async () => {
   try {
-    const res = await fetch("http://localhost:1337/api/collections/" + 20);
+    const res = await fetch(
+      "https://orange-gas-strapi.fly.dev/api/collections/" + 20,
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch collections");
     }

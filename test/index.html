@@ -1,65 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>My Website</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Welcome to My Website</h1>
 
     <p>This is the homepage of my website.</p>
 
-    <footer>
-        &copy; 2022 My Website. All rights reserved.
-    </footer>
-
-
-
-
-
-
-
-   
-    
+    <footer>&copy; 2022 My Website. All rights reserved.</footer>
 
     <div id="embedded-collection"></div>
     <script>
-    (function() {
-      var collectionId = 6;
+      (function () {
+        var collectionId = 6;
 
-      // Fetch collection data from Strapi API
-      fetch('http://localhost:1337/api/collections/' + collectionId, {
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log({data})
-        var collectionContent = data; // Adjust the property name based on your Strapi schema
-        console.log(collectionContent);
-        document.getElementById('embedded-collection').innerHTML = `
+        // Fetch collection data from Strapi API
+        fetch(
+          "https://orange-gas-strapi.fly.dev/api/collections/" + collectionId,
+          {},
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log({ data });
+            var collectionContent = data; // Adjust the property name based on your Strapi schema
+            console.log(collectionContent);
+            document.getElementById("embedded-collection").innerHTML = `
           <div>
               <h2>${collectionContent.name}</h2>
               <p>${collectionContent.description}</p>
               <p>Date: ${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
           </div>
         `;
-        // loop through collectionContent.articles and append them to innerHTML
+            // loop through collectionContent.articles and append them to innerHTML
 
-        collectionContent.articles.forEach(article => {
-          document.getElementById('embedded-collection').innerHTML += `
+            collectionContent.articles.forEach((article) => {
+              document.getElementById("embedded-collection").innerHTML += `
             <div>
                 <h3>${article.name}</h3>
                 <p>${article.text}</p>
                 <p>Date: ${new Date(article.createdAt).toLocaleDateString()}</p>
             </div>
           `;
-        });
-      });
-    })();
+            });
+          });
+      })();
     </script>
- 
-
-
-
-
-
-</body>
+  </body>
 </html>

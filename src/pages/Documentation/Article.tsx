@@ -19,7 +19,7 @@ const fetch_articles = async (id: string) => {
     });
 
     const res = await fetch(
-      "http://localhost:1337/api/public-article?" + query,
+      "https://orange-gas-strapi.fly.dev/api/public-article?" + query,
       {
         method: "GET",
         headers: {
