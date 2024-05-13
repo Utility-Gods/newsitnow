@@ -5,6 +5,7 @@ import Public from "@pages/Public";
 import Article from "@pages/Article";
 import Collection from "@pages/Collection";
 import CollectionView from "@pages/Collection/CollectionView";
+import ArticleShare from "@pages/Article/ArticleShare";
 
 import { Toaster } from "~/components/ui/toast";
 
@@ -26,6 +27,8 @@ import BlogLayout from "./pages/Blog/Layout";
 import BlogHome from "./pages/Blog/Home";
 import BlogCollection from "./pages/Blog/BlogCollection";
 import Plan from "./pages/Plan";
+import CollectionShare from "@pages/Collection/CollectionShare";
+
 const RouterComponent = () => (
   <>
     <Router>
@@ -50,8 +53,10 @@ const RouterComponent = () => (
         <Route path="" component={AppHome} />
         <Route path="/article" component={Article} />
         <Route path="/article/:id" component={ArticleView} />
+        <Route path="/article/:id/share" component={ArticleShare} />
         <Route path="/collection" component={Collection} />
         <Route path="/collection/:id" component={CollectionView} />
+        <Route path="/collection/:id/share" component={CollectionShare} />
         <Route path="/article/create" component={ArticleCreate} />
         <Route path="/plan" component={Plan} />
       </Route>

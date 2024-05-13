@@ -16,8 +16,6 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-import CollectionShare from "./CollectionShare";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,7 +48,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
 
   const [loading, setLoading] = createSignal(false);
   const navigate = useNavigate();
-  const [openShareModal, setOpenShareModal] = createSignal(false);
 
   createEffect(() => {
     console.log("fetching collections", collectionList());
@@ -87,22 +84,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
       });
     } finally {
       setLoading(false);
-    }
-  }
-
-  const [activeCollection, setActiveCollection] = createSignal<Collection>();
-
-  function embed_collection(c: Collection) {
-    if (c.status === "Published") {
-      setActiveCollection(c);
-      setOpenShareModal(true);
-      console.log("Embedding collection", activeCollection());
-    } else {
-      showToast({
-        title: "Collection not published",
-        description: "Please publish the collection to share it",
-        variant: "error",
-      });
     }
   }
 
@@ -211,7 +192,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                           <Button
                             onClick={(e) => {
                               e.stopPropagation();
-                              embed_collection(c);
+                              navigate(`${c.id}/share`);
                             }}
                           >
                             Share
@@ -261,7 +242,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                           <DropdownMenuItem
                             onClick={(e) => {
                               e.stopPropagation();
-                              embed_collection(c);
+                              navigate(`${c.id}/share`);
                             }}
                             class="text-primary-foreground flex items-center gap-2"
                           >
@@ -308,13 +289,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
       <Show when={loading()}>
         <PageSpinner />
       </Show>
-      <CollectionShare
-        collection={activeCollection}
-        show={openShareModal()}
-        onShowChange={() => {
-          setOpenShareModal(false);
-        }}
-      />
     </div>
   );
 };

@@ -18,7 +18,7 @@ function APIShare(props: APIShareProps) {
 
   async function copyCodeSnippet() {
     console.log("Copying code to clipboard");
-    const toCopy = await generateRestAPICodeExposed(props.collectionId);
+    const toCopy = generateRestAPICodeExposed(props.collectionId);
 
     navigator.clipboard
       .writeText(toCopy as string)
@@ -41,7 +41,7 @@ function APIShare(props: APIShareProps) {
   }
   return (
     <div class="flex flex-col gap-2">
-      <div class="border-2 p-3 bg-muted  code-block text-muted-foreground allow-3-lines">
+      <div class="border-2 p-3 bg-muted  code-block text-muted-foreground">
         {embedCode()}
       </div>
 

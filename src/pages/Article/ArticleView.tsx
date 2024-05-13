@@ -12,7 +12,7 @@ import { fetch_article_by_id, update_article } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
-import { useSearchParams } from "@solidjs/router";
+import { A, useSearchParams } from "@solidjs/router";
 
 import ArticleUpdate from "~/components/functional/article/ArticleUpdate";
 import { Button } from "~/components/ui/button";
@@ -20,7 +20,6 @@ import { showToast } from "~/components/ui/toast";
 
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import Share from "@lib/icons/share";
-import ArticleShare from "~/components/functional/article/ArticleShare";
 import AreYouSure from "~/components/functional/common/AreYouSure";
 
 const ArticleView: Component = (props) => {
@@ -36,32 +35,18 @@ const ArticleView: Component = (props) => {
 
   const article_details = () => article()?.value;
 
-  const [openShareModal, setOpenShareModal] = createSignal(false);
-
   const [openPublishModal, setOpenPublishModal] = createSignal(false);
+
   createEffect(() => {
     console.log("article", article_details());
   });
+
   const article_image = () => article_details()?.photo?.[0].url ?? null;
 
   const isPublished = () => {
     if (!article_details()) return false;
     return article_details()?.status === "Published";
   };
-
-  function embed_article() {
-    if (!isPublished()) {
-      showToast({
-        title: "Can not share article",
-        description: "please publish the article first",
-        variant: "warning",
-        duration: 20000,
-      });
-      return;
-    }
-    // we need to show the Share/Embed dialog
-    setOpenShareModal(true);
-  }
 
   async function changeStatus(status: string) {
     console.log("publishing article");
@@ -174,11 +159,13 @@ const ArticleView: Component = (props) => {
                         ).toLocaleDateString()}
                       </div>
                     </div>
-                    <Button variant={"secondary"} onClick={embed_article}>
-                      <div class="w-4 h-4 mr-2">
-                        <Share />
-                      </div>
-                      <span>Share</span>
+                    <Button>
+                      <A href="share" class="flex items-center gap-1">
+                        <div class="w-4 h-4 mr-2">
+                          <Share />
+                        </div>
+                        <span>Share</span>
+                      </A>
                     </Button>
                     <Show
                       when={!isPublished()}
@@ -221,19 +208,6 @@ const ArticleView: Component = (props) => {
           <div class="p-4 text-primary-100">Error loading article</div>
         </Show>
       </Show>
-
-      <ArticleShare
-        article={{
-          id: article_details()?.id,
-          attributes: {
-            ...article_details(),
-          },
-        }}
-        show={openShareModal()}
-        onShowChange={() => {
-          setOpenShareModal(false);
-        }}
-      />
 
       <Show when={loading()}>
         <PageSpinner />

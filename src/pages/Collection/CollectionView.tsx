@@ -20,7 +20,6 @@ import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import ArticleAttach from "~/components/functional/article/ArticleAttach";
-import CollectionShare from "~/components/functional/collection/CollectionShare";
 import AreYouSure from "~/components/functional/common/AreYouSure";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
@@ -49,22 +48,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
     return collection_details().creator.id === get_user_id();
   };
 
-  const [openShareModal, setOpenShareModal] = createSignal(false);
-
   const [openPublishModal, setOpenPublishModal] = createSignal(false);
-
-  function embed_collection() {
-    if (!isPublished()) {
-      showToast({
-        title: "Cannot share collection",
-        description: "Please publish the collection first",
-        variant: "warning",
-        duration: 20000,
-      });
-      return;
-    }
-    setOpenShareModal(true);
-  }
 
   function isPublished() {
     if (!collection_details()) {
@@ -172,11 +156,13 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                   >
                     + Add Article
                   </Button>
-                  <Button variant={"secondary"} onClick={embed_collection}>
-                    <div class="w-4 h-4 mr-2">
-                      <Share />
-                    </div>
-                    <span>Share</span>
+                  <Button>
+                    <A href="share" class="flex items-center gap-1">
+                      <div class="w-4 h-4 mr-2">
+                        <Share />
+                      </div>
+                      <span>Share</span>
+                    </A>
                   </Button>
                   <Show
                     when={!isPublished()}
@@ -282,14 +268,6 @@ const CollectionView: Component = (props: CollectionViewProps) => {
         message="Are you sure you want to publish this collection?"
         onOpenChange={() => {
           setOpenPublishModal(false);
-        }}
-      />
-
-      <CollectionShare
-        collection={collection_details}
-        show={openShareModal()}
-        onShowChange={() => {
-          setOpenShareModal(false);
         }}
       />
     </div>

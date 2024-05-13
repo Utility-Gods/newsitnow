@@ -28,8 +28,7 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import Trash from "@lib/icons/Trash";
 import { showToast } from "~/components/ui/toast";
 
-import ArticleShare from "./ArticleShare";
-import { A, useNavigate } from "@solidjs/router";
+import { useNavigate } from "@solidjs/router";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 
 import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
@@ -52,7 +51,6 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const { articleList, refetch } = merged;
 
   const navigate = useNavigate();
-  const [openShareModal, setOpenShareModal] = createSignal(false);
 
   const [loading, setLoading] = createSignal(false);
   createEffect(() => {
@@ -91,24 +89,6 @@ const ArticleList: Component<ArticleListProps> = (props) => {
     } finally {
       setLoading(false);
     }
-  }
-
-  const [activeArticle, setActiveArticle] = createSignal<Article>();
-
-  function embed_article(c: Article) {
-    if (!isPublished(c.status)) {
-      showToast({
-        title: "Can not share article",
-        description: "Please publish the article first before sharing",
-        variant: "warning",
-        duration: 20000,
-      });
-      return;
-    }
-
-    setActiveArticle(c);
-    console.log(activeArticle());
-    setOpenShareModal(true);
   }
 
   function isPublished(status: string): boolean {
@@ -224,7 +204,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                           <Button
                             onClick={(e) => {
                               e.stopPropagation();
-                              embed_article(c);
+                              navigate(`${c.id}/share`);
                             }}
                           >
                             Share
@@ -278,7 +258,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                           <DropdownMenuItem
                             onClick={(e) => {
                               e.stopPropagation();
-                              embed_article(c);
+                              navigate(`${c.id}/share`);
                             }}
                             class="text-primary-foreground flex items-center gap-2"
                           >
@@ -321,18 +301,6 @@ const ArticleList: Component<ArticleListProps> = (props) => {
           </Show>
         </TableBody>
       </Table>
-      <ArticleShare
-        article={{
-          id: activeArticle()?.id,
-          attributes: {
-            ...activeArticle(),
-          },
-        }}
-        show={openShareModal()}
-        onShowChange={() => {
-          setOpenShareModal(false);
-        }}
-      />
     </div>
   );
 };
