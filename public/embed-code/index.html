@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
   <head>
-    <title>My Website</title>
+    <title>Orange Gas Embed Demo</title>
+    <description>Embed a collection from Orange Gas into a website</description>
   </head>
   <body>
     <h1>Embed Code Demo</h1>
@@ -20,7 +21,7 @@
 
         // Fetch collection data from Strapi API
         fetch(
-          "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfilters%5D%5Bstatus%5D=Published&filters%5Bid%5D=18",
+          "http://localhost:1337/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=18",
           {},
         )
           .then((response) => response.json())
@@ -34,7 +35,7 @@
                    <p>${collectionContent.description}</p>
                    <p>Date: ${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
                    <p><strong>Creator:</strong> ${collectionContent.creator.username}</p>
-                   <p><strong>Creator ID:</strong> ${collectionContent.status}</p>
+                   <p><strong>Status:</strong> ${collectionContent.status}</p>
                </div>
              `;
             // loop through collectionContent.articles and append them to innerHTML
@@ -42,7 +43,9 @@
             collectionContent.articles.forEach((article) => {
               document.getElementById("embedded-collection").innerHTML += `
                  <div>
-                     <h3>${article.name}</h3>
+                 <h1>
+                     <a href="/embed-code/article.html?id=${article.text_id}">${article.name}</a>
+                    </h1>
                      <p>${article.text}</p>
                      <p>Date: ${new Date(article.createdAt).toLocaleDateString()}</p>
                      <p><strong>Status:</strong> ${article.status}</p>
