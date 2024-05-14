@@ -1,5 +1,6 @@
 import { get_token } from "@lib/utils";
 import qs from "qs";
+
 async function generateEmbedCode(collectionId: number): Promise<string> {
   const strapiUrl = "https://orange-gas-strapi.fly.dev"; // Replace with your Strapi API URL
 
@@ -61,7 +62,7 @@ async function generateEmbedCodeExposed(
         fields: ["id", "username"],
       },
       articles: {
-        fields: ["id", "name", "status", "createdAt", "text"],
+        fields: ["id", "name", "status", "createdAt", "text", "text_id"],
         ...(!includeDrafts
           ? {
               filters: {
@@ -149,7 +150,7 @@ function generateRestAPICode(
         fields: ["id", "username"],
       },
       articles: {
-        fields: ["id", "name", "status", "createdAt", "text"],
+        fields: ["id", "name", "status", "createdAt", "text", "text_id"],
         ...(!includeDrafts
           ? {
               filters: {
@@ -210,7 +211,7 @@ function generateRestAPICodeExposed(
         fields: ["id", "username"],
       },
       articles: {
-        fields: ["id", "name", "status", "createdAt", "text"],
+        fields: ["id", "name", "status", "createdAt", "text", "text_id"],
         ...(!includeDrafts
           ? {
               filters: {

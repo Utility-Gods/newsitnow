@@ -16,7 +16,7 @@ import { Label } from "~/components/ui/label";
 async function fetch_collections() {
   try {
     const res = await fetch(
-      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfilters%5D%5Bstatus%5D=Published&filters%5Bid%5D=18",
+      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=18",
     );
 
     if (!res.ok) {
@@ -111,7 +111,7 @@ const Collection: Component = () => {
                     {" "}
                     <div class="flex justify-between items-center">
                       <div class="flex items-center text-md font-regular text-primary underline underline-offset-2 leading-10">
-                        <A href={`/documentation/article/${article.id}`}>
+                        <A href={`/documentation/article/${article.text_id}`}>
                           {article.name}
                         </A>
                       </div>
