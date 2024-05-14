@@ -98,7 +98,7 @@ export const Footer: Component = () => {
         <div class="sm:flex sm:items-center sm:justify-between">
           <span class="text-sm text-gray-500 sm:text-center ">
             © 2024{" "}
-            <a href="https://orangegas.in/" class="hover:underline">
+            <a href="https://orangegas.co/" class="hover:underline">
               OrangeGas™
             </a>
             . All Rights Reserved.
