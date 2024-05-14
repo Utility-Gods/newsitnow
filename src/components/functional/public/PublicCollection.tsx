@@ -17,7 +17,7 @@ import PageSkeleton from "~/components/bare/common/PageSkeleton";
 
 async function fetch_collections(collectionId: string, includeDrafts: boolean) {
   try {
-    const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+    const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
     console.log(strapiUrl);
     const query = qs.stringify({
       populate: {
