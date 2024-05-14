@@ -6,7 +6,6 @@ import {
   Show,
 } from "solid-js";
 
-import { fetch_collection_by_id } from "@lib/service/collection";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { For } from "solid-js";
 import { Separator } from "~/components/ui/separator";
@@ -19,6 +18,7 @@ import PageSkeleton from "~/components/bare/common/PageSkeleton";
 async function fetch_collections(collectionId: string, includeDrafts: boolean) {
   try {
     const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+    console.log(strapiUrl);
     const query = qs.stringify({
       populate: {
         creator: {
@@ -36,7 +36,7 @@ async function fetch_collections(collectionId: string, includeDrafts: boolean) {
         },
       },
       filters: {
-        id: collectionId,
+        text_id: collectionId,
       },
     });
     const res = await fetch(`${strapiUrl}/api/public-collection?${query}`);
@@ -134,7 +134,7 @@ const PublicCollection: Component = (props) => {
                   {(article) => (
                     <div class="flex p-4 flex-col gap-3 bg-white">
                       <div class="flex justify-between items-center">
-                        <div class="flex items-center text-2xl font-bold text-primary leading-10">
+                        <div class="flex underline underline-offset-2 items-center text-2xl font-bold text-primary leading-10">
                           <A
                             href={`/public/${userId}/article/${article.text_id}`}
                           >

@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Orange Gas Embed Demo</title>
+    <description>Embed a article from Orange Gas into a website</description>
+  </head>
+  <body>
+    <h1>Embed Code Demo</h1>
+
+    <p>
+      This demo was created to show how to embed an article from Orange Gas into
+      a website.
+    </p>
+
+    <div class="ql-snow">
+      <div id="embedded-article" class="ql-editor"></div>
+    </div>
+
+    <script>
+      (function () {
+        // access the article ID from query params
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get("id");
+        console.log({ articleId });
+
+        fetch(
+          "http://localhost:1337/api/public-article?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=12",
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            var articleContent = data;
+            document.getElementById("embedded-article").innerHTML = `
+          <div>
+              <h2>${articleContent.name}</h2>
+              <p>${articleContent.text}</p>
+              <p> Status: ${articleContent.status}</p>
+              <p>Date: ${new Date(articleContent.createdAt).toLocaleDateString()}</p>
+          </div>
+        `;
+          });
+      })();
+    </script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.core.css"
+      integrity="sha512-a7lWBqHHHcLWWynFie8nxZ2haAUHs34w7XiVra9AjlL+/XpDK1GOAGfzcAoLW978tD8/fym7JYxDxg8uPszyfw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.snow.css"
+      integrity="sha512-ggYQiYwuFFyThzEv6Eo6g/uPLis4oUynsE88ovEde5b2swycOh9SlAI8FL/cL2AkGGNnWADPXcX2UnPIJS2ozw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </body>
+</html>

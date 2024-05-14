@@ -1,13 +1,45 @@
 import { Component, createResource, createSignal, Show } from "solid-js";
 
-import { fetch_article_by_id } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import qs from "qs";
+import { ok, err } from "neverthrow";
+
+const fetch_articles = async (id: string) => {
+  try {
+    const query = qs.stringify({
+      populate: {
+        author: {
+          fields: ["id", "username"],
+        },
+      },
+      filters: {
+        text_id: id,
+      },
+    });
+
+    const res = await fetch(
+      "https://orange-gas-strapi.fly.dev/api/public-article?" + query,
+    );
+    if (!res.ok) {
+      return err(res.statusText);
+    }
+
+    const result = await res.json();
+
+    console.log(result);
+
+    return ok(result);
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 const PublicArticle: Component = (props) => {
   const userId = props.params.userId;
   const articleId = props.params.id;
 
-  const [article] = createResource(props.params.id, fetch_article_by_id);
+  const [article] = createResource(props.params.id, fetch_articles);
   const [loading] = createSignal(false);
 
   const article_details = () => article()?.value;

@@ -2,7 +2,7 @@ import { get_token } from "@lib/utils";
 import qs from "qs";
 
 async function generateEmbedCode(collectionId: number): Promise<string> {
-  const strapiUrl = "https://orange-gas-strapi.fly.dev"; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
 
   // Generate HTML code
   const htmlCode = `
@@ -12,10 +12,7 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
          var collectionId = ${collectionId};
 
          // Fetch collection data from Strapi API
-         fetch('\${strapiUrl}/api/collections/' + collectionId, {
-           headers: {
-             Authorization: 'Bearer <Auth_token>' // Replace YOUR_AUTH_TOKEN with your actual token
-           }
+         fetch('\${strapiUrl}/api/public-collection/' + collectionId, {
          })
          .then(response => response.json())
          .then(data => {
@@ -107,7 +104,7 @@ async function generateEmbedCodeExposed(
              collectionContent.articles.forEach(article => {
                document.getElementById('embedded-collection').innerHTML += \`
                  <div>
-                     <h3>\${article.name}</h3>
+                     <a href="/article?id=\${article.text_id}">\${article.name}</a>
                      <p>\${article.text}</p>
                      <p>Date: \${new Date(article.createdAt).toLocaleDateString()}</p>
                      <p><strong>Status:</strong> \${article.status}</p>
