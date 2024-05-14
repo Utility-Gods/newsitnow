@@ -10,6 +10,8 @@ import Close from "@lib/icons/Close";
 import Menu from "@lib/icons/Menu";
 import Collection from "@lib/icons/Collection";
 import News from "@lib/icons/News";
+import Code from "@lib/icons/code";
+import Link from "@lib/icons/link";
 
 async function fetch_collections() {
   try {
@@ -44,6 +46,8 @@ async function fetch_blogs() {
     return [];
   }
 }
+
+const originURL = import.meta.env.VITE_ORIGIN;
 
 const SideBar: Component = () => {
   const [collections, { refetch }] = createResource(fetch_collections);
@@ -116,100 +120,130 @@ const SideBar: Component = () => {
         aria-label="Sidebar"
         style={``}
       >
-        <div class="h-full pb-4 overflow-y-auto bg-primary-900/10">
-          <A href="/documentation">
-            <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">
-              <div class="w-6 h-6">
-                <Book />
+        <div class="h-[90%] pb-4 overflow-y-auto bg-primary-900/10 flex flex-col justify-between">
+          <div class=" flex-col gap-3">
+            <A href="/documentation">
+              <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">
+                <div class="w-6 h-6">
+                  <Book />
+                </div>
+                Documentation
               </div>
-              Documentation
-            </div>
-          </A>
-          <ul class="font-medium">
-            <li>
-              <A
-                href="/documentation/collection"
-                class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
-                  matchPath("/documentation/collection")
-                    ? "text-secondary-foreground bg-secondary"
-                    : "text-secondary"
-                }`}
-              >
-                <Collection />
-                <span class="flex-1 ms-3 whitespace-nowrap">Collections</span>
-              </A>
-              <ul class="pl-3">
-                <Show when={collections()}>
-                  <For
-                    each={collections().articles}
-                    fallback={<PageSkeleton />}
-                  >
-                    {(article) => (
-                      <li>
-                        <A
-                          href={`/documentation/article/${article.text_id}`}
-                          class={`block truncate items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
-                            matchPath(`article/${article.text_id}`)
-                              ? "text-secondary-foreground bg-secondary"
-                              : "text-secondary"
-                          }`}
-                        >
-                          <span class="flex-1 ms-3 whitespace-nowrap">
-                            {article.name}
-                          </span>
-                        </A>
-                      </li>
-                    )}
-                  </For>
-                </Show>
-              </ul>
-            </li>
-          </ul>
-          <A href="/blog">
-            <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">
-              <div class="w-6 h-6">
-                <News />
+            </A>
+            <ul class="font-medium">
+              <li>
+                <A
+                  href="/documentation/collection"
+                  class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/documentation/collection")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <Collection />
+                  <span class="flex-1 ms-3 whitespace-nowrap">Collections</span>
+                </A>
+                <ul class="pl-3">
+                  <Show when={collections()}>
+                    <For
+                      each={collections().articles}
+                      fallback={<PageSkeleton />}
+                    >
+                      {(article) => (
+                        <li>
+                          <A
+                            href={`/documentation/article/${article.text_id}`}
+                            class={`block truncate items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                              matchPath(`article/${article.text_id}`)
+                                ? "text-secondary-foreground bg-secondary"
+                                : "text-secondary"
+                            }`}
+                          >
+                            <span class="flex-1 ms-3 whitespace-nowrap">
+                              {article.name}
+                            </span>
+                          </A>
+                        </li>
+                      )}
+                    </For>
+                  </Show>
+                </ul>
+              </li>
+            </ul>
+            <A href="/blog">
+              <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">
+                <div class="w-6 h-6">
+                  <News />
+                </div>
+                Blog
               </div>
-              Blog
-            </div>
-          </A>
-          <ul class="font-medium">
-            <li>
-              <A
-                href="/blog/collection"
-                class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
-                  matchPath("/blog/collection")
-                    ? "text-secondary-foreground bg-secondary"
-                    : "text-secondary"
-                }`}
-              >
-                <News />
-                <span class="flex-1 ms-3 whitespace-nowrap">Blogs</span>
-              </A>
-              <ul class="pl-3">
-                <Show when={blogs()}>
-                  <For each={blogs().articles} fallback={<PageSkeleton />}>
-                    {(article) => (
-                      <li>
-                        <A
-                          href={`/blog/article/${article.text_id}`}
-                          class={`block truncate p-3  hover:bg-secondary hover:text-secondary-foreground    group ${
-                            matchPath(`article/${article.text_id}`)
-                              ? "text-secondary-foreground bg-secondary"
-                              : "text-secondary"
-                          }`}
-                        >
-                          <span class="flex-1 ms-3 whitespace-nowrap">
-                            {article.name}
-                          </span>
-                        </A>
-                      </li>
-                    )}
-                  </For>
-                </Show>
-              </ul>
-            </li>
-          </ul>
+            </A>
+            <ul class="font-medium">
+              <li>
+                <A
+                  href="/blog/collection"
+                  class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/blog/collection")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <News />
+                  <span class="flex-1 ms-3 whitespace-nowrap">Blogs</span>
+                </A>
+                <ul class="pl-3">
+                  <Show when={blogs()}>
+                    <For each={blogs().articles} fallback={<PageSkeleton />}>
+                      {(article) => (
+                        <li>
+                          <A
+                            href={`/blog/article/${article.text_id}`}
+                            class={`block truncate p-3  hover:bg-secondary hover:text-secondary-foreground    group ${
+                              matchPath(`article/${article.text_id}`)
+                                ? "text-secondary-foreground bg-secondary"
+                                : "text-secondary"
+                            }`}
+                          >
+                            <span class="flex-1 ms-3 whitespace-nowrap">
+                              {article.name}
+                            </span>
+                          </A>
+                        </li>
+                      )}
+                    </For>
+                  </Show>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              href={originURL + "/embed-code/index.html"}
+              target="_blank"
+              class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+            >
+              <div class="w-6 h-6">
+                <Code />
+              </div>
+              <span class="flex-1 ms-3 whitespace-nowrap">
+                Raw Documentation
+              </span>
+            </a>
+            <a
+              href={
+                originURL + "/public/2/collection/" + collections()?.text_id
+              }
+              target="_blank"
+              class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+            >
+              <div class="w-6 h-6">
+                <Link />
+              </div>
+              <span class="flex-1 ms-3 whitespace-nowrap">
+                Public Documentation
+              </span>
+            </a>
+          </div>
         </div>
       </aside>
     </>
