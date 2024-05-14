@@ -14,7 +14,7 @@ const fetch_articles = async (id: string) => {
         },
       },
       filters: {
-        id: id,
+        text_id: id,
       },
     });
 

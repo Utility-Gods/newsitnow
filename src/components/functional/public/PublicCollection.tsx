@@ -25,7 +25,7 @@ async function fetch_collections(collectionId: string, includeDrafts: boolean) {
           fields: ["id", "username"],
         },
         articles: {
-          fields: ["id", "name", "status", "createdAt", "text"],
+          fields: ["id", "name", "status", "createdAt", "text", "text_id"],
           ...(!includeDrafts
             ? {
                 filters: {
@@ -135,7 +135,9 @@ const PublicCollection: Component = (props) => {
                     <div class="flex p-4 flex-col gap-3 bg-white">
                       <div class="flex justify-between items-center">
                         <div class="flex items-center text-2xl font-bold text-primary leading-10">
-                          <A href={`/public/${userId}/article/${article.id}`}>
+                          <A
+                            href={`/public/${userId}/article/${article.text_id}`}
+                          >
                             {article.name}
                           </A>
                         </div>
