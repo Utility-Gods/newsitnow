@@ -63,7 +63,7 @@ const AccountDropdown: Component = () => {
             class="p-3 text-primary-foreground flex items-center gap-2 text-md"
             onClick={(e) => {
               e.stopPropagation();
-              navigate(`/app/organizations`);
+              navigate(`/app/organization`);
             }}
           >
             <div class="w-6 h-6">
