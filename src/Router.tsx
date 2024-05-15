@@ -23,11 +23,14 @@ import DLayout from "@pages/Documentation/Layout";
 import DArticle from "@pages/Documentation/Article";
 import DCollection from "@pages/Documentation/Collection";
 import DHome from "@pages/Documentation/Home";
-import BlogLayout from "./pages/Blog/Layout";
-import BlogHome from "./pages/Blog/Home";
-import BlogCollection from "./pages/Blog/BlogCollection";
-import Plan from "./pages/Plan";
+import BlogLayout from "@pages/Blog/Layout";
+import BlogHome from "@pages/Blog/Home";
+import BlogCollection from "@pages/Blog/BlogCollection";
+import Plan from "@pages/Plan";
 import CollectionShare from "@pages/Collection/CollectionShare";
+import Organization from "@pages/Organization";
+import Media from "@pages/Media";
+import Settings from "@pages/Settings";
 
 const RouterComponent = () => (
   <>
@@ -59,6 +62,9 @@ const RouterComponent = () => (
         <Route path="/collection/:id/share" component={CollectionShare} />
         <Route path="/article/create" component={ArticleCreate} />
         <Route path="/plan" component={Plan} />
+        <Route path="/media" component={Media} />
+        <Route path="/organization" component={Organization} />
+        <Route path="/settings" component={Settings} />
       </Route>
       <Route path="/auth">
         <Route path="/login" component={Login} />

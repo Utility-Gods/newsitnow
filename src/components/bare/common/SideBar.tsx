@@ -2,11 +2,21 @@ import Article from "@lib/icons/Article";
 import Close from "@lib/icons/Close";
 import Collection from "@lib/icons/Collection";
 import Menu from "@lib/icons/Menu";
+import Org from "@lib/icons/Org";
 import Photo from "@lib/icons/Photo";
+import { fetch_organizations } from "@lib/service/organization";
 import { check_if_mobile } from "@lib/utils";
 import { A, useLocation, useNavigate, useSearchParams } from "@solidjs/router";
-import { Show } from "solid-js";
+import { Show, createResource } from "solid-js";
 import { Component, createEffect, createSignal, onMount } from "solid-js";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { Skeleton } from "~/components/ui/skeleton";
 
 const SideBar: Component = () => {
   // Implement your component logic here
@@ -24,11 +34,21 @@ const SideBar: Component = () => {
 
   const [isMobile, setMobile] = createSignal(check_if_mobile());
 
+  const [value, setValue] = createSignal("");
+
+  const [orgList, { refetch }] = createResource(fetch_organizations);
+
+  const org_details = () => orgList()?.value?.map((o) => o.name) ?? [];
+
   const resizeObserver = new ResizeObserver((entries) => {
     for (let entry of entries) {
       const isMobile = check_if_mobile();
       setMobile(isMobile);
     }
+  });
+
+  createEffect(() => {
+    refetch();
   });
 
   onMount(() => {
@@ -82,8 +102,39 @@ const SideBar: Component = () => {
         aria-label="Sidebar"
       >
         <div class="h-full pb-4 overflow-y-auto bg-primary-900/10">
-          <div class="p-3 text-md font-bold text-secondary truncate">
-            Welcome {name}
+          <div class="p-3 text-md font-bold text-secondary">
+            <Show
+              when={!orgList.loading}
+              fallback={
+                <div>
+                  <Skeleton class="w-20 h-6 rounded-lg bg-primary-900/20" />
+                </div>
+              }
+            >
+              <div class="mb-2">Organization</div>
+              <Select
+                value={value()}
+                onChange={setValue}
+                options={org_details()}
+                placeholder={
+                  <div class="flex items-center">
+                    <span class="ms-2">Organization</span>
+                  </div>
+                }
+                itemComponent={(props) => (
+                  <SelectItem item={props.item}>
+                    {props.item.rawValue}
+                  </SelectItem>
+                )}
+              >
+                <SelectTrigger aria-label="Organization">
+                  <SelectValue<string>>
+                    {(state) => state.selectedOption()}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent class="font-bold"></SelectContent>
+              </Select>
+            </Show>
           </div>
           <ul class="font-medium">
             <li>
@@ -115,7 +166,7 @@ const SideBar: Component = () => {
             <li>
               <A
                 href="article"
-                class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/app/media")
                     ? "text-secondary-foreground bg-secondary"
                     : "text-secondary"
@@ -149,11 +200,26 @@ const SideBar: Component = () => {
               </A>
             </li>
             <li>
-              <div
-                onClick={() => {
-                  navigate("/app/settings");
-                }}
-                class={`flex items-center cursor-pointer p-3 w-full  hover:bg-secondary hover:text-secondary-foreground    group ${
+              <A
+                href="organization"
+                class={` flex items-center p-3   hover:bg-secondary hover:text-secondary-foreground    group ${
+                  matchPath("/app/organization")
+                    ? "text-secondary-foreground bg-secondary"
+                    : "text-secondary"
+                }`}
+              >
+                <div class="w-6 h-6">
+                  <Org />
+                </div>
+
+                <span class="flex-1 ms-3 whitespace-nowrap">Organization</span>
+              </A>
+            </li>
+
+            <li>
+              <A
+                href="/app/settings"
+                class={` flex items-center cursor-pointer p-3 w-full  hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/app/settings")
                     ? "text-secondary-foreground bg-secondary"
                     : "text-secondary"
@@ -180,7 +246,7 @@ const SideBar: Component = () => {
                 </svg>
 
                 <span class="flex-1 ms-3 whitespace-nowrap">Settings</span>
-              </div>
+              </A>
             </li>
             <li>
               <div
