@@ -98,6 +98,7 @@ const OrganizationList: Component<OrganizationListProps> = (props) => {
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Description</TableHead>
+            <TableHead>Creator</TableHead>
             <TableHead>Status</TableHead>
             <TableHead class="text-right">Created</TableHead>
             <TableHead class=" text-right"></TableHead>
@@ -133,6 +134,7 @@ const OrganizationList: Component<OrganizationListProps> = (props) => {
                     <TableCell class="text-truncate">
                       <div class="allow-3-lines">{c.description}</div>
                     </TableCell>
+                    <TableCell>{c.creator.username}</TableCell>
                     <TableCell>
                       <BadgeDelta deltaType={"increase"}>Active</BadgeDelta>
                     </TableCell>
