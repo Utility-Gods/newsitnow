@@ -9,6 +9,7 @@ import { check_if_mobile } from "@lib/utils";
 import { A, useLocation, useNavigate, useSearchParams } from "@solidjs/router";
 import { Show, createResource } from "solid-js";
 import { Component, createEffect, createSignal, onMount } from "solid-js";
+import { Button } from "~/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -34,11 +35,10 @@ const SideBar: Component = () => {
 
   const [isMobile, setMobile] = createSignal(check_if_mobile());
 
-  const [value, setValue] = createSignal("");
-
-  const [orgList, { refetch }] = createResource(fetch_organizations);
-
   const org_details = () => orgList()?.value?.map((o) => o.name) ?? [];
+  const default_org = () => org_details()[0] ?? "";
+  const [orgList, { refetch }] = createResource(fetch_organizations);
+  const [value, setValue] = createSignal(default_org());
 
   const resizeObserver = new ResizeObserver((entries) => {
     for (let entry of entries) {
@@ -111,29 +111,31 @@ const SideBar: Component = () => {
                 </div>
               }
             >
-              <div class="mb-2">Organization</div>
-              <Select
-                value={value()}
-                onChange={setValue}
-                options={org_details()}
-                placeholder={
-                  <div class="flex items-center">
-                    <span class="ms-2">Organization</span>
-                  </div>
-                }
-                itemComponent={(props) => (
-                  <SelectItem item={props.item}>
-                    {props.item.rawValue}
-                  </SelectItem>
-                )}
-              >
-                <SelectTrigger aria-label="Organization">
-                  <SelectValue<string>>
-                    {(state) => state.selectedOption()}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent class="font-bold"></SelectContent>
-              </Select>
+              <Show when={orgList()?.isOk()}>
+                <div class="mb-2">Organization</div>
+                <Select
+                  defaultValue={default_org()}
+                  onChange={setValue}
+                  options={org_details()}
+                  placeholder={
+                    <div class="flex items-center">
+                      <span class="ms-2">Organization</span>
+                    </div>
+                  }
+                  itemComponent={(props) => (
+                    <SelectItem item={props.item}>
+                      {props.item.rawValue}
+                    </SelectItem>
+                  )}
+                >
+                  <SelectTrigger aria-label="Organization">
+                    <SelectValue<string>>
+                      {(state) => state.selectedOption()}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent class="font-bold"></SelectContent>
+                </Select>
+              </Show>
             </Show>
           </div>
           <ul class="font-medium">
