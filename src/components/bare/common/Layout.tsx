@@ -1,7 +1,7 @@
 import { check_token_validity, get_token } from "@lib/utils";
 import { useNavigate } from "@solidjs/router";
-import { Component, createEffect } from "solid-js";
-
+import { type Component, createEffect } from "solid-js";
+import AccountDropdown from "@components/bare/common/AccountDropdown";
 import SideBar from "@components/bare/common/SideBar";
 import { showToast } from "@components/ui/toast";
 import Nav from "~/components/bare/common/Nav";
@@ -9,6 +9,8 @@ import Nav from "~/components/bare/common/Nav";
 const Layout: Component = (props) => {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
+
+  const isLogged = user ? true : false;
 
   const token = get_token();
   const isTokenValid = check_token_validity();
@@ -29,7 +31,9 @@ const Layout: Component = (props) => {
   });
   return (
     <div class="flex flex-col w-full h-full">
-      <Nav />
+      <Nav>
+        <AccountDropdown />
+      </Nav>
       <div class="w-full gap-3 flex">
         <SideBar />
         <div class="flex flex-1 w-full">{props.children}</div>

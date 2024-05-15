@@ -32,6 +32,15 @@ export function get_user_id() {
   return user.user.id;
 }
 
+export function get_user_name() {
+  const user = get_user();
+
+  if (!user.user) {
+    return null;
+  }
+  return user.user.username;
+}
+
 export function check_token_validity() {
   const token = localStorage.getItem("token");
 

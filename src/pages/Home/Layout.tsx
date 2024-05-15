@@ -5,6 +5,7 @@ import { Component } from "solid-js";
 
 import { Footer } from "@components/bare/common/Footer";
 import Nav from "@components/bare/common/Nav";
+import AccountDropdown from "~/components/bare/common/AccountDropdown";
 
 const Layout: Component = (props) => {
   const user = get_user();
@@ -27,6 +28,7 @@ const Layout: Component = (props) => {
               Go to App
             </A>
           </div>
+          <AccountDropdown />
         </Show>
       </Nav>
 

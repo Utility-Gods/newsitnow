@@ -140,7 +140,9 @@ const SideBar: Component = () => {
                       : "text-secondary"
                   }`}
                 >
-                  <Collection />
+                  <div class="w-5 h-5">
+                    <Collection />
+                  </div>
                   <span class="flex-1 ms-3 whitespace-nowrap">Collections</span>
                 </A>
                 <ul class="pl-3">
