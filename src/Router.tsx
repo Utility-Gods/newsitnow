@@ -52,7 +52,7 @@ const RouterComponent = () => (
           <Route path="/collection" component={BlogCollection} />
         </Route>
       </Route>
-      <Route path="/app/:orgId" component={Layout}>
+      <Route path="/app/:org_id" component={Layout}>
         <Route path="" component={AppHome} />
         <Route path="/article" component={Article} />
         <Route path="/article/:id" component={ArticleView} />

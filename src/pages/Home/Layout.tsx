@@ -1,5 +1,5 @@
-import { get_user } from "@lib/utils";
-import { A } from "@solidjs/router";
+import { get_first_org_id, is_logged_in } from "@lib/utils";
+import { A, useParams } from "@solidjs/router";
 import { Show } from "solid-js";
 import { Component } from "solid-js";
 
@@ -8,9 +8,11 @@ import Nav from "@components/bare/common/Nav";
 import AccountDropdown from "~/components/bare/common/AccountDropdown";
 
 const Layout: Component = (props) => {
-  const user = get_user();
+  const params = useParams();
 
-  const isLogged = user ? true : false;
+  const org_id = params.org_id ?? get_first_org_id();
+
+  const isLogged = is_logged_in();
 
   return (
     <div class="flex flex-col flex-1 flex-grow">
@@ -24,7 +26,7 @@ const Layout: Component = (props) => {
           }
         >
           <div>
-            <A href="/app" class="text-white">
+            <A href={`/app/${org_id}`} class="text-white">
               Go to App
             </A>
           </div>

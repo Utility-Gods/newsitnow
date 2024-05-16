@@ -3,12 +3,14 @@ import { Article } from "./Article";
 
 export interface Collection {
   id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt?: Date;
   name?: string;
-  articles: { data: Article[] };
-  creator?: { data: User };
-  uuid: string;
+  articles: Article[];
+  creator?: User;
+  uuid: any;
   description?: string;
   url?: string;
-  createdAt: string;
-  status: string;
+  text_id: string;
 }

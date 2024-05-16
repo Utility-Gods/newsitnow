@@ -1,6 +1,8 @@
 import { count_articles } from "@lib/service/article";
 import { fetch_collections } from "@lib/service/collection";
-import { fetch_user_plan } from "@lib/service/plan";
+import { fetch_plan_by_id } from "@lib/service/plan";
+import { get_org_plan, get_user_orgs } from "@lib/utils";
+import { useParams } from "@solidjs/router";
 import { Show, createEffect } from "solid-js";
 import { Component, createResource } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
@@ -11,19 +13,23 @@ import { ProgressCircle } from "~/components/ui/progress-circle";
 import { Separator } from "~/components/ui/separator";
 
 const Plan: Component = () => {
-  const [userPlan, { refetch }] = createResource(fetch_user_plan);
+  const params = useParams();
 
+  const org_id = Number(params.org_id);
+
+  const plan_id = () => get_org_plan(org_id);
+
+  const [user_plan, { refetch }] = createResource(plan_id, fetch_plan_by_id);
+
+  const user_plan_details = () => user_plan()?.value ?? {};
   const [articleCount] = createResource(count_articles);
   const [collections] = createResource(fetch_collections);
-  const organization = () => {
-    if (userPlan().isOk()) {
-      return userPlan().value.organization;
-    }
-    return {};
-  };
+
+  const organization = () =>
+    get_user_orgs().find((org) => org.id === org_id) ?? {};
 
   createEffect(() => {
-    console.log("---------", userPlan());
+    console.log("---------", user_plan());
   });
 
   return (
@@ -38,20 +44,20 @@ const Plan: Component = () => {
         <div class="text-2xl font-bold text-primary leading-10">
           Plan details
         </div>
-        <Show when={!userPlan.loading} fallback={<PageSkeleton />}>
+        <Show when={!user_plan.loading} fallback={<PageSkeleton />}>
           <Show
-            when={userPlan()?.isOk()}
+            when={user_plan()?.isOk()}
             fallback={<div class="text-center">Something went wrong</div>}
           >
             <div class="flex flex-col gap-3 items-start">
               <div class="bg-white shadow rounded-lg p-4 mb-6">
-                <h3 class="text-lg font-semibold mb-2">Plan Details</h3>
                 <p class="mb-2">
-                  <strong>Plan Name:</strong> {organization().plan.name}
+                  <strong>Plan Name:</strong>{" "}
+                  {user_plan_details().attributes.name}
                 </p>
                 <p class="mb-2">
                   <strong>Description:</strong>{" "}
-                  {organization().plan.description}
+                  {user_plan_details().attributes.description}
                 </p>
                 <p class="mb-2">
                   <strong>Price:</strong> 99 rupees per month
@@ -62,7 +68,7 @@ const Plan: Component = () => {
                       <ProgressCircle
                         value={
                           (100 * collections()?.value.length) /
-                          organization().plan.allowed_collection
+                          user_plan_details().attributes.allowed_collections
                         }
                       />
                       <div>
@@ -71,8 +77,8 @@ const Plan: Component = () => {
                           {collections()?.value.length ?? 0}
                         </p>
                         <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-                          Allowed Collections :{" "}
-                          {organization().plan.allowed_collection}
+                          Allowed Collections :
+                          {user_plan_details().attributes.allowed_collections}
                         </p>
                       </div>
                     </div>
@@ -82,7 +88,7 @@ const Plan: Component = () => {
                       <ProgressCircle
                         value={
                           (100 * articleCount()?.value.length) /
-                            organization().plan.allowed_articles ?? 0
+                            user_plan_details().attributes.allowed_articles ?? 0
                         }
                       />
                       <div>
@@ -91,7 +97,7 @@ const Plan: Component = () => {
                         </p>
                         <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
                           Allowed Articles-{" "}
-                          {organization().plan.allowed_articles}
+                          {user_plan_details().attributes.allowed_articles}
                         </p>
                       </div>
                     </div>
@@ -101,7 +107,7 @@ const Plan: Component = () => {
                       <ProgressCircle value={75} />
                       <div>
                         <p class="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-                          {organization().plan.allowed_media_in_mb}
+                          {user_plan_details().attributes.allowed_media_in_mb}
                         </p>
                         <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
                           Allowed Storaage
@@ -128,7 +134,7 @@ const Plan: Component = () => {
                 <Button variant="ghost" onclick={refetch}>
                   Refresh Plan
                 </Button>
-                <Show when={organization().plan.name === "free"}>
+                <Show when={user_plan_details().attributes.name === "free"}>
                   <Button>Upgrade Plan</Button>
                 </Show>
               </div>

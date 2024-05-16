@@ -18,7 +18,7 @@ import {
   CreateCollectionSchema,
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
-import { useSearchParams } from "@solidjs/router";
+import { useParams, useSearchParams } from "@solidjs/router";
 
 type CreateCollectionModalProps = {
   open: boolean;
@@ -28,9 +28,8 @@ type CreateCollectionModalProps = {
 export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
   props,
 ) => {
-  const [searchParams] = useSearchParams();
-
-  const orgId = searchParams.orgId;
+  const params = useParams();
+  const org_id = params.org_id;
 
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
@@ -56,7 +55,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       const result = await save_collection({
         ...values,
         status: "Draft",
-        orgId,
+        org_id,
       });
 
       console.log("submitting", result);
@@ -79,9 +78,9 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       console.log(e);
       showToast({
         variant: "error",
-        title: e.message ?? "Failed to create collection",
+        title: e?.message ?? "Failed to create collection",
         description:
-          e.details.message ??
+          e?.details?.message ??
           "An error occurred while creating the collection",
       });
     } finally {

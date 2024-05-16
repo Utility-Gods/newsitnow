@@ -15,7 +15,6 @@ import {
 } from "~/components/ui/select";
 import { Skeleton } from "~/components/ui/skeleton";
 import Photo from "@lib/icons/Photo";
-import PageSkeleton from "./PageSkeleton";
 
 const SideBar: Component = () => {
   // Implement your component logic here
@@ -96,7 +95,15 @@ const SideBar: Component = () => {
       >
         <div class=" pb-4 overflow-y-auto bg-primary-900/10 h-full">
           <div class="p-3 text-md font-bold text-secondary">
-            <Show when={!orgList.loading} fallback={<div>Loading</div>}>
+            <Show
+              when={!orgList.loading}
+              fallback={
+                <div class="flex gap-3 pt-1 flex-col">
+                  <Skeleton height={20} radius={6} />
+                  <Skeleton height={34} radius={6} />
+                </div>
+              }
+            >
               <Show when={orgList()?.isOk()}>
                 <div class="mb-2">Organization</div>
                 <Select

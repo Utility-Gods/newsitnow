@@ -1,4 +1,4 @@
-import { createEffect, type Component } from "solid-js";
+import { type Component } from "solid-js";
 import ArrowDown from "@lib/icons/ArrowDown";
 import Avatar from "@lib/icons/Avatar";
 import Gear from "@lib/icons/Gear";
@@ -14,11 +14,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { useNavigate } from "@solidjs/router";
-import { get_user, get_user_name } from "@lib/utils";
+import { useNavigate, useParams } from "@solidjs/router";
+import { get_first_org_id, get_user_name } from "@lib/utils";
 
 const AccountDropdown: Component = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  const org_id = params.org_id ?? get_first_org_id();
 
   const name = () => get_user_name();
 
@@ -50,7 +52,7 @@ const AccountDropdown: Component = () => {
           <DropdownMenuItem
             class="p-3 text-primary-foreground flex items-center gap-2 text-md"
             onClick={(e) => {
-              navigate(`/app/settings`);
+              navigate(`/app/${org_id}/settings`);
             }}
           >
             <div class="w-6 h-6">
@@ -63,7 +65,7 @@ const AccountDropdown: Component = () => {
             class="p-3 text-primary-foreground flex items-center gap-2 text-md"
             onClick={(e) => {
               e.stopPropagation();
-              navigate(`/app/organization`);
+              navigate(`/app/${org_id}/organization`);
             }}
           >
             <div class="w-6 h-6">
@@ -76,7 +78,7 @@ const AccountDropdown: Component = () => {
             class="p-3 text-primary-foreground flex items-center gap-2 text-md"
             onClick={(e) => {
               e.stopPropagation();
-              navigate(`/app/plan`);
+              navigate(`/app/${org_id}/plan`);
             }}
           >
             <div class="w-6 h-6">

@@ -1,14 +1,13 @@
-import { get_user } from "@lib/utils";
+import { is_logged_in } from "@lib/utils";
 import { useNavigate } from "@solidjs/router";
 import { Component } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 
 const Home: Component = () => {
-  const user = get_user();
   const navigate = useNavigate();
 
-  const isLogged = user ? true : false;
+  const isLogged = is_logged_in();
 
   console.log({ isLogged });
 

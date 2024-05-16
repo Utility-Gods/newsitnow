@@ -2,6 +2,8 @@ import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { jwtDecode } from "jwt-decode";
+import { User } from "./types/User";
+import { Organization } from "./types/Organization";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,30 +17,81 @@ export function get_token() {
   return token;
 }
 
-export function get_user() {
+export function get_user(): User | null {
   const user = localStorage.getItem("user");
   if (!user) {
     return null;
   }
-  return JSON.parse(user);
-}
-
-export function get_user_id() {
-  const user = get_user();
-
-  if (!user.user) {
+  try {
+    const parsed_user = JSON.parse(user) as { user: User };
+    return parsed_user.user;
+  } catch (e) {
     return null;
   }
-  return user.user.id;
 }
 
-export function get_user_name() {
+export function get_user_id(): number | null {
   const user = get_user();
 
-  if (!user.user) {
+  if (!user) {
     return null;
   }
-  return user.user.username;
+  return user.id;
+}
+
+export function is_logged_in(): boolean {
+  const user = get_user();
+
+  if (!user) {
+    return false;
+  }
+  return true;
+}
+
+export function get_user_name(): string | null {
+  const user = get_user();
+
+  if (!user) {
+    return null;
+  }
+  return user.username;
+}
+
+export function get_first_org_id(): number | null {
+  const user = get_user();
+  if (!user || !user.organizations || user.organizations.length === 0) {
+    return null;
+  }
+  return user.organizations[0].id;
+}
+
+export function get_user_orgs(): Organization[] | [] {
+  const user = get_user();
+  if (!user) {
+    return [];
+  }
+  return user.organizations;
+}
+
+export function get_org_plan(org_id: number): number | null {
+  const user = get_user();
+
+  if (!user) {
+    return null;
+  }
+  const org = user.organizations.find((o) => o.id == org_id);
+
+  if (!org) {
+    return null;
+  }
+
+  const plan = org.plan;
+
+  if (!plan) {
+    return null;
+  }
+
+  return plan.id;
 }
 
 export function check_token_validity() {
@@ -52,6 +105,11 @@ export function check_token_validity() {
   let currentDate = new Date();
 
   console.log({ jwtPayload });
+
+  if (!jwtPayload.exp) {
+    return false;
+  }
+
   if (jwtPayload.exp * 1000 < currentDate.getTime()) {
     return false;
   }
