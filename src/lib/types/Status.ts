@@ -1,7 +1,5 @@
-
-export interface Status {
-  id: number;
-  attributes: {
-    status: 'Published' | 'Draft' | 'Deleted';
-  }
+export enum Status {
+  Published = "Published",
+  Draft = "Draft",
+  Deleted = "Deleted",
 }

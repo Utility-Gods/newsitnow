@@ -1,14 +1,16 @@
 import { Collection } from "./Collection";
+import { Status } from "./Status";
 
 export interface Article {
   id: number;
-  attributes: {
-    name?: string;
-    created_on?: string;
-    creator?: { data: Collection };
-    status?: "Published" | "Draft" | "Deleted";
-    uuid?: any;
-    content: string;
-    createdAt: string;
-  };
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt?: Date;
+  name?: string;
+  created_on?: Date;
+  creator?: Collection;
+  status?: Status;
+  uuid?: any;
+  content: string;
+  text_id: string;
 }

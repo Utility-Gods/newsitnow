@@ -43,4 +43,30 @@ const fetch_user_plan = async () => {
   }
 };
 
-export { fetch_user_plan };
+const fetch_plan_by_id = async (id: string) => {
+  try {
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(`${API_URL}/api/plans/${id}`, {
+      headers: reqHeaders,
+      method: "GET",
+    });
+
+    const { data, error } = await response.json();
+
+    if (!response.ok) {
+      console.log("Fetch articles error:", error);
+      throw error.error;
+    }
+    return ok(data);
+  } catch (e) {
+    console.log(e, "-----------");
+    return err(e);
+  }
+};
+
+export { fetch_user_plan, fetch_plan_by_id };

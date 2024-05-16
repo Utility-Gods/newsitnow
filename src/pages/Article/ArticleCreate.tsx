@@ -20,19 +20,17 @@ import { save_article } from "@lib/service/article";
 
 import Quill from "quill";
 import { SolidQuill } from "solid-quill";
-import { upload_image } from "@lib/service/common";
+
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import ImageUpload from "~/components/functional/common/ImageUpload";
 
 const ArticleCreate: Component = (props) => {
+  const params = useParams();
+  const org_id = params.org_id;
   const navigate = useNavigate();
   const [articleForm, { Form, Field }] = createForm<CreateArticleForm>({
     validate: valiForm(CreateArticleSchema),
-  });
-
-  createEffect(() => {
-    console.log({ formValues });
   });
 
   const formValues = {
@@ -42,38 +40,6 @@ const ArticleCreate: Component = (props) => {
   };
 
   const [loading, setLoading] = createSignal(false);
-
-  createEffect(() => {
-    console.log({ articleForm });
-  });
-
-  const uploadImage = async (file: File) => {
-    console.log({ file });
-    setLoading(true);
-    const res = await upload_image(file);
-    setLoading(false);
-    if (res.isErr()) {
-      console.log(res.error);
-      showToast({
-        variant: "error",
-        duration: 5000,
-        title: "Failed to upload image",
-        description: "An error occurred while uploading the image",
-      });
-    }
-
-    if (res.isOk()) {
-      console.log(res.value);
-      showToast({
-        variant: "success",
-        duration: 5000,
-        title: "Image uploaded",
-        description: "The image has been uploaded successfully",
-      });
-      formValues.photo = res.value;
-      console.log({ formValues });
-    }
-  };
 
   const handleSubmit: SubmitHandler<CreateArticleForm> = async (
     values,
@@ -88,6 +54,7 @@ const ArticleCreate: Component = (props) => {
         ...values,
         photo: formValues.photo,
         status: "Draft",
+        org_id,
       });
       console.log({ result });
 

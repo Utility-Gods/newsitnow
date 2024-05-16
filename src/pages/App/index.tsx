@@ -6,7 +6,7 @@ const AppHome: Component = (props) => {
 
   console.log({ props });
 
-  navigate(`/app/${props.params.orgId}/collection`);
+  navigate(`/app/${props.params.org_id}/collection`);
 
   return <div></div>;
 };
