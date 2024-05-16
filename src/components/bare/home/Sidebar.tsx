@@ -99,7 +99,6 @@ const SideBar: Component = () => {
         <button
           class="absolute top-0 left-0 m-4"
           onClick={() => {
-            console.log(urlParams.sidebar);
             setParams({
               sidebar: urlParams.sidebar == "true" ? "false" : "true",
             });
@@ -120,7 +119,7 @@ const SideBar: Component = () => {
         aria-label="Sidebar"
         style={``}
       >
-        <div class="h-[90%] pb-4 overflow-y-auto bg-primary-900/10 flex flex-col justify-between">
+        <div class=" pb-4 overflow-y-auto bg-primary-900/10 h-full flex flex-col gap-6">
           <div class=" flex-col gap-3">
             <A href="/documentation">
               <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">

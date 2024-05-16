@@ -1,5 +1,5 @@
 import { check_token_validity, get_token } from "@lib/utils";
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useSearchParams } from "@solidjs/router";
 import { type Component, createEffect } from "solid-js";
 import AccountDropdown from "@components/bare/common/AccountDropdown";
 import SideBar from "@components/bare/common/SideBar";
@@ -7,6 +7,9 @@ import { showToast } from "@components/ui/toast";
 import Nav from "~/components/bare/common/Nav";
 
 const Layout: Component = (props) => {
+  const [searchParams] = useSearchParams();
+
+  const orgId = searchParams.orgId;
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
 

@@ -1,10 +1,12 @@
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useParams, useSearchParams } from "@solidjs/router";
 import { Component } from "solid-js";
 
-const AppHome: Component = () => {
+const AppHome: Component = (props) => {
   const navigate = useNavigate();
 
-  navigate("/app/collection");
+  console.log({ props });
+
+  navigate(`/app/${props.params.orgId}/collection`);
 
   return <div></div>;
 };

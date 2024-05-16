@@ -15,6 +15,7 @@ import {
 } from "~/components/ui/select";
 import { Skeleton } from "~/components/ui/skeleton";
 import Photo from "@lib/icons/Photo";
+import PageSkeleton from "./PageSkeleton";
 
 const SideBar: Component = () => {
   // Implement your component logic here
@@ -32,8 +33,15 @@ const SideBar: Component = () => {
 
   const [isMobile, setMobile] = createSignal(check_if_mobile());
 
-  const org_details = () => orgList()?.value?.map((o) => o.name) ?? [];
+  const org_details = () =>
+    orgList()?.value?.map((o) => {
+      return { label: o.name, value: o.id };
+    }) ?? [];
   const default_org = () => org_details()[0] ?? "";
+
+  createEffect(() => {
+    console.log("org_details", org_details());
+  });
   const [orgList, { refetch }] = createResource(fetch_organizations);
   const [value, setValue] = createSignal(default_org());
 
@@ -44,16 +52,11 @@ const SideBar: Component = () => {
     }
   });
 
-  createEffect(() => {
-    refetch();
-  });
-
   onMount(() => {
     resizeObserver.observe(document.body);
   });
 
   const isMobileAndSidebarVisible = () => {
-    console.log({ sidebar: isMobile() && urlParams.sidebar == "true" });
     return isMobile() && urlParams.sidebar == "true";
   };
 
@@ -72,7 +75,6 @@ const SideBar: Component = () => {
         <button
           class="absolute top-0 left-0 m-4"
           onClick={() => {
-            console.log(urlParams.sidebar);
             setParams({
               sidebar: urlParams.sidebar == "true" ? "false" : "true",
             });
@@ -92,22 +94,21 @@ const SideBar: Component = () => {
           ${isMobileAndSidebarVisible() ? "transform: translate-x-0" : ""}`}
         aria-label="Sidebar"
       >
-        <div class=" pb-4 overflow-y-auto bg-primary-900/10">
+        <div class=" pb-4 overflow-y-auto bg-primary-900/10 h-full">
           <div class="p-3 text-md font-bold text-secondary">
-            <Show
-              when={!orgList.loading}
-              fallback={
-                <div>
-                  <Skeleton class="w-20 h-6 rounded-lg bg-primary-900/20" />
-                </div>
-              }
-            >
+            <Show when={!orgList.loading} fallback={<div>Loading</div>}>
               <Show when={orgList()?.isOk()}>
                 <div class="mb-2">Organization</div>
                 <Select
+                  optionValue="value"
+                  optionTextValue="label"
+                  optionDisabled="disabled"
                   defaultValue={default_org()}
-                  onChange={setValue}
                   options={org_details()}
+                  onChange={(o) => {
+                    console.log("changed", o);
+                    navigate(`/app/${o.value}/collection`);
+                  }}
                   placeholder={
                     <div class="flex items-center">
                       <span class="ms-2">Organization</span>
@@ -115,13 +116,13 @@ const SideBar: Component = () => {
                   }
                   itemComponent={(props) => (
                     <SelectItem item={props.item}>
-                      {props.item.rawValue}
+                      {props.item.rawValue.label}
                     </SelectItem>
                   )}
                 >
                   <SelectTrigger aria-label="Organization">
                     <SelectValue<string>>
-                      {(state) => state.selectedOption()}
+                      {(state) => state.selectedOption().label}
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent class="font-bold"></SelectContent>

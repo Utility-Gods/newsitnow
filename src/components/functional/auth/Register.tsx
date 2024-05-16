@@ -26,7 +26,6 @@ const Register: Component = () => {
   const handleSubmit = async (values: RegisterForm, event: Event) => {
     setLoading(true);
 
-    console.log(values);
     event.preventDefault();
     try {
       const result = await user_register(

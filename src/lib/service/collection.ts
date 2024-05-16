@@ -24,7 +24,6 @@ const fetch_collections = async () => {
 
     const result = await response.json();
 
-    console.log("fetching collections", result);
     return ok(result);
   } catch (e) {
     console.log(e);
