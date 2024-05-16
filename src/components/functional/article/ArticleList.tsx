@@ -53,16 +53,12 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = createSignal(false);
-  createEffect(() => {
-    console.log("fetching articles", articleList());
-  });
 
   async function handle_delete_article(id: string) {
     try {
       setLoading(true);
       const result = await delete_article(id);
 
-      console.log("deleting article", result);
       if (result?.isOk()) {
         refetch();
         showToast({
@@ -99,7 +95,6 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   }
 
   async function changeStatus(article: Article, status: string) {
-    console.log("publishing article");
     try {
       setLoading(true);
       const result = await update_article({

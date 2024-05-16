@@ -18,6 +18,7 @@ import {
   CreateCollectionSchema,
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
+import { useSearchParams } from "@solidjs/router";
 
 type CreateCollectionModalProps = {
   open: boolean;
@@ -27,6 +28,10 @@ type CreateCollectionModalProps = {
 export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
   props,
 ) => {
+  const [searchParams] = useSearchParams();
+
+  const orgId = searchParams.orgId;
+
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
   const [, { Form, Field, FieldArray }] = createForm<CreateCollectionForm>({
@@ -51,6 +56,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       const result = await save_collection({
         ...values,
         status: "Draft",
+        orgId,
       });
 
       console.log("submitting", result);

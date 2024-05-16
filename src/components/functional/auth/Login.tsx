@@ -26,7 +26,6 @@ const Login: Component = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values: LoginForm, event: Event) => {
-    console.log(values);
     setLoading(true);
 
     event.preventDefault();
@@ -43,9 +42,15 @@ const Login: Component = () => {
         description: "Welcome back",
         duration: 5000,
       });
-      if (result?.value)
-        localStorage.setItem("user", JSON.stringify(result.value));
-      navigate("/app", { replace: true });
+      if (result?.value) {
+        const user = result.value;
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log(user.user.organizations[0].id, "------------");
+        return navigate("/app/" + user.user.organizations[0].id, {
+          replace: true,
+        });
+      }
+      throw "No user found";
     } catch (error) {
       showToast({
         variant: "error",

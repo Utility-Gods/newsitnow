@@ -49,10 +49,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   const [loading, setLoading] = createSignal(false);
   const navigate = useNavigate();
 
-  createEffect(() => {
-    console.log("fetching collections", collectionList());
-  });
-
   async function handle_delete_collection(id: string) {
     try {
       setLoading(true);
@@ -95,7 +91,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   }
 
   async function changeStatus(collection: Collection, status: string) {
-    console.log("publishing Collection");
     try {
       setLoading(true);
       const result = await update_collection({
@@ -104,7 +99,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
       });
 
       if (result.isOk()) {
-        console.log("collectionpublished");
         showToast({
           title: "Collection status changed to " + status,
           description: "Article has been published",

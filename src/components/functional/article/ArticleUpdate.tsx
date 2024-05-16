@@ -28,7 +28,6 @@ type ArticleUpdateProps = {
 const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
   const { article } = props;
 
-  console.log({ article });
   const navigate = useNavigate();
 
   const formValues = {
@@ -41,21 +40,12 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
     initialValues: formValues,
   });
 
-  createEffect(() => {
-    console.log({ formValues, article });
-  });
-
   const [loading, setLoading] = createSignal(false);
-
-  createEffect(() => {
-    console.log({ articleForm });
-  });
 
   const handleSubmit: SubmitHandler<UpdateArticleForm> = async (
     values,
     event,
   ) => {
-    console.log("submitting", values);
     setLoading(true);
 
     event.preventDefault();
@@ -66,7 +56,6 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
         status: "Draft",
         id: article.id,
       });
-      console.log({ result });
 
       if (result.isErr()) {
         throw result.error;

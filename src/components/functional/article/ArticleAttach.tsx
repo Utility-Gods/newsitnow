@@ -33,14 +33,11 @@ function ArticleAttach(props: ArticleAttachProps) {
   const [attachedArticlesIdList, setAttachedArticlesIdList] = createSignal([]);
 
   onMount(() => {
-    console.log(collection());
     setAttachedArticlesIdList(collection()?.value?.articles.map((a) => a.id));
-    console.log(attachedArticlesIdList());
   });
 
   async function attach_articles() {
     setLoading(true);
-    console.log(attachedArticlesIdList());
 
     try {
       const updatedCollection = {
@@ -48,7 +45,6 @@ function ArticleAttach(props: ArticleAttachProps) {
         articles: attachedArticlesIdList(),
       };
 
-      console.log({ updatedCollection });
       const result = await update_collection(updatedCollection);
 
       if (result.isOk()) {
