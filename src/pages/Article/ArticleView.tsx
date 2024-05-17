@@ -1,10 +1,4 @@
-import {
-  type Component,
-  createEffect,
-  createResource,
-  Show,
-  createSignal,
-} from "solid-js";
+import { type Component, createResource, Show, createSignal } from "solid-js";
 
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
@@ -88,7 +82,10 @@ const ArticleView: Component = (props) => {
   }
   return (
     <div class="flex flex-col flex-1 flex-grow  p-3 overflow-hidden">
-      <div class="flex items-center justify-between">
+      <div class="flex justify-between items-center p-3 ">
+        <div class="text-2xl font-bold text-primary leading-10">
+          Article {editMode() ? "Edit" : "View"}
+        </div>
         <Tabs
           defaultValue={editMode() ? "edit" : "view"}
           onChange={(e) => {
@@ -112,6 +109,7 @@ const ArticleView: Component = (props) => {
           </TabsList>
         </Tabs>
       </div>
+
       <Show when={!article.loading} fallback={<PageSkeleton />}>
         <Show when={article()?.isOk()}>
           <Show when={!editMode()}>

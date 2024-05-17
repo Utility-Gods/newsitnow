@@ -1,10 +1,11 @@
 import {
-  Component,
+  type Component,
   createEffect,
   createResource,
   createSignal,
   Show,
 } from "solid-js";
+import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { For } from "solid-js";
@@ -77,6 +78,15 @@ const PublicCollection: Component = (props) => {
   return (
     <Show when={collection()} fallback={<PageSkeleton />}>
       <div class="flex flex-col flex-1 flex-grow p-3 w-full  sm:w-[69%] m-auto ">
+        <Callout>
+          <CalloutTitle>Attention</CalloutTitle>
+          <CalloutContent>
+            This collection was created on Orange Gas and share with you using
+            the API share method provided by Orange Gas. The content of this
+            collection can be updated directly from the Orange Gas platform and
+            the changes will be reflected here.
+          </CalloutContent>
+        </Callout>
         <Show when={collection()?.isErr()}>
           <div class="p-4 text-primary-100">Error loading collection</div>
         </Show>
