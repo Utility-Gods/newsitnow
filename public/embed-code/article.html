@@ -1,16 +1,18 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Orange Gas Embed Demo</title>
-    <description>Embed a article from Orange Gas into a website</description>
-  </head>
   <body>
-    <h1>Embed Code Demo</h1>
-
-    <p>
-      This demo was created to show how to embed an article from Orange Gas into
-      a website.
-    </p>
+    <div style="background-color: #ff5b19; padding: 8px; color: #051733">
+      <h1>Embed Article Demo</h1>
+      <h2>
+        This demo was created to show how to embed an article from Orange Gas
+        into a website.
+      </h2>
+      <h2>
+        If you inspect the code of this page you will se that we are using the
+        same code that we export while Sharing Articles(Embed Code mode)
+      </h2>
+      <i>Same way you can embed the article in your website. </i>
+    </div>
 
     <div class="ql-snow">
       <div id="embedded-article" class="ql-editor"></div>
@@ -18,19 +20,19 @@
 
     <script>
       (function () {
-        // access the article ID from query params
-        const urlParams = new URLSearchParams(window.location.search);
-        const articleId = urlParams.get("id");
+        var urlParams = new URLSearchParams(window.location.search);
+        var articleId = urlParams.get("article_id");
 
         fetch(
-          "http://localhost:1337/api/public-article?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=12",
+          `https://orange-gas-strapi.fly.dev/api/public-article?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Bphoto%5D=true&populate%5Btext_id%5D=true&filters%5Bid%5D=${articleId}`,
         )
           .then((response) => response.json())
           .then((data) => {
             var articleContent = data;
             document.getElementById("embedded-article").innerHTML = `
           <div>
-              <h2>${articleContent.name}</h2>
+              <h1>${articleContent.name}</h1>
+            <img src="${articleContent.photo[0].url}" alt="${articleContent.photo[0].name}" />
               <p>${articleContent.text}</p>
               <p> Status: ${articleContent.status}</p>
               <p>Date: ${new Date(articleContent.createdAt).toLocaleDateString()}</p>
@@ -39,7 +41,6 @@
           });
       })();
     </script>
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.core.css"
@@ -56,4 +57,13 @@
       referrerpolicy="no-referrer"
     />
   </body>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </html>

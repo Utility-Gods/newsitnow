@@ -36,10 +36,6 @@ const ArticleView: Component = (props) => {
 
   const [openPublishModal, setOpenPublishModal] = createSignal(false);
 
-  createEffect(() => {
-    console.log("article", article_details());
-  });
-
   const article_image = () => article_details()?.photo?.[0].url ?? null;
 
   const isPublished = () => {

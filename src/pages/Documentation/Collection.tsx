@@ -59,6 +59,7 @@ const Collection: Component = () => {
                   </div>
                   <div class="flex gap-2 items-center">
                     <BadgeDelta
+                      innerHTML
                       deltaType={
                         collections().status === "Published"
                           ? "increase"

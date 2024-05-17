@@ -37,9 +37,8 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
       creator: {
         fields: ["id", "username"],
       },
-      articles: {
-        fields: ["id", "name", "status", "createdAt", "text", "text_id"],
-      },
+      photo: true,
+      text_id: true,
     },
     filters: {
       id: articleId,
@@ -49,7 +48,6 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
   // Generate HTML code
   const htmlCode = `
     <div class="ql-snow">
-
       <div id="embedded-article" class="ql-editor"></div>
     </div>
 
@@ -59,10 +57,11 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
       fetch('${strapiUrl}/api/public-article?${query}')
       .then(response => response.json())
       .then(data => {
-        var articleContent = data.data.attributes;
+        var articleContent = data;
         document.getElementById('embedded-article').innerHTML = \`
           <div>
-              <h2>\${articleContent.name}</h2>
+            <h1>\${articleContent.name}</h1>
+            <img src="\${articleContent.photo[0].url}" alt="\${articleContent.photo[0].name}" />
               <p>\${articleContent.text}</p>
               <p> Status: \${articleContent.status}</p>
               <p>Date: \${new Date(articleContent.createdAt).toLocaleDateString()}</p>

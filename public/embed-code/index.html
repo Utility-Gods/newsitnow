@@ -1,27 +1,30 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Orange Gas Embed Demo</title>
-    <description>Embed a collection from Orange Gas into a website</description>
-  </head>
   <body>
-    <h1>Embed Code Demo</h1>
-
-    <p>
-      This demo was created to show how to embed a collection from Orange Gas
-      into a website.
-    </p>
+    <div style="background-color: #ff5b19; padding: 8px; color: #051733">
+      <h1>Embed Collection Demo</h1>
+      <h2>
+        This demo was created to show how to embed an collection from OrangeGas
+        into a website.
+      </h2>
+      <h2>
+        If you inspect the code of this page you will se that we are using the
+        same code that we export while Sharing Collections(Embed Code mode)
+      </h2>
+      <i>Same way you can embed the collection in your website. </i>
+    </div>
 
     <div class="ql-snow">
       <div id="embedded-collection" class="ql-editor"></div>
     </div>
     <script>
       (function () {
-        var collectionId = 18;
+        var urlParams = new URLSearchParams(window.location.search);
+        var collection_id = urlParams.get("collection_id");
 
         // Fetch collection data from Strapi API
         fetch(
-          "undefined/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&populate%5Barticles%5D%5Bfilters%5D%5Bstatus%5D=Published&filters%5Bid%5D=18",
+          `http://localhost:1337/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&populate%5Barticles%5D%5Bfilters%5D%5Bstatus%5D=Published&filters%5Bid%5D=${collection_id}`,
           {},
         )
           .then((response) => response.json())
@@ -29,7 +32,7 @@
             var collectionContent = data; // Adjust the property name based on your Strapi schema
             document.getElementById("embedded-collection").innerHTML = `
                <div>
-                   <h2>${collectionContent.name}</h2>
+                   <h1>${collectionContent.name}</h1>
                    <p>${collectionContent.description}</p>
                    <p>Date: ${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
                    <p><strong>Creator:</strong> ${collectionContent.creator.username}</p>
@@ -41,10 +44,10 @@
             collectionContent.articles.forEach((article) => {
               document.getElementById("embedded-collection").innerHTML += `
                  <div>
-                     <a href="/article?id=${article.text_id}">${article.name}</a>
+                     <h1 href="/article?id=${article.text_id}">${article.name}</h1>
+                     <h2>Date: ${new Date(article.createdAt).toLocaleDateString()}</h2>
+                     <h2><strong>Status:</strong> ${article.status}</h2>
                      <p>${article.text}</p>
-                     <p>Date: ${new Date(article.createdAt).toLocaleDateString()}</p>
-                     <p><strong>Status:</strong> ${article.status}</p>
                  </div>
                `;
             });
@@ -68,4 +71,13 @@
       referrerpolicy="no-referrer"
     />
   </body>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </html>
