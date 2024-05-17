@@ -155,7 +155,7 @@ const SideBar: Component = () => {
             </A>
             <ul class="font-medium">
               <li>
-                <A
+                {/* <A
                   href="/blog/collection"
                   class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                     matchPath("/blog/collection")
@@ -163,9 +163,11 @@ const SideBar: Component = () => {
                       : "text-secondary"
                   }`}
                 >
-                  <News />
+                  <div class="w-6 h-6">
+                    <News />
+                  </div>
                   <span class="flex-1 ms-3 whitespace-nowrap">Blogs</span>
-                </A>
+                </A> */}
                 <ul class="pl-3">
                   <Show when={blogs()}>
                     <For each={blogs().articles} fallback={<PageSkeleton />}>
@@ -193,7 +195,7 @@ const SideBar: Component = () => {
           </div>
           <div>
             <a
-              href={originURL + "/embed-code/index.html"}
+              href={`${originURL}/embed-code/index.html?collection_id=${collections()?.id}`}
               target="_blank"
               class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
             >
@@ -201,7 +203,7 @@ const SideBar: Component = () => {
                 <Code />
               </div>
               <span class="flex-1 ms-3 whitespace-nowrap">
-                Raw Documentation
+                Embedded Documentation
               </span>
             </a>
             <a

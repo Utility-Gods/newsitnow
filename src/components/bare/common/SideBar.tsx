@@ -33,6 +33,7 @@ import {
 import { Separator } from "~/components/ui/separator";
 import Book from "@lib/icons/Book";
 import Preview from "@lib/icons/Preview";
+import News from "@lib/icons/News";
 
 const originURL = import.meta.env.VITE_ORIGIN;
 
@@ -256,7 +257,7 @@ const SideBar: Component = () => {
             <span class="flex-1 ms-3 whitespace-nowrap">Documentation</span>
           </a>
           <a
-            href={originURL + "/embed-code/index.html"}
+            href={`${originURL}/embed-code/index.html?collection_id=${collections()?.id}`}
             target="_blank"
             class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
           >
@@ -278,6 +279,16 @@ const SideBar: Component = () => {
             <span class="flex-1 ms-3 whitespace-nowrap">
               Public Documentation
             </span>
+          </a>
+          <a
+            href={originURL + "/public/2/collection/" + collections()?.text_id}
+            target="_blank"
+            class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+          >
+            <div class="w-6 h-6">
+              <News />
+            </div>
+            <span class="flex-1 ms-3 whitespace-nowrap">Blog</span>
           </a>
         </div>
       </aside>
