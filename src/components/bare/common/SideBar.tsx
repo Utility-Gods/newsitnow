@@ -148,9 +148,6 @@ const SideBar: Component = () => {
                       <span class="ms-2">Organization</span>
                     </div>
                   }
-                  sectionComponent={(props) => {
-                    return <div class="text-sm font-bold">{props}</div>;
-                  }}
                   itemComponent={(props) => (
                     <SelectItem item={props.item}>
                       {props.item.rawValue.label}
