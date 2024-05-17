@@ -1,12 +1,5 @@
 import { delete_collection, update_collection } from "@lib/service/collection";
-import {
-  Component,
-  createEffect,
-  For,
-  mergeProps,
-  Show,
-  createSignal,
-} from "solid-js";
+import { Component, For, mergeProps, Show, createSignal } from "solid-js";
 import {
   Table,
   TableBody,
@@ -36,6 +29,7 @@ import Share from "@lib/icons/share";
 import { Collection } from "@lib/types/Collection";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import Hidden from "@lib/icons/Hidden";
+import { get_user_id } from "@lib/utils";
 
 export type CollectionListProps = {
   collectionList: any;
@@ -44,6 +38,8 @@ export type CollectionListProps = {
 
 const CollectionList: Component<CollectionListProps> = (props) => {
   const merged = mergeProps(props);
+  const user_id = () => get_user_id();
+
   const { collectionList, refetch } = merged;
 
   const [loading, setLoading] = createSignal(false);
@@ -135,6 +131,8 @@ const CollectionList: Component<CollectionListProps> = (props) => {
             <TableHead>Name</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead class="text-left">Owner</TableHead>
+            <TableHead class="text-center">Role</TableHead>
             <TableHead class="text-right">Created</TableHead>
             <TableHead class=" text-right"></TableHead>
           </TableRow>
@@ -173,6 +171,20 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                         }
                       >
                         {c.status}
+                      </BadgeDelta>
+                    </TableCell>
+                    <TableCell class={`font-semibold `}>
+                      {c.creator?.username ?? "NA"}
+                    </TableCell>
+                    <TableCell
+                      class={`text-center ${user_id() == c.creator?.id ? "text-primary" : "text-text"}`}
+                    >
+                      <BadgeDelta
+                        deltaType={
+                          user_id() == c.creator?.id ? "increase" : "decrease"
+                        }
+                      >
+                        {user_id() == c.creator?.id ? "Owner" : "Collaborator"}
                       </BadgeDelta>
                     </TableCell>
                     <TableCell class="text-right">

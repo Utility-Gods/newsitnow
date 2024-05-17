@@ -22,6 +22,7 @@ import {
 import { Skeleton } from "~/components/ui/skeleton";
 import Photo from "@lib/icons/Photo";
 import { Organization } from "@lib/types/Organization";
+import Org from "@lib/icons/Org";
 
 const SideBar: Component = () => {
   // Implement your component logic here
@@ -118,8 +119,14 @@ const SideBar: Component = () => {
               }
             >
               <Show when={orgList()?.isOk()}>
-                <div class="mb-2">Organization</div>
+                <div class="mb-2 flex items-center gap-2">
+                  <div class="w-5 h-5">
+                    <Org />
+                  </div>
+                  Organization
+                </div>
                 <Select
+                  modal={true}
                   optionValue="value"
                   optionTextValue="label"
                   optionDisabled="disabled"
@@ -141,6 +148,9 @@ const SideBar: Component = () => {
                       <span class="ms-2">Organization</span>
                     </div>
                   }
+                  sectionComponent={(props) => {
+                    return <div class="text-sm font-bold">{props}</div>;
+                  }}
                   itemComponent={(props) => (
                     <SelectItem item={props.item}>
                       {props.item.rawValue.label}
