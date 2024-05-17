@@ -29,7 +29,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
   props,
 ) => {
   const params = useParams();
-  const org_id = params.org_id;
+  const org_id = () => params.org_id;
 
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
@@ -55,7 +55,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       const result = await save_collection({
         ...values,
         status: "Draft",
-        org_id,
+        org_id: org_id(),
       });
 
       console.log("submitting", result);

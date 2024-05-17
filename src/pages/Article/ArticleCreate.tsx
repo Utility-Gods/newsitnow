@@ -160,15 +160,6 @@ const ArticleCreate: Component = (props) => {
                             },
                           );
                         }}
-                        modules={{
-                          toolbar: [
-                            [{ header: "1" }, { header: "2" }],
-                            ["bold", "italic", "underline", "strike"],
-                            [{ list: "ordered" }, { list: "bullet" }],
-                            ["link", "image"],
-                            ["clean"],
-                          ],
-                        }}
                         placeholder="Write something here..."
                         ref={quill}
                         onTextChange={() => {
