@@ -1,13 +1,8 @@
 import { fetch_collections } from "@lib/service/collection";
 import { get_first_org_id } from "@lib/utils";
 import { useParams } from "@solidjs/router";
-import {
-  Component,
-  createEffect,
-  createResource,
-  createSignal,
-} from "solid-js";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
+import { type Component, createResource, createSignal } from "solid-js";
+
 import CollectionList from "~/components/functional/collection/CollectionList";
 import { CreateCollectionModal } from "~/components/functional/collection/CreateCollectionModal";
 import { Button } from "~/components/ui/button";
@@ -24,12 +19,6 @@ const Collection: Component = () => {
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
-      <BreadCrumb
-        crumbs={[
-          { href: "/app", label: "Home" },
-          { href: "/app/collection", label: "Collections" },
-        ]}
-      />
       <div class="flex justify-between items-center p-3  ">
         <div class="text-2xl font-bold text-primary leading-10">
           Collections

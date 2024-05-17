@@ -4,8 +4,8 @@ import {
   update_collection,
 } from "@lib/service/collection";
 import { Collection } from "@lib/types/Collection";
-import { get_user_id } from "@lib/utils";
-import { A } from "@solidjs/router";
+import { get_first_org_id, get_user_id } from "@lib/utils";
+import { A, useParams } from "@solidjs/router";
 
 import {
   Component,
@@ -15,7 +15,7 @@ import {
   createEffect,
   For,
 } from "solid-js";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
+
 import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
@@ -28,8 +28,18 @@ import { showToast } from "~/components/ui/toast";
 type CollectionViewProps = {};
 
 const CollectionView: Component = (props: CollectionViewProps) => {
+  const params = useParams();
+  const org_id = () => params.org_id ?? get_first_org_id();
+
+  const fetc_collecection_args = () => {
+    return {
+      id: Number(params.id),
+      org_id: org_id(),
+    };
+  };
+
   const [collection, { refetch }] = createResource(
-    props.params.id,
+    fetc_collecection_args,
     fetch_collection_by_id,
   );
 
@@ -96,19 +106,13 @@ const CollectionView: Component = (props: CollectionViewProps) => {
       });
     } finally {
       console.log("done");
+      setOpenPublishModal(false);
       setLoading(false);
     }
   }
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-6">
-      <BreadCrumb
-        crumbs={[
-          { href: "/app", label: "Home" },
-          { href: "/app/collection", label: "Collections" },
-        ]}
-      />
-
       <Show when={!collection.loading} fallback={<PageSkeleton />}>
         <Show when={collection()?.isOk()}>
           <Show
@@ -207,12 +211,13 @@ const CollectionView: Component = (props: CollectionViewProps) => {
 
                 <For each={collection_details()?.articles}>
                   {(article) => (
-                    <div class="flex p-4 flex-col gap-3 border-border border bg-muted">
+                    <A
+                      href={`/app/${org_id()}/article/${article.id}`}
+                      class="flex p-4 flex-col gap-3 border-border border bg-muted"
+                    >
                       <div class="flex justify-between items-center">
                         <div class="flex items-center text-md font-regular text-primary underline underline-offset-2 leading-10">
-                          <A href={`/app/article/${article.id}`}>
-                            {article.name}
-                          </A>
+                          {article.name}
                         </div>
                         <div class="flex items center gap-3 text-muted-foreground text-sm">
                           <div class="flex gap-2 items-center">
@@ -233,7 +238,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </A>
                   )}
                 </For>
               </div>

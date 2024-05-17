@@ -21,7 +21,6 @@ import { save_article } from "@lib/service/article";
 import Quill from "quill";
 import { SolidQuill } from "solid-quill";
 
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import { useNavigate, useParams } from "@solidjs/router";
 import ImageUpload from "~/components/functional/common/ImageUpload";
 
@@ -84,12 +83,6 @@ const ArticleCreate: Component = (props) => {
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
-      <BreadCrumb
-        crumbs={[
-          { href: "/app", label: "Home" },
-          { href: "/app/article", label: "Article" },
-        ]}
-      />
       <div class="flex justify-between items-center p-3 ">
         <div class="text-2xl font-bold text-primary leading-10">
           Create articles

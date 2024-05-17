@@ -93,7 +93,7 @@ const update_collection = async (data: any) => {
   }
 };
 
-const fetch_collection_by_id = async (id: string) => {
+const fetch_collection_by_id = async ({ org_id, id }) => {
   if (!id) {
     return;
   }
@@ -104,10 +104,13 @@ const fetch_collection_by_id = async (id: string) => {
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(`${BASE_URL}/api/collections/${id}`, {
-      headers: reqHeaders,
-      method: "GET",
-    });
+    const response = await fetch(
+      `${BASE_URL}/api/collections/${id}?org_id=${org_id}`,
+      {
+        headers: reqHeaders,
+        method: "GET",
+      },
+    );
 
     if (!response.ok) {
       const error = await response.json();

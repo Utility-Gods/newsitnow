@@ -1,5 +1,6 @@
 import { fetch_articles } from "@lib/service/article";
 import { update_collection } from "@lib/service/collection";
+import { useParams } from "@solidjs/router";
 import { For, createResource, createSignal, onMount } from "solid-js";
 import { Show } from "solid-js";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
@@ -25,8 +26,10 @@ interface ArticleAttachProps {
 
 function ArticleAttach(props: ArticleAttachProps) {
   const collection = props.collection;
+  const params = useParams();
+  const org_id = () => params.org_id ?? get_first_org_id();
 
-  const [articleList] = createResource(fetch_articles);
+  const [articleList] = createResource(org_id, fetch_articles);
 
   const [loading, setLoading] = createSignal(false);
 
@@ -110,7 +113,7 @@ function ArticleAttach(props: ArticleAttachProps) {
             {/* show a list of articles with check mark to check and select */}
             <For each={articleList()?.value}>
               {(article, index) => (
-                <div class="flex items center gap-3 p-3 bg-muted justify-between">
+                <div class="flex items-center gap-3 p-3 bg-muted justify-between">
                   <div class="flex items center gap-3">
                     <Checkbox
                       checked={attachedArticlesIdList()?.includes(article.id)}
