@@ -15,12 +15,12 @@ const Plan: Component = () => {
   const params = useParams();
   const org_id = () => Number(params.org_id);
 
-  const plan_id = () => get_org_plan(org_id);
+  const plan_id = () => get_org_plan(org_id());
 
   const [user_plan, { refetch }] = createResource(plan_id, fetch_plan_by_id);
 
   const user_plan_details = () => user_plan()?.value ?? {};
-  const [articleCount] = createResource(count_articles);
+  const [articleCount] = createResource(org_id, count_articles);
 
   const [collections] = createResource(org_id, fetch_collections);
 
@@ -36,7 +36,11 @@ const Plan: Component = () => {
         <Show when={!user_plan.loading} fallback={<PageSkeleton />}>
           <Show
             when={user_plan()?.isOk()}
-            fallback={<div class="text-center">Something went wrong</div>}
+            fallback={
+              <div class="text-center">
+                {user_plan_details()}-=--- Something went wrong
+              </div>
+            }
           >
             <div class="flex flex-col gap-3 items-start">
               <div class="bg-white shadow rounded-lg p-4 mb-6">
@@ -76,7 +80,7 @@ const Plan: Component = () => {
                     <div class="flex items-center justify-start space-x-5">
                       <ProgressCircle
                         value={
-                          (100 * articleCount()?.value.length) /
+                          (100 * articleCount()?.value?.length) /
                             user_plan_details().attributes.allowed_articles ?? 0
                         }
                       />
