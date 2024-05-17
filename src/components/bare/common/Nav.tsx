@@ -15,19 +15,7 @@ export const Nav: Component = (props) => {
           </A>
           <div class="text-md text-muted text-center">Own your content.</div>
         </div>
-        <div class="flex gap-6 items-center">
-          <div>
-            <A href="/documentation" class="text-primary">
-              Documentation
-            </A>
-          </div>
-          <div>
-            <A href="/blog" class="text-primary">
-              Blog
-            </A>
-          </div>
-          {props.children}
-        </div>
+        <div class="flex gap-6 items-center">{props.children}</div>
       </nav>
     </header>
   );
