@@ -1,7 +1,6 @@
 import { createResource } from "solid-js";
 import { Component } from "solid-js";
-
-import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
+import CalloutJoin from "~/components/bare/common/CalloutJoin";
 
 const fetch_collections = async () => {
   try {
@@ -25,12 +24,7 @@ const DHome: Component = () => {
     <div class="w-full h-full p-6 flex gap-3 flex-col">
       <div class="text-xl font-semibold">Documentation</div>
 
-      <Callout>
-        <CalloutTitle>Fold the space</CalloutTitle>
-        <CalloutContent>
-          This whole documentation was created using the Orange Gas Platform.
-        </CalloutContent>
-      </Callout>
+      <CalloutJoin />
 
       <div class="text-lg mb-3">
         Explore the comprehensive guide to using the Orange Gas Platform

@@ -149,9 +149,7 @@ const Register: Component = () => {
                 Login
               </a>
             </div>
-            <Button type="submit" variant="secondary">
-              Register
-            </Button>
+            <Button type="submit">Register</Button>
           </CardFooter>
         </Form>
       </Card>

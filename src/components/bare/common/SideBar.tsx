@@ -281,7 +281,7 @@ const SideBar: Component = () => {
             </span>
           </a>
           <a
-            href={originURL + "/public/2/collection/" + collections()?.text_id}
+            href={originURL + "/blog/collection"}
             target="_blank"
             class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
           >

@@ -168,7 +168,6 @@ const ArticleView: Component = (props) => {
                       }
                     >
                       <Button
-                        variant={"secondary"}
                         onClick={() => {
                           setOpenPublishModal(true);
                         }}

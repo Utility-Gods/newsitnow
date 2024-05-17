@@ -17,7 +17,6 @@ const Organization: Component = () => {
         </div>
         <Button
           class="font-bold text-base"
-          variant={"secondary"}
           size="lg"
           onClick={() => setOpenModal(true)}
         >

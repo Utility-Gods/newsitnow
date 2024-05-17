@@ -18,7 +18,8 @@ import {
 import { update_article } from "@lib/service/article";
 
 import Quill from "quill";
-import { SolidQuill } from "solid-quill";
+import { SolidQuill } from "~/components/functional/editor/SolidQuill";
+
 import { useNavigate, useParams } from "@solidjs/router";
 import ImageUpload from "../common/ImageUpload";
 
@@ -175,7 +176,7 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
             >
               Cancel
             </Button>
-            <Button type="submit" size={"lg"} variant="secondary">
+            <Button type="submit" size={"lg"}>
               Save changes
             </Button>
           </div>

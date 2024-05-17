@@ -182,7 +182,6 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                     }
                   >
                     <Button
-                      variant={"secondary"}
                       onClick={() => {
                         setOpenPublishModal(true);
                       }}

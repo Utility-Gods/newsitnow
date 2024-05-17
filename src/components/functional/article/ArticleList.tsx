@@ -218,7 +218,6 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                         }
                       >
                         <Button
-                          variant={"secondary"}
                           onClick={(e) => {
                             e.stopPropagation();
                             changeStatus(c, "Published");

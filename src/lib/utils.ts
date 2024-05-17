@@ -62,7 +62,11 @@ export function get_first_org_id(): number | null {
   if (!user || !user.organizations || user.organizations.length === 0) {
     return null;
   }
-  return user.organizations[0].id;
+  return user.organizations.sort(
+    (a, b) =>
+      new Date(a.created_on).getMilliseconds() -
+      new Date(b.created_on).getMilliseconds(),
+  )[0].id;
 }
 
 export function get_first_org(): Organization | null {
@@ -70,7 +74,11 @@ export function get_first_org(): Organization | null {
   if (!user || !user.organizations || user.organizations.length === 0) {
     return null;
   }
-  return user.organizations[0];
+  return user.organizations.sort(
+    (a, b) =>
+      new Date(a.created_on).getMilliseconds() -
+      new Date(b.created_on).getMilliseconds(),
+  )[0];
 }
 
 export function get_user_orgs(): Organization[] | [] {

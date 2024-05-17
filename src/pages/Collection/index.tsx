@@ -26,7 +26,6 @@ const Collection: Component = () => {
 
         <Button
           class="font-bold text-base"
-          variant={"secondary"}
           size="lg"
           onClick={() => setOpenModal(true)}
         >

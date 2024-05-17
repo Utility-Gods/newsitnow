@@ -193,7 +193,6 @@ export function SolidQuill(props: Props) {
               onClick={() => {
                 setShowImageUpload(false);
               }}
-              variant="secondary"
             >
               Save
             </Button>

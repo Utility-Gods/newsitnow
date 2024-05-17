@@ -19,7 +19,6 @@ const Article: Component = () => {
         <div class="text-2xl font-bold text-primary leading-10">Articles</div>
         <Button
           class="font-bold text-base"
-          variant={"secondary"}
           size="lg"
           onClick={() => navigate("create")}
         >

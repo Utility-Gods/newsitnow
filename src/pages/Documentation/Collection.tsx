@@ -6,9 +6,9 @@ import {
   createSignal,
   Show,
 } from "solid-js";
+import CalloutJoin from "~/components/bare/common/CalloutJoin";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
-import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 
@@ -134,14 +134,7 @@ const Collection: Component = () => {
           </Show>
         </Show>
       </Show>
-      <Callout>
-        <CalloutTitle>Notice</CalloutTitle>
-        <CalloutContent>
-          Only for the purpose of demonstation we are also showing you the
-          unpublished content. But on the same time it also gives you the idea
-          of how you can manage your content.
-        </CalloutContent>
-      </Callout>
+      <CalloutJoin />
     </div>
   );
 };

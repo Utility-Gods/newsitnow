@@ -146,9 +146,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
               >
                 Close
               </Button>
-              <Button type="submit" variant="secondary">
-                Save changes
-              </Button>
+              <Button type="submit">Save changes</Button>
             </DialogFooter>
           </Form>
         </DialogContent>

@@ -205,7 +205,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                         }
                       >
                         <Button
-                          variant={"secondary"}
                           onClick={(e) => {
                             e.stopPropagation();
                             changeStatus(c, "Published");
