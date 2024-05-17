@@ -126,7 +126,7 @@ function generateRestAPICodeExposed(articleId: number): string {
   return restAPICode;
 }
 
-function generateArticleShareLink(articleId: number, userId: number): string {
+function generateArticleShareLink(articleId: string, userId: number): string {
   const origin = import.meta.env.VITE_ORIGIN; // Replace with your Strapi API URL
 
   const link = `${origin}/public/${userId}/article/${articleId}`;

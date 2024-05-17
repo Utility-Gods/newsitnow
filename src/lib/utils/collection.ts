@@ -230,8 +230,8 @@ function generateRestAPICodeExposed(
 }
 
 function generateCollectionShareLink(
-  collectionId: number,
-  userId: number = 12,
+  collectionId: string,
+  userId: number,
   includeDrafts: boolean,
 ): string {
   const origin = import.meta.env.VITE_ORIGIN; // Replace with your Strapi API URL

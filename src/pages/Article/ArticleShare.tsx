@@ -353,7 +353,9 @@ const ArticleShare: Component = (props) => {
                     <APIShare articleId={article_details().id}></APIShare>
                   </TabsContent>
                   <TabsContent value="link">
-                    <LinkShare articleId={article_details().id}></LinkShare>
+                    <LinkShare
+                      articleId={article_details().text_id}
+                    ></LinkShare>
                   </TabsContent>
                 </Tabs>
               </div>

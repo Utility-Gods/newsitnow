@@ -4,8 +4,14 @@ import {
   update_collection,
 } from "@lib/service/collection";
 import { Collection } from "@lib/types/Collection";
-import { get_user_id } from "@lib/utils";
-import { Component, Show, createResource, createSignal } from "solid-js";
+import { get_first_org_id, get_user_id } from "@lib/utils";
+import {
+  Component,
+  Show,
+  createEffect,
+  createResource,
+  createSignal,
+} from "solid-js";
 
 import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
@@ -35,17 +41,31 @@ import Hidden from "@lib/icons/Hidden";
 import Trash from "@lib/icons/Trash";
 
 import Edit from "@lib/icons/Edit";
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import ThreeDots from "@lib/icons/ThreeDots";
 
 const CollectionShare: Component = (props) => {
+  console.log("props");
   const navigate = useNavigate();
   const collection_id = () => props.params.id;
+  const params = useParams();
+  const org_id = () => params.org_id ?? get_first_org_id();
+
+  const fetch_collecection_args = () => {
+    return {
+      id: Number(params.id),
+      org_id: org_id(),
+    };
+  };
 
   const [collection, { refetch }] = createResource(
-    collection_id,
+    fetch_collecection_args,
     fetch_collection_by_id,
   );
+
+  createEffect(() => {
+    console.log(collection(), collection_id());
+  });
 
   const [loading, setLoading] = createSignal(false);
 
@@ -363,7 +383,7 @@ const CollectionShare: Component = (props) => {
                   </TabsContent>
                   <TabsContent value="link">
                     <LinkShare
-                      collectionId={collection_details().id}
+                      collectionId={collection_details().text_id}
                     ></LinkShare>
                   </TabsContent>
                 </Tabs>
