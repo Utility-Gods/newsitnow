@@ -4,13 +4,13 @@ import { err, ok } from "neverthrow";
 // Assuming the environment variable is named REACT_APP_API_URL
 const API_URL = import.meta.env.VITE_STRAPI_URL as string;
 
-const fetch_articles = async () => {
+const fetch_articles = async (org_id: number) => {
   try {
     const token = get_token();
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(`${API_URL}/api/articles`, {
+    const response = await fetch(`${API_URL}/api/articles?org_id=${org_id}`, {
       headers: reqHeaders,
       method: "GET",
     }).catch((error) => {

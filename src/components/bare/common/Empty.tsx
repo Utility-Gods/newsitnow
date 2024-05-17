@@ -7,8 +7,8 @@ type EmptyProps = {
 
 const Empty: Component = (props: EmptyProps) => {
   return (
-    <div class="w-full h-full flex-col text-primary flex items-center justify-center">
-      <div class="w-48 h-48 font-thin animate-bounce">
+    <div class="w-full flex-1 h-full min-[h-300px] flex-col text-primary flex items-center justify-center">
+      <div class="w-64 h-64 font-thin animate-bounce">
         <Cat />
       </div>
       <div class="text-2xl">{props.message ?? "Nothing to show"}</div>

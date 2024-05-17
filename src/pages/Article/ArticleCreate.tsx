@@ -66,14 +66,14 @@ const ArticleCreate: Component = (props) => {
         title: "Article created",
         description: "The article has been created successfully",
       });
-      navigate("/app/article");
+      navigate(`/app/${org_id}/article`);
     } catch (e) {
       console.log(e);
       showToast({
         variant: "error",
         title: e.message ?? "Failed to create article",
         description:
-          e.details.message ?? "An error occurred while creating the article",
+          e?.details?.message ?? "An error occurred while creating the article",
       });
     } finally {
       setLoading(false);
@@ -199,7 +199,7 @@ const ArticleCreate: Component = (props) => {
                 variant="ghost"
                 type="button"
                 onClick={() => {
-                  navigate("/article");
+                  navigate(`/app/${org_id}/article`);
                 }}
               >
                 Cancel

@@ -66,20 +66,16 @@ const CollectionList: Component<CollectionListProps> = (props) => {
       }
 
       if (result?.isErr()) {
-        showToast({
-          title: "Some error occured",
-          duration: 5000,
-          description: "Could not delete collection, please try again later",
-          variant: "error",
-        });
+        throw result.error;
       }
     } catch (e) {
       console.log(e);
       showToast({
         variant: "error",
-        duration: 5000,
-        title: "Failed to delete collection",
-        description: "An error occurred while deleting the collection",
+        title: e?.message ?? "Failed to create collection",
+        description:
+          e?.details?.message ??
+          "An error occurred while delete the collection",
       });
     } finally {
       setLoading(false);
