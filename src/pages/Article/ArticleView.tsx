@@ -148,14 +148,14 @@ const ArticleView: Component = (props) => {
                         ).toLocaleDateString()}
                       </div>
                     </div>
-                    <Button>
-                      <A href="share" class="flex items-center gap-1">
+                    <A href="share" class="flex items-center gap-1">
+                      <Button>
                         <div class="w-4 h-4 mr-2">
                           <Share />
                         </div>
                         <span>Share</span>
-                      </A>
-                    </Button>
+                      </Button>
+                    </A>
                     <Show
                       when={!isPublished()}
                       fallback={

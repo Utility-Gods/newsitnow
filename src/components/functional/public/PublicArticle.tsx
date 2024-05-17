@@ -1,4 +1,10 @@
-import { Component, createResource, createSignal, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createResource,
+  createSignal,
+  Show,
+} from "solid-js";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import qs from "qs";
@@ -11,6 +17,9 @@ const fetch_articles = async (id: string) => {
       populate: {
         author: {
           fields: ["id", "username"],
+        },
+        photo: {
+          fields: ["id", "url"],
         },
       },
       filters: {
@@ -48,6 +57,9 @@ const PublicArticle: Component = (props) => {
 
   const article_image = () => article_details()?.photo?.[0].url ?? null;
 
+  createEffect(() => {
+    console.log(article_image());
+  });
   return (
     <div class="flex flex-col flex-1 overflow-auto flex-grow p-6">
       <div class="sm:w-4/5 w-full mx-auto">
