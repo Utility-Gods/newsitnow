@@ -18,14 +18,18 @@ import {
 import { update_article } from "@lib/service/article";
 
 import Quill from "quill";
-import { SolidQuill } from "solid-quill";
-import { useNavigate } from "@solidjs/router";
+import { SolidQuill } from "~/components/functional/editor/SolidQuill";
+
+import { useNavigate, useParams } from "@solidjs/router";
 import ImageUpload from "../common/ImageUpload";
 
 type ArticleUpdateProps = {
   article: Record<string, any>;
 };
 const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
+  const params = useParams();
+  const org_id = () => params.org_id;
+
   const { article } = props;
 
   const navigate = useNavigate();
@@ -65,7 +69,7 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
         title: "Article updated",
         description: "The article has been updated successfully",
       });
-      navigate("/app/article");
+      navigate(`/app/${org_id()}/article`);
     } catch (e) {
       console.log(e);
       showToast({
@@ -167,12 +171,12 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
               variant="ghost"
               type="button"
               onClick={() => {
-                navigate("/article");
+                navigate(`/app/${org_id()}/article`);
               }}
             >
               Cancel
             </Button>
-            <Button type="submit" size={"lg"} variant="secondary">
+            <Button type="submit" size={"lg"}>
               Save changes
             </Button>
           </div>

@@ -145,7 +145,7 @@ const SideBar: Component = () => {
                 </ul>
               </li>
             </ul>
-            <A href="/blog">
+            <A href="/blog/collection">
               <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">
                 <div class="w-6 h-6">
                   <News />

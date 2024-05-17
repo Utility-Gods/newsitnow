@@ -169,9 +169,7 @@ function ArticleAttach(props: ArticleAttachProps) {
             >
               Close
             </Button>
-            <Button onClick={() => attach_articles()} variant="secondary">
-              Save
-            </Button>
+            <Button onClick={() => attach_articles()}>Save</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

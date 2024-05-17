@@ -183,7 +183,6 @@ const ArticleShare: Component = (props) => {
                       <div class="flex gap-3 flex-shrink-0 justify-end">
                         <Show when={!isPublished()}>
                           <Button
-                            variant={"secondary"}
                             onClick={() => {
                               changeStatus("Published");
                             }}

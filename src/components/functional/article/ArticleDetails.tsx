@@ -57,7 +57,7 @@ const ArticleDetails: Component<ArticleDetailsProps> = (props) => {
                     <div class="text-2xl font-bold text-primary">
                       {article_details().name}
                     </div>
-                    <Button variant={"secondary"} onClick={embed_article}>
+                    <Button onClick={embed_article}>
                       <span>Share</span>
                       <div class="w-4 h-4 ml-2">
                         <Share />

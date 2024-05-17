@@ -20,7 +20,7 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
-import { A, useNavigate } from "@solidjs/router";
+import { useNavigate } from "@solidjs/router";
 import TableRowSkeleton from "@components/bare/common/TableRowSkeleton";
 import ThreeDots from "@lib/icons/ThreeDots";
 import Link from "@lib/icons/link";
@@ -205,7 +205,6 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                         }
                       >
                         <Button
-                          variant={"secondary"}
                           onClick={(e) => {
                             e.stopPropagation();
                             changeStatus(c, "Published");

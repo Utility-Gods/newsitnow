@@ -194,7 +194,7 @@ const ArticleCreate: Component = (props) => {
               >
                 Cancel
               </Button>
-              <Button type="submit" size={"lg"} variant="secondary">
+              <Button type="submit" size={"lg"}>
                 Save changes
               </Button>
             </div>

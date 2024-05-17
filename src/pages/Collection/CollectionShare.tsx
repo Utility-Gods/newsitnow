@@ -211,7 +211,6 @@ const CollectionShare: Component = (props) => {
 
                     <Show when={!isPublished()}>
                       <Button
-                        variant={"secondary"}
                         onClick={() => {
                           changeStatus("Published");
                         }}
