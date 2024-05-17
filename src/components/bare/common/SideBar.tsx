@@ -23,6 +23,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 import Photo from "@lib/icons/Photo";
 import { Organization } from "@lib/types/Organization";
 import Org from "@lib/icons/Org";
+import Menu from "@lib/icons/Menu";
 
 const SideBar: Component = () => {
   // Implement your component logic here

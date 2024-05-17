@@ -153,13 +153,13 @@ const delete_article = async (id: string) => {
   }
 };
 
-const count_articles = async () => {
+const count_articles = async (org_id: number) => {
   try {
     const token = get_token();
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(`${API_URL}/api/articles`, {
+    const response = await fetch(`${API_URL}/api/articles?org_id=${org_id}`, {
       headers: reqHeaders,
       method: "GET",
     });

@@ -1,6 +1,6 @@
 import Upload from "@lib/icons/Upload";
 import { upload_image } from "@lib/service/common";
-import { Show } from "solid-js";
+import { Show, mergeProps } from "solid-js";
 
 import { type Component, createSignal, createEffect } from "solid-js";
 import { Input } from "~/components/ui/input";
@@ -8,23 +8,21 @@ import { Label } from "~/components/ui/label";
 import { showToast } from "~/components/ui/toast";
 
 type ImageUploadProps = {
+  id: string;
   value?: Record<string, string>;
   onUpload: (url: string) => void;
 };
 
 const ImageUpload: Component = (props: ImageUploadProps) => {
+  console.log("-------------", props);
+  const merged = mergeProps(props);
   const [loading, setLoading] = createSignal(false);
 
-  const { value, onUpload } = props;
+  const { value, onUpload } = merged;
 
   const [imageURL, setImageURL] = createSignal(value);
 
-  createEffect(() => {
-    console.log({ value, imageURL: imageURL() });
-  });
-
   const uploadImage = async (file: File) => {
-    console.log({ file });
     setLoading(true);
     const res = await upload_image(file);
     setLoading(false);
@@ -65,7 +63,7 @@ const ImageUpload: Component = (props: ImageUploadProps) => {
       // }
     >
       <Label
-        for="image_ImageUpload"
+        for={merged.id ?? "image_upload"}
         class="cursor-pointer flex gap-3 bg-secondary rounded-sm text-secondary-foreground p-3 font-semibold "
       >
         <div class="w-4 h-4">
@@ -79,6 +77,7 @@ const ImageUpload: Component = (props: ImageUploadProps) => {
       </Show>
       <Input
         hidden
+        id={merged.id ?? "image_upload"}
         class="hidden"
         onChange={async (e: Event) => {
           const file = e.target?.files[0];
@@ -86,7 +85,6 @@ const ImageUpload: Component = (props: ImageUploadProps) => {
           uploadImage(file);
         }}
         accept="image/png, image/jpeg"
-        id="image_ImageUpload"
         type="file"
       >
         Upload Image

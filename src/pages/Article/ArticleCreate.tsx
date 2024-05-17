@@ -1,4 +1,4 @@
-import { Component, createSignal, Show } from "solid-js";
+import { Component, createSignal, onMount, Show } from "solid-js";
 import {
   createForm,
   setValue,
@@ -19,7 +19,7 @@ import {
 import { save_article } from "@lib/service/article";
 
 import Quill from "quill";
-import { SolidQuill } from "solid-quill";
+import { SolidQuill } from "~/components/functional/editor/SolidQuill";
 
 import { useNavigate, useParams } from "@solidjs/router";
 import ImageUpload from "~/components/functional/common/ImageUpload";
@@ -79,6 +79,10 @@ const ArticleCreate: Component = (props) => {
     }
   };
 
+  function imageHandler(e) {
+    console.log(e);
+  }
+
   let quill: Quill;
 
   return (
@@ -95,7 +99,9 @@ const ArticleCreate: Component = (props) => {
             <div class="flex-1 overflow-scroll gap-2 flex flex-col no-scrollbar">
               <div class="">
                 <ImageUpload
+                  id="article_image_upload"
                   onUpload={(url) => {
+                    console.log("wny coming here");
                     formValues.photo = url;
                   }}
                 />

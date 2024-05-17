@@ -58,8 +58,10 @@ const fetch_plan_by_id = async (id: string) => {
 
     const { data, error } = await response.json();
 
+    console.log("fetching plan", data);
+
     if (!response.ok) {
-      console.log("Fetch articles error:", error);
+      console.log("Fetch plan error:", error);
       throw error.error;
     }
     return ok(data);
