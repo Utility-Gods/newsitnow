@@ -162,21 +162,6 @@ function generateRestAPICode(
     },
   });
 
-  async function fetch_collections() {
-    try {
-      const res = await fetch("${strapiUrl}/api/public-collection?${query}");
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch collections");
-      }
-
-      return res.json();
-    } catch (err) {
-      console.log(err);
-      return [];
-    }
-  }
-
   const restAPICode = `
     async function fetch_collections() {
       try {

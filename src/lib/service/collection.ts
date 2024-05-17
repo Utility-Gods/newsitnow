@@ -4,17 +4,20 @@ import { err, ok } from "neverthrow";
 // Assuming BASE_URL is the environment variable containing your API URL.
 const BASE_URL = import.meta.env.VITE_STRAPI_URL as string;
 
-const fetch_collections = async () => {
+const fetch_collections = async (org_id: number) => {
   try {
     const token = get_token();
 
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(`${BASE_URL}/api/collections`, {
-      headers: reqHeaders,
-      method: "GET",
-    });
+    const response = await fetch(
+      `${BASE_URL}/api/collections?org_id=${org_id}`,
+      {
+        headers: reqHeaders,
+        method: "GET",
+      },
+    );
 
     if (!response.ok) {
       const error = await response.json();

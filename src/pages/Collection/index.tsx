@@ -1,4 +1,6 @@
 import { fetch_collections } from "@lib/service/collection";
+import { get_first_org_id } from "@lib/utils";
+import { useParams } from "@solidjs/router";
 import { Component, createResource, createSignal } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import CollectionList from "~/components/functional/collection/CollectionList";
@@ -7,7 +9,12 @@ import { Button } from "~/components/ui/button";
 
 const Collection: Component = () => {
   const [openModal, setOpenModal] = createSignal(false);
-  const [collectionList, { refetch }] = createResource(fetch_collections);
+  const params = useParams();
+  const org_id = () => params.org_id ?? get_first_org_id();
+  const [collectionList, { refetch }] = createResource(
+    org_id,
+    fetch_collections,
+  );
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
