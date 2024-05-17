@@ -30,7 +30,7 @@ const SideBar: Component = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
-  const org_id = params.org_id;
+  const org_id = () => params.org_id;
 
   const [path, setPath] = createSignal(location.pathname);
 
@@ -48,7 +48,7 @@ const SideBar: Component = () => {
     }) ?? [];
 
   const default_org = () =>
-    org_details().find((o: Organization) => o.id == Number(org_id)) ||
+    org_details().find((o: Organization) => o.id == Number(org_id())) ||
     org_details()[0];
   const [orgList] = createResource(fetch_organizations);
 
@@ -167,7 +167,7 @@ const SideBar: Component = () => {
           <ul class="font-medium">
             <li>
               <A
-                href={`/app/${org_id}/collection`}
+                href={`/app/${org_id()}/collection`}
                 class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/collection")
                     ? "text-secondary-foreground bg-secondary"
@@ -182,7 +182,7 @@ const SideBar: Component = () => {
             </li>
             <li>
               <A
-                href={`/app/${org_id}/article`}
+                href={`/app/${org_id()}/article`}
                 class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/article")
                     ? "text-secondary-foreground bg-secondary"
@@ -197,7 +197,7 @@ const SideBar: Component = () => {
             </li>
             <li>
               <A
-                href={`/app/${org_id}/media`}
+                href={`/app/${org_id()}/media`}
                 class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/media")
                     ? "text-secondary-foreground bg-secondary"

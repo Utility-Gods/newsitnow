@@ -9,7 +9,6 @@ import Nav from "~/components/bare/common/Nav";
 const Layout: Component = (props) => {
   const params = useParams();
 
-  const org_id = params.org_id;
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
 
