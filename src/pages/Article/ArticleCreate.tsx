@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, onMount, Show } from "solid-js";
+import { Component, createSignal, Show } from "solid-js";
 import {
   createForm,
   setValue,
@@ -26,7 +26,7 @@ import ImageUpload from "~/components/functional/common/ImageUpload";
 
 const ArticleCreate: Component = (props) => {
   const params = useParams();
-  const org_id = params.org_id;
+  const org_id = () => params.org_id;
   const navigate = useNavigate();
   const [articleForm, { Form, Field }] = createForm<CreateArticleForm>({
     validate: valiForm(CreateArticleSchema),
@@ -53,7 +53,7 @@ const ArticleCreate: Component = (props) => {
         ...values,
         photo: formValues.photo,
         status: "Draft",
-        org_id,
+        org_id: org_id(),
       });
       console.log({ result });
 
@@ -65,7 +65,7 @@ const ArticleCreate: Component = (props) => {
         title: "Article created",
         description: "The article has been created successfully",
       });
-      navigate(`/app/${org_id}/article`);
+      navigate(`/app/${org_id()}/article`);
     } catch (e) {
       console.log(e);
       showToast({
@@ -192,7 +192,7 @@ const ArticleCreate: Component = (props) => {
                 variant="ghost"
                 type="button"
                 onClick={() => {
-                  navigate(`/app/${org_id}/article`);
+                  navigate(`/app/${org_id()}/article`);
                 }}
               >
                 Cancel

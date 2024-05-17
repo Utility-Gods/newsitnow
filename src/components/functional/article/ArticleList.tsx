@@ -1,12 +1,5 @@
 import { delete_article, update_article } from "@lib/service/article";
-import {
-  Component,
-  createEffect,
-  createSignal,
-  For,
-  mergeProps,
-  Show,
-} from "solid-js";
+import { Component, createSignal, For, mergeProps, Show } from "solid-js";
 import {
   Table,
   TableBody,
@@ -39,6 +32,7 @@ import Link from "@lib/icons/link";
 import { Button } from "~/components/ui/button";
 import { Article } from "@lib/types/Article";
 import Hidden from "@lib/icons/Hidden";
+import { get_user_id } from "@lib/utils";
 
 export type ArticleListProps = {
   articleList: any;
@@ -53,6 +47,8 @@ const ArticleList: Component<ArticleListProps> = (props) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = createSignal(false);
+
+  const user_id = () => get_user_id();
 
   async function handle_delete_article(id: string) {
     try {
@@ -147,7 +143,9 @@ const ArticleList: Component<ArticleListProps> = (props) => {
             <TableHead class="w-1/4">Name</TableHead>
             {/* <TableHead class="w-1/4">Description</TableHead> */}
             <TableHead>Status</TableHead>
-            <TableHead class="text-right">Created</TableHead>
+            <TableHead class="text-left">Owner</TableHead>
+            <TableHead class="text-center">Role</TableHead>
+            <TableHead class="text-right">Created At</TableHead>
             <TableHead class="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -177,12 +175,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                     <TableCell class="font-semibold">
                       <div class="clamp-lines line-clamp-1">{c.name}</div>
                     </TableCell>
-                    {/* <TableCell class="text-truncate ">
-                      <div
-                        class="clamp-lines line-clamp-2"
-                        innerHTML={c.text}
-                      ></div>
-                    </TableCell> */}
+
                     <TableCell>
                       <BadgeDelta
                         deltaType={
@@ -192,6 +185,21 @@ const ArticleList: Component<ArticleListProps> = (props) => {
                         {c.status}
                       </BadgeDelta>
                     </TableCell>
+                    <TableCell class={`font-semibold `}>
+                      {c.creator?.username ?? "NA"}
+                    </TableCell>
+                    <TableCell
+                      class={`text-center ${user_id() == c.creator?.id ? "text-primary" : "text-text"}`}
+                    >
+                      <BadgeDelta
+                        deltaType={
+                          user_id() == c.creator?.id ? "increase" : "decrease"
+                        }
+                      >
+                        {user_id() == c.creator?.id ? "Owner" : "Collaborator"}
+                      </BadgeDelta>
+                    </TableCell>
+
                     <TableCell class="text-right">
                       {new Date(c.createdAt).toLocaleDateString()}
                     </TableCell>
