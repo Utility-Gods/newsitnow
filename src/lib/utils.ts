@@ -65,6 +65,14 @@ export function get_first_org_id(): number | null {
   return user.organizations[0].id;
 }
 
+export function get_first_org(): Organization | null {
+  const user = get_user();
+  if (!user || !user.organizations || user.organizations.length === 0) {
+    return null;
+  }
+  return user.organizations[0];
+}
+
 export function get_user_orgs(): Organization[] | [] {
   const user = get_user();
   if (!user) {
@@ -92,6 +100,25 @@ export function get_org_plan(org_id: number): number | null {
   }
 
   return plan.id;
+}
+
+export function get_org_by_id(org_id: number | null): Organization | null {
+  if (!org_id) {
+    return null;
+  }
+
+  const user = get_user();
+
+  if (!user) {
+    return null;
+  }
+
+  const org = user.organizations.find((o) => o.id == org_id);
+
+  if (!org) {
+    return null;
+  }
+  return org;
 }
 
 export function check_token_validity() {

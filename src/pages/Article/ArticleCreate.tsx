@@ -73,7 +73,7 @@ const ArticleCreate: Component = (props) => {
         variant: "error",
         title: e.message ?? "Failed to create article",
         description:
-          e.details.message ?? "An error occurred while creating the article",
+          e?.details?.message ?? "An error occurred while creating the article",
       });
     } finally {
       setLoading(false);

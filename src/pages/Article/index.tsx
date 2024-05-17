@@ -1,5 +1,6 @@
 import { fetch_articles } from "@lib/service/article";
-import { useNavigate } from "@solidjs/router";
+import { get_first_org_id } from "@lib/utils";
+import { useNavigate, useParams } from "@solidjs/router";
 
 import { Component, Show, createResource } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
@@ -8,7 +9,10 @@ import { Button } from "~/components/ui/button";
 
 const Article: Component = () => {
   const navigate = useNavigate();
-  const [articleList, { refetch }] = createResource(fetch_articles);
+  const params = useParams();
+  const org_id = () => params.org_id ?? get_first_org_id();
+
+  const [articleList, { refetch }] = createResource(org_id, fetch_articles);
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">

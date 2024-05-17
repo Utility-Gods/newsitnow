@@ -1,8 +1,14 @@
 import Collection from "@lib/icons/Collection";
 import Article from "@lib/icons/Article";
 import { fetch_organizations } from "@lib/service/organization";
-import { check_if_mobile } from "@lib/utils";
-import { A, useLocation, useNavigate, useSearchParams } from "@solidjs/router";
+import { check_if_mobile, get_org_by_id } from "@lib/utils";
+import {
+  A,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "@solidjs/router";
 import { Show, createResource } from "solid-js";
 import { Component, createEffect, createSignal, onMount } from "solid-js";
 
@@ -15,12 +21,15 @@ import {
 } from "~/components/ui/select";
 import { Skeleton } from "~/components/ui/skeleton";
 import Photo from "@lib/icons/Photo";
+import { Organization } from "@lib/types/Organization";
 
 const SideBar: Component = () => {
   // Implement your component logic here
 
   const location = useLocation();
   const navigate = useNavigate();
+  const params = useParams();
+  const org_id = params.org_id;
 
   const [path, setPath] = createSignal(location.pathname);
 
@@ -34,18 +43,22 @@ const SideBar: Component = () => {
 
   const org_details = () =>
     orgList()?.value?.map((o) => {
-      return { label: o.name, value: o.id };
+      return { label: o.name, value: o.id, id: o.id };
     }) ?? [];
-  const default_org = () => org_details()[0] ?? "";
 
-  createEffect(() => {
-    console.log("org_details", org_details());
-  });
-  const [orgList, { refetch }] = createResource(fetch_organizations);
+  const default_org = () =>
+    org_details().find((o: Organization) => o.id == Number(org_id)) ||
+    org_details()[0];
+  const [orgList] = createResource(fetch_organizations);
+
   const [value, setValue] = createSignal(default_org());
 
+  createEffect(() => {
+    console.log("org_details", default_org());
+  });
+
   const resizeObserver = new ResizeObserver((entries) => {
-    for (let entry of entries) {
+    for (let _ of entries) {
       const isMobile = check_if_mobile();
       setMobile(isMobile);
     }
@@ -111,10 +124,17 @@ const SideBar: Component = () => {
                   optionTextValue="label"
                   optionDisabled="disabled"
                   defaultValue={default_org()}
+                  value={value()}
                   options={org_details()}
                   onChange={(o) => {
                     console.log("changed", o);
-                    navigate(`/app/${o.value}/collection`);
+                    setValue(o);
+                    navigate(
+                      location.pathname.replace(
+                        /\/app\/[^/]+/,
+                        `/app/${o.value}`,
+                      ),
+                    );
                   }}
                   placeholder={
                     <div class="flex items-center">

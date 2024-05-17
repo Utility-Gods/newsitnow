@@ -1,7 +1,12 @@
 import { fetch_collections } from "@lib/service/collection";
 import { get_first_org_id } from "@lib/utils";
 import { useParams } from "@solidjs/router";
-import { Component, createResource, createSignal } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createResource,
+  createSignal,
+} from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import CollectionList from "~/components/functional/collection/CollectionList";
 import { CreateCollectionModal } from "~/components/functional/collection/CreateCollectionModal";
@@ -11,6 +16,7 @@ const Collection: Component = () => {
   const [openModal, setOpenModal] = createSignal(false);
   const params = useParams();
   const org_id = () => params.org_id ?? get_first_org_id();
+
   const [collectionList, { refetch }] = createResource(
     org_id,
     fetch_collections,
