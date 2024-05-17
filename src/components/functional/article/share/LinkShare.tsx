@@ -9,7 +9,7 @@ import { showToast } from "~/components/ui/toast";
 
 interface LinkShareProps {
   // add props here
-  articleId: number;
+  articleId: string;
 }
 
 function LinkShare(props: LinkShareProps) {

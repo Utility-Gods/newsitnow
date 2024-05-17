@@ -9,7 +9,7 @@ import { showToast } from "~/components/ui/toast";
 
 interface LinkShareProps {
   // add props here
-  collectionId: number;
+  collectionId: string;
 }
 
 function LinkShare(props: LinkShareProps) {
