@@ -45,10 +45,25 @@ const Login: Component = () => {
       if (result?.value) {
         const user = result.value;
         localStorage.setItem("user", JSON.stringify(user));
-        console.log(user.user.organizations[0].id, "------------");
-        return navigate("/app/" + user.user.organizations[0].id, {
-          replace: true,
-        });
+
+        if (user.user.organizations.length === 0) {
+          return navigate("/", {
+            replace: true,
+          });
+        }
+
+        return navigate(
+          "/app/" +
+            user.user.organizations.sort((a, b) => {
+              return (
+                new Date(a.created_on).getTime() -
+                new Date(b.created_on).getTime()
+              );
+            })[0]?.id,
+          {
+            replace: true,
+          },
+        );
       }
       throw "No user found";
     } catch (error) {

@@ -180,8 +180,10 @@ const ArticleView: Component = (props) => {
                 </div>
               </div>
 
-              <div class="p-3 max-h-full ">
-                <div class="" innerHTML={article_details().text}></div>
+              <div class="ql-snow ">
+                <div class="p-3 max-h-full overflow-auto no-scrollbar ql-editor">
+                  <div class="" innerHTML={article_details().text}></div>
+                </div>
               </div>
             </div>
           </Show>
