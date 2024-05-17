@@ -1,15 +1,18 @@
 import {
-  Component,
+  type Component,
   createEffect,
   createResource,
   createSignal,
   Show,
 } from "solid-js";
 
+import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
+
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import qs from "qs";
 import { ok, err } from "neverthrow";
 import { useParams } from "@solidjs/router";
+import Link from "@lib/icons/link";
 
 const fetch_articles = async (id: string) => {
   try {
@@ -63,6 +66,20 @@ const PublicArticle: Component = (props) => {
   return (
     <div class="flex flex-col flex-1 overflow-auto flex-grow p-6">
       <div class="sm:w-4/5 w-full mx-auto">
+        <Callout>
+          <CalloutTitle class="flex gap-3 items-center">
+            <div class="w-6 h-6">
+              <Link />
+            </div>
+            Attention
+          </CalloutTitle>
+          <CalloutContent>
+            This article was created on Orange Gas and shared with you using the
+            API share method provided by Orange Gas. The content of this article
+            can be updated directly from the Orange Gas platform and the changes
+            will be reflected here.
+          </CalloutContent>
+        </Callout>
         <Show when={article()?.isErr()}>
           <div class="p-4 text-primary-100">Error loading article</div>
         </Show>
@@ -107,8 +124,10 @@ const PublicArticle: Component = (props) => {
               </div>
             </div>
 
-            <div class="p-3 max-h-full ">
-              <div class="" innerHTML={article_details().text}></div>
+            <div class="ql-snow ">
+              <div class="p-3 max-h-full overflow-auto no-scrollbar ql-editor">
+                <div class="" innerHTML={article_details().text}></div>
+              </div>
             </div>
           </div>
         </Show>
