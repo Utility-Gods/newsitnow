@@ -36,10 +36,6 @@ const ArticleView: Component = (props) => {
 
   const [openPublishModal, setOpenPublishModal] = createSignal(false);
 
-  createEffect(() => {
-    console.log("article", article_details());
-  });
-
   const article_image = () => article_details()?.photo?.[0].url ?? null;
 
   const isPublished = () => {
@@ -152,14 +148,14 @@ const ArticleView: Component = (props) => {
                         ).toLocaleDateString()}
                       </div>
                     </div>
-                    <Button>
-                      <A href="share" class="flex items-center gap-1">
+                    <A href="share" class="flex items-center gap-1">
+                      <Button>
                         <div class="w-4 h-4 mr-2">
                           <Share />
                         </div>
                         <span>Share</span>
-                      </A>
-                    </Button>
+                      </Button>
+                    </A>
                     <Show
                       when={!isPublished()}
                       fallback={

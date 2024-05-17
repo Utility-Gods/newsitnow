@@ -159,10 +159,46 @@ const delete_collection = async (id: string) => {
   }
 };
 
+async function fetch_documentation_collections() {
+  try {
+    const res = await fetch(
+      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=18",
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch collections");
+    }
+
+    return res.json();
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
+
+async function fetch_blogs_collections() {
+  try {
+    const res = await fetch(
+      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=20",
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch collections");
+    }
+
+    return res.json();
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
+
 export {
   fetch_collections,
   save_collection,
   update_collection,
   fetch_collection_by_id,
   delete_collection,
+  fetch_documentation_collections,
+  fetch_blogs_collections,
 };

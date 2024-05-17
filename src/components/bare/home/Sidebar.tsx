@@ -12,46 +12,20 @@ import Collection from "@lib/icons/Collection";
 import News from "@lib/icons/News";
 import Code from "@lib/icons/code";
 import Link from "@lib/icons/link";
-
-async function fetch_collections() {
-  try {
-    const res = await fetch(
-      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=18",
-    );
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch collections");
-    }
-
-    return res.json();
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
-}
-
-async function fetch_blogs() {
-  try {
-    const res = await fetch(
-      "https://orange-gas-strapi.fly.dev/api/public-collection?populate%5Bcreator%5D%5Bfields%5D%5B0%5D=id&populate%5Bcreator%5D%5Bfields%5D%5B1%5D=username&populate%5Barticles%5D%5Bfields%5D%5B0%5D=id&populate%5Barticles%5D%5Bfields%5D%5B1%5D=name&populate%5Barticles%5D%5Bfields%5D%5B2%5D=status&populate%5Barticles%5D%5Bfields%5D%5B3%5D=createdAt&populate%5Barticles%5D%5Bfields%5D%5B4%5D=text&populate%5Barticles%5D%5Bfields%5D%5B5%5D=text_id&filters%5Bid%5D=20",
-    );
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch collections");
-    }
-
-    return res.json();
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
-}
+import {
+  fetch_blogs_collections,
+  fetch_documentation_collections,
+} from "@lib/service/collection";
 
 const originURL = import.meta.env.VITE_ORIGIN;
 
 const SideBar: Component = () => {
-  const [collections, { refetch }] = createResource(fetch_collections);
-  const [blogs, { refetch: refetchBlogs }] = createResource(fetch_blogs);
+  const [collections, { refetch }] = createResource(
+    fetch_documentation_collections,
+  );
+  const [blogs, { refetch: refetchBlogs }] = createResource(
+    fetch_blogs_collections,
+  );
 
   const [urlParams, setParams] = useSearchParams();
   const location = useLocation();
@@ -113,13 +87,13 @@ const SideBar: Component = () => {
       </Show>
       <aside
         id="default-sidebar"
-        class={`text-white z-40 w-80 flex-shrink-0 h-screen transform: -translate-x-full sm:translate-x-0 transition-transform duration-200
+        class={`text-white bg-primary-900/10 z-40 w-80 flex-shrink-0 h-screen transform: -translate-x-full sm:translate-x-0 transition-transform duration-200
           ${isMobile() ? "fixed bg-primary-900" : ""}
           ${isMobileAndSidebarVisible() ? "transform: translate-x-0" : ""}`}
         aria-label="Sidebar"
         style={``}
       >
-        <div class=" pb-4 overflow-y-auto bg-primary-900/10 h-full flex flex-col gap-6">
+        <div class=" pb-4 overflow-y-auto  h-full flex flex-col gap-6">
           <div class=" flex-col gap-3">
             <A href="/documentation">
               <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">

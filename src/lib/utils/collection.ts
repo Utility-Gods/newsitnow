@@ -2,7 +2,7 @@ import { get_token } from "@lib/utils";
 import qs from "qs";
 
 async function generateEmbedCode(collectionId: number): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   // Generate HTML code
   const htmlCode = `
@@ -21,7 +21,7 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
            console.log(collectionContent);
            document.getElementById('embedded-collection').innerHTML = \`
              <div>
-                 <h2>\${collectionContent.name}</h2>
+                 <h1>\${collectionContent.name}</h1>
                  <p>\${collectionContent.description}</p>
                  <p>Date: \${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
              </div>
@@ -31,7 +31,7 @@ async function generateEmbedCode(collectionId: number): Promise<string> {
            collectionContent.articles.forEach(article => {
              document.getElementById('embedded-collection').innerHTML += \`
                <div>
-                   <h3>\${article.name}</h3>
+                   <h1>\${article.name}</h1>
                    <p>\${article.text}</p>
                    <p>Date: \${new Date(article.createdAt).toLocaleDateString()}</p>
                </div>
@@ -49,7 +49,7 @@ async function generateEmbedCodeExposed(
   collectionId: number,
   includeDrafts: boolean,
 ): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
   // Replace with your Strapi API token
   // Generate HTML code
 
@@ -75,7 +75,6 @@ async function generateEmbedCodeExposed(
   });
   const htmlCode = `
     <div class="ql-snow">
-
       <div id="embedded-collection" class="ql-editor"></div>
     </div>
          <script>
@@ -87,12 +86,10 @@ async function generateEmbedCodeExposed(
            })
            .then(response => response.json())
            .then(data => {
-             console.log({data})
              var collectionContent = data; // Adjust the property name based on your Strapi schema
-             console.log(collectionContent);
              document.getElementById('embedded-collection').innerHTML = \`
                <div>
-                   <h2>\${collectionContent.name}</h2>
+                   <h1>\${collectionContent.name}</h1>
                    <p>\${collectionContent.description}</p>
                    <p>Date: \${new Date(collectionContent.createdAt).toLocaleDateString()}</p>
                    <p><strong>Creator:</strong> \${collectionContent.creator.username}</p>
@@ -104,10 +101,10 @@ async function generateEmbedCodeExposed(
              collectionContent.articles.forEach(article => {
                document.getElementById('embedded-collection').innerHTML += \`
                  <div>
-                     <a href="/article?id=\${article.text_id}">\${article.name}</a>
+                     <h1 href="/article?id=\${article.text_id}">\${article.name}</h1>
+                     <h2>Date: \${new Date(article.createdAt).toLocaleDateString()}</h2>
+                     <h2><strong>Status:</strong> \${article.status}</h2>
                      <p>\${article.text}</p>
-                     <p>Date: \${new Date(article.createdAt).toLocaleDateString()}</p>
-                     <p><strong>Status:</strong> \${article.status}</p>
                  </div>
                \`;
              });
@@ -139,7 +136,7 @@ function generateRestAPICode(
   collectionId: number,
   includeDrafts: boolean = false,
 ): string {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const query = qs.stringify({
     populate: {
@@ -186,7 +183,7 @@ function generateRestAPICodeExposed(
   collectionId: number,
   includeDrafts: boolean,
 ): string {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
   const query = qs.stringify({
     populate: {
       creator: {

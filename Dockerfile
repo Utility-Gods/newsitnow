@@ -32,6 +32,7 @@ COPY --link . .
 # Set environment variables during the build process
 ENV VITE_STRAPI_URL="https://orange-gas-strapi.fly.dev"
 ENV VITE_ORIGIN="https://orangegas.co"
+ENV VITE_STRAPI_URL=
 
 # Build application
 RUN yarn run build

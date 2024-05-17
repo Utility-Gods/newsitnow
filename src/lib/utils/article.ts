@@ -1,7 +1,7 @@
 import { get_token } from "@lib/utils";
 import qs from "qs";
 async function generateEmbedCode(articleId: number): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   // Generate HTML code
   const htmlCode = `
@@ -30,16 +30,15 @@ async function generateEmbedCode(articleId: number): Promise<string> {
 }
 
 async function generateEmbedCodeExposed(articleId: number): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const query = qs.stringify({
     populate: {
       creator: {
         fields: ["id", "username"],
       },
-      articles: {
-        fields: ["id", "name", "status", "createdAt", "text", "text_id"],
-      },
+      photo: true,
+      text_id: true,
     },
     filters: {
       id: articleId,
@@ -49,7 +48,6 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
   // Generate HTML code
   const htmlCode = `
     <div class="ql-snow">
-
       <div id="embedded-article" class="ql-editor"></div>
     </div>
 
@@ -59,10 +57,11 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
       fetch('${strapiUrl}/api/public-article?${query}')
       .then(response => response.json())
       .then(data => {
-        var articleContent = data.data.attributes;
+        var articleContent = data;
         document.getElementById('embedded-article').innerHTML = \`
           <div>
-              <h2>\${articleContent.name}</h2>
+            <h1>\${articleContent.name}</h1>
+            <img src="\${articleContent.photo[0].url}" alt="\${articleContent.photo[0].name}" />
               <p>\${articleContent.text}</p>
               <p> Status: \${articleContent.status}</p>
               <p>Date: \${new Date(articleContent.createdAt).toLocaleDateString()}</p>
@@ -92,7 +91,7 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
 }
 
 function generateRestAPICode(articleId: number): string {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const strapiToken = get_token(); // Replace with your Strapi API token
 
@@ -109,7 +108,7 @@ function generateRestAPICode(articleId: number): string {
 
 function generateRestAPICodeExposed(articleId: number): string {
   const strapiToken = get_token(); // Replace with your Strapi API token
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const restAPICode = `
     fetch('${strapiUrl}/api/articles/' + ${articleId}, {
