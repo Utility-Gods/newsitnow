@@ -77,7 +77,7 @@ const SideBar: Component = () => {
   });
 
   function matchPath(path: string) {
-    return location.pathname === path || location.pathname.startsWith(path);
+    return location.pathname === path || location.pathname.includes(path);
   }
 
   return (
@@ -162,7 +162,7 @@ const SideBar: Component = () => {
               <A
                 href={`/app/${org_id}/collection`}
                 class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
-                  matchPath("/app/collection")
+                  matchPath("/collection")
                     ? "text-secondary-foreground bg-secondary"
                     : "text-secondary"
                 }`}
@@ -177,7 +177,7 @@ const SideBar: Component = () => {
               <A
                 href={`/app/${org_id}/article`}
                 class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
-                  matchPath("/app/article")
+                  matchPath("/article")
                     ? "text-secondary-foreground bg-secondary"
                     : "text-secondary"
                 }`}
@@ -192,7 +192,7 @@ const SideBar: Component = () => {
               <A
                 href={`/app/${org_id}/media`}
                 class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
-                  matchPath("/app/media")
+                  matchPath("/media")
                     ? "text-secondary-foreground bg-secondary"
                     : "text-secondary"
                 }`}

@@ -10,7 +10,6 @@ import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
 import { fetch_article_by_id, update_article } from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { A, useSearchParams } from "@solidjs/router";
 
@@ -87,19 +86,13 @@ const ArticleView: Component = (props) => {
       });
     } finally {
       console.log("done");
+      setOpenPublishModal(false);
       setLoading(false);
     }
   }
   return (
     <div class="flex flex-col flex-1 flex-grow  p-3 overflow-hidden">
       <div class="flex items-center justify-between">
-        <BreadCrumb
-          crumbs={[
-            { href: "/app/", label: "Home" },
-            { href: "/app/article", label: "Article" },
-          ]}
-        />
-
         <Tabs
           defaultValue={editMode() ? "edit" : "view"}
           onChange={(e) => {

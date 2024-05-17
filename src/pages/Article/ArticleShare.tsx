@@ -1,6 +1,5 @@
 import { get_user_id } from "@lib/utils";
 import { Component, Show, createResource, createSignal } from "solid-js";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
@@ -51,7 +50,7 @@ const ArticleShare: Component = (props) => {
 
   const isAuthor = () => {
     console.log(get_user_id());
-    return article_details().author.id === get_user_id();
+    return article_details().creator.id === get_user_id();
   };
 
   function isPublished() {
@@ -143,13 +142,6 @@ const ArticleShare: Component = (props) => {
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-3">
-      <BreadCrumb
-        crumbs={[
-          { href: "/app", label: "Home" },
-          { href: "/app/articles", label: "Articles" },
-        ]}
-      />
-
       <Show when={!article.loading} fallback={<PageSkeleton />}>
         <Show when={article()?.isOk()}>
           <Show

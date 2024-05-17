@@ -6,7 +6,7 @@ import {
 import { Collection } from "@lib/types/Collection";
 import { get_user_id } from "@lib/utils";
 import { Component, Show, createResource, createSignal } from "solid-js";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
+
 import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
@@ -148,13 +148,6 @@ const CollectionShare: Component = (props) => {
   }
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-3">
-      <BreadCrumb
-        crumbs={[
-          { href: "/app", label: "Home" },
-          { href: "/app/collection", label: "Collections" },
-        ]}
-      />
-
       <Show when={!collection.loading} fallback={<PageSkeleton />}>
         <Show when={collection()?.isOk()}>
           <Show

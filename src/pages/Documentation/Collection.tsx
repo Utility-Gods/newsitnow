@@ -6,7 +6,6 @@ import {
   createSignal,
   Show,
 } from "solid-js";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
@@ -42,13 +41,6 @@ const Collection: Component = () => {
   });
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-6">
-      <BreadCrumb
-        crumbs={[
-          { href: "/documentation", label: "Documentation" },
-          { href: "/documentation/collection", label: "Collections" },
-        ]}
-      />
-
       <Show
         when={!collections.loading}
         fallback={<PageSkeleton></PageSkeleton>}

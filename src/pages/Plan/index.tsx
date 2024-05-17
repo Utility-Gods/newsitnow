@@ -5,7 +5,6 @@ import { get_org_plan, get_user_orgs } from "@lib/utils";
 import { useParams } from "@solidjs/router";
 import { Show, createEffect } from "solid-js";
 import { Component, createResource } from "solid-js";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
@@ -14,8 +13,7 @@ import { Separator } from "~/components/ui/separator";
 
 const Plan: Component = () => {
   const params = useParams();
-
-  const org_id = Number(params.org_id);
+  const org_id = () => Number(params.org_id);
 
   const plan_id = () => get_org_plan(org_id);
 
@@ -23,23 +21,14 @@ const Plan: Component = () => {
 
   const user_plan_details = () => user_plan()?.value ?? {};
   const [articleCount] = createResource(count_articles);
-  const [collections] = createResource(fetch_collections);
+
+  const [collections] = createResource(org_id, fetch_collections);
 
   const organization = () =>
-    get_user_orgs().find((org) => org.id === org_id) ?? {};
-
-  createEffect(() => {
-    console.log("---------", user_plan());
-  });
+    get_user_orgs().find((org) => org.id === org_id()) ?? {};
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
-      <BreadCrumb
-        crumbs={[
-          { href: "/app", label: "Home" },
-          { href: "/app/plan", label: "Plan" },
-        ]}
-      />
       <div class="p-3 ">
         <div class="text-2xl font-bold text-primary leading-10">
           Plan details

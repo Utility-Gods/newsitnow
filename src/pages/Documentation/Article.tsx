@@ -1,6 +1,5 @@
 import { Show, createEffect } from "solid-js";
 import { Component, createResource } from "solid-js";
-import BreadCrumb from "~/components/bare/common/BreadCrumb";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import qs from "qs";
@@ -63,12 +62,6 @@ const Article: Component = (props) => {
   });
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-auto no-scrollbar p-3 ">
-      <BreadCrumb
-        crumbs={[
-          { href: "/documentation/", label: "Home" },
-          { href: "/documentation/collection", label: "Collections" },
-        ]}
-      />
       <Show when={!article.loading} fallback={<PageSkeleton />}>
         <Show when={article()}>
           <div class="mt-4 flex flex-col p-400 text-primary-100 rounded-sm ">
