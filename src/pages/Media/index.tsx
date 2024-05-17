@@ -1,5 +1,6 @@
 import { Component } from "solid-js";
 import BreadCrumb from "~/components/bare/common/BreadCrumb";
+import Empty from "~/components/bare/common/Empty";
 
 const Media: Component = () => {
   return (
@@ -10,8 +11,9 @@ const Media: Component = () => {
           { href: "/app/media", label: "Media" },
         ]}
       />
-      <div class="p-3 ">
+      <div class="p-3 flex flex-col flex-1">
         <div class="text-2xl font-bold text-primary leading-10">Media</div>
+        <Empty message="Work in Development, Come back later" />
       </div>
     </div>
   );

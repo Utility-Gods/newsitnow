@@ -160,7 +160,7 @@ const SideBar: Component = () => {
           <ul class="font-medium">
             <li>
               <A
-                href="collection"
+                href={`/app/${org_id}/collection`}
                 class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/app/collection")
                     ? "text-secondary-foreground bg-secondary"
@@ -175,7 +175,7 @@ const SideBar: Component = () => {
             </li>
             <li>
               <A
-                href="article"
+                href={`/app/${org_id}/article`}
                 class={`flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/app/article")
                     ? "text-secondary-foreground bg-secondary"
@@ -190,7 +190,7 @@ const SideBar: Component = () => {
             </li>
             <li>
               <A
-                href="article"
+                href={`/app/${org_id}/media`}
                 class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
                   matchPath("/app/media")
                     ? "text-secondary-foreground bg-secondary"

@@ -3,6 +3,7 @@ import { Component, createResource, createSignal, Show } from "solid-js";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import qs from "qs";
 import { ok, err } from "neverthrow";
+import { useParams } from "@solidjs/router";
 
 const fetch_articles = async (id: string) => {
   try {
@@ -37,7 +38,8 @@ const fetch_articles = async (id: string) => {
 
 const PublicArticle: Component = (props) => {
   const userId = props.params.userId;
-  const articleId = props.params.id;
+  const params = useParams();
+  const articleId = params.id;
 
   const [article] = createResource(props.params.id, fetch_articles);
   const [loading] = createSignal(false);

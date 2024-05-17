@@ -66,7 +66,7 @@ const ArticleCreate: Component = (props) => {
         title: "Article created",
         description: "The article has been created successfully",
       });
-      navigate("/app/article");
+      navigate(`/app/${org_id}/article`);
     } catch (e) {
       console.log(e);
       showToast({
@@ -199,7 +199,7 @@ const ArticleCreate: Component = (props) => {
                 variant="ghost"
                 type="button"
                 onClick={() => {
-                  navigate("/article");
+                  navigate(`/app/${org_id}/article`);
                 }}
               >
                 Cancel
