@@ -1,7 +1,7 @@
 import { get_token } from "@lib/utils";
 import qs from "qs";
 async function generateEmbedCode(articleId: number): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   // Generate HTML code
   const htmlCode = `
@@ -30,7 +30,7 @@ async function generateEmbedCode(articleId: number): Promise<string> {
 }
 
 async function generateEmbedCodeExposed(articleId: number): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const query = qs.stringify({
     populate: {
@@ -92,7 +92,7 @@ async function generateEmbedCodeExposed(articleId: number): Promise<string> {
 }
 
 function generateRestAPICode(articleId: number): string {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const strapiToken = get_token(); // Replace with your Strapi API token
 
@@ -109,7 +109,7 @@ function generateRestAPICode(articleId: number): string {
 
 function generateRestAPICodeExposed(articleId: number): string {
   const strapiToken = get_token(); // Replace with your Strapi API token
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const restAPICode = `
     fetch('${strapiUrl}/api/articles/' + ${articleId}, {

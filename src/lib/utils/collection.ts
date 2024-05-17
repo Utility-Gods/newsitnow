@@ -2,7 +2,7 @@ import { get_token } from "@lib/utils";
 import qs from "qs";
 
 async function generateEmbedCode(collectionId: number): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   // Generate HTML code
   const htmlCode = `
@@ -49,7 +49,7 @@ async function generateEmbedCodeExposed(
   collectionId: number,
   includeDrafts: boolean,
 ): Promise<string> {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
   // Replace with your Strapi API token
   // Generate HTML code
 
@@ -139,7 +139,7 @@ function generateRestAPICode(
   collectionId: number,
   includeDrafts: boolean = false,
 ): string {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
 
   const query = qs.stringify({
     populate: {
@@ -186,7 +186,7 @@ function generateRestAPICodeExposed(
   collectionId: number,
   includeDrafts: boolean,
 ): string {
-  const strapiUrl = import.meta.env.VITE_PROD_API; // Replace with your Strapi API URL
+  const strapiUrl = import.meta.env.VITE_STRAPI_URL; // Replace with your Strapi API URL
   const query = qs.stringify({
     populate: {
       creator: {
