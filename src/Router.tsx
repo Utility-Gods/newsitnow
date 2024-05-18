@@ -31,6 +31,9 @@ import CollectionShare from "@pages/Collection/CollectionShare";
 import Organization from "@pages/Organization";
 import Media from "@pages/Media";
 import Settings from "@pages/Settings";
+import PublicLayout from "@pages/Public";
+import TermsPage from "@pages/Public/Terms";
+import PrivacyPage from "@pages/Public/Privacy";
 
 const RouterComponent = () => (
   <>
@@ -78,6 +81,10 @@ const RouterComponent = () => (
         <Route path="/collection">
           <Route path="/:id" component={PublicCollection} />
         </Route>
+      </Route>
+      <Route path="/legal" component={PublicLayout}>
+        <Route path="/terms" component={TermsPage}></Route>
+        <Route path="/privacy" component={PrivacyPage}></Route>
       </Route>
     </Router>
     <Toaster />

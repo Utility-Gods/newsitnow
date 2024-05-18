@@ -14,11 +14,10 @@ export default function () {
       </CalloutTitle>
       <CalloutContent class="flex items-start gap-6 font-semibold">
         <div class="text-justify sm:w-2/3">
-          This blog was created using the OrangeGas CMS and it is really a
-          collection of articles that are related to each other. You can create
-          your own collection and add articles to it and share it with your
-          website, your twitter feed or your really life friend who still reads
-          blogs
+          This blog was created using the OrangeGas CMS and it is really a just
+          a collection of articles. You can create your own collection and add
+          articles to it and share it with your website, your twitter feed or
+          your really life friend who still reads blogs. The content must flow.
         </div>
         <div class="flex-shrink-0 flex gap-3 flex-1 justify-end">
           <A href="/auth/register">

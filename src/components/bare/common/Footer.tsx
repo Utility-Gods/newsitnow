@@ -10,7 +10,7 @@ export const Footer: Component = () => {
             <a
               target="_blank"
               class="text-red-500 underline underline-offset-2"
-              href="https://github.com/Utility-Gods"
+              href="https://utilitygods.com"
             >
               Utility Gods
             </a>
@@ -81,12 +81,12 @@ export const Footer: Component = () => {
               </h2>
               <ul class="font-medium text-gray-500 ">
                 <li class="mb-4">
-                  <a href="/privacy_policy" class="hover:underline">
+                  <a href="/legal/privacy" class="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="/terms_of_use" class="hover:underline">
+                  <a href="/legal/terms" class="hover:underline">
                     Terms &amp; Conditions
                   </a>
                 </li>

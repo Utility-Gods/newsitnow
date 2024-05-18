@@ -22,7 +22,7 @@ export const Nav: Component = (props) => {
             </A>
           </div>
           <div>
-            <A href="/blog" class="text-primary">
+            <A href="/blog/collection" class="text-primary">
               Blog
             </A>
           </div>

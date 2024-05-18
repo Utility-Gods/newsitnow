@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://www.orangegas.com</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1</priority>
+  </url>
+  <url>
+    <loc>http://www.orangegas.com/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+   <url>
+    <loc>http://www.orangegas.com/blog/collection</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://www.orangegas.com/documentation</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://www.orangegas.com/documentation/collection</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://orangegas.co/documentation/article/create-collection-1714674560446</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://orangegas.co/documentation/article/create-article-1715457758021</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://orangegas.co/documentation/article/share-article-1715460383944</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+    <url>
+    <loc>https://orangegas.co/documentation/article/share-your-collection-1715460764634</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+    <url>
+    <loc>https://orangegas.co/documentation/article/attach-articles-to-collection-1715460259100</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+    <url>
+    <loc>https://orangegas.co/documentation/article/attach-articles-to-collection-1715460259100</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+    <url>
+    <loc>https://orangegas.co/documentation/article/delete-article-1715457797167</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+    <url>
+    <loc>https://orangegas.co/documentation/article/delete-collection-1714764281293</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+   <url>
+    <loc>https://orangegas.co/documentation/article/publish-a-collection-1715460704994
+</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://orangegas.co/blog/article/launching-orange-gas,-a-general-purpose-cms-1715462952160
+
+</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>http://www.orangegas.com/auth/login</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://www.orangegas.com/auth/signup</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/collection/collections-1714673978839</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/article/create-collection-1714674560446</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/article/delete-collection-1714764281293</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/article/create-article-1715457758021</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/article/share-article-1715460383944</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+
+
+
+ <url>
+    <loc>https://orangegas.co/public/2/article/attach-articles-to-collection-1715460259100</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/article/publish-an-article-1715458903658</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/article/share-your-collection-1715460764634</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+
+   <url>
+    <loc>https://orangegas.co/public/2/article/publish-a-collection-1715460704994</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
