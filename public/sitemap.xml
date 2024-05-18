@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.orangegas.com</loc>
+    <loc>http://www.orangegas.co</loc>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
-    <loc>http://www.orangegas.com/blog</loc>
+    <loc>http://www.orangegas.co/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
    <url>
-    <loc>http://www.orangegas.com/blog/collection</loc>
+    <loc>http://www.orangegas.co/blog/collection</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://www.orangegas.com/documentation</loc>
+    <loc>http://www.orangegas.co/documentation</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://www.orangegas.com/documentation/collection</loc>
+    <loc>http://www.orangegas.co/documentation/collection</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -90,12 +90,12 @@
   </url>
 
   <url>
-    <loc>http://www.orangegas.com/auth/login</loc>
+    <loc>http://www.orangegas.co/auth/login</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://www.orangegas.com/auth/signup</loc>
+    <loc>http://www.orangegas.co/auth/signup</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
