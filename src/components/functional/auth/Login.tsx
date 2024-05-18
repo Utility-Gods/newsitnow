@@ -1,7 +1,7 @@
 import { LoginForm, LoginSchema } from "@lib/schema/forms/login";
 import { user_login } from "@lib/service/auth";
 import { createForm, valiForm } from "@modular-forms/solid";
-import { A, useNavigate, useParams } from "@solidjs/router";
+import { A, useNavigate, useSearchParams } from "@solidjs/router";
 import { Component, createSignal, Show } from "solid-js";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import { Button } from "~/components/ui/button";
@@ -21,11 +21,13 @@ const Login: Component = () => {
     validate: valiForm(LoginSchema),
   });
 
-  const params = useParams();
+  const [params, _] = useSearchParams();
 
-  const email_confired = params.confirmed_email == "true";
+  const confirmed_email = params.confirmed_email == "true";
 
-  if (email_confired) {
+  console.log({ confirmed_email, params });
+
+  if (confirmed_email) {
     showToast({
       variant: "success",
       title: "Email Confirmed",
