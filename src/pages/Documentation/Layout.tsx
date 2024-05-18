@@ -1,4 +1,5 @@
 import { Component } from "solid-js";
+import CalloutJoin from "~/components/bare/common/CalloutJoin";
 import SideBar from "~/components/bare/home/Sidebar";
 
 const DLayout: Component = (props) => {
@@ -8,6 +9,7 @@ const DLayout: Component = (props) => {
       <div class="flex flex-1 w-full">
         <div class="flex gap-4 flex-col p-3 overflow-auto h-full  w-full mx-auto">
           {props.children}
+          <CalloutJoin />
         </div>
       </div>
     </div>

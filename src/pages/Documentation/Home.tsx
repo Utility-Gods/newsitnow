@@ -21,10 +21,8 @@ const DHome: Component = () => {
   const [collections, { refetch }] = createResource(fetch_collections);
 
   return (
-    <div class="w-full h-full p-6 flex gap-3 flex-col">
+    <div class="w-full  p-6 flex gap-3 flex-col">
       <div class="text-xl font-semibold">Documentation</div>
-
-      <CalloutJoin />
 
       <div class="text-lg mb-3">
         Explore the comprehensive guide to using the Orange Gas Platform

@@ -1,5 +1,6 @@
 import { err, ok } from "neverthrow";
 import { Effect } from "effect";
+import { reset } from "effect/MutableList";
 
 // Assuming you are using this format for your environment variable
 const API_URL = import.meta.env.VITE_STRAPI_URL as string;
@@ -14,32 +15,29 @@ const user_register = async (
       return err("Passwords do not match");
     }
 
-    const localAuthRegisterEffect = () =>
-      Effect.tryPromise({
-        try: () =>
-          fetch(`${API_URL}/api/auth/local/register`, {
-            // Updated here
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-              username: email,
-            }),
-          }),
-        catch: (unknown) => new Error(`something went wrong ${unknown}`),
-      });
-
-    const res = Effect.runPromise(localAuthRegisterEffect());
-    const user = await res.then((res) => res.json());
+    const res = await fetch(`${API_URL}/api/auth/local/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        username: email,
+      }),
+    });
+    if (!res.ok) {
+      console.log("not ok");
+      const error = await res.json();
+      return err(error.error.message);
+    }
+    const user = await res.json();
 
     console.log({ user });
     return ok(user);
   } catch (e) {
     console.log(e);
-    return err(e?.error?.message ?? e?.error ?? e ?? "An error occurred");
+    return err(error.error.message);
   }
 };
 

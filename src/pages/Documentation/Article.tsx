@@ -11,6 +11,9 @@ const fetch_articles = async (id: string) => {
         author: {
           fields: ["id", "username"],
         },
+        photo: {
+          fields: ["id", "url"],
+        },
       },
       filters: {
         text_id: id,
@@ -58,7 +61,7 @@ const Article: Component = (props) => {
   };
 
   createEffect(() => {
-    console.log(article(), article(), article_status());
+    console.log(article(), article(), article_image());
   });
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-auto no-scrollbar p-3 ">
