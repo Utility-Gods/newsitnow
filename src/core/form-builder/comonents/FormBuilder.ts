@@ -4,6 +4,9 @@ import {
   FormFieldFactory,
   TextFieldFactory,
   SelectFieldFactory,
+  PasswordFieldFactory,
+  RadioFieldFactory,
+  CheckboxFieldFactory,
 } from "./FormFieldFactory";
 
 export class FormBuilder {
@@ -12,6 +15,9 @@ export class FormBuilder {
     text: new TextFieldFactory(),
     email: new EmailFieldFactory(),
     select: new SelectFieldFactory(),
+    password: new PasswordFieldFactory(),
+    radio: new RadioFieldFactory(),
+    checkbox: new CheckboxFieldFactory(),
     // Register more factories for other field types
   };
 
