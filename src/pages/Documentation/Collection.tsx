@@ -134,7 +134,6 @@ const Collection: Component = () => {
           </Show>
         </Show>
       </Show>
-      <CalloutJoin />
     </div>
   );
 };

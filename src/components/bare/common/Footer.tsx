@@ -73,6 +73,15 @@ export const Footer: Component = () => {
                     Github
                   </a>
                 </li>
+                <li class="mb-4">
+                  <a
+                    href="https://www.linkedin.com/company/utility-gods/"
+                    target="_blank"
+                    class="hover:underline "
+                  >
+                    LinkedIn
+                  </a>
+                </li>
               </ul>
             </div>
             <div>

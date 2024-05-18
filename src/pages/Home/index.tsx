@@ -22,7 +22,7 @@ const Home: Component = () => {
             Orange Gas is a general purpose CMS to empower the way you create
           </p>
           <Button
-            class="font-bold text-base"
+            class="font-bold w-[250px] h-[50px] text-xl"
             onClick={() => {
               navigate("/auth/register");
             }}
@@ -30,6 +30,18 @@ const Home: Component = () => {
           >
             Get Started
           </Button>
+          <a
+            href="https://www.producthunt.com/posts/orangegas-cms?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-orangegas&#0045;cms"
+            target="_blank"
+          >
+            <img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=457999&theme=dark"
+              alt="OrangeGas&#0032;CMS - Own&#0032;your&#0032;content | Product Hunt"
+              style="width: 250px; height: 54px;"
+              width="250"
+              height="54"
+            />
+          </a>
         </div>
         <div class="relative overflow-hidden shadow-lg">
           <img src="/images/12.png" alt="hero" class="w-full" />
