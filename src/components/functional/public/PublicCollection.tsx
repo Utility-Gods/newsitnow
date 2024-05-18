@@ -15,6 +15,7 @@ import { A, useSearchParams } from "@solidjs/router";
 import qs from "qs";
 import { err, ok } from "neverthrow";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
+import CalloutJoin from "~/components/bare/common/CalloutJoin";
 
 async function fetch_collections(collectionId: string, includeDrafts: boolean) {
   try {
@@ -78,15 +79,7 @@ const PublicCollection: Component = (props) => {
   return (
     <Show when={collection()} fallback={<PageSkeleton />}>
       <div class="flex flex-col flex-1 flex-grow p-3 w-full  sm:w-[69%] m-auto ">
-        <Callout>
-          <CalloutTitle>Attention</CalloutTitle>
-          <CalloutContent>
-            This collection was created on Orange Gas and share with you using
-            the API share method provided by Orange Gas. The content of this
-            collection can be updated directly from the Orange Gas platform and
-            the changes will be reflected here.
-          </CalloutContent>
-        </Callout>
+        <CalloutJoin />
         <Show when={collection()?.isErr()}>
           <div class="p-4 text-primary-100">Error loading collection</div>
         </Show>
