@@ -2,10 +2,14 @@ import { type Component, createResource, Show, createSignal } from "solid-js";
 
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-import { fetch_article_by_id, update_article } from "@lib/service/article";
+import {
+  delete_article,
+  fetch_article_by_id,
+  update_article,
+} from "@lib/service/article";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
-import { A, useSearchParams } from "@solidjs/router";
+import { A, useNavigate, useParams, useSearchParams } from "@solidjs/router";
 
 import ArticleUpdate from "~/components/functional/article/ArticleUpdate";
 import { Button } from "~/components/ui/button";
@@ -15,9 +19,26 @@ import PageSpinner from "~/components/bare/common/PageSpinner";
 import Share from "@lib/icons/share";
 import AreYouSure from "~/components/functional/common/AreYouSure";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import { get_first_org_id } from "@lib/utils";
+import ThreeDots from "@lib/icons/ThreeDots";
+import Link from "@lib/icons/link";
+import Edit from "@lib/icons/Edit";
+import Hidden from "@lib/icons/Hidden";
+import Trash from "@lib/icons/Trash";
+
 const ArticleView: Component = (props) => {
+  const params = useParams();
   const [urlParams, setParams] = useSearchParams();
 
+  const org_id = () => params.org_id ?? get_first_org_id();
+
+  const navigate = useNavigate();
   const [loading, setLoading] = createSignal(false);
   const editMode = () => urlParams["edit"] == "true";
 
@@ -36,6 +57,43 @@ const ArticleView: Component = (props) => {
     if (!article_details()) return false;
     return article_details()?.status === "Published";
   };
+
+  async function handle_delete_article() {
+    try {
+      setLoading(true);
+      const result = await delete_article(article_details().id);
+
+      if (result?.isOk()) {
+        refetch();
+        showToast({
+          variant: "success",
+          title: "Article deleted",
+          duration: 5000,
+          description: "Article has been deleted successfully",
+        });
+        navigate(`/app/${org_id()}/articles`);
+      }
+
+      if (result?.isErr()) {
+        showToast({
+          title: "Some error occured",
+          duration: 5000,
+          description: "Could not delete article, please try again later",
+          variant: "error",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      showToast({
+        variant: "error",
+        title: "Failed to delete article",
+        duration: 5000,
+        description: "An error occurred while deleting the article",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function changeStatus(status: string) {
     console.log("publishing article");
@@ -138,7 +196,6 @@ const ArticleView: Component = (props) => {
                         {article_details().status}
                       </BadgeDelta>
                     </div>
-
                     <div class="flex gap-2 items-center">
                       <div class="">
                         {new Date(
@@ -146,27 +203,17 @@ const ArticleView: Component = (props) => {
                         ).toLocaleDateString()}
                       </div>
                     </div>
-                    <A href="share" class="flex items-center gap-1">
-                      <Button>
-                        <div class="w-4 h-4 mr-2">
-                          <Share />
-                        </div>
-                        <span>Share</span>
-                      </Button>
-                    </A>
-                    <Show
-                      when={!isPublished()}
-                      fallback={
-                        <Button
-                          variant={"destructive"}
-                          onClick={() => {
-                            changeStatus("Draft");
-                          }}
-                        >
-                          Unpublish
+                    <Show when={isPublished()}>
+                      <A href="share" class="flex items-center gap-1">
+                        <Button>
+                          <div class="w-4 h-4 mr-2">
+                            <Share />
+                          </div>
+                          <span>Share</span>
                         </Button>
-                      }
-                    >
+                      </A>
+                    </Show>
+                    <Show when={!isPublished()}>
                       <Button
                         onClick={() => {
                           setOpenPublishModal(true);
@@ -175,6 +222,41 @@ const ArticleView: Component = (props) => {
                         Publish
                       </Button>
                     </Show>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <div class="w-6 h-6 rotate-90">
+                          <ThreeDots />
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <Show when={isPublished()}>
+                          <DropdownMenuItem
+                            class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              changeStatus("Draft");
+                            }}
+                          >
+                            <div class="w-4 h-4">
+                              <Hidden />
+                            </div>
+                            Unpublish
+                          </DropdownMenuItem>
+                        </Show>
+                        <DropdownMenuItem
+                          class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handle_delete_article();
+                          }}
+                        >
+                          <div class="w-4 h-4">
+                            <Trash />
+                          </div>
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </div>
               </div>

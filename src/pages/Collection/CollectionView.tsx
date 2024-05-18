@@ -1,11 +1,19 @@
 import Share from "@lib/icons/share";
 import {
+  delete_collection,
   fetch_collection_by_id,
   update_collection,
 } from "@lib/service/collection";
 import { Collection } from "@lib/types/Collection";
 import { get_first_org_id, get_user_id } from "@lib/utils";
-import { A, useParams } from "@solidjs/router";
+import { A, useParams, useNavigate } from "@solidjs/router";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 
 import {
   Component,
@@ -24,6 +32,10 @@ import AreYouSure from "~/components/functional/common/AreYouSure";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
+import ThreeDots from "@lib/icons/ThreeDots";
+import Hidden from "@lib/icons/Hidden";
+import Trash from "@lib/icons/Trash";
+import Edit from "@lib/icons/Edit";
 
 type CollectionViewProps = {};
 
@@ -31,6 +43,7 @@ const CollectionView: Component = (props: CollectionViewProps) => {
   const params = useParams();
   const org_id = () => params.org_id ?? get_first_org_id();
 
+  const navigate = useNavigate();
   const fetc_collecection_args = () => {
     return {
       id: Number(params.id),
@@ -111,6 +124,40 @@ const CollectionView: Component = (props: CollectionViewProps) => {
     }
   }
 
+  async function handle_delete_collection(id: string) {
+    try {
+      setLoading(true);
+      const result = await delete_collection(id);
+
+      console.log("deleting collection", result);
+      if (result?.isOk()) {
+        refetch();
+        showToast({
+          variant: "success",
+          title: "Collection deleted",
+          duration: 5000,
+          description: "Collection has been deleted successfully",
+        });
+        navigate(`/app/${org_id()}/collection`);
+      }
+
+      if (result?.isErr()) {
+        throw result.error;
+      }
+    } catch (e) {
+      console.log(e);
+      showToast({
+        variant: "error",
+        title: e?.message ?? "Failed to create collection",
+        description:
+          e?.details?.message ??
+          "An error occurred while delete the collection",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-6">
       <Show when={!collection.loading} fallback={<PageSkeleton />}>
@@ -160,27 +207,17 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                   >
                     + Attach Article
                   </Button>
-                  <A href="share" class="flex items-center gap-1">
-                    <Button>
-                      <div class="w-4 h-4 mr-2">
-                        <Share />
-                      </div>
-                      <span>Share</span>
-                    </Button>
-                  </A>
-                  <Show
-                    when={!isPublished()}
-                    fallback={
-                      <Button
-                        variant={"destructive"}
-                        onClick={() => {
-                          changeStatus("Draft");
-                        }}
-                      >
-                        Unpublish
+                  <Show when={isPublished()}>
+                    <A href="share" class="flex items-center gap-1">
+                      <Button>
+                        <div class="w-4 h-4 mr-2">
+                          <Share />
+                        </div>
+                        <span>Share</span>
                       </Button>
-                    }
-                  >
+                    </A>
+                  </Show>
+                  <Show when={!isPublished()}>
                     <Button
                       onClick={() => {
                         setOpenPublishModal(true);
@@ -189,6 +226,51 @@ const CollectionView: Component = (props: CollectionViewProps) => {
                       Publish
                     </Button>
                   </Show>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <div class="w-6 h-6 rotate-90">
+                        <ThreeDots />
+                      </div>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent>
+                      <DropdownMenuItem
+                        onClick={() => {}}
+                        class="text-primary-foreground flex items-center gap-2"
+                      >
+                        <div class="w-4 h-4">
+                          <Edit />
+                        </div>
+                        Edit
+                      </DropdownMenuItem>
+                      <Show when={isPublished()}>
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            changeStatus("Draft");
+                          }}
+                          class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                        >
+                          <div class="w-4 h-4">
+                            <Hidden />
+                          </div>
+                          Unpublish
+                        </DropdownMenuItem>
+                      </Show>
+                      <DropdownMenuItem
+                        class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handle_delete_collection(collection_details().id);
+                        }}
+                      >
+                        <div class="w-4 h-4">
+                          <Trash />
+                        </div>
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </Show>
             </div>

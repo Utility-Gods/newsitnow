@@ -69,7 +69,7 @@ const ArticleUpdate: Component = (props: ArticleUpdateProps) => {
         title: "Article updated",
         description: "The article has been updated successfully",
       });
-      navigate(`/app/${org_id()}/article`);
+      navigate(`/app/${org_id()}/article/${article.id}`);
     } catch (e) {
       console.log(e);
       showToast({

@@ -243,30 +243,21 @@ const CollectionList: Component<CollectionListProps> = (props) => {
                             Edit
                           </DropdownMenuItem>
 
-                          <DropdownMenuItem
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`${c.id}/share`);
-                            }}
-                            class="text-primary-foreground flex items-center gap-2"
-                          >
-                            <div class="w-4 h-4">
-                              <Share />
-                            </div>
-                            Share
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              changeStatus(c, "Draft");
-                            }}
-                            class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
-                          >
-                            <div class="w-4 h-4">
-                              <Hidden />
-                            </div>
-                            Unpublish
-                          </DropdownMenuItem>
+                          <Show when={isPublished(c.status)}>
+                            <DropdownMenuItem
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                changeStatus(c, "Draft");
+                              }}
+                              class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
+                            >
+                              <div class="w-4 h-4">
+                                <Hidden />
+                              </div>
+                              Unpublish
+                            </DropdownMenuItem>
+                          </Show>
+
                           <DropdownMenuItem
                             class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
                             onClick={(e) => {

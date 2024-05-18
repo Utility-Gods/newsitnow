@@ -18,7 +18,7 @@ import {
   CreateCollectionSchema,
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
-import { useParams, useSearchParams } from "@solidjs/router";
+import { useParams, useNavigate } from "@solidjs/router";
 
 type CreateCollectionModalProps = {
   open: boolean;
@@ -28,6 +28,7 @@ type CreateCollectionModalProps = {
 export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
   props,
 ) => {
+  const navigate = useNavigate();
   const params = useParams();
   const org_id = () => params.org_id;
 
@@ -63,8 +64,21 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       if (result?.isOk()) {
         showToast({
           variant: "success",
+          duration: 20000,
           title: "Collection created",
-          description: "Collection has been created successfully",
+          description: (
+            <>
+              <div>Now you can create add articles to this Collection</div>
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  navigate(`/app/${org_id()}/article/create`);
+                }}
+              >
+                Create Article
+              </Button>
+            </>
+          ),
         });
         merged.refetch();
       }
