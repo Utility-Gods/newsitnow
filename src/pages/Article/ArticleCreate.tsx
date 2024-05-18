@@ -65,7 +65,7 @@ const ArticleCreate: Component = (props) => {
         title: "Article created",
         description: "The article has been created successfully",
       });
-      navigate(`/app/${org_id()}/article`);
+      navigate(`/app/${org_id()}/article/${result.value.id}`);
     } catch (e) {
       console.log(e);
       showToast({
