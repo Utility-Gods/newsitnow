@@ -6,6 +6,8 @@ import {
   Show,
 } from "solid-js";
 
+import { Meta } from "@solidjs/meta";
+
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
@@ -65,6 +67,7 @@ const PublicArticle: Component = (props) => {
   });
   return (
     <div class="flex flex-col flex-1 overflow-auto flex-grow p-6">
+      <Meta property="og:image" content={article_image()} />
       <div class="sm:w-4/5 w-full mx-auto">
         <Callout>
           <CalloutTitle class="flex gap-3 items-center">
