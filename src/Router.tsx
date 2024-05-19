@@ -34,6 +34,7 @@ import Settings from "@pages/Settings";
 import PublicLayout from "@pages/Public";
 import TermsPage from "@pages/Public/Terms";
 import PrivacyPage from "@pages/Public/Privacy";
+import Forms from "./pages/Forms";
 
 const RouterComponent = () => (
   <>
@@ -68,6 +69,7 @@ const RouterComponent = () => (
         <Route path="/media" component={Media} />
         <Route path="/organization" component={Organization} />
         <Route path="/settings" component={Settings} />
+        <Route path="/forms" component={Forms} />
       </Route>
       <Route path="/auth">
         <Route path="/login" component={Login} />
