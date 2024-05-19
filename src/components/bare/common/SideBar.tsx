@@ -134,6 +134,7 @@ const SideBar: Component = () => {
                     Organization
                   </div>
                   <Select
+                    disallowEmptySelection={true}
                     modal={true}
                     optionValue="value"
                     optionTextValue="label"

@@ -88,9 +88,9 @@ export const InviteToOrganizationModal: Component<
       console.log(e);
       showToast({
         variant: "error",
-        title: e.message ?? "Failed to create invitation",
+        title: e?.message ?? "Failed to create invitation",
         description:
-          e.details.message ??
+          e?.details?.message ??
           "An error occurred while creating the invitation",
       });
     } finally {

@@ -13,7 +13,7 @@ import Org from "@lib/icons/Org";
 import { createResource } from "solid-js";
 import { fetch_organizations } from "@lib/service/organization";
 import { Organization } from "@lib/types/Organization";
-import { useNavigate, useParams } from "@solidjs/router";
+import { useParams } from "@solidjs/router";
 
 type ChangeOrgProps = {
   onChange: (org: Organization) => void;
@@ -55,6 +55,7 @@ export default function (props: ChangeOrgProps): Component {
         </div>
         <Select
           modal={true}
+          disallowEmptySelection={true}
           optionValue="value"
           optionTextValue="label"
           optionDisabled="disabled"
@@ -63,8 +64,10 @@ export default function (props: ChangeOrgProps): Component {
           options={org_details()}
           onChange={(o) => {
             console.log("changed", o);
-            setValue(o);
-            merged.onChange(o);
+            if (o) {
+              setValue(o);
+              merged.onChange(o);
+            }
           }}
           placeholder={
             <div class="flex items-center">
@@ -77,7 +80,7 @@ export default function (props: ChangeOrgProps): Component {
             </SelectItem>
           )}
         >
-          <SelectTrigger aria-label="Organization">
+          <SelectTrigger>
             <SelectValue<string>>
               {(state) => state.selectedOption().label}
             </SelectValue>
