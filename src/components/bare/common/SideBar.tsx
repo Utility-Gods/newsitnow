@@ -31,6 +31,7 @@ import { Separator } from "~/components/ui/separator";
 import Book from "@lib/icons/Book";
 import Preview from "@lib/icons/Preview";
 import News from "@lib/icons/News";
+import Forms from "@lib/icons/Forms";
 
 const originURL = import.meta.env.VITE_ORIGIN;
 
@@ -204,7 +205,7 @@ const SideBar: Component = () => {
                   <span class="flex-1 ms-3 whitespace-nowrap">Articles</span>
                 </A>
               </li>
-              <li>
+              {/* <li>
                 <A
                   href={`/app/${org_id()}/media`}
                   class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
@@ -218,8 +219,8 @@ const SideBar: Component = () => {
                   </div>
                   <span class="flex-1 ms-3 whitespace-nowrap">Media</span>
                 </A>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <A
                   href={`/app/${org_id()}/preview`}
                   class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
@@ -232,6 +233,21 @@ const SideBar: Component = () => {
                     <Preview />
                   </div>
                   <span class="flex-1 ms-3 whitespace-nowrap">Preview</span>
+                </A>
+              </li> */}
+              <li>
+                <A
+                  href={`/app/${org_id()}/forms`}
+                  class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/forms")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <div class="w-5 h-5">
+                    <Forms />
+                  </div>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Forms</span>
                 </A>
               </li>
             </ul>
