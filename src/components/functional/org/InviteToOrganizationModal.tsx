@@ -1,4 +1,11 @@
-import { Component, createSignal, mergeProps, Show } from "solid-js";
+import {
+  Component,
+  createSignal,
+  mergeProps,
+  onMount,
+  onCleanup,
+  Show,
+} from "solid-js";
 import { createForm, SubmitHandler, valiForm } from "@modular-forms/solid";
 import { showToast } from "~/components/ui/toast";
 
@@ -12,41 +19,38 @@ import {
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Textarea } from "~/components/ui/textarea";
-import {
-  CreateCollectionForm,
-  CreateCollectionSchema,
-} from "@lib/schema/forms/create_collection";
-import { save_collection } from "@lib/service/collection";
-import { useParams, useNavigate } from "@solidjs/router";
-import { get_first_org_id } from "@lib/utils";
 
-type CreateCollectionModalProps = {
+import {
+  InviteToOrgForm,
+  InviteToOrgSchema,
+} from "@lib/schema/forms/invite_to_org";
+import { invite_user } from "@lib/service/invitation";
+import { get_first_org_id, get_user_id } from "@lib/utils";
+import { useParams } from "@solidjs/router";
+import ChangeOrg from "./ChangeOrg";
+import { Organization } from "@lib/types/Organization";
+
+type InviteToOrganizationModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   refetch: () => void;
 };
-export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
-  props,
-) => {
-  const navigate = useNavigate();
+export const InviteToOrganizationModal: Component<
+  InviteToOrganizationModalProps
+> = (props) => {
+  const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
   const params = useParams();
   const org_id = () => params.org_id ?? get_first_org_id();
 
-  const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
+  const [selectedOrg, setSelectedOrg] = createSignal<number>(Number(org_id()));
 
-  const [, { Form, Field, FieldArray }] = createForm<CreateCollectionForm>({
-    validate: valiForm(CreateCollectionSchema),
+  const [, { Form, Field }] = createForm<InviteToOrgForm>({
+    validate: valiForm(InviteToOrgSchema),
   });
-
-  const formValues = {
-    name: "",
-    description: "",
-  };
 
   const [loading, setLoading] = createSignal(false);
 
-  const handleSubmit: SubmitHandler<CreateCollectionForm> = async (
+  const handleSubmit: SubmitHandler<InviteToOrgForm> = async (
     values,
     event,
   ) => {
@@ -54,10 +58,13 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
 
     event.preventDefault();
     try {
-      const result = await save_collection({
+      const result = await invite_user({
         ...values,
-        status: "Draft",
-        org_id: org_id(),
+        organization: selectedOrg(),
+        invited_by: get_user_id(),
+        expiry_date: new Date(
+          Date.now() + 7 * 24 * 60 * 60 * 1000,
+        ).toISOString(),
       });
 
       console.log("submitting", result);
@@ -65,23 +72,11 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       if (result?.isOk()) {
         showToast({
           variant: "success",
-          duration: 20000,
-          title: "Collection created",
-          description: (
-            <>
-              <div>Now you can create add articles to this Collection</div>
-              <Button
-                variant={"outline"}
-                onClick={() => {
-                  navigate(`/app/${org_id()}/article/create`);
-                }}
-              >
-                Create Article
-              </Button>
-            </>
-          ),
+          title: "Invitation created successfully",
+          description:
+            "An invitation mail is on the way, once accepted the user will be added to the organization.",
         });
-        merged.refetch();
+        merged.onOpenChange(false);
       }
 
       if (result?.isErr()) {
@@ -93,10 +88,10 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
       console.log(e);
       showToast({
         variant: "error",
-        title: e?.message ?? "Failed to create collection",
+        title: e.message ?? "Failed to create invitation",
         description:
-          e?.details?.message ??
-          "An error occurred while creating the collection",
+          e.details.message ??
+          "An error occurred while creating the invitation",
       });
     } finally {
       setLoading(false);
@@ -110,23 +105,33 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
           <Form onSubmit={handleSubmit}>
             <DialogHeader>
               <div class="text-lg font-semibold leading-none tracking-tight text-primary">
-                Create Collection
+                Invite User
               </div>
               <div class="text-sm text-muted-foreground">
-                Create a new collection and press save when you're done.
+                Enter the email address of the user you want to invite to the
+                organization and press invite.
               </div>
             </DialogHeader>
+            <div class="flex flex-row gap-3">
+              <ChangeOrg
+                onChange={(o: Organization) => {
+                  console.log(o);
+                  setSelectedOrg(o.id);
+                  console.log(selectedOrg());
+                }}
+              />
+            </div>
             <div class="grid gap-4 py-4">
               <div class="grid grid-cols-4 items-center gap-4">
                 <Label for="name" class="text-right">
-                  Name
+                  Email
                 </Label>
-                <Field name="name">
+                <Field name="email">
                   {(field, props) => (
                     <div class="flex flex-col col-span-3 gap-1">
                       <Input
                         {...props}
-                        id="name"
+                        id="email"
                         area-invalid={field.error ? "true" : "false"}
                         required
                       />
@@ -135,19 +140,6 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
                           {field.error}
                         </span>
                       )}
-                    </div>
-                  )}
-                </Field>
-              </div>
-              <div class="grid grid-cols-4 items-center gap-4">
-                <Label for="description" class="text-right">
-                  Description
-                </Label>
-                <Field name="description">
-                  {(field, props) => (
-                    <div class="flex flex-col col-span-3 gap-1">
-                      <Textarea {...props} id="description" rows="3" required />
-                      <span class="text-secondary text-sm">{field.error}</span>
                     </div>
                   )}
                 </Field>
@@ -161,7 +153,7 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
               >
                 Close
               </Button>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">Invite</Button>
             </DialogFooter>
           </Form>
         </DialogContent>

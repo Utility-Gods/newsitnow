@@ -20,7 +20,6 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { Skeleton } from "~/components/ui/skeleton";
-import Photo from "@lib/icons/Photo";
 import { Organization } from "@lib/types/Organization";
 import Org from "@lib/icons/Org";
 import Menu from "@lib/icons/Menu";
@@ -29,7 +28,6 @@ import Code from "@lib/icons/code";
 import { fetch_documentation_collections } from "@lib/service/collection";
 import { Separator } from "~/components/ui/separator";
 import Book from "@lib/icons/Book";
-import Preview from "@lib/icons/Preview";
 import News from "@lib/icons/News";
 import Forms from "@lib/icons/Forms";
 
@@ -117,7 +115,7 @@ const SideBar: Component = () => {
         aria-label="Sidebar"
       >
         <div class=" pb-4 overflow-y-auto bg-primary-900/10">
-          <div class="flex flex-col gap-6">
+          <div class="flex flex-col">
             <div class="p-3 text-md font-bold text-secondary">
               <Show
                 when={!orgList.loading}
