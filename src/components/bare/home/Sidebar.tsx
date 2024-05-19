@@ -94,7 +94,7 @@ const SideBar: Component = () => {
         aria-label="Sidebar"
         style={``}
       >
-        <div class=" pb-4 overflow-y-auto  h-full flex flex-col gap-6">
+        <div class=" pb-4 overflow-y-auto  h-full flex flex-col gap-6 bg-white">
           <div class=" flex-col gap-3">
             <A href="/documentation">
               <div class="p-3 border-secondary border-b-2 text-text text-md font-black truncate flex gap-3 items-center">

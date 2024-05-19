@@ -99,7 +99,7 @@ const Home: Component = () => {
           <Button
             class="font-bold text-base"
             onClick={() => {
-              window.location.href = "https://utilitygods.com";
+              window.location.href = "https://utilitygods.com/contact";
             }}
             size="lg"
           >

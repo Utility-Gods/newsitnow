@@ -12,7 +12,7 @@ export default function () {
         </div>
         Fold the Space
       </CalloutTitle>
-      <CalloutContent class="flex items-start gap-6 font-semibold">
+      <CalloutContent class="flex items-start gap-6 flex-col font-semibold">
         <div class="text-justify sm:w-2/3">
           This blog was created using the OrangeGas CMS and it is really a just
           a collection of articles. You can create your own collection and add
