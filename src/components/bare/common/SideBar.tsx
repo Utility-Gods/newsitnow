@@ -26,10 +26,7 @@ import Org from "@lib/icons/Org";
 import Menu from "@lib/icons/Menu";
 import Link from "@lib/icons/link";
 import Code from "@lib/icons/code";
-import {
-  fetch_collections,
-  fetch_documentation_collections,
-} from "@lib/service/collection";
+import { fetch_documentation_collections } from "@lib/service/collection";
 import { Separator } from "~/components/ui/separator";
 import Book from "@lib/icons/Book";
 import Preview from "@lib/icons/Preview";
@@ -45,11 +42,7 @@ const SideBar: Component = () => {
   const params = useParams();
   const org_id = () => params.org_id;
 
-  const [path, setPath] = createSignal(location.pathname);
-
-  const user = localStorage.getItem("user");
-
-  const name = user ? JSON.parse(user)?.user?.username : "User";
+  const [_, setPath] = createSignal(location.pathname);
 
   const [urlParams, setParams] = useSearchParams();
 
@@ -246,6 +239,7 @@ const SideBar: Component = () => {
         </div>
         <div>
           <Separator />
+
           <a
             href={originURL + "/documentation"}
             target="_blank"
@@ -256,30 +250,42 @@ const SideBar: Component = () => {
             </div>
             <span class="flex-1 ms-3 whitespace-nowrap">Documentation</span>
           </a>
-          <a
-            href={`${originURL}/embed-code/index.html?collection_id=${collections()?.id}`}
-            target="_blank"
-            class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+          <Show
+            when={!collections.loading}
+            fallback={
+              <div class="flex gap-5 pt-1 flex-col p-3">
+                <Skeleton height={24} radius={6} />
+                <Skeleton height={24} radius={6} />
+              </div>
+            }
           >
-            <div class="w-6 h-6">
-              <Code />
-            </div>
-            <span class="flex-1 ms-3 whitespace-nowrap">
-              Embedded Documentation
-            </span>
-          </a>
-          <a
-            href={originURL + "/public/2/collection/" + collections()?.text_id}
-            target="_blank"
-            class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
-          >
-            <div class="w-6 h-6">
-              <Link />
-            </div>
-            <span class="flex-1 ms-3 whitespace-nowrap">
-              Public Documentation
-            </span>
-          </a>
+            <a
+              href={`${originURL}/embed-code/index.html?collection_id=${collections()?.id}`}
+              target="_blank"
+              class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+            >
+              <div class="w-6 h-6">
+                <Code />
+              </div>
+              <span class="flex-1 ms-3 whitespace-nowrap">
+                Embedded Documentation
+              </span>
+            </a>
+            <a
+              href={
+                originURL + "/public/2/collection/" + collections()?.text_id
+              }
+              target="_blank"
+              class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+            >
+              <div class="w-6 h-6">
+                <Link />
+              </div>
+              <span class="flex-1 ms-3 whitespace-nowrap">
+                Public Documentation
+              </span>
+            </a>
+          </Show>
           <a
             href={originURL + "/blog/collection"}
             target="_blank"

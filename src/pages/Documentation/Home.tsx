@@ -1,25 +1,6 @@
-import { createResource } from "solid-js";
 import { Component } from "solid-js";
-import CalloutJoin from "~/components/bare/common/CalloutJoin";
-
-const fetch_collections = async () => {
-  try {
-    const res = await fetch(
-      "https://orange-gas-strapi.fly.dev/api/collections/" + 18,
-    );
-    if (!res.ok) {
-      throw new Error("Failed to fetch collections");
-    }
-    return await res.json();
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
-};
 
 const DHome: Component = () => {
-  const [collections, { refetch }] = createResource(fetch_collections);
-
   return (
     <div class="w-full  p-6 flex gap-3 flex-col">
       <div class="text-xl font-semibold">Documentation</div>

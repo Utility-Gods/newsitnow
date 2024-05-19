@@ -16,6 +16,7 @@ import {
   fetch_blogs_collections,
   fetch_documentation_collections,
 } from "@lib/service/collection";
+import { Skeleton } from "~/components/ui/skeleton";
 
 const originURL = import.meta.env.VITE_ORIGIN;
 
@@ -119,7 +120,15 @@ const SideBar: Component = () => {
                   <span class="flex-1 ms-3 whitespace-nowrap">Collections</span>
                 </A>
                 <ul class="pl-3">
-                  <Show when={collections()}>
+                  <Show
+                    when={collections()}
+                    fallback={
+                      <div class="flex gap-5 pt-1 flex-col p-3">
+                        <Skeleton height={24} radius={6} />
+                        <Skeleton height={24} radius={6} />
+                      </div>
+                    }
+                  >
                     <For
                       each={collections().articles}
                       fallback={<PageSkeleton />}
@@ -194,32 +203,42 @@ const SideBar: Component = () => {
             </ul>
           </div>
           <div>
-            <a
-              href={`${originURL}/embed-code/index.html?collection_id=${collections()?.id}`}
-              target="_blank"
-              class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
-            >
-              <div class="w-6 h-6">
-                <Code />
-              </div>
-              <span class="flex-1 ms-3 whitespace-nowrap">
-                Embedded Documentation
-              </span>
-            </a>
-            <a
-              href={
-                originURL + "/public/2/collection/" + collections()?.text_id
+            <Show
+              when={!collections.loading}
+              fallback={
+                <div class="flex gap-5 pt-1 flex-col p-3">
+                  <Skeleton height={24} radius={6} />
+                  <Skeleton height={24} radius={6} />
+                </div>
               }
-              target="_blank"
-              class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
             >
-              <div class="w-6 h-6">
-                <Link />
-              </div>
-              <span class="flex-1 ms-3 whitespace-nowrap">
-                Public Documentation
-              </span>
-            </a>
+              <a
+                href={`${originURL}/embed-code/index.html?collection_id=${collections()?.id}`}
+                target="_blank"
+                class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+              >
+                <div class="w-6 h-6">
+                  <Code />
+                </div>
+                <span class="flex-1 ms-3 whitespace-nowrap">
+                  Embedded Documentation
+                </span>
+              </a>
+              <a
+                href={
+                  originURL + "/public/2/collection/" + collections()?.text_id
+                }
+                target="_blank"
+                class={`truncate flex items-center p-3  hover:bg-secondary hover:text-secondary-foreground  text-secondary  group `}
+              >
+                <div class="w-6 h-6">
+                  <Link />
+                </div>
+                <span class="flex-1 ms-3 whitespace-nowrap">
+                  Public Documentation
+                </span>
+              </a>
+            </Show>
           </div>
         </div>
       </aside>
