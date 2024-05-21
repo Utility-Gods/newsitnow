@@ -66,7 +66,7 @@ const SelectItem: Component<SelectPrimitive.SelectItemProps> = (props) => {
   return (
     <SelectPrimitive.Item
       class={cn(
-        "relative mt-0 flex text-base w-full cursor-default select-none items-center rounded-sm py-3 pl-8 pr-2  outline-none focus:bg-secondary focus:text-secondary-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative mt-0 flex text-base w-full cursor-default select-none items-center rounded-sm py-3 pl-8 pr-2  outline-none focus:bg-muted focus:text-muted-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         props.class,
       )}
       {...rest}

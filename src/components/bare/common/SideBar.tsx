@@ -30,6 +30,8 @@ import { Separator } from "~/components/ui/separator";
 import Book from "@lib/icons/Book";
 import News from "@lib/icons/News";
 import Forms from "@lib/icons/Forms";
+import Plus from "@lib/icons/Plus";
+import { Button } from "~/components/ui/button";
 
 const originURL = import.meta.env.VITE_ORIGIN;
 
@@ -127,11 +129,21 @@ const SideBar: Component = () => {
                 }
               >
                 <Show when={orgList()?.isOk()}>
-                  <div class="mb-2 flex items-center gap-2">
-                    <div class="w-5 h-5">
-                      <Org />
+                  <div class="flex items-center justify-between py-3">
+                    <div class="mb-2 flex items-center gap-2">
+                      <div class="w-5 h-5">
+                        <Org />
+                      </div>
+                      Organization
                     </div>
-                    Organization
+                    <Button
+                      onClick={() => {
+                        navigate(`/app/${org_id()}/organization`);
+                      }}
+                      size="sm"
+                    >
+                      Add
+                    </Button>
                   </div>
                   <Select
                     disallowEmptySelection={true}
@@ -158,9 +170,11 @@ const SideBar: Component = () => {
                       </div>
                     }
                     itemComponent={(props) => (
-                      <SelectItem item={props.item}>
-                        {props.item.rawValue.label}
-                      </SelectItem>
+                      <>
+                        <SelectItem item={props.item}>
+                          {props.item.rawValue.label}
+                        </SelectItem>
+                      </>
                     )}
                   >
                     <SelectTrigger aria-label="Organization">
