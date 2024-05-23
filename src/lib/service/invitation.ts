@@ -3,6 +3,7 @@ import { err, ok } from "neverthrow";
 
 // Assuming BASE_URL is the environment variable containing your API URL.
 const BASE_URL = import.meta.env.VITE_STRAPI_URL as string;
+import qs from "qs";
 
 export const invite_user = async (data: any) => {
   try {
@@ -31,6 +32,35 @@ export const invite_user = async (data: any) => {
     return ok(result);
   } catch (e) {
     console.log(e);
+    return err(e);
+  }
+};
+
+export const fetch_invitation_by_id = async (invitation_id: number) => {
+  try {
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const query = qs;
+
+    const response = await fetch(`${BASE_URL}/api/invitations?${query}`, {
+      headers: reqHeaders,
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch invitation error:", error);
+      throw error.error;
+    }
+
+    const result = await response.json();
+
+    return ok(result);
+  } catch (e) {
+    console.log(e, "====");
     return err(e);
   }
 };

@@ -1,8 +1,6 @@
 import * as v from "valibot";
 
-import * as v from "valibot";
-
-export const RegisterSchema = v.object(
+export const InvitationJoinSchema = v.object(
   {
     email: v.string([
       v.minLength(1, "Please enter your email."),
@@ -23,5 +21,4 @@ export const RegisterSchema = v.object(
     ),
   ],
 );
-
-export type RegisterForm = v.Input<typeof RegisterSchema>;
+export type InvitationJoinForm = v.Input<typeof InvitationJoinSchema>;

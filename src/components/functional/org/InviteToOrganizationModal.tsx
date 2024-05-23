@@ -1,11 +1,4 @@
-import {
-  Component,
-  createSignal,
-  mergeProps,
-  onMount,
-  onCleanup,
-  Show,
-} from "solid-js";
+import { Component, createSignal, mergeProps, Show } from "solid-js";
 import { createForm, SubmitHandler, valiForm } from "@modular-forms/solid";
 import { showToast } from "~/components/ui/toast";
 
@@ -29,6 +22,8 @@ import { get_first_org_id, get_user_id } from "@lib/utils";
 import { useParams } from "@solidjs/router";
 import ChangeOrg from "./ChangeOrg";
 import { Organization } from "@lib/types/Organization";
+import Email from "@lib/icons/Email";
+import Lock from "@lib/icons/Lock";
 
 type InviteToOrganizationModalProps = {
   open: boolean;
@@ -123,8 +118,11 @@ export const InviteToOrganizationModal: Component<
             </div>
             <div class="grid gap-4 py-4">
               <div class="grid grid-cols-4 items-center gap-4">
-                <Label for="name" class="text-right">
-                  Email
+                <Label for="name" class="flex items-center gap-2">
+                  <div class="w-6 h-6">
+                    <Email />
+                  </div>
+                  <span>Email</span>
                 </Label>
                 <Field name="email">
                   {(field, props) => (
@@ -143,6 +141,18 @@ export const InviteToOrganizationModal: Component<
                     </div>
                   )}
                 </Field>
+              </div>
+              <div class="grid grid-cols-4 items-center gap-4">
+                <Label for="name" class="flex items-center gap-2">
+                  <div class="w-6 h-6">
+                    <Lock />
+                  </div>
+                  <span>Role</span>
+                </Label>
+
+                <div class="flex flex-col col-span-3 gap-1">
+                  <Input id="email" required disabled value="Collaborator" />
+                </div>
               </div>
             </div>
             <DialogFooter>

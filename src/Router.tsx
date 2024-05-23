@@ -39,6 +39,7 @@ import { MetaProvider, Title } from "@solidjs/meta";
 import { Suspense } from "solid-js";
 
 import PageSpinner from "~/components/bare/common/PageSpinner";
+import Invitation from "./components/functional/auth/Invitation";
 
 const RouterComponent = () => (
   <>
@@ -84,6 +85,7 @@ const RouterComponent = () => (
       <Route path="/auth">
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/invitation" component={Invitation} />
       </Route>
       <Route path="/public/:user_id" component={Public}>
         <Route path="" component={PublicHome} />
