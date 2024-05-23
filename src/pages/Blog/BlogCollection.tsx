@@ -1,12 +1,8 @@
-import News from "@lib/icons/News";
 import { A } from "@solidjs/router";
-import { Component, createEffect, createResource, Show } from "solid-js";
-import CalloutJoin from "~/components/bare/common/CalloutJoin";
+import { For, Component, createEffect, createResource, Show } from "solid-js";
 
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
-import { Button } from "~/components/ui/button";
-import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 
 async function fetch_collections() {
   try {
@@ -112,7 +108,6 @@ const BlogCollection: Component = () => {
           </Show>
         </Show>
       </Show>
-      <CalloutJoin />
     </div>
   );
 };
