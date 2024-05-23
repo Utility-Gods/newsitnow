@@ -2,7 +2,7 @@ import { fetch_articles } from "@lib/service/article";
 import { get_first_org_id } from "@lib/utils";
 import { useNavigate, useParams } from "@solidjs/router";
 
-import { Component, Show, createResource } from "solid-js";
+import { Component, createResource } from "solid-js";
 import ArticleList from "~/components/functional/article/ArticleList";
 import { Button } from "~/components/ui/button";
 

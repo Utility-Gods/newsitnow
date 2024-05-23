@@ -27,8 +27,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { get_first_org_id } from "@lib/utils";
 import ThreeDots from "@lib/icons/ThreeDots";
-import Link from "@lib/icons/link";
-import Edit from "@lib/icons/Edit";
+
 import Hidden from "@lib/icons/Hidden";
 import Trash from "@lib/icons/Trash";
 
