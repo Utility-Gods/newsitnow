@@ -34,7 +34,8 @@ import Settings from "@pages/Settings";
 import PublicLayout from "@pages/Public";
 import TermsPage from "@pages/Public/Terms";
 import PrivacyPage from "@pages/Public/Privacy";
-import Forms from "./pages/Forms";
+import Forms from "@pages/Forms";
+import Invitation from "@components/functional/auth/Invitation";
 
 const RouterComponent = () => (
   <>
