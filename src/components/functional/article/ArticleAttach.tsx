@@ -109,57 +109,58 @@ function ArticleAttach(props: ArticleAttachProps) {
             <Show when={articleList()?.value.length === 0}>
               <div class="text-center">No articles found</div>
             </Show>
-
-            {/* show a list of articles with check mark to check and select */}
-            <For each={articleList()?.value}>
-              {(article, index) => (
-                <div class="flex items-center gap-3 p-3 bg-muted justify-between">
-                  <div class="flex items center gap-3">
-                    <Checkbox
-                      checked={attachedArticlesIdList()?.includes(article.id)}
-                      id={`article_attach_label_${index()}`}
-                      onChange={(checked) => {
-                        if (checked) {
-                          setAttachedArticlesIdList([
-                            ...attachedArticlesIdList(),
-                            article.id,
-                          ]);
-                        } else {
-                          setAttachedArticlesIdList(
-                            attachedArticlesIdList().filter(
-                              (id) => id !== article.id,
-                            ),
-                          );
-                        }
-                      }}
-                    />
-                    <Label for={`article_attach_label_${index()}`}>
-                      <div class="text-primary-foreground font-bold text-md w-[220px] truncate">
-                        {article.name}
+            <div class="max-h-[420px] overflow-auto flex flex-col gap-2">
+              {/* show a list of articles with check mark to check and select */}
+              <For each={articleList()?.value}>
+                {(article, index) => (
+                  <div class="flex items-center gap-3 p-3 bg-muted justify-between">
+                    <div class="flex items center gap-3">
+                      <Checkbox
+                        checked={attachedArticlesIdList()?.includes(article.id)}
+                        id={`article_attach_label_${index()}`}
+                        onChange={(checked) => {
+                          if (checked) {
+                            setAttachedArticlesIdList([
+                              ...attachedArticlesIdList(),
+                              article.id,
+                            ]);
+                          } else {
+                            setAttachedArticlesIdList(
+                              attachedArticlesIdList().filter(
+                                (id) => id !== article.id,
+                              ),
+                            );
+                          }
+                        }}
+                      />
+                      <Label for={`article_attach_label_${index()}`}>
+                        <div class="text-primary-foreground font-bold text-md w-[220px] truncate">
+                          {article.name}
+                        </div>
+                      </Label>
+                    </div>
+                    <div class="flex items center gap-3 text-muted-foreground text-sm">
+                      <div class="flex gap-2 items-center">
+                        <div class="">
+                          {new Date(article.createdAt).toLocaleDateString()}
+                        </div>
                       </div>
-                    </Label>
-                  </div>
-                  <div class="flex items center gap-3 text-muted-foreground text-sm">
-                    <div class="flex gap-2 items-center">
-                      <div class="">
-                        {new Date(article.createdAt).toLocaleDateString()}
+                      <div class="flex gap-2 items-center">
+                        <BadgeDelta
+                          deltaType={
+                            article.status === "Published"
+                              ? "increase"
+                              : "decrease"
+                          }
+                        >
+                          {article.status}
+                        </BadgeDelta>
                       </div>
                     </div>
-                    <div class="flex gap-2 items-center">
-                      <BadgeDelta
-                        deltaType={
-                          article.status === "Published"
-                            ? "increase"
-                            : "decrease"
-                        }
-                      >
-                        {article.status}
-                      </BadgeDelta>
-                    </div>
                   </div>
-                </div>
-              )}
-            </For>
+                )}
+              </For>
+            </div>
           </Show>
           <DialogFooter>
             <Button

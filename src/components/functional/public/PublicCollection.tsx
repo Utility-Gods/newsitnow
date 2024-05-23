@@ -1,11 +1,4 @@
-import {
-  type Component,
-  createEffect,
-  createResource,
-  createSignal,
-  Show,
-} from "solid-js";
-import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
+import { type Component, createResource, createSignal, Show } from "solid-js";
 
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { For } from "solid-js";
@@ -52,21 +45,17 @@ async function fetch_collections(collectionId: string, includeDrafts: boolean) {
     console.log(result);
 
     return ok(result);
-  } catch (err) {
-    console.log(err);
-    return [];
+  } catch (e) {
+    console.log(e);
+    return err(e);
   }
 }
 
 const PublicCollection: Component = (props) => {
   const userId = props.params.user_id;
   const collectionId = props.params.id;
-  const [urlParams, setParams] = useSearchParams();
+  const [urlParams] = useSearchParams();
   const includeDrafts = () => urlParams.includeDrafts === "true";
-
-  createEffect(() => {
-    console.log("PublicCollection", userId, collectionId, includeDrafts());
-  });
 
   const [collection] = createResource(collectionId, () =>
     fetch_collections(collectionId, includeDrafts()),
@@ -77,7 +66,10 @@ const PublicCollection: Component = (props) => {
   const collection_details = () => collection()?.value;
 
   return (
-    <Show when={collection()} fallback={<PageSkeleton />}>
+    <Show
+      when={collection() && !collection.loading}
+      fallback={<PageSkeleton />}
+    >
       <div class="flex flex-col flex-1 flex-grow p-3 w-full  sm:w-[69%] m-auto ">
         <CalloutJoin />
         <Show when={collection()?.isErr()}>

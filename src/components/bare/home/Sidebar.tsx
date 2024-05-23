@@ -92,7 +92,6 @@ const SideBar: Component = () => {
           ${isMobile() ? "fixed bg-primary-900" : ""}
           ${isMobileAndSidebarVisible() ? "transform: translate-x-0" : ""}`}
         aria-label="Sidebar"
-        style={``}
       >
         <div class=" pb-4 overflow-y-auto  h-full flex flex-col gap-6 bg-white">
           <div class=" flex-col gap-3">

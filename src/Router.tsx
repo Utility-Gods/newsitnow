@@ -35,21 +35,10 @@ import PublicLayout from "@pages/Public";
 import TermsPage from "@pages/Public/Terms";
 import PrivacyPage from "@pages/Public/Privacy";
 import Forms from "./pages/Forms";
-import { MetaProvider, Title } from "@solidjs/meta";
-import { Suspense } from "solid-js";
-
-import PageSpinner from "~/components/bare/common/PageSpinner";
-import Invitation from "./components/functional/auth/Invitation";
 
 const RouterComponent = () => (
   <>
-    <Router
-      root={(props) => (
-        <MetaProvider>
-          <Suspense fallback={<PageSpinner />}>{props.children}</Suspense>
-        </MetaProvider>
-      )}
-    >
+    <Router>
       <Route
         path="*"
         component={() => <div>404 - looks like you're lost</div>}
