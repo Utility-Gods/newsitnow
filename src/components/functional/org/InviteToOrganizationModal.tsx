@@ -51,15 +51,14 @@ export const InviteToOrganizationModal: Component<
   ) => {
     setLoading(true);
 
+    console.log({ values });
+
     event.preventDefault();
     try {
       const result = await invite_user({
         ...values,
         organization: selectedOrg(),
         invited_by: get_user_id(),
-        expiry_date: new Date(
-          Date.now() + 7 * 24 * 60 * 60 * 1000,
-        ).toISOString(),
       });
 
       console.log("submitting", result);
