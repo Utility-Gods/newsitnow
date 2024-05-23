@@ -109,7 +109,7 @@ function ArticleAttach(props: ArticleAttachProps) {
             <Show when={articleList()?.value.length === 0}>
               <div class="text-center">No articles found</div>
             </Show>
-            <div class="max-h-[420px] overflow-auto">
+            <div class="max-h-[420px] overflow-auto flex flex-col gap-2">
               {/* show a list of articles with check mark to check and select */}
               <For each={articleList()?.value}>
                 {(article, index) => (
