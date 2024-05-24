@@ -75,7 +75,7 @@ const RouterComponent = () => (
       <Route path="/auth">
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/invitation" component={Invitation} />
+        <Route path="/verify-invitation/:id" component={Invitation} />
       </Route>
       <Route path="/public/:user_id" component={Public}>
         <Route path="" component={PublicHome} />
