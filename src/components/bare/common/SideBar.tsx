@@ -139,14 +139,14 @@ const SideBar: Component = () => {
                       </div>
                       Organization
                     </div>
-                    <Button
+                    {/* <Button
                       onClick={() => {
                         navigate(`/app/${org_id()}/organization`);
                       }}
                       size="sm"
                     >
                       Add
-                    </Button>
+                    </Button> */}
                   </div>
                   <Select
                     disallowEmptySelection={true}
@@ -267,21 +267,8 @@ const SideBar: Component = () => {
                 </A>
               </li>
               <Separator />
-              <li>
-                <A
-                  href={`/app/${org_id()}/plan`}
-                  class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
-                    matchPath("/plan")
-                      ? "text-secondary-foreground bg-secondary"
-                      : "text-secondary"
-                  }`}
-                >
-                  <div class="w-5 h-5">
-                    <Plan />
-                  </div>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Plan</span>
-                </A>
-              </li>
+              <div class="p-3 text-md font-bold text-secondary">Settings</div>
+
               <li>
                 <A
                   href={`/app/${org_id()}/team`}
@@ -295,6 +282,21 @@ const SideBar: Component = () => {
                     <Team />
                   </div>
                   <span class="flex-1 ms-3 whitespace-nowrap">Team</span>
+                </A>
+              </li>
+              <li>
+                <A
+                  href={`/app/${org_id()}/plan`}
+                  class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/plan")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <div class="w-5 h-5">
+                    <Plan />
+                  </div>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Plan</span>
                 </A>
               </li>
             </ul>

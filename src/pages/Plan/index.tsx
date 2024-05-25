@@ -82,7 +82,7 @@ const Plan: Component = () => {
                       <ProgressCircle
                         value={
                           (100 * articleCount()?.value?.length) /
-                            user_plan_details().attributes.allowed_articles ?? 0
+                            user_plan_details().attributes.allowed_articles || 0
                         }
                       />
                       <div>

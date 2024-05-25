@@ -61,7 +61,6 @@ const AccountDropdown: Component = () => {
             Settings
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => {}}
             class="p-3 text-primary-foreground flex items-center gap-2 text-md"
             onClick={(e) => {
               e.stopPropagation();

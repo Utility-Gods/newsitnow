@@ -109,3 +109,23 @@ export const verify_invitation = async (data: any) => {
     return err(e);
   }
 };
+
+export const fetch_invitations = async (query) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/invitations?&${query}`, {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch invitation error:", error);
+      throw error.error;
+    }
+
+    const result = await response.json();
+
+    return ok(result);
+  } catch (e) {
+    return err(e);
+  }
+};
