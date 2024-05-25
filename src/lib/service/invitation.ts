@@ -1,9 +1,9 @@
 import { get_token } from "@lib/utils";
 import { err, ok } from "neverthrow";
+import qs from "qs";
 
 // Assuming BASE_URL is the environment variable containing your API URL.
 const BASE_URL = import.meta.env.VITE_STRAPI_URL as string;
-import qs from "qs";
 
 export const invite_user = async (data: any) => {
   try {
@@ -38,11 +38,6 @@ export const invite_user = async (data: any) => {
 
 export const fetch_invitation_by_id = async (invitation_id: number) => {
   try {
-    const token = get_token();
-
-    const reqHeaders = new Headers();
-    reqHeaders.append("Authorization", `Bearer ${token}`);
-
     const query = qs.stringify({
       populate: {
         invited_by: {
@@ -54,10 +49,12 @@ export const fetch_invitation_by_id = async (invitation_id: number) => {
       },
     });
 
-    const response = await fetch(`${BASE_URL}/api/invitations?${query}`, {
-      headers: reqHeaders,
-      method: "GET",
-    });
+    const response = await fetch(
+      `${BASE_URL}/api/invitations/${invitation_id}?${query}`,
+      {
+        method: "GET",
+      },
+    );
 
     if (!response.ok) {
       const error = await response.json();
@@ -78,17 +75,16 @@ export const verify_invitation = async (data: any) => {
   try {
     console.log("submitting verify invitation");
     if (data.password !== data.confirmPassword) {
-      return err("Passwords do not match");
+      return err({
+        message: "Passwords do not match",
+      });
     }
 
     if (!data.email) {
       return err("Email is required");
     }
 
-    const token = get_token();
-
     const reqHeaders = new Headers();
-    reqHeaders.append("Authorization", `Bearer ${token}`);
     reqHeaders.append("Content-Type", "application/json");
 
     const response = await fetch(`${BASE_URL}/api/invitations/verify`, {

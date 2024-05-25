@@ -59,6 +59,7 @@ export const CreateOrganizationModal: Component<
         showToast({
           variant: "success",
           title: "Organization created",
+          duration: 5000,
           description: "Organization has been created successfully",
         });
         merged.refetch();
@@ -73,6 +74,7 @@ export const CreateOrganizationModal: Component<
       console.log(e);
       showToast({
         variant: "error",
+        duration: 5000,
         title: e.message ?? "Failed to create organization",
         description:
           e.details.message ??

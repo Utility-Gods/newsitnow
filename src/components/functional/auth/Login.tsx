@@ -81,12 +81,15 @@ const Login: Component = () => {
         );
       }
       throw "No user found";
-    } catch (error) {
+    } catch (e) {
+      console.log({ e }, "-=--------");
       showToast({
         variant: "error",
-        title: "Error",
-        description: error as string,
+        title: e.message ?? "Failed to create organization",
         duration: 5000,
+        description:
+          e?.details.message ??
+          "An error occurred while creating the organization",
       });
     } finally {
       setLoading(false);

@@ -8,7 +8,7 @@ import {
   verify_invitation,
 } from "@lib/service/invitation";
 import { createForm, valiForm } from "@modular-forms/solid";
-import { A, useParams, useSearchParams } from "@solidjs/router";
+import { A, useNavigate, useParams, useSearchParams } from "@solidjs/router";
 import {
   Component,
   Show,
@@ -30,6 +30,8 @@ import { Label } from "~/components/ui/label";
 import { showToast } from "~/components/ui/toast";
 
 const Invitation: Component = () => {
+  const navigate = useNavigate();
+
   const [urlParams, _] = useSearchParams();
   const params = useParams();
 
@@ -44,7 +46,7 @@ const Invitation: Component = () => {
 
   const invitation_details = () => {
     if (invitation()?.isOk()) {
-      return invitation().value?.data[0]?.attributes;
+      return invitation().value?.data?.attributes;
     }
     return null;
   };
@@ -79,15 +81,42 @@ const Invitation: Component = () => {
 
       showToast({
         variant: "success",
-        title: "Registeration Successful",
-        description: "Please check your email to verify your account.",
+        title: "Account Created",
+        description: "Please check your organizations to access the content.",
       });
-    } catch (error) {
-      console.error(error);
+
+      if (result?.value) {
+        const user = result.value;
+        localStorage.setItem("user", JSON.stringify(user));
+
+        if (user.user.organizations.length === 0) {
+          return navigate("/", {
+            replace: true,
+          });
+        }
+
+        return navigate(
+          "/app/" +
+            user.user.organizations.sort((a, b) => {
+              return (
+                new Date(a.created_on).getTime() -
+                new Date(b.created_on).getTime()
+              );
+            })[0]?.id,
+          {
+            replace: true,
+          },
+        );
+      }
+    } catch (e) {
+      console.log({ e }, "-=--------");
       showToast({
         variant: "error",
-        title: "Error",
-        description: error as string,
+        title: e.message ?? "Failed to create organization",
+        duration: 5000,
+        description:
+          e?.details?.message ??
+          "An error occurred while creating the organization",
       });
     } finally {
       setLoading(false);
