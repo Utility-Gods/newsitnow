@@ -1,7 +1,4 @@
-import {
-  delete_organization,
-  update_organization,
-} from "@lib/service/organization";
+import { delete_organization } from "@lib/service/organization";
 import {
   Component,
   createEffect,
@@ -30,7 +27,7 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
-import { A, useNavigate } from "@solidjs/router";
+import { useNavigate } from "@solidjs/router";
 import TableRowSkeleton from "@components/bare/common/TableRowSkeleton";
 import ThreeDots from "@lib/icons/ThreeDots";
 import Link from "@lib/icons/link";

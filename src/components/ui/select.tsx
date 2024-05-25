@@ -16,7 +16,7 @@ const SelectTrigger: Component<SelectPrimitive.SelectTriggerProps> = (
   return (
     <SelectPrimitive.Trigger
       class={cn(
-        "flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-10 w-full items-center justify-between rounded-md border border-border bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         props.class,
       )}
       {...rest}
@@ -66,7 +66,7 @@ const SelectItem: Component<SelectPrimitive.SelectItemProps> = (props) => {
   return (
     <SelectPrimitive.Item
       class={cn(
-        "relative mt-0 flex text-base w-full cursor-default select-none items-center rounded-sm py-3 pl-8 pr-2  outline-none focus:bg-secondary focus:text-secondary-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative mt-0 flex text-base w-full cursor-default select-none items-center rounded-sm py-3 pl-8 pr-2  outline-none focus:bg-muted focus:text-muted-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         props.class,
       )}
       {...rest}

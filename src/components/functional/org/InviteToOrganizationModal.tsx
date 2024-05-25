@@ -12,45 +12,53 @@ import {
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Textarea } from "~/components/ui/textarea";
-import {
-  CreateOrganizationForm,
-  CreateOrganizationSchema,
-} from "@lib/schema/forms/create_organization";
-import { save_organization } from "@lib/service/organization";
 
-type CreateOrganizationModalProps = {
+import {
+  InviteToOrgForm,
+  InviteToOrgSchema,
+} from "@lib/schema/forms/invite_to_org";
+import { invite_user } from "@lib/service/invitation";
+import { get_first_org_id, get_user_id } from "@lib/utils";
+import { useParams } from "@solidjs/router";
+import ChangeOrg from "./ChangeOrg";
+import { Organization } from "@lib/types/Organization";
+import Email from "@lib/icons/Email";
+import Lock from "@lib/icons/Lock";
+
+type InviteToOrganizationModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   refetch: () => void;
 };
-export const CreateOrganizationModal: Component<
-  CreateOrganizationModalProps
+export const InviteToOrganizationModal: Component<
+  InviteToOrganizationModalProps
 > = (props) => {
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
+  const params = useParams();
+  const org_id = () => params.org_id ?? get_first_org_id();
 
-  const [, { Form, Field, FieldArray }] = createForm<CreateOrganizationForm>({
-    validate: valiForm(CreateOrganizationSchema),
+  const [selectedOrg, setSelectedOrg] = createSignal<number>(Number(org_id()));
+
+  const [, { Form, Field }] = createForm<InviteToOrgForm>({
+    validate: valiForm(InviteToOrgSchema),
   });
-
-  const formValues = {
-    name: "",
-    description: "",
-  };
 
   const [loading, setLoading] = createSignal(false);
 
-  const handleSubmit: SubmitHandler<CreateOrganizationForm> = async (
+  const handleSubmit: SubmitHandler<InviteToOrgForm> = async (
     values,
     event,
   ) => {
     setLoading(true);
 
+    console.log({ values });
+
     event.preventDefault();
     try {
-      const result = await save_organization({
+      const result = await invite_user({
         ...values,
-        status: "Draft",
+        organization: selectedOrg(),
+        invited_by: get_user_id(),
       });
 
       console.log("submitting", result);
@@ -58,11 +66,11 @@ export const CreateOrganizationModal: Component<
       if (result?.isOk()) {
         showToast({
           variant: "success",
-          title: "Organization created",
-          duration: 5000,
-          description: "Organization has been created successfully",
+          title: "Invitation created successfully",
+          description:
+            "An invitation mail is on the way, once accepted the user will be added to the organization.",
         });
-        merged.refetch();
+        merged.onOpenChange(false);
       }
 
       if (result?.isErr()) {
@@ -74,11 +82,10 @@ export const CreateOrganizationModal: Component<
       console.log(e);
       showToast({
         variant: "error",
-        duration: 5000,
-        title: e.message ?? "Failed to create organization",
+        title: e?.message ?? "Failed to create invitation",
         description:
-          e.details.message ??
-          "An error occurred while creating the organization",
+          e?.details?.message ??
+          "An error occurred while creating the invitation",
       });
     } finally {
       setLoading(false);
@@ -92,23 +99,36 @@ export const CreateOrganizationModal: Component<
           <Form onSubmit={handleSubmit}>
             <DialogHeader>
               <div class="text-lg font-semibold leading-none tracking-tight text-primary">
-                Create Organization
+                Invite User
               </div>
               <div class="text-sm text-muted-foreground">
-                Create a new organization and press save when you're done.
+                Enter the email address of the user you want to invite to the
+                organization and press invite.
               </div>
             </DialogHeader>
+            <div class="flex flex-row gap-3">
+              <ChangeOrg
+                onChange={(o: Organization) => {
+                  console.log(o);
+                  setSelectedOrg(o.id);
+                  console.log(selectedOrg());
+                }}
+              />
+            </div>
             <div class="grid gap-4 py-4">
               <div class="grid grid-cols-4 items-center gap-4">
-                <Label for="name" class="text-right">
-                  Name
+                <Label for="name" class="flex items-center gap-2">
+                  <div class="w-6 h-6">
+                    <Email />
+                  </div>
+                  <span>Email</span>
                 </Label>
-                <Field name="name">
+                <Field name="email">
                   {(field, props) => (
                     <div class="flex flex-col col-span-3 gap-1">
                       <Input
                         {...props}
-                        id="name"
+                        id="email"
                         area-invalid={field.error ? "true" : "false"}
                         required
                       />
@@ -122,17 +142,16 @@ export const CreateOrganizationModal: Component<
                 </Field>
               </div>
               <div class="grid grid-cols-4 items-center gap-4">
-                <Label for="description" class="text-right">
-                  Description
+                <Label for="name" class="flex items-center gap-2">
+                  <div class="w-6 h-6">
+                    <Lock />
+                  </div>
+                  <span>Role</span>
                 </Label>
-                <Field name="description">
-                  {(field, props) => (
-                    <div class="flex flex-col col-span-3 gap-1">
-                      <Textarea {...props} id="description" rows="3" required />
-                      <span class="text-secondary text-sm">{field.error}</span>
-                    </div>
-                  )}
-                </Field>
+
+                <div class="flex flex-col col-span-3 gap-1">
+                  <Input id="email" required disabled value="Collaborator" />
+                </div>
               </div>
             </div>
             <DialogFooter>
@@ -143,7 +162,7 @@ export const CreateOrganizationModal: Component<
               >
                 Close
               </Button>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">Invite</Button>
             </DialogFooter>
           </Form>
         </DialogContent>

@@ -34,7 +34,9 @@ import Settings from "@pages/Settings";
 import PublicLayout from "@pages/Public";
 import TermsPage from "@pages/Public/Terms";
 import PrivacyPage from "@pages/Public/Privacy";
-import Forms from "./pages/Forms";
+import Forms from "@pages/Forms";
+import Invitation from "@components/functional/auth/Invitation";
+import Team from "./pages/Team";
 
 const RouterComponent = () => (
   <>
@@ -66,6 +68,7 @@ const RouterComponent = () => (
         <Route path="/collection/:id/share" component={CollectionShare} />
         <Route path="/article/create" component={ArticleCreate} />
         <Route path="/plan" component={Plan} />
+        <Route path="/team" component={Team} />
         <Route path="/media" component={Media} />
         <Route path="/organization" component={Organization} />
         <Route path="/settings" component={Settings} />
@@ -74,6 +77,7 @@ const RouterComponent = () => (
       <Route path="/auth">
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/verify-invitation/:id" component={Invitation} />
       </Route>
       <Route path="/public/:user_id" component={Public}>
         <Route path="" component={PublicHome} />

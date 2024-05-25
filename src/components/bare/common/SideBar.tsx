@@ -1,7 +1,7 @@
 import Collection from "@lib/icons/Collection";
 import Article from "@lib/icons/Article";
 import { fetch_organizations } from "@lib/service/organization";
-import { check_if_mobile, get_org_by_id } from "@lib/utils";
+import { check_if_mobile } from "@lib/utils";
 import {
   A,
   useLocation,
@@ -20,7 +20,6 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { Skeleton } from "~/components/ui/skeleton";
-import Photo from "@lib/icons/Photo";
 import { Organization } from "@lib/types/Organization";
 import Org from "@lib/icons/Org";
 import Menu from "@lib/icons/Menu";
@@ -29,9 +28,13 @@ import Code from "@lib/icons/code";
 import { fetch_documentation_collections } from "@lib/service/collection";
 import { Separator } from "~/components/ui/separator";
 import Book from "@lib/icons/Book";
-import Preview from "@lib/icons/Preview";
 import News from "@lib/icons/News";
 import Forms from "@lib/icons/Forms";
+
+import Plan from "@lib/icons/Plan";
+
+import { Button } from "~/components/ui/button";
+import Team from "@lib/icons/Team";
 
 const originURL = import.meta.env.VITE_ORIGIN;
 
@@ -117,7 +120,7 @@ const SideBar: Component = () => {
         aria-label="Sidebar"
       >
         <div class=" pb-4 overflow-y-auto bg-primary-900/10">
-          <div class="flex flex-col gap-6">
+          <div class="flex flex-col">
             <div class="p-3 text-md font-bold text-secondary">
               <Show
                 when={!orgList.loading}
@@ -129,13 +132,24 @@ const SideBar: Component = () => {
                 }
               >
                 <Show when={orgList()?.isOk()}>
-                  <div class="mb-2 flex items-center gap-2">
-                    <div class="w-5 h-5">
-                      <Org />
+                  <div class="flex items-center justify-between py-3">
+                    <div class="mb-2 flex items-center gap-2">
+                      <div class="w-5 h-5">
+                        <Org />
+                      </div>
+                      Organization
                     </div>
-                    Organization
+                    {/* <Button
+                      onClick={() => {
+                        navigate(`/app/${org_id()}/organization`);
+                      }}
+                      size="sm"
+                    >
+                      Add
+                    </Button> */}
                   </div>
                   <Select
+                    disallowEmptySelection={true}
                     modal={true}
                     optionValue="value"
                     optionTextValue="label"
@@ -159,9 +173,11 @@ const SideBar: Component = () => {
                       </div>
                     }
                     itemComponent={(props) => (
-                      <SelectItem item={props.item}>
-                        {props.item.rawValue.label}
-                      </SelectItem>
+                      <>
+                        <SelectItem item={props.item}>
+                          {props.item.rawValue.label}
+                        </SelectItem>
+                      </>
                     )}
                   >
                     <SelectTrigger aria-label="Organization">
@@ -248,6 +264,39 @@ const SideBar: Component = () => {
                     <Forms />
                   </div>
                   <span class="flex-1 ms-3 whitespace-nowrap">Forms</span>
+                </A>
+              </li>
+              <Separator />
+              <div class="p-3 text-md font-bold text-secondary">Settings</div>
+
+              <li>
+                <A
+                  href={`/app/${org_id()}/team`}
+                  class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/team")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <div class="w-5 h-5">
+                    <Team />
+                  </div>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Team</span>
+                </A>
+              </li>
+              <li>
+                <A
+                  href={`/app/${org_id()}/plan`}
+                  class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/plan")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <div class="w-5 h-5">
+                    <Plan />
+                  </div>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Plan</span>
                 </A>
               </li>
             </ul>
