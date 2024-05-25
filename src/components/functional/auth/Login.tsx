@@ -48,7 +48,7 @@ const Login: Component = () => {
       const result = await user_login(values.email, values.password);
 
       if (result.isErr()) {
-        console.log(result.error);
+        console.log(result.error, "----------");
         throw result.error;
       }
       showToast({
@@ -80,16 +80,14 @@ const Login: Component = () => {
           },
         );
       }
-      throw "No user found";
     } catch (e) {
       console.log({ e }, "-=--------");
       showToast({
         variant: "error",
-        title: e.message ?? "Failed to create organization",
+        title: e.message ?? "Failed to login",
         duration: 5000,
         description:
-          e?.details.message ??
-          "An error occurred while creating the organization",
+          e?.details?.message ?? "An error occurred while signing in",
       });
     } finally {
       setLoading(false);

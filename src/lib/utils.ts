@@ -39,6 +39,15 @@ export function get_user_id(): number | null {
   return user.id;
 }
 
+export function get_user_email(): string | number {
+  const user = get_user();
+
+  if (!user) {
+    return null;
+  }
+  return user.email;
+}
+
 export function is_logged_in(): boolean {
   const user = get_user();
 

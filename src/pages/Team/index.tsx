@@ -9,7 +9,7 @@ import {
 } from "~/components/ui/table";
 
 import { useParams } from "@solidjs/router";
-import { Component, createEffect, createResource, For } from "solid-js";
+import { Component, createResource, For } from "solid-js";
 import qs from "qs";
 import { Show } from "solid-js";
 
@@ -21,7 +21,7 @@ const [openInviteModal, setOpenInviteModal] = createSignal(false);
 import { InviteToOrganizationModal } from "~/components/functional/org/InviteToOrganizationModal";
 import { createSignal } from "solid-js";
 import { fetch_invitations } from "@lib/service/invitation";
-import { Separator } from "~/components/ui/separator";
+
 const Team: Component = () => {
   const params = useParams();
   const org_id = () => Number(params.org_id);
@@ -46,7 +46,7 @@ const Team: Component = () => {
 
   const invitation_query = () =>
     qs.stringify({
-      filter: {
+      filters: {
         organization: {
           id: org_id(),
         },
@@ -54,6 +54,9 @@ const Team: Component = () => {
       populate: {
         invited_by: {
           fields: ["id", "email", "username"],
+        },
+        organization: {
+          fields: ["id", "name"],
         },
       },
       pagination: {

@@ -58,12 +58,11 @@ const user_login = async (email: string, password: string) => {
     if (!res.ok) {
       console.log("not ok");
       const error = await res.json();
-      console.log(error.error.message);
-      return err(error.error.message);
+      console.log(error.error);
+      return err(error.error);
     }
     const user = await res.json();
 
-    console.log({ user });
     if (user) {
       localStorage.setItem("token", user.jwt);
       localStorage.setItem("user", JSON.stringify(user.user));
@@ -71,7 +70,7 @@ const user_login = async (email: string, password: string) => {
     }
 
     if (user.error) {
-      return err(user.error.message);
+      return err(user.error);
     }
   } catch (e) {
     console.log(e);
