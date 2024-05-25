@@ -91,7 +91,7 @@ const update_organization = async (data: any) => {
   }
 };
 
-const fetch_organization_by_id = async (id: string) => {
+const fetch_organization_by_id = async ({ id, query }) => {
   if (!id) {
     return;
   }
@@ -99,13 +99,18 @@ const fetch_organization_by_id = async (id: string) => {
   try {
     const token = get_token();
 
+    console.log("fetching organization by id", id);
+
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(`${BASE_URL}/api/organizations/${id}`, {
-      headers: reqHeaders,
-      method: "GET",
-    });
+    const response = await fetch(
+      `${BASE_URL}/api/organizations/${id}?${query}`,
+      {
+        headers: reqHeaders,
+        method: "GET",
+      },
+    );
 
     if (!response.ok) {
       const error = await response.json();

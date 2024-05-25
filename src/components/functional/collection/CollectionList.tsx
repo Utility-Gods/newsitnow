@@ -25,7 +25,7 @@ import TableRowSkeleton from "@components/bare/common/TableRowSkeleton";
 import ThreeDots from "@lib/icons/ThreeDots";
 import Link from "@lib/icons/link";
 import Edit from "@lib/icons/Edit";
-import Share from "@lib/icons/share";
+
 import { Collection } from "@lib/types/Collection";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import Hidden from "@lib/icons/Hidden";

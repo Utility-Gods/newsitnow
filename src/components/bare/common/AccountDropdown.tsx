@@ -73,19 +73,6 @@ const AccountDropdown: Component = () => {
             </div>
             Organizations
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {}}
-            class="p-3 text-primary-foreground flex items-center gap-2 text-md"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/app/${org_id}/plan`);
-            }}
-          >
-            <div class="w-6 h-6">
-              <Plan />
-            </div>
-            Plan
-          </DropdownMenuItem>
 
           <DropdownMenuItem
             class="p-3 text-primary-foreground focus:bg-error-foreground focus:text-error flex items-center gap-2 text-md"

@@ -1,7 +1,7 @@
 import Collection from "@lib/icons/Collection";
 import Article from "@lib/icons/Article";
 import { fetch_organizations } from "@lib/service/organization";
-import { check_if_mobile, get_org_by_id } from "@lib/utils";
+import { check_if_mobile } from "@lib/utils";
 import {
   A,
   useLocation,
@@ -30,8 +30,11 @@ import { Separator } from "~/components/ui/separator";
 import Book from "@lib/icons/Book";
 import News from "@lib/icons/News";
 import Forms from "@lib/icons/Forms";
-import Plus from "@lib/icons/Plus";
+
+import Plan from "@lib/icons/Plan";
+
 import { Button } from "~/components/ui/button";
+import Team from "@lib/icons/Team";
 
 const originURL = import.meta.env.VITE_ORIGIN;
 
@@ -261,6 +264,37 @@ const SideBar: Component = () => {
                     <Forms />
                   </div>
                   <span class="flex-1 ms-3 whitespace-nowrap">Forms</span>
+                </A>
+              </li>
+              <Separator />
+              <li>
+                <A
+                  href={`/app/${org_id()}/plan`}
+                  class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/plan")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <div class="w-5 h-5">
+                    <Plan />
+                  </div>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Plan</span>
+                </A>
+              </li>
+              <li>
+                <A
+                  href={`/app/${org_id()}/team`}
+                  class={` flex items-center p-3    hover:bg-secondary hover:text-secondary-foreground    group ${
+                    matchPath("/team")
+                      ? "text-secondary-foreground bg-secondary"
+                      : "text-secondary"
+                  }`}
+                >
+                  <div class="w-5 h-5">
+                    <Team />
+                  </div>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Team</span>
                 </A>
               </li>
             </ul>
