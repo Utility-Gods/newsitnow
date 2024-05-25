@@ -87,7 +87,8 @@ const Invitation: Component = () => {
 
       if (result?.value) {
         const user = result.value;
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("token", user.jwt);
+        localStorage.setItem("user", JSON.stringify(user.user));
 
         if (user.user.organizations.length === 0) {
           return navigate("/", {
