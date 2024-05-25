@@ -51,6 +51,11 @@ const Team: Component = () => {
           id: org_id(),
         },
       },
+      populate: {
+        invited_by: {
+          fields: ["id", "email", "username"],
+        },
+      },
       pagination: {
         pageSize: 100,
       },
@@ -161,8 +166,10 @@ const Team: Component = () => {
             <TableHeader>
               <TableRow>
                 <TableHead>Email</TableHead>
+                <TableHead>Invited By</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead class=" text-right">Created At</TableHead>
+                <TableHead class=" text-right">Invited At</TableHead>
+                <TableHead class=" text-right">Expiry Date</TableHead>
                 <TableHead class=" text-right"></TableHead>
               </TableRow>
             </TableHeader>
@@ -195,6 +202,11 @@ const Team: Component = () => {
                         <TableCell class="text-truncate">
                           <div class="allow-3-lines">{c.email}</div>
                         </TableCell>
+                        <TableCell class="text-truncate">
+                          <div class="allow-3-lines">
+                            {c.invited_by.data.attributes.email ?? "NA"}
+                          </div>
+                        </TableCell>
                         <TableCell>
                           <BadgeDelta
                             deltaType={
@@ -206,6 +218,10 @@ const Team: Component = () => {
                         </TableCell>
                         <TableCell class="text-right">
                           {new Date(c.createdAt).toLocaleDateString()}
+                        </TableCell>
+
+                        <TableCell class="text-right">
+                          {new Date(c.expiry_date).toLocaleDateString()}
                         </TableCell>
                       </TableRow>
                     )}
