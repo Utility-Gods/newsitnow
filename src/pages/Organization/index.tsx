@@ -1,4 +1,8 @@
-import { fetch_invitations } from "@lib/service/invitation";
+import {
+  accept_invitation,
+  fetch_invitations,
+  reject_invitation,
+} from "@lib/service/invitation";
 import { fetch_organizations } from "@lib/service/organization";
 import { get_user_email } from "@lib/utils";
 import { For, createSignal } from "solid-js";
@@ -18,6 +22,7 @@ import {
 } from "~/components/ui/table";
 import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
 import { BadgeDelta } from "~/components/ui/badge-delta";
+import { showToast } from "~/components/ui/toast";
 
 const Organization: Component = () => {
   const [orgList, { refetch }] = createResource(fetch_organizations);
@@ -51,9 +56,69 @@ const Organization: Component = () => {
     return invitations()?.value.data ?? [];
   };
 
-  async function acceptInvitation() {}
+  async function acceptInvitation(id: string) {
+    try {
+      console.log(invitation_details());
+      const data = {
+        invitation_id: id,
+      };
 
-  async function rejectInvitation() {}
+      console.log({ data });
+      const result = await accept_invitation(data);
+
+      if (result.isOk()) {
+        refetch_invitation();
+        showToast({
+          title: "Invitation Accepted",
+          variant: "success",
+          duration: 5000,
+        });
+      }
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+    } catch (e) {
+      console.log(e);
+      showToast({
+        title: "Error",
+        description: e.message,
+        variant: "error",
+        duration: 5000,
+      });
+    }
+  }
+
+  async function rejectInvitation(id: string) {
+    try {
+      const data = {
+        invitation_id: id,
+      };
+
+      const result = await reject_invitation(data);
+
+      if (result.isOk()) {
+        refetch_invitation();
+        showToast({
+          title: "Invitation Declined",
+          variant: "success",
+          duration: 5000,
+        });
+      }
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+    } catch {
+      console.log(e);
+      showToast({
+        title: "Error",
+        description: e.message,
+        variant: "error",
+        duration: 5000,
+      });
+    }
+  }
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
@@ -120,7 +185,7 @@ const Organization: Component = () => {
                     </TableRow>
                   </Show>
                   <For each={invitation_details()}>
-                    {({ attributes: c }) => (
+                    {({ id, attributes: c }) => (
                       <TableRow class="cursor-pointer">
                         <TableCell class="text-truncate">
                           <div class="allow-3-lines">{c.email}</div>
@@ -155,7 +220,7 @@ const Organization: Component = () => {
                           <Show when={c.status === "Pending"}>
                             <Button
                               onClick={() => {
-                                acceptInvitation();
+                                acceptInvitation(id);
                               }}
                             >
                               Accept
@@ -163,7 +228,7 @@ const Organization: Component = () => {
                             <Button
                               variant="destructive"
                               onClick={() => {
-                                rejectInvitation();
+                                rejectInvitation(id);
                               }}
                             >
                               Reject
