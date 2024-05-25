@@ -1,4 +1,3 @@
-import { MetaProvider } from "@solidjs/meta";
 import { useNavigate, useParams, useSearchParams } from "@solidjs/router";
 import { Component } from "solid-js";
 
