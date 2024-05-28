@@ -36,7 +36,8 @@ import TermsPage from "@pages/Public/Terms";
 import PrivacyPage from "@pages/Public/Privacy";
 import Forms from "@pages/Forms";
 import Invitation from "@components/functional/auth/Invitation";
-import Team from "./pages/Team";
+import Team from "@pages/Team";
+import FormCreate from "@pages/Forms/FormCreate";
 
 const RouterComponent = () => (
   <>
@@ -73,6 +74,7 @@ const RouterComponent = () => (
         <Route path="/organization" component={Organization} />
         <Route path="/settings" component={Settings} />
         <Route path="/forms" component={Forms} />
+        <Route path="/forms/create" component={FormCreate} />
       </Route>
       <Route path="/auth">
         <Route path="/login" component={Login} />

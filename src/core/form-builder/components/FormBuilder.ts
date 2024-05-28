@@ -21,7 +21,14 @@ export class FormBuilder {
     // Register more factories for other field types
   };
 
-  constructor(private formConfig: FormRoot) {
+  constructor(private formConfig?: FormRoot) {
+    if (formConfig) {
+      this.buildForm();
+    }
+  }
+
+  seed(formConfig: FormRoot) {
+    this.formConfig = formConfig;
     this.buildForm();
   }
 

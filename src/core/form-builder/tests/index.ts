@@ -1,4 +1,4 @@
-import { FormBuilder } from "../comonents/FormBuilder";
+import { FormBuilder } from "../components/FormBuilder";
 import { FormRoot } from "../types/types";
 
 const formConfig: FormRoot = {
