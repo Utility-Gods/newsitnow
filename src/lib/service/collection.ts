@@ -64,7 +64,7 @@ const save_collection = async (data: any) => {
   }
 };
 
-const update_collection = async (data: any) => {
+const update_collection = async (data: any, org_id: string) => {
   console.log("sending this payload", data);
   try {
     const token = get_token();
@@ -72,11 +72,14 @@ const update_collection = async (data: any) => {
     reqHeaders.append("Authorization", `Bearer ${token}`);
     reqHeaders.append("Content-Type", "application/json");
 
-    const response = await fetch(`${BASE_URL}/api/collections/${data.id}`, {
-      method: "PUT",
-      headers: reqHeaders,
-      body: JSON.stringify({ data }),
-    });
+    const response = await fetch(
+      `${BASE_URL}/api/collections/${data.id}?org_id=${org_id}`,
+      {
+        method: "PUT",
+        headers: reqHeaders,
+        body: JSON.stringify({ data }),
+      },
+    );
 
     if (!response.ok) {
       const error = await response.json();
@@ -129,7 +132,7 @@ const fetch_collection_by_id = async ({ org_id, id }) => {
   }
 };
 
-const delete_collection = async (id: string) => {
+const delete_collection = async (id: number, org_id: string) => {
   const token = get_token();
   if (!id) {
     return err("No id provided");
@@ -139,10 +142,13 @@ const delete_collection = async (id: string) => {
     const reqHeaders = new Headers();
     reqHeaders.append("Authorization", `Bearer ${token}`);
 
-    const response = await fetch(`${BASE_URL}/api/collections/${id}`, {
-      headers: reqHeaders,
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${BASE_URL}/api/collections/${id}?org_id=${org_id}`,
+      {
+        headers: reqHeaders,
+        method: "DELETE",
+      },
+    );
 
     if (!response.ok) {
       const error = await response.json();

@@ -20,7 +20,7 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "@components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Trash from "@lib/icons/Trash";
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import TableRowSkeleton from "@components/bare/common/TableRowSkeleton";
 import ThreeDots from "@lib/icons/ThreeDots";
 import Link from "@lib/icons/link";
@@ -41,6 +41,8 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   const user_id = () => get_user_id();
 
   const { collectionList, refetch } = merged;
+  const params = useParams();
+  const org_id = params.org_id;
 
   const [loading, setLoading] = createSignal(false);
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   async function handle_delete_collection(id: string) {
     try {
       setLoading(true);
-      const result = await delete_collection(id);
+      const result = await delete_collection(id, org_id);
 
       console.log("deleting collection", result);
       if (result?.isOk()) {
@@ -85,10 +87,13 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   async function changeStatus(collection: Collection, status: string) {
     try {
       setLoading(true);
-      const result = await update_collection({
-        ...collection,
-        status,
-      });
+      const result = await update_collection(
+        {
+          ...collection,
+          status,
+        },
+        org_id,
+      );
 
       if (result.isOk()) {
         showToast({

@@ -49,8 +49,9 @@ const ArticleShare: Component = (props) => {
   const article_details: () => Article = () => article()?.value;
 
   const isAuthor = () => {
-    console.log(get_user_id());
-    return article_details().creator.id === get_user_id();
+    // TODO implement the role for org
+    return true;
+    // return article_details().creator.id === get_user_id();
   };
 
   function isPublished() {

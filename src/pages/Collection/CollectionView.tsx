@@ -68,7 +68,8 @@ const CollectionView: Component = (props: CollectionViewProps) => {
 
   const isAuthor = () => {
     console.log(get_user_id());
-    return collection_details().creator.id === get_user_id();
+    return true;
+    // return collection_details().creator.id === get_user_id();
   };
 
   const [openPublishModal, setOpenPublishModal] = createSignal(false);
@@ -84,10 +85,13 @@ const CollectionView: Component = (props: CollectionViewProps) => {
     console.log("publishing Collection");
     try {
       setLoading(true);
-      const result = await update_collection({
-        ...collection_details(),
-        status,
-      });
+      const result = await update_collection(
+        {
+          ...collection_details(),
+          status,
+        },
+        org_id(),
+      );
 
       if (result.isOk()) {
         console.log("collectionpublished");
@@ -124,10 +128,10 @@ const CollectionView: Component = (props: CollectionViewProps) => {
     }
   }
 
-  async function handle_delete_collection(id: string) {
+  async function handle_delete_collection(id: number) {
     try {
       setLoading(true);
-      const result = await delete_collection(id);
+      const result = await delete_collection(id, org_id());
 
       console.log("deleting collection", result);
       if (result?.isOk()) {

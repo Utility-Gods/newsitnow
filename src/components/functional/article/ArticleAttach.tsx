@@ -1,5 +1,6 @@
 import { fetch_articles } from "@lib/service/article";
 import { update_collection } from "@lib/service/collection";
+import { showErrorToast } from "@lib/utils";
 import { useParams } from "@solidjs/router";
 import { For, createResource, createSignal, onMount } from "solid-js";
 import { Show } from "solid-js";
@@ -48,7 +49,7 @@ function ArticleAttach(props: ArticleAttachProps) {
         articles: attachedArticlesIdList(),
       };
 
-      const result = await update_collection(updatedCollection);
+      const result = await update_collection(updatedCollection, org_id());
 
       if (result.isOk()) {
         setLoading(false);
@@ -63,22 +64,14 @@ function ArticleAttach(props: ArticleAttachProps) {
       }
 
       if (result.isErr()) {
+        console.log({ result });
         setLoading(false);
-        showToast({
-          title: "Error",
-          description: "Error attaching articles",
-          variant: "error",
-          duration: 5000,
-        });
+        throw result.error;
       }
     } catch (e) {
       console.log(e);
       setLoading(false);
-      showToast({
-        title: "Error",
-        description: "Error attaching articles",
-        variant: "error",
-      });
+      showErrorToast(e);
     }
   }
   return (
