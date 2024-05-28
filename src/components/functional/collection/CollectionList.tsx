@@ -29,7 +29,7 @@ import Edit from "@lib/icons/Edit";
 import { Collection } from "@lib/types/Collection";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 import Hidden from "@lib/icons/Hidden";
-import { get_user_id } from "@lib/utils";
+import { get_user_id, show_error_toast } from "@lib/utils";
 
 export type CollectionListProps = {
   collectionList: any;
@@ -42,7 +42,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
 
   const { collectionList, refetch } = merged;
   const params = useParams();
-  const org_id = params.org_id;
+  const org_id = () => params.org_id;
 
   const [loading, setLoading] = createSignal(false);
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
   async function handle_delete_collection(id: string) {
     try {
       setLoading(true);
-      const result = await delete_collection(id, org_id);
+      const result = await delete_collection(id, org_id());
 
       console.log("deleting collection", result);
       if (result?.isOk()) {
@@ -92,7 +92,7 @@ const CollectionList: Component<CollectionListProps> = (props) => {
           ...collection,
           status,
         },
-        org_id,
+        org_id(),
       );
 
       if (result.isOk()) {
@@ -107,21 +107,11 @@ const CollectionList: Component<CollectionListProps> = (props) => {
 
       if (result.isErr()) {
         console.log("error publishing Collection");
-        showToast({
-          title: "Error",
-          description: "Error changing Collection status",
-          variant: "error",
-          duration: 5000,
-        });
+        throw result.error;
       }
     } catch (e) {
       console.log("error publishing Collection", e);
-      showToast({
-        title: "Error",
-        description: "Error changing Collection status",
-        variant: "error",
-        duration: 5000,
-      });
+      show_error_toast(e);
     } finally {
       console.log("done");
       setLoading(false);

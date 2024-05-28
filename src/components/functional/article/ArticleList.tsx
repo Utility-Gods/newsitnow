@@ -32,7 +32,7 @@ import Link from "@lib/icons/link";
 import { Button } from "~/components/ui/button";
 import { Article } from "@lib/types/Article";
 import Hidden from "@lib/icons/Hidden";
-import { get_user_id } from "@lib/utils";
+import { get_user_id, show_error_toast } from "@lib/utils";
 
 export type ArticleListProps = {
   articleList: any;
@@ -111,12 +111,7 @@ const ArticleList: Component<ArticleListProps> = (props) => {
 
       if (result.isErr()) {
         console.log("error publishing article");
-        showToast({
-          title: "Error",
-          description: "Error changing article status",
-          variant: "error",
-          duration: 5000,
-        });
+        throw result.error;
       }
     } catch (e) {
       console.log("error publishing article", e);

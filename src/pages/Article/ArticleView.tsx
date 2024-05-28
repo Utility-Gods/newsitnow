@@ -25,7 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { get_first_org_id } from "@lib/utils";
+import { get_first_org_id, show_error_toast } from "@lib/utils";
 import ThreeDots from "@lib/icons/ThreeDots";
 
 import Hidden from "@lib/icons/Hidden";
@@ -116,21 +116,11 @@ const ArticleView: Component = (props) => {
 
       if (result.isErr()) {
         console.log("error publishing article");
-        showToast({
-          title: "Error",
-          description: "Error changing article status",
-          variant: "error",
-          duration: 5000,
-        });
+        throw result.error;
       }
     } catch (e) {
       console.log("error publishing article", e);
-      showToast({
-        title: "Error",
-        description: "Error changing article status",
-        variant: "error",
-        duration: 5000,
-      });
+      show_error_toast(e);
     } finally {
       console.log("done");
       setOpenPublishModal(false);

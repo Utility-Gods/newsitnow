@@ -1,6 +1,6 @@
 import { fetch_articles } from "@lib/service/article";
 import { update_collection } from "@lib/service/collection";
-import { showErrorToast } from "@lib/utils";
+import { show_error_toast } from "@lib/utils";
 import { useParams } from "@solidjs/router";
 import { For, createResource, createSignal, onMount } from "solid-js";
 import { Show } from "solid-js";
@@ -71,7 +71,7 @@ function ArticleAttach(props: ArticleAttachProps) {
     } catch (e) {
       console.log(e);
       setLoading(false);
-      showErrorToast(e);
+      show_error_toast(e);
     }
   }
   return (
