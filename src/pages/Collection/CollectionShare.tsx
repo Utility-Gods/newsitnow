@@ -77,13 +77,15 @@ const CollectionShare: Component = (props) => {
 
   const isAuthor = () => {
     console.log(get_user_id());
-    return collection_details().creator.id === get_user_id();
+    // TODO implement the role mechanism to remove this
+    return true;
+    // return collection_details().creator.id === get_user_id();
   };
 
   async function handle_delete_collection(id: string) {
     try {
       setLoading(true);
-      const result = await delete_collection(id);
+      const result = await delete_collection(id, org_id());
 
       console.log("deleting collection", result);
       if (result?.isOk()) {
@@ -121,10 +123,13 @@ const CollectionShare: Component = (props) => {
     console.log("publishing Collection");
     try {
       setLoading(true);
-      const result = await update_collection({
-        ...collection_details(),
-        status,
-      });
+      const result = await update_collection(
+        {
+          ...collection_details(),
+          status,
+        },
+        org_id(),
+      );
 
       if (result.isOk()) {
         console.log("collectionpublished");

@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { jwtDecode } from "jwt-decode";
 import { User } from "./types/User";
 import { Organization } from "./types/Organization";
+import { showToast } from "~/components/ui/toast";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -162,4 +163,22 @@ export function check_token_validity() {
 
 export function check_if_mobile() {
   return window.innerWidth < 768;
+}
+
+type TError = {
+  status: number;
+  name: string;
+  message: string;
+  details: {
+    message: string;
+  };
+};
+
+export function showErrorToast(error: TError) {
+  showToast({
+    title: error.name + " " + (error.message || "Unknown error"),
+    description: error.details.message || "An error occurred",
+    variant: "error",
+    duration: 5000,
+  });
 }
