@@ -1,7 +1,7 @@
 import Collection from "@lib/icons/Collection";
 import Article from "@lib/icons/Article";
 import { fetch_organizations } from "@lib/service/organization";
-import { check_if_mobile } from "@lib/utils";
+import { check_if_mobile, get_user_name } from "@lib/utils";
 import {
   A,
   useLocation,
@@ -11,7 +11,7 @@ import {
 } from "@solidjs/router";
 import { Show, createResource } from "solid-js";
 import { Component, createEffect, createSignal, onMount } from "solid-js";
-
+import Avatar from "@lib/icons/Avatar";
 import {
   Select,
   SelectContent,
@@ -121,75 +121,14 @@ const SideBar: Component = () => {
       >
         <div class=" pb-4 overflow-y-auto bg-primary-900/10">
           <div class="flex flex-col">
-            <div class="p-3 text-md font-bold text-secondary">
-              <Show
-                when={!orgList.loading}
-                fallback={
-                  <div class="flex gap-3 pt-1 flex-col">
-                    <Skeleton height={20} radius={6} />
-                    <Skeleton height={34} radius={6} />
-                  </div>
-                }
-              >
-                <Show when={orgList()?.isOk()}>
-                  <div class="flex items-center justify-between py-3">
-                    <div class="mb-2 flex items-center gap-2">
-                      <div class="w-5 h-5">
-                        <Org />
-                      </div>
-                      Organization
-                    </div>
-                    {/* <Button
-                      onClick={() => {
-                        navigate(`/app/${org_id()}/organization`);
-                      }}
-                      size="sm"
-                    >
-                      Add
-                    </Button> */}
-                  </div>
-                  <Select
-                    disallowEmptySelection={true}
-                    modal={true}
-                    optionValue="value"
-                    optionTextValue="label"
-                    optionDisabled="disabled"
-                    defaultValue={default_org()}
-                    value={value()}
-                    options={org_details()}
-                    onChange={(o) => {
-                      console.log("changed", o);
-                      setValue(o);
-                      navigate(
-                        location.pathname.replace(
-                          /\/app\/[^/]+/,
-                          `/app/${o.value}`,
-                        ),
-                      );
-                    }}
-                    placeholder={
-                      <div class="flex items-center">
-                        <span class="ms-2">Organization</span>
-                      </div>
-                    }
-                    itemComponent={(props) => (
-                      <>
-                        <SelectItem item={props.item}>
-                          {props.item.rawValue.label}
-                        </SelectItem>
-                      </>
-                    )}
-                  >
-                    <SelectTrigger aria-label="Organization">
-                      <SelectValue<string>>
-                        {(state) => state.selectedOption().label}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent class="font-bold"></SelectContent>
-                  </Select>
-                </Show>
-              </Show>
+            <div class="p-3 text-md font-bold bg-primary-foreground text-primary flex gap-2 items-center">
+              <div class="w-6 h-6">
+                <Avatar />
+              </div>
+              Hello, {get_user_name()}
             </div>
+            <Separator />
+
             <ul class="font-medium">
               <li>
                 <A
@@ -267,8 +206,75 @@ const SideBar: Component = () => {
                 </A>
               </li>
               <Separator />
-              <div class="p-3 text-md font-bold text-secondary">Settings</div>
-
+              <div class="p-3 text-md font-bold text-secondary">
+                <Show
+                  when={!orgList.loading}
+                  fallback={
+                    <div class="flex gap-3 pt-1 flex-col">
+                      <Skeleton height={20} radius={6} />
+                      <Skeleton height={34} radius={6} />
+                    </div>
+                  }
+                >
+                  <Show when={orgList()?.isOk()}>
+                    <div class="flex items-center justify-between py-3">
+                      <div class="mb-2 flex items-center gap-2">
+                        <div class="w-5 h-5">
+                          <Org />
+                        </div>
+                        Organization
+                      </div>
+                      {/* <Button
+                        onClick={() => {
+                          navigate(`/app/${org_id()}/organization`);
+                        }}
+                        size="sm"
+                      >
+                        Add
+                      </Button> */}
+                    </div>
+                    <Select
+                      disallowEmptySelection={true}
+                      modal={true}
+                      optionValue="value"
+                      optionTextValue="label"
+                      optionDisabled="disabled"
+                      defaultValue={default_org()}
+                      value={value()}
+                      options={org_details()}
+                      onChange={(o) => {
+                        console.log("changed", o);
+                        setValue(o);
+                        navigate(
+                          location.pathname.replace(
+                            /\/app\/[^/]+/,
+                            `/app/${o.value}`,
+                          ),
+                        );
+                      }}
+                      placeholder={
+                        <div class="flex items-center">
+                          <span class="ms-2">Organization</span>
+                        </div>
+                      }
+                      itemComponent={(props) => (
+                        <>
+                          <SelectItem item={props.item}>
+                            {props.item.rawValue.label}
+                          </SelectItem>
+                        </>
+                      )}
+                    >
+                      <SelectTrigger aria-label="Organization">
+                        <SelectValue<string>>
+                          {(state) => state.selectedOption().label}
+                        </SelectValue>
+                      </SelectTrigger>
+                      <SelectContent class="font-bold"></SelectContent>
+                    </Select>
+                  </Show>
+                </Show>
+              </div>
               <li>
                 <A
                   href={`/app/${org_id()}/team`}

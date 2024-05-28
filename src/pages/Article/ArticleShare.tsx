@@ -1,4 +1,4 @@
-import { get_user_id } from "@lib/utils";
+import { get_user_id, show_error_toast } from "@lib/utils";
 import { Component, Show, createResource, createSignal } from "solid-js";
 import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
@@ -83,21 +83,11 @@ const ArticleShare: Component = (props) => {
 
       if (result.isErr()) {
         console.log("error publishing article");
-        showToast({
-          title: "Error",
-          description: "Error changing article status",
-          variant: "error",
-          duration: 5000,
-        });
+        throw result.error;
       }
     } catch (e) {
       console.log("error publishing article", e);
-      showToast({
-        title: "Error",
-        description: "Error changing article status",
-        variant: "error",
-        duration: 5000,
-      });
+      show_error_toast(e);
     } finally {
       console.log("done");
       setLoading(false);

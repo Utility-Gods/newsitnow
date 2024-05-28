@@ -1,5 +1,6 @@
 import { get_first_org_id, is_logged_in } from "@lib/utils";
 import { A, useParams } from "@solidjs/router";
+import { Show } from "solid-js";
 
 import { Component } from "solid-js";
 import AccountDropdown from "~/components/bare/common/AccountDropdown";

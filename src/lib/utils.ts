@@ -174,7 +174,7 @@ type TError = {
   };
 };
 
-export function showErrorToast(error: TError) {
+export function show_error_toast(error: TError) {
   showToast({
     title: error.name + " " + (error.message || "Unknown error"),
     description: error.details.message || "An error occurred",
