@@ -1,4 +1,4 @@
-import { FormField, FormFieldType, FormOption } from "../types/types";
+import { FormField, FormFieldType, FormOption } from "./types";
 
 export class TextField implements FormField {
   type: FormFieldType;
@@ -21,10 +21,10 @@ export class SelectField implements FormField {
   name: string;
   options: FormOption[];
 
-  constructor(type: FormFieldType, name: string, options: FormOption[]) {
+  constructor(type: FormFieldType, name: string, options?: FormOption[]) {
     this.type = type;
     this.name = name;
-    this.options = options;
+    this.options = options || [];
   }
 
   // render
@@ -115,6 +115,22 @@ export class CheckboxField implements FormField {
       `,
         )
         .join("")}
+    `;
+  }
+}
+
+export class SubmitField implements FormField {
+  type: FormFieldType;
+  name: string;
+
+  constructor(type: FormFieldType, name: string) {
+    this.type = type;
+    this.name = name;
+  }
+
+  render() {
+    return `
+      <button type="submit">${this.name}</button>
     `;
   }
 }

@@ -19,7 +19,7 @@ export type FormField = {
   name: string;
   value?: any;
   options?: FormOption[];
-  render?: (props: any) => JSX.Element;
+  render: (props?: any) => JSX.Element;
   [key: string]: any; // Allow additional properties for future extensibility
 };
 
@@ -54,9 +54,9 @@ export enum FormRuleType {
 }
 
 export type FormAction = {
-  type: FormActionType;
-  method: FormActionMethod;
-  [key: string]: any; // Allow additional properties for future extensibility
+  label: string;
+  field: FormField;
+  [key: string]: any; // Al// Allow additional properties for future extensibility
 };
 
 export type FormActionType = {

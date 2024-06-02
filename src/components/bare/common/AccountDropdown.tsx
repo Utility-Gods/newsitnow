@@ -1,4 +1,4 @@
-import { Show, createEffect, createResource, type Component } from "solid-js";
+import { Show, createResource, type Component } from "solid-js";
 import ArrowDown from "@lib/icons/ArrowDown";
 import Avatar from "@lib/icons/Avatar";
 import Gear from "@lib/icons/Gear";
@@ -22,10 +22,6 @@ const AccountDropdown: Component = () => {
   const org_id = params.org_id ?? get_first_org_id();
 
   const name = () => get_user_name();
-
-  createEffect(() => {
-    console.log("invitation countr", invitation_count());
-  });
 
   const invitation_query = () =>
     qs.stringify({

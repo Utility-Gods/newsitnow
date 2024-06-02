@@ -1,6 +1,7 @@
-import { FormFieldType, FormRoot } from "../types/types";
+import { FormFieldType } from "../core/types";
+import type { FormTemplate } from "./types";
 
-const newsletterForm: FormRoot = {
+const newsletterForm: FormTemplate = {
   entities: [
     {
       label: {

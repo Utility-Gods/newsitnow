@@ -66,10 +66,6 @@ const SideBar: Component = () => {
 
   const [value, setValue] = createSignal(default_org());
 
-  createEffect(() => {
-    console.log("org_details", default_org());
-  });
-
   const resizeObserver = new ResizeObserver((entries) => {
     for (let _ of entries) {
       const isMobile = check_if_mobile();

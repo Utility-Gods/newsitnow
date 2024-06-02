@@ -24,7 +24,6 @@ const fetch_organizations = async () => {
 
     const result = await response.json();
 
-    console.log("fetching organizations", result);
     return ok(result);
   } catch (e) {
     console.log(e);
@@ -119,8 +118,6 @@ const fetch_organization_by_id = async ({ id, query }) => {
     }
 
     const result = await response.json();
-
-    console.log("fetching organization by id", result);
 
     return ok(result);
   } catch (e) {

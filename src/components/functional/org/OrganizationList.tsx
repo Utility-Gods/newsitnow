@@ -47,10 +47,6 @@ const OrganizationList: Component<OrganizationListProps> = (props) => {
   const [loading, setLoading] = createSignal(false);
   const navigate = useNavigate();
 
-  createEffect(() => {
-    console.log("fetching organizations", organizationList());
-  });
-
   async function handle_delete_organization(id: string) {
     try {
       setLoading(true);
