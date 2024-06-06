@@ -12,7 +12,10 @@ import {
 } from "./FormFieldFactory";
 
 export class FormBuilder {
-  private fields: FormRoot = { entities: [], action: {} };
+  private fields: FormRoot = {
+    entities: [],
+    action: {},
+  };
   private factories: { [key: string]: FormFieldFactory } = {
     text: new TextFieldFactory(),
     email: new EmailFieldFactory(),

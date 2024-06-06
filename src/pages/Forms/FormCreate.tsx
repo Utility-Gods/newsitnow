@@ -1,5 +1,6 @@
 import Forms from "@lib/icons/Forms";
 import { Component, For, Show, createEffect, createSignal } from "solid-js";
+import { Button } from "~/components/ui/button";
 import FormActionField from "~/core/form-builder/components/FormActionField";
 import FormField from "~/core/form-builder/components/FormField";
 import { FormBuilder } from "~/core/form-builder/core/FormBuilder";
@@ -106,6 +107,15 @@ const FormCreate: Component = () => {
             />
           </form>
         </div>
+      </div>
+      <div class="p-3 text-right">
+        <Button
+          onClick={() => {
+            console.log(formDigested());
+          }}
+        >
+          Continue
+        </Button>
       </div>
     </div>
   );
