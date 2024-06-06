@@ -1,3 +1,5 @@
+import { Theme } from "../themes/types";
+
 export type FormRoot = {
   entities: FormEntity[];
   action: FormAction;
@@ -20,6 +22,7 @@ export type FormField = {
   value?: any;
   options?: FormOption[];
   render: (props?: any) => JSX.Element;
+  renderWithTheme: (theme: Theme) => JSX.Element;
   [key: string]: any; // Allow additional properties for future extensibility
 };
 

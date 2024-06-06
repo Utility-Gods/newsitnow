@@ -1,3 +1,4 @@
+import { Theme } from "../themes/types";
 import { FormField, FormFieldType, FormOption } from "./types";
 
 export class TextField implements FormField {
@@ -12,6 +13,15 @@ export class TextField implements FormField {
   render() {
     return `
       <input type="text" name="${this.name}" />
+    `;
+  }
+
+  renderWithTheme(theme: Theme) {
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      <input type="text" name="${this.name}" class="${theme.input}" />
     `;
   }
 }
@@ -35,6 +45,17 @@ export class SelectField implements FormField {
       </select>
     `;
   }
+
+  renderWithTheme(theme: Theme) {
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      <select class="${theme.select}">
+        ${this.options.map((option) => `<option>${option.label}</option>`).join("")}
+      </select>
+    `;
+  }
 }
 
 export class EmailField implements FormField {
@@ -51,6 +72,16 @@ export class EmailField implements FormField {
       <input type="email" name="${this.name}" />
     `;
   }
+
+  renderWithTheme(theme: Theme) {
+    console.log({ theme });
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      <input type="email" name="${this.name}" class="${theme.email}" />
+    `;
+  }
 }
 
 export class PasswordField implements FormField {
@@ -65,6 +96,15 @@ export class PasswordField implements FormField {
   render() {
     return `
       <input type="password" name="${this.name}" />
+    `;
+  }
+
+  renderWithTheme(theme: Theme) {
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      <input type="password" name="${this.name}" class="${theme.input}" />
     `;
   }
 }
@@ -87,6 +127,22 @@ export class RadioField implements FormField {
           (option) => `
         <input type="radio" name="${this.name}" value="${option.value}" />
         <label>${option.label}</label>
+      `,
+        )
+        .join("")}
+    `;
+  }
+
+  renderWithTheme(theme: Theme) {
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      ${this.options
+        .map(
+          (option) => `
+        <input type="radio" name="${this.name}" value="${option.value}" class="${theme.radio}" />
+        <label class="${theme.label}">${option.label}</label>
       `,
         )
         .join("")}
@@ -117,6 +173,21 @@ export class CheckboxField implements FormField {
         .join("")}
     `;
   }
+  renderWithTheme(theme: Theme) {
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      ${this.options
+        .map(
+          (option) => `
+        <input type="checkbox" name="${this.name}" value="${option.value}" class="${theme.checkbox}" />
+        <label class="${theme.label}">${option.label}</label>
+      `,
+        )
+        .join("")}
+    `;
+  }
 }
 
 export class SubmitField implements FormField {
@@ -131,6 +202,15 @@ export class SubmitField implements FormField {
   render() {
     return `
       <button type="submit">${this.name}</button>
+    `;
+  }
+
+  renderWithTheme(theme: Theme) {
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      <button type="submit" class="${theme.submit}">${this.name}</button>
     `;
   }
 }

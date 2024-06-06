@@ -7,22 +7,12 @@ interface FormFieldStyles {
   radio: string;
   textarea: string;
   error: string;
+  submit: string;
+  email: string;
+  button: string;
 }
 
-// interface FormButtonStyles {
-//   button: string;
-//   submit: string;
-//   reset: string;
-// }
-
-// interface FormStyles {
-//   form: string;
-//   fields: FormFieldStyles;
-//   buttons: FormButtonStyles;
-// }
-
-export interface Theme {
+export interface Theme extends FormFieldStyles {
   name: string;
   form: string;
-  formField: FormFieldStyles;
 }

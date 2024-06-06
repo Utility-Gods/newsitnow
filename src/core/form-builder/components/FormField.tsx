@@ -9,14 +9,14 @@ const FormField: Component = (props) => {
   const type = () => field.field.type;
 
   createEffect(() => {
-    console.log(type());
+    console.log("-=-=-=-=-=-=-=-=-=-=-");
     console.log(theme[type()]);
   });
 
   return (
     <div class={`${theme.formField}`}>
       <label class={`${theme.label} `}>{field.field.name.toUpperCase()}</label>
-      <div class={`${theme[type()]} `} innerHTML={field.field.render()}></div>
+      <div innerHTML={field.field.renderWithTheme(theme)}></div>
     </div>
   );
 };
