@@ -33,27 +33,34 @@ const ActionForm: Component = (props) => {
   const formDigested = () => formBuilder().output();
 
   createEffect(() => {
-    console.log(form_details());
-    console.log(theme());
-    console.log(template());
-    console.log(formDigested());
+    console.log(form_details(), "-------");
   });
   return (
-    <Show when={form_details()}>
-      <div class="w-1/2 p-3 space-y-3">
-        <div class="font-semibold text-xl text-muted-foreground">
-          {form_details().name}
-        </div>
-        <div>
-          <form onSubmit={(e) => e.preventDefault()} class={theme().form}>
-            <For each={formDigested()?.entities ?? []}>
-              {(field) => (
-                <Show when={field}>
-                  <FormField field={field} theme={theme} />
-                </Show>
-              )}
+    <>
+      <Show when={!form_details() && form()}>
+        <div class="text-muted-foreground">No form found</div>
+      </Show>
+      <Show when={form_details()}>
+        <div class="w-1/2 p-3 space-y-3">
+          <div class="font-semibold text-xl text-muted-foreground">
+            {form_details().name}
+          </div>
+          <div>
+            <form
+              class={theme().form}
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log("Form submitted");
+              }}
+            >
+              <For each={formDigested()?.entities ?? []}>
+                {(field) => (
+                  <Show when={field}>
+                    <FormField field={field} theme={theme} />
+                  </Show>
+                )}
 
-              {/* {(field) => (
+                {/* {(field) => (
                 <div class="p-3">
                   <div class="text-lg font-semibold text-primary">
                     {field.label.text}
@@ -61,12 +68,13 @@ const ActionForm: Component = (props) => {
                   <div innerHTML={field.field.render()}></div>
                 </div>
               )} */}
-            </For>
-            <FormActionField field={formDigested()?.action} theme={theme} />
-          </form>
+              </For>
+              <FormActionField field={formDigested()?.action} theme={theme} />
+            </form>
+          </div>
         </div>
-      </div>
-    </Show>
+      </Show>
+    </>
   );
 };
 
