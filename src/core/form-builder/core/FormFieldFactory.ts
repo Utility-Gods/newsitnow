@@ -1,12 +1,14 @@
-import { FormField, FormFieldType, FormOption } from "../types/types";
 import {
+  CheckboxField,
   EmailField,
   PasswordField,
-  SelectField,
-  TextField,
   RadioField,
-  CheckboxField,
+  SelectField,
+  SubmitField,
+  TextField,
+  TextareaField,
 } from "./FormField";
+import { FormField, FormFieldType, FormOption } from "./types";
 
 export interface FormFieldFactory {
   createField(
@@ -26,7 +28,7 @@ export class SelectFieldFactory implements FormFieldFactory {
   createField(
     type: FormFieldType,
     name: string,
-    options: FormOption[],
+    options?: FormOption[],
   ): FormField {
     return new SelectField(type, name, options);
   }
@@ -61,5 +63,17 @@ export class CheckboxFieldFactory implements FormFieldFactory {
     options: FormOption[],
   ): FormField {
     return new CheckboxField(type, name, options);
+  }
+}
+
+export class SubmitFieldFactory implements FormFieldFactory {
+  createField(type: FormFieldType, name: string): FormField {
+    return new SubmitField(type, name);
+  }
+}
+
+export class TextareaFactory implements FormFieldFactory {
+  createField(type: FormFieldType, name: string): FormField {
+    return new TextareaField(type, name);
   }
 }

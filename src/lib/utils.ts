@@ -142,14 +142,11 @@ export function get_org_by_id(org_id: number | null): Organization | null {
 export function check_token_validity() {
   const token = localStorage.getItem("token");
 
-  console.log({ token });
   if (!token) {
     return false;
   }
   const jwtPayload = jwtDecode(token);
   let currentDate = new Date();
-
-  console.log({ jwtPayload });
 
   if (!jwtPayload.exp) {
     return false;

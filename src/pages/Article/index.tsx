@@ -1,15 +1,25 @@
 import { fetch_articles } from "@lib/service/article";
-import { get_first_org_id } from "@lib/utils";
 import { useNavigate, useParams } from "@solidjs/router";
 
 import { Component, createResource } from "solid-js";
 import ArticleList from "~/components/functional/article/ArticleList";
 import { Button } from "~/components/ui/button";
+import { showToast } from "~/components/ui/toast";
 
 const Article: Component = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const org_id = () => params.org_id ?? get_first_org_id();
+  const org_id = () => params.org_id;
+
+  if (!org_id) {
+    showToast({
+      title: "Error",
+      description: "Organization ID is required",
+      duration: 5000,
+      variant: "error",
+    });
+    return navigate("/");
+  }
 
   const [articleList, { refetch }] = createResource(org_id, fetch_articles);
 

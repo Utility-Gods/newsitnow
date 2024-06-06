@@ -6,7 +6,7 @@ import {
 } from "@lib/service/collection";
 import { Collection } from "@lib/types/Collection";
 import { get_first_org_id, get_user_id } from "@lib/utils";
-import { A, useParams, useNavigate } from "@solidjs/router";
+import { A, useNavigate, useParams } from "@solidjs/router";
 
 import {
   DropdownMenu,
@@ -17,13 +17,17 @@ import {
 
 import {
   Component,
-  createResource,
-  Show,
-  createSignal,
-  createEffect,
   For,
+  Show,
+  createEffect,
+  createResource,
+  createSignal,
 } from "solid-js";
 
+import Edit from "@lib/icons/Edit";
+import Hidden from "@lib/icons/Hidden";
+import ThreeDots from "@lib/icons/ThreeDots";
+import Trash from "@lib/icons/Trash";
 import Empty from "~/components/bare/common/Empty";
 import PageSkeleton from "~/components/bare/common/PageSkeleton";
 import PageSpinner from "~/components/bare/common/PageSpinner";
@@ -32,10 +36,6 @@ import AreYouSure from "~/components/functional/common/AreYouSure";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
-import ThreeDots from "@lib/icons/ThreeDots";
-import Hidden from "@lib/icons/Hidden";
-import Trash from "@lib/icons/Trash";
-import Edit from "@lib/icons/Edit";
 
 type CollectionViewProps = {};
 

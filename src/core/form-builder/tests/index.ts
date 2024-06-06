@@ -1,7 +1,7 @@
-import { FormBuilder } from "../comonents/FormBuilder";
-import { FormRoot } from "../types/types";
+import { FormBuilder } from "../core/FormBuilder";
+import { FormTemplate } from "../templates/types";
 
-const formConfig: FormRoot = {
+const formConfig: FormTemplate = {
   entities: [
     {
       label: { text: "Name", for: "name" },

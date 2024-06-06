@@ -1,5 +1,6 @@
 import { count_articles } from "@lib/service/article";
 import { fetch_collections } from "@lib/service/collection";
+import { count_forms, fetch_forms } from "@lib/service/form";
 import { fetch_plan_by_id } from "@lib/service/plan";
 import { get_org_plan, get_user_orgs } from "@lib/utils";
 
@@ -22,9 +23,14 @@ const Plan: Component = () => {
 
   const user_plan_details = () => user_plan()?.value ?? {};
   const [articleCount] = createResource(org_id, count_articles);
-
   const [collections] = createResource(org_id, fetch_collections);
+  const [forms] = createResource(org_id, fetch_forms);
 
+  const formsCount = () => forms()?.value?.length ?? 0;
+
+  createEffect(() => {
+    console.log(formsCount());
+  });
   const organization = () =>
     get_user_orgs().find((org) => org.id === org_id()) ?? {};
 
@@ -37,11 +43,7 @@ const Plan: Component = () => {
         <Show when={!user_plan.loading} fallback={<PageSkeleton />}>
           <Show
             when={user_plan()?.isOk()}
-            fallback={
-              <div class="text-center">
-                {user_plan_details()}-=--- Something went wrong
-              </div>
-            }
+            fallback={<div class="text-center">{user_plan_details()}</div>}
           >
             <div class="flex flex-col gap-3 items-start">
               <div class="bg-white shadow rounded-lg p-4 mb-6">
@@ -58,53 +60,93 @@ const Plan: Component = () => {
                 </p>
                 <div class="flex flex-row gap-3">
                   <Card class="p-4">
-                    <div class="flex items-center justify-start space-x-5">
-                      <ProgressCircle
-                        value={
-                          (100 * collections()?.value.length) /
-                          user_plan_details().attributes.allowed_collections
-                        }
-                      />
+                    <div class="flex flex-col space-y-3">
                       <div>
-                        <p class="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-                          Created Collections :{" "}
+                        <p class="font-medium">
+                          Created Collections:{" "}
                           {collections()?.value.length ?? 0}
                         </p>
-                        <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-                          Allowed Collections :
-                          {user_plan_details().attributes.allowed_collections}
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                          <div
+                            class="bg-blue-600 h-2.5 rounded-full"
+                            style={{
+                              width: `${
+                                (100 * (collections()?.value.length ?? 0)) /
+                                user_plan_details().attributes
+                                  .allowed_collections
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                        <p class="text-sm text-gray-500">
+                          Allowed Collections:{" "}
+                          {user_plan_details().attributes.allowed_collection}
                         </p>
                       </div>
                     </div>
                   </Card>
                   <Card class="p-4">
-                    <div class="flex items-center justify-start space-x-5">
-                      <ProgressCircle
-                        value={
-                          (100 * articleCount()?.value?.length) /
-                            user_plan_details().attributes.allowed_articles || 0
-                        }
-                      />
+                    <div class="flex flex-col space-y-3">
                       <div>
-                        <p class="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-                          Article Created- {articleCount()?.value?.length ?? 0}
+                        <p class="font-medium">
+                          Articles Created: {articleCount()?.value?.length ?? 0}
                         </p>
-                        <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-                          Allowed Articles-{" "}
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                          <div
+                            class="bg-green-600 h-2.5 rounded-full"
+                            style={{
+                              width: `${
+                                (100 * (articleCount()?.value?.length ?? 0)) /
+                                user_plan_details().attributes.allowed_articles
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                        <p class="text-sm text-gray-500">
+                          Allowed Articles:{" "}
                           {user_plan_details().attributes.allowed_articles}
                         </p>
                       </div>
                     </div>
                   </Card>
                   <Card class="p-4">
-                    <div class="flex items-center justify-start space-x-5">
-                      <ProgressCircle value={75} />
+                    <div class="flex flex-col space-y-3">
                       <div>
-                        <p class="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-                          {user_plan_details().attributes.allowed_media_in_mb}
+                        <p class="font-medium">
+                          Forms Created: {formsCount() ?? 0}
                         </p>
-                        <p class="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-                          Allowed Storaage
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                          <div
+                            class="bg-purple-600 h-2.5 rounded-full"
+                            style={{
+                              width: `${
+                                (100 * (formsCount() ?? 0)) /
+                                user_plan_details().attributes.allowed_forms
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                        <p class="text-sm text-gray-500">
+                          Allowed Forms:{" "}
+                          {user_plan_details().attributes.allowed_forms}
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card class="p-4">
+                    <div class="flex flex-col space-y-3">
+                      <div>
+                        <p class="font-medium">Storage Used: 75 MB</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                          <div
+                            class="bg-red-600 h-2.5 rounded-full"
+                            style={{ width: "75%" }}
+                          ></div>
+                        </div>
+                        <p class="text-sm text-gray-500">
+                          Allowed Storage:{" "}
+                          {user_plan_details().attributes.allowed_media_in_mb}{" "}
+                          MB
                         </p>
                       </div>
                     </div>
