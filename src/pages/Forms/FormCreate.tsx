@@ -27,6 +27,8 @@ const FormCreate: Component = () => {
     },
   ];
 
+  const active_theme = () => themes[activeTheme()];
+
   createEffect(() => {
     console.log("formDigested", formDigested());
   });
@@ -74,6 +76,8 @@ const FormCreate: Component = () => {
             onClick={() => {
               console.log(theme.name);
               setActiveTheme(index);
+              console.log(activeTheme());
+              setActiveTemplate(activeTemplate());
             }}
           >
             <div class="text-lg font-semibold">{theme.name}</div>
@@ -89,7 +93,7 @@ const FormCreate: Component = () => {
           <For each={formDigested()?.entities ?? []}>
             {(field) => (
               <Show when={field}>
-                <FormField field={field} theme={themes[activeTheme()]} />
+                <FormField field={field} theme={active_theme} />
               </Show>
             )}
 
@@ -104,7 +108,7 @@ const FormCreate: Component = () => {
           </For>
           <FormActionField
             field={formDigested()?.action}
-            theme={themes[activeTheme()]}
+            theme={active_theme}
           />
         </form>
       </div>

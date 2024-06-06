@@ -20,13 +20,13 @@ const themes: Theme[] = [
     button:
       "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
     submit:
-      "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+      "bg-secondary hover:bg-secondary/80 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
   },
   {
     name: "dark",
     form: "bg-gray-900 shadow-md rounded px-8 pt-6 pb-8 mb-4",
     formField: "mb-6",
-    label: "block text-white text-lg font-semibold mb-2",
+    label: "block text-gray-100 text-sm font-bold mb-2",
     input:
       "bg-gray-800 appearance-none border-2 border-gray-700 rounded w-full py-3 px-4 text-gray-400 leading-tight focus:outline-none focus:bg-gray-700 focus:border-purple-500",
     email:
@@ -41,7 +41,7 @@ const themes: Theme[] = [
     button:
       "bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline-purple",
     submit:
-      "bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline-green",
+      "bg-primary hover:bg-primary/80 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline-green",
   },
   {
     name: "material",

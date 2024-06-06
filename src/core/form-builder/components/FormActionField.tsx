@@ -9,8 +9,8 @@ const FormActionField: Component = (props) => {
   const type = () => field.field.type;
 
   return (
-    <div class={`${theme.formField}`}>
-      <div class={`${theme[type()]} `} innerHTML={field.field.render()}></div>
+    <div class={`${theme().formField}`}>
+      <div class={`${theme()[type()]} `} innerHTML={field.field.render()}></div>
     </div>
   );
 };
