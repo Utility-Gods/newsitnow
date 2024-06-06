@@ -40,6 +40,8 @@ import Team from "@pages/Team";
 import FormCreate from "@pages/Forms/FormCreate";
 import FormView from "@pages/Forms/FormView";
 
+import ActionFormLayout from "@pages/ActionForm/Layout";
+import ActionForm from "@pages/ActionForm";
 const RouterComponent = () => (
   <>
     <Router>
@@ -77,6 +79,9 @@ const RouterComponent = () => (
         <Route path="/forms" component={Forms} />
         <Route path="/forms/create" component={FormCreate} />
         <Route path="/forms/:id" component={FormView} />
+      </Route>
+      <Route path="/action-form" component={ActionFormLayout}>
+        <Route path="/:id" component={ActionForm} />
       </Route>
       <Route path="/auth">
         <Route path="/login" component={Login} />

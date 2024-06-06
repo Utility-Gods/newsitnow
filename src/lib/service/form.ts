@@ -118,8 +118,8 @@ export const update_form = async (data: any, org_id: string) => {
 };
 
 export const fetch_form_by_id = async ({ org_id, id }) => {
-  if (!org_id || !id) {
-    return err("org_id or id is missing");
+  if (!id) {
+    return err("form id is missing");
   }
 
   try {

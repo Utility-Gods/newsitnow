@@ -142,8 +142,8 @@ const FormList: Component<FormListProps> = (props) => {
         <TableHeader>
           <TableRow>
             <TableHead class="w-1/4">Name</TableHead>
+            <TableHead class="text-left">Visibility</TableHead>
             <TableHead class="text-left">Status</TableHead>
-            <TableHead class="text-center">Owner</TableHead>
             <TableHead class="text-center">Role</TableHead>
             <TableHead class="text-right">Created At</TableHead>
             <TableHead class="text-right"></TableHead>
@@ -175,6 +175,17 @@ const FormList: Component<FormListProps> = (props) => {
                     <TableCell class="font-semibold">
                       <div class="clamp-lines line-clamp-1">{c.name}</div>
                     </TableCell>
+                    <TableCell
+                      class={`${c.is_publicly_accesible ? "text-primary" : "text-text"}`}
+                    >
+                      <BadgeDelta
+                        deltaType={
+                          c.is_publicly_accesible ? "increase" : "decrease"
+                        }
+                      >
+                        {c.is_publicly_accesible ? "Public" : "Private"}
+                      </BadgeDelta>
+                    </TableCell>
 
                     <TableCell>
                       <BadgeDelta
@@ -184,9 +195,6 @@ const FormList: Component<FormListProps> = (props) => {
                       >
                         {c.status}
                       </BadgeDelta>
-                    </TableCell>
-                    <TableCell class={`font-semibold `}>
-                      {c.creator?.username ?? "NA"}
                     </TableCell>
                     <TableCell
                       class={`text-center ${user_id() == c.creator?.id ? "text-primary" : "text-text"}`}

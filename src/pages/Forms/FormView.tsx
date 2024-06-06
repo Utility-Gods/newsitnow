@@ -1,9 +1,6 @@
 import Share from "@lib/icons/share";
 import { delete_form, fetch_form_by_id, update_form } from "@lib/service/form";
 
-import { Checkbox } from "~/components/ui/checkbox";
-import { Label } from "~/components/ui/label";
-
 import { get_first_org_id, get_user_id } from "@lib/utils";
 import { A, useNavigate, useParams } from "@solidjs/router";
 
@@ -33,6 +30,8 @@ import AreYouSure from "~/components/functional/common/AreYouSure";
 import { BadgeDelta } from "~/components/ui/badge-delta";
 import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
+import Unlock from "@lib/icons/Unlock";
+import Lock from "@lib/icons/Lock";
 
 type FormViewProps = {};
 
@@ -71,6 +70,52 @@ const FormView: Component = (props: FormViewProps) => {
       return false;
     }
     return form_details()?.status === "Published";
+  }
+
+  async function togglePublicAccess(access: boolean) {
+    try {
+      setLoading(true);
+      const result = await update_form(
+        {
+          ...form_details(),
+          is_publicly_accesible: access,
+        },
+        org_id(),
+      );
+
+      if (result.isOk()) {
+        console.log("formpublished");
+        showToast({
+          title: "Form status changed to " + status,
+          description: "Article has been published",
+          variant: "success",
+          duration: 5000,
+        });
+        refetch();
+      }
+
+      if (result.isErr()) {
+        console.log("error publishing Form");
+        showToast({
+          title: "Error",
+          description: "Error changing Form status",
+          variant: "error",
+          duration: 5000,
+        });
+      }
+    } catch (e) {
+      console.log("error publishing Form", e);
+      showToast({
+        title: "Error",
+        description: "Error changing Form status",
+        variant: "error",
+        duration: 5000,
+      });
+    } finally {
+      console.log("done");
+      setOpenPublishModal(false);
+      setLoading(false);
+    }
   }
 
   async function changeStatus(status: string) {
@@ -152,11 +197,9 @@ const FormView: Component = (props: FormViewProps) => {
       setLoading(false);
     }
   }
-  const [isPubliclyAccesible, setIsPubliclyAccesible] = createSignal(true);
-
   function copyCodeSnippet() {
     console.log("Copying code to clipboard");
-    const toCopy = "https://orangegas.co/";
+    const toCopy = "https://orangegas.co/action-form/" + form_details()?.id;
     navigator.clipboard
       .writeText(toCopy as string)
       .then(() => {
@@ -210,12 +253,50 @@ const FormView: Component = (props: FormViewProps) => {
                       >
                         {form_details().status}
                       </BadgeDelta>
+
+                      <BadgeDelta
+                        deltaType={
+                          form_details().is_publicly_accesible
+                            ? "increase"
+                            : "decrease"
+                        }
+                      >
+                        {form_details().is_publicly_accesible
+                          ? "Public"
+                          : "Private"}
+                      </BadgeDelta>
                     </div>
                   </div>
                 </div>
               </div>
               <Show when={isAuthor()}>
                 <div class="flex gap-3 flex-shrink-0">
+                  <Show
+                    when={!form_details().is_publicly_accesible}
+                    fallback={
+                      <Button
+                        onClick={() => {
+                          togglePublicAccess(false);
+                        }}
+                      >
+                        <div class="w-4 h-4 mr-2">
+                          <Lock />
+                        </div>
+                        <span>Make Private</span>
+                      </Button>
+                    }
+                  >
+                    <Button
+                      onClick={() => {
+                        togglePublicAccess(true);
+                      }}
+                    >
+                      <div class="w-4 h-4 mr-2">
+                        <Unlock />
+                      </div>
+                      <span>Make Public</span>
+                    </Button>
+                  </Show>
                   <Show when={isPublished()}>
                     <A href="share" class="flex items-center gap-1">
                       <Button>
@@ -292,45 +373,21 @@ const FormView: Component = (props: FormViewProps) => {
               Form Responses
             </div>
           </div>
-          <div class="flex flex-col gap-2 items-baseline ">
-            <div class="text-muted-foreground text-sm ">
-              Share the link below to collect responses
-            </div>
-            <div class="flex flex-row gap-2 items-baseline">
-              <div class="flex flex-col gap-1">
-                <pre class="border-2 p-3 bg-muted  code-block text-muted-foreground">
-                  "https://orangegas.co/public/forms/1"
-                </pre>
-                <div class="flex gap-1 items-center">
-                  <Checkbox
-                    id="terms1"
-                    defaultChecked={isPubliclyAccesible()}
-                    onChange={(e) => {
-                      console.log(e);
-                      setIsPubliclyAccesible(e);
-                    }}
-                  />
-                  <div class="grid gap-1.5 leading-none text-sm">
-                    <Label for="terms1-input" class="text-muted-foreground">
-                      Publicly accessible form
-                      <A
-                        href="/documentation/collection"
-                        class="text-primary ml-1 text-sm"
-                      >
-                        Learn more
-                      </A>
-                    </Label>
-                  </div>
-                </div>
+          <Show when={form_details().is_publicly_accesible}>
+            <div class="flex flex-col gap-2 items-baseline ">
+              <div class="text-muted-foreground text-sm ">
+                Share the link below to collect responses
               </div>
-              <Button
-                disabled={!isPubliclyAccesible()}
-                onClick={copyCodeSnippet}
-              >
-                Copy
-              </Button>
+              <div class="flex flex-row gap-2 items-baseline">
+                <div class="flex flex-col gap-1">
+                  <pre class="border-2 p-3 bg-muted  code-block text-muted-foreground">
+                    {`https://orangegas.co/action-form/` + params.id}
+                  </pre>
+                </div>
+                <Button onClick={copyCodeSnippet}>Copy</Button>
+              </div>
             </div>
-          </div>
+          </Show>
         </div>
 
         <Show when={form()?.isErr()}>
