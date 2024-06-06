@@ -1,4 +1,3 @@
-import Forms from "@lib/icons/Forms";
 import { Component, For, Show, createEffect, createSignal } from "solid-js";
 import { Button } from "~/components/ui/button";
 import FormActionField from "~/core/form-builder/components/FormActionField";
@@ -8,36 +7,95 @@ import contactForm from "~/core/form-builder/templates/contact";
 import loginForm from "~/core/form-builder/templates/login";
 import newsletterForm from "~/core/form-builder/templates/newsletter";
 import themes from "~/core/form-builder/themes";
+import { Dialog, DialogContent, DialogHeader } from "~/components/ui/dialog";
+import { Input } from "~/components/ui/input";
+import { save_form } from "@lib/service/form";
+import { useNavigate, useParams } from "@solidjs/router";
+import { get_first_org_id, get_user_id, show_error_toast } from "@lib/utils";
+import { showToast } from "~/components/ui/toast";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 
+const templates = [
+  {
+    name: "Contact Form",
+    template: contactForm,
+    description: "A simple contact form",
+  },
+  {
+    name: "Login Form",
+    template: loginForm,
+    description: "A simple login form",
+  },
+  {
+    name: "Newsletter Form",
+    template: newsletterForm,
+    description: "A simple newsletter form",
+  },
+];
 const FormCreate: Component = () => {
-  const templates = [
-    {
-      name: "Contact Form",
-      template: contactForm,
-      description: "A simple contact form",
-    },
-    {
-      name: "Login Form",
-      template: loginForm,
-      description: "A simple login form",
-    },
-    {
-      name: "Newsletter Form",
-      template: newsletterForm,
-      description: "A simple newsletter form",
-    },
-  ];
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const org_id = () => params.org_id;
+
+  if (!org_id()) {
+    navigate("/");
+  }
+
+  const [showSaveModal, setShowSaveModal] = createSignal(false);
 
   const active_theme = () => themes[activeTheme()];
 
   const [activeTemplate, setActiveTemplate] = createSignal(0);
+  const [formName, setFormName] = createSignal("");
 
   const [activeTheme, setActiveTheme] = createSignal(0);
+  const [loading, setLoading] = createSignal(true);
   const formBuilder = () =>
     new FormBuilder(templates[activeTemplate()].template);
   const formDigested = () => formBuilder().output();
+
+  async function handleSaveFormTemplate() {
+    console.log("Save form template", formName());
+    console.log("formBuilder JSON", formBuilder().getTemplate());
+    console.log("theme", active_theme());
+
+    try {
+      setLoading(true);
+      const result = await save_form({
+        name: formName(),
+        template: formBuilder().getTemplate(),
+        theme: active_theme(),
+        organizations: [org_id()],
+        creator: get_user_id(),
+      });
+
+      console.log("Save form result", result);
+
+      if (result.isOk()) {
+        showToast({
+          title: "Form saved successfully",
+          description:
+            "Now you can use this form to collect data from your users.",
+          duration: 5000,
+          variant: "success",
+        });
+        navigate(`/app/${org_id()}/forms`);
+      }
+    } catch (e) {
+      console.error(e);
+      setLoading(false);
+      show_error_toast(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 ">
+      <Show when={loading()}>
+        <PageSpinner />
+      </Show>
       <div class="flex justify-between items-center p-3 ">
         <div class="text-2xl font-bold text-primary leading-10">
           Create Form
@@ -111,12 +169,46 @@ const FormCreate: Component = () => {
       <div class="p-3 text-right">
         <Button
           onClick={() => {
-            console.log(formDigested());
+            setShowSaveModal(true);
           }}
         >
           Continue
         </Button>
       </div>
+      <Dialog
+        open={showSaveModal()}
+        onOpenChange={() => {
+          setShowSaveModal(false);
+        }}
+      >
+        <DialogContent class="w-[600px]">
+          <DialogHeader class="space-y-1.5 overflow-hidden gap-2">
+            <h2 class="text-lg font-semibold px-2">Give your form a name...</h2>
+            <div class="flex flex-col col-span-3 p-2">
+              <Input
+                id="name"
+                area-invalid={"false"}
+                value={formName()}
+                onChange={(e) => {
+                  setFormName(e.currentTarget.value);
+                }}
+                required
+              />
+            </div>
+            <div class="flex gap-3 justify-end p-2">
+              <Button
+                onClick={() => {
+                  setShowSaveModal(false);
+                }}
+                variant="outline"
+              >
+                Cancel
+              </Button>
+              <Button onClick={() => handleSaveFormTemplate()}>Save</Button>
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

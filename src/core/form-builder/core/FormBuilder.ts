@@ -12,6 +12,7 @@ import {
 } from "./FormFieldFactory";
 
 export class FormBuilder {
+  private template: FormTemplate;
   private fields: FormRoot = {
     entities: [],
     action: {},
@@ -29,17 +30,23 @@ export class FormBuilder {
 
   constructor(private formConfig?: FormTemplate) {
     if (formConfig) {
+      this.template = formConfig;
       this.buildForm();
     }
   }
 
   seed(formConfig: FormTemplate) {
+    this.template = formConfig;
     this.formConfig = formConfig;
     this.buildForm();
   }
 
   output() {
     return this.fields;
+  }
+
+  getTemplate() {
+    return this.template;
   }
 
   private buildForm() {

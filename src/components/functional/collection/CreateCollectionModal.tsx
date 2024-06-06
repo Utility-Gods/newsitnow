@@ -19,7 +19,6 @@ import {
 } from "@lib/schema/forms/create_collection";
 import { save_collection } from "@lib/service/collection";
 import { useParams, useNavigate } from "@solidjs/router";
-import { get_first_org_id } from "@lib/utils";
 
 type CreateCollectionModalProps = {
   open: boolean;
@@ -31,7 +30,12 @@ export const CreateCollectionModal: Component<CreateCollectionModalProps> = (
 ) => {
   const navigate = useNavigate();
   const params = useParams();
-  const org_id = () => params.org_id ?? get_first_org_id();
+  const org_id = () => params.org_id;
+
+  if (!org_id()) {
+    navigate("/");
+    return null;
+  }
 
   const merged = mergeProps({ open: false, onOpenChange: () => {} }, props);
 
