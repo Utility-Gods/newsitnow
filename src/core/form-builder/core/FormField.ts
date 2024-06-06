@@ -51,7 +51,9 @@ export class SelectField implements FormField {
       return this.render();
     }
     return `
-      <select class="${theme.select}">
+      <select class="${theme.select}"
+      name=${this.name}
+      >
         ${this.options.map((option) => `<option>${option.label}</option>`).join("")}
       </select>
     `;
@@ -210,6 +212,31 @@ export class SubmitField implements FormField {
     }
     return `
       <button type="submit" class="${theme.submit}">${this.name}</button>
+    `;
+  }
+}
+
+export class TextareaField implements FormField {
+  type: FormFieldType;
+  name: string;
+
+  constructor(type: FormFieldType, name: string) {
+    this.type = type;
+    this.name = name;
+  }
+
+  render() {
+    return `
+      <textarea name="${this.name}"></textarea>
+    `;
+  }
+
+  renderWithTheme(theme: Theme) {
+    if (!theme) {
+      return this.render();
+    }
+    return `
+      <textarea name="${this.name}" class="${theme.textarea}"></textarea>
     `;
   }
 }

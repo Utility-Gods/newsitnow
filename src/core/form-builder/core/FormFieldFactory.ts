@@ -6,6 +6,7 @@ import {
   SelectField,
   SubmitField,
   TextField,
+  TextareaField,
 } from "./FormField";
 import { FormField, FormFieldType, FormOption } from "./types";
 
@@ -68,5 +69,11 @@ export class CheckboxFieldFactory implements FormFieldFactory {
 export class SubmitFieldFactory implements FormFieldFactory {
   createField(type: FormFieldType, name: string): FormField {
     return new SubmitField(type, name);
+  }
+}
+
+export class TextareaFactory implements FormFieldFactory {
+  createField(type: FormFieldType, name: string): FormField {
+    return new TextareaField(type, name);
   }
 }

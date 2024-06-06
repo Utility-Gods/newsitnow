@@ -9,6 +9,7 @@ import {
   RadioFieldFactory,
   CheckboxFieldFactory,
   SubmitFieldFactory,
+  TextareaFactory,
 } from "./FormFieldFactory";
 
 export class FormBuilder {
@@ -25,6 +26,7 @@ export class FormBuilder {
     radio: new RadioFieldFactory(),
     checkbox: new CheckboxFieldFactory(),
     submit: new SubmitFieldFactory(),
+    textarea: new TextareaFactory(),
     // Register more factories for other field types
   };
 

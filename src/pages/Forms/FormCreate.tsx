@@ -1,4 +1,4 @@
-import { Component, For, Show, createEffect, createSignal } from "solid-js";
+import { Component, For, Show, createSignal } from "solid-js";
 import { Button } from "~/components/ui/button";
 import FormActionField from "~/core/form-builder/components/FormActionField";
 import FormField from "~/core/form-builder/components/FormField";
@@ -10,10 +10,13 @@ import themes from "~/core/form-builder/themes";
 import { Dialog, DialogContent, DialogHeader } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { save_form } from "@lib/service/form";
-import { useNavigate, useParams } from "@solidjs/router";
+import { A, useNavigate, useParams } from "@solidjs/router";
 import { get_user_id, show_error_toast } from "@lib/utils";
 import { showToast } from "~/components/ui/toast";
 import PageSpinner from "~/components/bare/common/PageSpinner";
+import registrationForm from "~/core/form-builder/templates/registration";
+import feedbackForm from "~/core/form-builder/templates/feedback";
+import suggestionForm from "~/core/form-builder/templates/suggestionForm";
 
 const templates = [
   {
@@ -27,9 +30,24 @@ const templates = [
     description: "A simple login form",
   },
   {
-    name: "Newsletter Form",
+    name: "Subscription Form",
     template: newsletterForm,
-    description: "A simple newsletter form",
+    description: "A simple newsletter subscription form",
+  },
+  {
+    name: "Registration Form",
+    template: registrationForm,
+    description: "A simple registration form",
+  },
+  {
+    name: "Feedback Form",
+    template: feedbackForm,
+    description: "A simple feedback form",
+  },
+  {
+    name: "Suggestion Form",
+    template: suggestionForm,
+    description: "A simple suggestion form",
   },
 ];
 const FormCreate: Component = () => {
@@ -107,7 +125,7 @@ const FormCreate: Component = () => {
       <div class="px-3 font-semibold text-muted-foreground">
         Select a template
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
+      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-3 p-3">
         {templates.map((template, index) => (
           <div
             class={` shadow-md rounded-lg p-3 cursor-pointer
@@ -121,6 +139,15 @@ const FormCreate: Component = () => {
             <div>{template.description}</div>
           </div>
         ))}
+        <A
+          href=""
+          class={` shadow-md rounded-lg p-3 cursor-pointer
+            `}
+        >
+          <div class="flex gap-2 text-lg font-semibold ">
+            Request a template
+          </div>
+        </A>
       </div>
       <div class="px-3 font-semibold text-muted-foreground">Select a theme</div>
       <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-3 p-3">
