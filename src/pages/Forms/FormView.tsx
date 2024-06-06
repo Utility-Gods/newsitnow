@@ -43,6 +43,7 @@ import Unlock from "@lib/icons/Unlock";
 import Lock from "@lib/icons/Lock";
 import { fetch_form_response } from "@lib/service/form_response";
 import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
+import JsonTreeViewer from "~/components/bare/common/JSONTree";
 
 type FormViewProps = {};
 
@@ -307,16 +308,7 @@ const FormView: Component = (props: FormViewProps) => {
                       <span>Make Public</span>
                     </Button>
                   </Show>
-                  <Show when={isPublished()}>
-                    <A href="share" class="flex items-center gap-1">
-                      <Button>
-                        <div class="w-4 h-4 mr-2">
-                          <Share />
-                        </div>
-                        <span>Share</span>
-                      </Button>
-                    </A>
-                  </Show>
+
                   <Show when={!isPublished()}>
                     <Button
                       onClick={() => {
@@ -386,7 +378,7 @@ const FormView: Component = (props: FormViewProps) => {
           <Show when={form_details().is_publicly_accesible}>
             <div class="flex flex-col gap-2 items-baseline ">
               <div class="text-muted-foreground text-sm ">
-                Share the link below to collect responses
+                Share the link below to share your form with others
               </div>
               <div class="flex flex-row gap-2 items-baseline">
                 <div class="flex flex-col gap-1">
@@ -440,7 +432,9 @@ const FormView: Component = (props: FormViewProps) => {
                       <TableCell class="font-semibold">
                         <div class="clamp-lines line-clamp-1">{c.creator}</div>
                       </TableCell>
-                      <TableCell>{JSON.stringify(c.response)}</TableCell>
+                      <TableCell>
+                        <JsonTreeViewer data={{ response: c.response }} />
+                      </TableCell>
 
                       <TableCell class="text-center">
                         {new Date(c.createdAt).toLocaleDateString()}
