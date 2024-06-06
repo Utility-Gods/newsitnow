@@ -14,6 +14,7 @@ import FormField from "~/core/form-builder/components/FormField";
 import { FormBuilder } from "~/core/form-builder/core/FormBuilder";
 import { createSignal } from "solid-js";
 import { Button } from "~/components/ui/button";
+import PageSpinner from "~/components/bare/common/PageSpinner";
 
 const ActionForm: Component = (props) => {
   const params = useParams();
@@ -44,6 +45,8 @@ const ActionForm: Component = (props) => {
     console.log(form_id(), "-------");
   });
 
+  const [loading, setLoading] = createSignal(false);
+
   async function handleFormSubmit() {
     const form = document.getElementById("form");
     const formData = new FormData(form);
@@ -54,6 +57,8 @@ const ActionForm: Component = (props) => {
     console.log(data);
 
     try {
+      setLoading(true);
+      console.log("submitting form", loading());
       const result = await save_form_response({
         form: form_id(),
         response: data,
@@ -78,6 +83,9 @@ const ActionForm: Component = (props) => {
       }
     } catch (e) {
       show_error_toast(e);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -157,6 +165,10 @@ const ActionForm: Component = (props) => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
+      <Show when={loading()}>
+        <PageSpinner />
+      </Show>
     </>
   );
 };
