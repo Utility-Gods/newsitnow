@@ -1,6 +1,9 @@
 import Share from "@lib/icons/share";
 import { delete_form, fetch_form_by_id, update_form } from "@lib/service/form";
 
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
+
 import { get_first_org_id, get_user_id } from "@lib/utils";
 import { A, useNavigate, useParams } from "@solidjs/router";
 
@@ -149,6 +152,31 @@ const FormView: Component = (props: FormViewProps) => {
       setLoading(false);
     }
   }
+  const [isPubliclyAccesible, setIsPubliclyAccesible] = createSignal(true);
+
+  function copyCodeSnippet() {
+    console.log("Copying code to clipboard");
+    const toCopy = "https://orangegas.co/";
+    navigator.clipboard
+      .writeText(toCopy as string)
+      .then(() => {
+        console.log("URL copied to clipboard successfully");
+        showToast({
+          variant: "success",
+          title: "Success",
+          description:
+            "You can now share the link with others and collect responses",
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to copy URL to clipboard:", error);
+        showToast({
+          variant: "error",
+          title: "Failed to copy URL",
+          description: "An error occurred while copying the URL to clipboard",
+        });
+      });
+  }
 
   return (
     <div class="flex flex-col flex-1 flex-grow overflow-hidden p-3 gap-6">
@@ -184,9 +212,6 @@ const FormView: Component = (props: FormViewProps) => {
                       </BadgeDelta>
                     </div>
                   </div>
-                </div>
-                <div class="overflow-auto text-muted-foreground text-md clamp-lines line-clamp-3 mt-2">
-                  {form_details().description}
                 </div>
               </div>
               <Show when={isAuthor()}>
@@ -260,6 +285,53 @@ const FormView: Component = (props: FormViewProps) => {
             </div>
           </Show>
         </Show>
+
+        <div class=" flex justify-between items-end">
+          <div class="w-1/2 px-3 flex flex-col gap-3">
+            <div class="text-2xl flex-shrink-0 font-bold text-primary leading-10">
+              Form Responses
+            </div>
+          </div>
+          <div class="flex flex-col gap-2 items-baseline ">
+            <div class="text-muted-foreground text-sm ">
+              Share the link below to collect responses
+            </div>
+            <div class="flex flex-row gap-2 items-baseline">
+              <div class="flex flex-col gap-1">
+                <pre class="border-2 p-3 bg-muted  code-block text-muted-foreground">
+                  "https://orangegas.co/public/forms/1"
+                </pre>
+                <div class="flex gap-1 items-center">
+                  <Checkbox
+                    id="terms1"
+                    defaultChecked={isPubliclyAccesible()}
+                    onChange={(e) => {
+                      console.log(e);
+                      setIsPubliclyAccesible(e);
+                    }}
+                  />
+                  <div class="grid gap-1.5 leading-none text-sm">
+                    <Label for="terms1-input" class="text-muted-foreground">
+                      Publicly accessible form
+                      <A
+                        href="/documentation/collection"
+                        class="text-primary ml-1 text-sm"
+                      >
+                        Learn more
+                      </A>
+                    </Label>
+                  </div>
+                </div>
+              </div>
+              <Button
+                disabled={!isPubliclyAccesible()}
+                onClick={copyCodeSnippet}
+              >
+                Copy
+              </Button>
+            </div>
+          </div>
+        </div>
 
         <Show when={form()?.isErr()}>
           <div class="p-4 text-primary-100">Error loading form</div>
