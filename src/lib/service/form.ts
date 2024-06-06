@@ -84,3 +84,35 @@ export const delete_form = async (id: number) => {
     return err(e);
   }
 };
+
+export const update_form = async (data: any, org_id: string) => {
+  try {
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+    reqHeaders.append("Content-Type", "application/json");
+
+    const response = await fetch(
+      `${BASE_URL}/api/forms/${data.id}?org_id=${org_id}`,
+      {
+        method: "PUT",
+        headers: reqHeaders,
+        body: JSON.stringify({ data }),
+      },
+    );
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Update form error:", error);
+      throw error.error;
+    }
+
+    const result = await response.json();
+
+    return ok(result);
+  } catch (e) {
+    console.log(e);
+    return err(e);
+  }
+};

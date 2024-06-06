@@ -1,4 +1,4 @@
-import { delete_form } from "@lib/service/form";
+import { delete_form, update_form } from "@lib/service/form";
 import { Component, createSignal, For, mergeProps, Show } from "solid-js";
 import {
   Table,
@@ -21,7 +21,7 @@ import { BadgeDelta } from "~/components/ui/badge-delta";
 import Trash from "@lib/icons/Trash";
 import { showToast } from "~/components/ui/toast";
 
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 
 import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
@@ -41,6 +41,9 @@ export type FormListProps = {
 
 const FormList: Component<FormListProps> = (props) => {
   const merged = mergeProps(props);
+
+  const params = useParams();
+  const org_id = () => params.org_id;
 
   const { formList, refetch } = merged;
 
@@ -79,15 +82,55 @@ const FormList: Component<FormListProps> = (props) => {
         variant: "error",
         title: "Failed to delete form",
         duration: 5000,
-        description: "An error occurred while deleting the article",
+        description: "An error occurred while deleting the form",
       });
     } finally {
       setLoading(false);
     }
   }
 
-  function isPublished() {
-    return false;
+  function isPublished(status) {
+    return status === "Published";
+  }
+
+  async function changeStatus(form, status: string) {
+    try {
+      setLoading(true);
+      const result = await update_form(
+        {
+          ...form,
+          status,
+        },
+        org_id(),
+      );
+
+      if (result.isOk()) {
+        console.log("Foorm published");
+        showToast({
+          title: "Form status changed to " + status,
+          description: "Form has been published",
+          variant: "success",
+          duration: 5000,
+        });
+        refetch();
+      }
+
+      if (result.isErr()) {
+        console.log("error publishing form");
+        throw result.error;
+      }
+    } catch (e) {
+      console.log("error publishing form", e);
+      showToast({
+        title: "Error",
+        description: "Error changing form status",
+        variant: "error",
+        duration: 5000,
+      });
+    } finally {
+      console.log("done");
+      setLoading(false);
+    }
   }
 
   return (
@@ -160,13 +203,28 @@ const FormList: Component<FormListProps> = (props) => {
                       {new Date(c.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell class="text-right gap-2 flex justify-end">
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
+                      <Show
+                        when={!isPublished(c.status)}
+                        fallback={
+                          <Button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`${c.id}/share`);
+                            }}
+                          >
+                            Share
+                          </Button>
+                        }
                       >
-                        Publish
-                      </Button>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            changeStatus(c, "Published");
+                          }}
+                        >
+                          Publish
+                        </Button>
+                      </Show>
 
                       <DropdownMenu>
                         <DropdownMenuTrigger>
@@ -191,11 +249,11 @@ const FormList: Component<FormListProps> = (props) => {
 
                           <Show when={isPublished(c.status)}>
                             <DropdownMenuItem
-                              class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 changeStatus(c, "Draft");
                               }}
+                              class="text-primary-foreground focus:bg-error-foreground flex items-center gap-2"
                             >
                               <div class="w-4 h-4">
                                 <Hidden />

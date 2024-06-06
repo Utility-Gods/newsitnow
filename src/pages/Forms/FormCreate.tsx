@@ -50,7 +50,7 @@ const FormCreate: Component = () => {
   const [formName, setFormName] = createSignal("");
 
   const [activeTheme, setActiveTheme] = createSignal(0);
-  const [loading, setLoading] = createSignal(true);
+  const [loading, setLoading] = createSignal(false);
   const formBuilder = () =>
     new FormBuilder(templates[activeTemplate()].template);
   const formDigested = () => formBuilder().output();
@@ -66,11 +66,14 @@ const FormCreate: Component = () => {
         name: formName(),
         template: formBuilder().getTemplate(),
         theme: active_theme(),
-        organizations: [org_id()],
+        org_id: org_id(),
         creator: get_user_id(),
       });
 
       console.log("Save form result", result);
+      if (result.isErr()) {
+        throw result.error;
+      }
 
       if (result.isOk()) {
         showToast({
