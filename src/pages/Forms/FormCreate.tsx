@@ -85,19 +85,20 @@ const FormCreate: Component = () => {
         ))}
       </div>
       <div class="p-3">
-        <div class="text-lg font-semibold">Form Preview</div>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          class={themes[activeTheme()].form}
-        >
-          <For each={formDigested()?.entities ?? []}>
-            {(field) => (
-              <Show when={field}>
-                <FormField field={field} theme={active_theme} />
-              </Show>
-            )}
+        <div class="px-3 font-semibold text-muted-foreground">Form Preview</div>
+        <div class="p-3">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            class={themes[activeTheme()].form}
+          >
+            <For each={formDigested()?.entities ?? []}>
+              {(field) => (
+                <Show when={field}>
+                  <FormField field={field} theme={active_theme} />
+                </Show>
+              )}
 
-            {/* {(field) => (
+              {/* {(field) => (
               <div class="p-3">
                 <div class="text-lg font-semibold text-primary">
                   {field.label.text}
@@ -105,12 +106,13 @@ const FormCreate: Component = () => {
                 <div innerHTML={field.field.render()}></div>
               </div>
             )} */}
-          </For>
-          <FormActionField
-            field={formDigested()?.action}
-            theme={active_theme}
-          />
-        </form>
+            </For>
+            <FormActionField
+              field={formDigested()?.action}
+              theme={active_theme}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );
