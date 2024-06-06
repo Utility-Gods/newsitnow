@@ -178,3 +178,32 @@ export const save_form_response = async (data: any) => {
     return err(e);
   }
 };
+
+export const count_forms = async (org_id: number) => {
+  try {
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(
+      `${BASE_URL}/api/forms/count?org_id=${org_id}`,
+      {
+        headers: reqHeaders,
+        method: "GET",
+      },
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch forms error:", error);
+      throw error.error;
+    }
+
+    const forms = await response.json();
+
+    return ok(forms);
+  } catch (e) {
+    console.log(e, "-----------");
+    return err(e);
+  }
+};
