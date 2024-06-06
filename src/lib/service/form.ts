@@ -116,3 +116,36 @@ export const update_form = async (data: any, org_id: string) => {
     return err(e);
   }
 };
+
+export const fetch_form_by_id = async ({ org_id, id }) => {
+  if (!org_id || !id) {
+    return err("org_id or id is missing");
+  }
+
+  try {
+    const token = get_token();
+
+    const reqHeaders = new Headers();
+    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    const response = await fetch(
+      `${BASE_URL}/api/forms/${id}?org_id=${org_id}`,
+      {
+        headers: reqHeaders,
+        method: "GET",
+      },
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("Fetch form error:", error);
+      throw error.error;
+    }
+
+    const form = await response.json();
+
+    return ok(form);
+  } catch (e) {
+    console.log(e, "-----------");
+    return err(e);
+  }
+};

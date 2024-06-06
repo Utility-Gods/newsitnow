@@ -142,10 +142,11 @@ const FormList: Component<FormListProps> = (props) => {
         <TableHeader>
           <TableRow>
             <TableHead class="w-1/4">Name</TableHead>
-
-            <TableHead class="text-left">Owner</TableHead>
+            <TableHead class="text-left">Status</TableHead>
+            <TableHead class="text-center">Owner</TableHead>
+            <TableHead class="text-center">Role</TableHead>
             <TableHead class="text-right">Created At</TableHead>
-            <TableHead class="text-right">Actions</TableHead>
+            <TableHead class="text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
