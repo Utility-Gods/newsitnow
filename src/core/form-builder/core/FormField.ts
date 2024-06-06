@@ -40,7 +40,7 @@ export class SelectField implements FormField {
   // render
   render() {
     return `
-      <select>
+      <select name=${this.name}>
         ${this.options.map((option) => `<option>${option.label}</option>`).join("")}
       </select>
     `;

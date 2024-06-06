@@ -32,6 +32,7 @@ import { Button } from "~/components/ui/button";
 import { showToast } from "~/components/ui/toast";
 import Unlock from "@lib/icons/Unlock";
 import Lock from "@lib/icons/Lock";
+import { fetch_form_response } from "@lib/service/form_response";
 
 type FormViewProps = {};
 
@@ -49,10 +50,14 @@ const FormView: Component = (props: FormViewProps) => {
 
   const [form, { refetch }] = createResource(fetch_form_args, fetch_form_by_id);
 
-  createEffect(() => {
-    console.log(form());
-  });
+  const [form_response, { refetch: fr_refetch }] = createResource(
+    fetch_form_args,
+    fetch_form_response,
+  );
 
+  createEffect(() => {
+    console.log("form_response", form_response());
+  });
   const [loading, setLoading] = createSignal(false);
 
   const form_details = () => form()?.value;

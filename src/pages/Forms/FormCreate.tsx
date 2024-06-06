@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { save_form } from "@lib/service/form";
 import { useNavigate, useParams } from "@solidjs/router";
-import { get_first_org_id, get_user_id, show_error_toast } from "@lib/utils";
+import { get_user_id, show_error_toast } from "@lib/utils";
 import { showToast } from "~/components/ui/toast";
 import PageSpinner from "~/components/bare/common/PageSpinner";
 
@@ -187,6 +187,9 @@ const FormCreate: Component = () => {
         <DialogContent class="w-[600px]">
           <DialogHeader class="space-y-1.5 overflow-hidden gap-2">
             <h2 class="text-lg font-semibold px-2">Give your form a name...</h2>
+            <div class="px-2 text-muted-foreground">
+              This name will be shown to your users when they fill the form.
+            </div>
             <div class="flex flex-col col-span-3 p-2">
               <Input
                 id="name"
