@@ -1,3 +1,4 @@
+import Forms from "@lib/icons/Forms";
 import { Component, For, Show, createEffect, createSignal } from "solid-js";
 import FormActionField from "~/core/form-builder/components/FormActionField";
 import FormField from "~/core/form-builder/components/FormField";
@@ -49,30 +50,33 @@ const FormCreate: Component = () => {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
         {templates.map((template, index) => (
           <div
-            class={`bg-white shadow-md rounded-lg p-3 cursor-pointer `}
+            class={` shadow-md rounded-lg p-3 cursor-pointer
+              ${activeTemplate() === index ? "bg-secondary text-secondary-foreground" : "bg-white"}
+              `}
             onClick={() => {
               console.log(template.template);
               setActiveTemplate(index);
             }}
           >
-            <div class="text-lg font-semibold text-primary">
-              {templates[activeTemplate()].name}
-            </div>
-            <div class="text-text">{template.description}</div>
+            <div class="flex gap-2 text-lg font-semibold ">{template.name}</div>
+            <div>{template.description}</div>
           </div>
         ))}
       </div>
       <div class="px-3 font-semibold text-muted-foreground">Select a theme</div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
+      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-3 p-3">
         {themes.map((theme, index) => (
           <div
-            class={`bg-white shadow-md rounded-lg p-3 cursor-pointer `}
+            class={`shadow-md rounded-lg p-3 cursor-pointer
+                ${activeTheme() === index ? "bg-secondary text-secondary-foreground" : "bg-white"}
+
+              `}
             onClick={() => {
               console.log(theme.name);
               setActiveTheme(index);
             }}
           >
-            <div class="text-lg font-semibold text-primary">{theme.name}</div>
+            <div class="text-lg font-semibold">{theme.name}</div>
           </div>
         ))}
       </div>
