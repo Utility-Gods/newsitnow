@@ -3,6 +3,14 @@ import { delete_form, fetch_form_by_id, update_form } from "@lib/service/form";
 
 import { get_first_org_id, get_user_id } from "@lib/utils";
 import { A, useNavigate, useParams } from "@solidjs/router";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 
 import {
   DropdownMenu,
@@ -14,6 +22,7 @@ import {
 import {
   Component,
   Show,
+  For,
   createEffect,
   createResource,
   createSignal,
@@ -33,6 +42,7 @@ import { showToast } from "~/components/ui/toast";
 import Unlock from "@lib/icons/Unlock";
 import Lock from "@lib/icons/Lock";
 import { fetch_form_response } from "@lib/service/form_response";
+import TableRowSkeleton from "~/components/bare/common/TableRowSkeleton";
 
 type FormViewProps = {};
 
@@ -50,20 +60,16 @@ const FormView: Component = (props: FormViewProps) => {
 
   const [form, { refetch }] = createResource(fetch_form_args, fetch_form_by_id);
 
-  const [form_response, { refetch: fr_refetch }] = createResource(
+  const [formResponseList, { refetch: fr_refetch }] = createResource(
     fetch_form_args,
     fetch_form_response,
   );
 
-  createEffect(() => {
-    console.log("form_response", form_response());
-  });
   const [loading, setLoading] = createSignal(false);
 
   const form_details = () => form()?.value;
 
   const isAuthor = () => {
-    console.log(get_user_id());
     return true;
     // return form_details().creator.id === get_user_id();
   };
@@ -89,7 +95,6 @@ const FormView: Component = (props: FormViewProps) => {
       );
 
       if (result.isOk()) {
-        console.log("formpublished");
         showToast({
           title: "Form status changed to " + status,
           description: "Article has been published",
@@ -394,6 +399,59 @@ const FormView: Component = (props: FormViewProps) => {
             </div>
           </Show>
         </div>
+
+        <Table class=" border-border border">
+          <TableHeader>
+            <TableRow>
+              <TableHead class="w-1/4">Email</TableHead>
+              <TableHead class="text-left">Response</TableHead>
+              <TableHead class="text-center">Date</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <Show when={formResponseList()?.isErr()}>
+              <TableRow>
+                <TableCell
+                  colspan={5}
+                  class="text-center text-error-foreground"
+                >
+                  {formResponseList()?.error.message}
+                </TableCell>
+              </TableRow>
+            </Show>
+            <Show
+              when={!formResponseList.loading}
+              fallback={<TableRowSkeleton />}
+            >
+              <Show when={formResponseList()?.isOk()}>
+                <Show when={formResponseList()?.value.length === 0}>
+                  <TableRow>
+                    <TableCell
+                      colspan={5}
+                      class="text-center text-muted-foreground"
+                    >
+                      No responses found
+                    </TableCell>
+                  </TableRow>
+                </Show>
+                <For each={formResponseList()?.value}>
+                  {(c) => (
+                    <TableRow>
+                      <TableCell class="font-semibold">
+                        <div class="clamp-lines line-clamp-1">{c.creator}</div>
+                      </TableCell>
+                      <TableCell>{JSON.stringify(c.response)}</TableCell>
+
+                      <TableCell class="text-center">
+                        {new Date(c.createdAt).toLocaleDateString()}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </For>
+              </Show>
+            </Show>
+          </TableBody>
+        </Table>
 
         <Show when={form()?.isErr()}>
           <div class="p-4 text-primary-100">Error loading form</div>

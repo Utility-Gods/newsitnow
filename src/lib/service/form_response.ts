@@ -13,7 +13,7 @@ export const fetch_form_response = async ({ id, org_id }) => {
     reqHeaders.append("Content-Type", "application/json");
 
     const response = await fetch(
-      `${BASE_URL}/api/form-responses/${id}?org_id=${org_id}`,
+      `${BASE_URL}/api/form-responses?org_id=${org_id}&&form_id=${id}`,
       {
         method: "GET",
         headers: reqHeaders,
