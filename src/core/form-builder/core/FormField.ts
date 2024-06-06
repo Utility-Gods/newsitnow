@@ -74,7 +74,6 @@ export class EmailField implements FormField {
   }
 
   renderWithTheme(theme: Theme) {
-    console.log("in email field builder class", { theme });
     if (!theme) {
       return this.render();
     }

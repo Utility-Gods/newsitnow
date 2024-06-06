@@ -29,10 +29,6 @@ const FormCreate: Component = () => {
 
   const active_theme = () => themes[activeTheme()];
 
-  createEffect(() => {
-    console.log("formDigested", formDigested());
-  });
-
   const [activeTemplate, setActiveTemplate] = createSignal(0);
 
   const [activeTheme, setActiveTheme] = createSignal(0);
@@ -56,7 +52,6 @@ const FormCreate: Component = () => {
               ${activeTemplate() === index ? "bg-secondary text-secondary-foreground" : "bg-white"}
               `}
             onClick={() => {
-              console.log(template.template);
               setActiveTemplate(index);
             }}
           >
@@ -74,9 +69,7 @@ const FormCreate: Component = () => {
 
               `}
             onClick={() => {
-              console.log(theme.name);
               setActiveTheme(index);
-              console.log(activeTheme());
               setActiveTemplate(activeTemplate());
             }}
           >

@@ -5,7 +5,6 @@ import { Theme } from "../themes/types";
 
 const FormActionField: Component = (props) => {
   const { field, theme } = props as { field: FormAction; theme: Theme };
-  console.log(field);
   const type = () => field.field.type;
 
   return (
