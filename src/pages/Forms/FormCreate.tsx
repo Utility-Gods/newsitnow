@@ -140,7 +140,8 @@ const FormCreate: Component = () => {
           </div>
         ))}
         <A
-          href=""
+          href="https://orangegas.co/action-form/1"
+          target="_blank"
           class={` shadow-md rounded-lg p-3 cursor-pointer
             `}
         >
