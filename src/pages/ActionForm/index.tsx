@@ -94,7 +94,7 @@ const ActionForm: Component = (props) => {
         <div class="text-muted-foreground">No form found</div>
       </Show>
       <Show when={form_details()}>
-        <div class="w-1/2 p-3 space-y-3">
+        <div class="w-full sm:w-1/2 p-3 space-y-3">
           <div class="font-semibold text-xl text-muted-foreground">
             {form_details().name}
           </div>
