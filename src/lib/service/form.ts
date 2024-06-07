@@ -126,15 +126,15 @@ export const fetch_form_by_id = async ({ org_id, id }) => {
     const token = get_token();
 
     const reqHeaders = new Headers();
-    reqHeaders.append("Authorization", `Bearer ${token}`);
+    if (token) {
+      reqHeaders.append("Authorization", `Bearer ${token}`);
+    }
+    reqHeaders.append("Content-Type", "application/json");
 
-    const response = await fetch(
-      `${BASE_URL}/api/forms/${id}?org_id=${org_id}`,
-      {
-        headers: reqHeaders,
-        method: "GET",
-      },
-    );
+    const response = await fetch(`${BASE_URL}/api/forms/${id}`, {
+      headers: reqHeaders,
+      method: "GET",
+    });
     if (!response.ok) {
       const error = await response.json();
       console.log("Fetch form error:", error);
@@ -155,7 +155,9 @@ export const save_form_response = async (data: any) => {
     const token = get_token();
 
     const reqHeaders = new Headers();
-    reqHeaders.append("Authorization", `Bearer ${token}`);
+    if (token) {
+      reqHeaders.append("Authorization", `Bearer ${token}`);
+    }
     reqHeaders.append("Content-Type", "application/json");
 
     const response = await fetch(`${BASE_URL}/api/form-responses`, {

@@ -41,7 +41,10 @@ export const save_form_response = async (data: any) => {
     const token = get_token();
 
     const reqHeaders = new Headers();
-    reqHeaders.append("Authorization", `Bearer ${token}`);
+
+    if (token) {
+      reqHeaders.append("Authorization", `Bearer ${token}`);
+    }
     reqHeaders.append("Content-Type", "application/json");
 
     const response = await fetch(`${BASE_URL}/api/form-responses`, {
