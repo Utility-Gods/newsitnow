@@ -17,6 +17,7 @@ import PageSpinner from "~/components/bare/common/PageSpinner";
 import registrationForm from "~/core/form-builder/templates/registration";
 import feedbackForm from "~/core/form-builder/templates/feedback";
 import suggestionForm from "~/core/form-builder/templates/suggestionForm";
+import bugReportForm from "~/core/form-builder/templates/bugForm";
 
 const templates = [
   {
@@ -48,6 +49,11 @@ const templates = [
     name: "Suggestion Form",
     template: suggestionForm,
     description: "A simple suggestion form",
+  },
+  {
+    name: "Report a bug Form",
+    template: bugReportForm,
+    description: "A simple form to report a bug",
   },
 ];
 const FormCreate: Component = () => {

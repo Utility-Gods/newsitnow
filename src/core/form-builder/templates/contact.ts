@@ -13,16 +13,7 @@ const contactForm: FormTemplate = {
         name: "name",
       },
     },
-    {
-      label: {
-        text: "Email",
-        for: "email",
-      },
-      field: {
-        type: FormFieldType.Email,
-        name: "email",
-      },
-    },
+
     {
       label: {
         text: "Message",

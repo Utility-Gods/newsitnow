@@ -26,6 +26,9 @@ export const Nav: Component = (props) => {
               Blog
             </A>
           </div>
+          <A href="/action-form/2" class="text-primary">
+            Contact Us
+          </A>
           {props.children}
         </div>
       </nav>

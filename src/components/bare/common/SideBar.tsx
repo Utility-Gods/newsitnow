@@ -353,6 +353,7 @@ const SideBar: Component = () => {
               </span>
             </a>
           </Show>
+
           <a
             href={originURL + "/blog/collection"}
             target="_blank"
