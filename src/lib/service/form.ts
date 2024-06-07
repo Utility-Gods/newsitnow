@@ -146,8 +146,8 @@ export const fetch_form_by_id = async ({ org_id, id }) => {
     return ok(form);
   } catch (e) {
     console.log(e, "-----------");
+    return err(e);
   }
-  return err(e);
 };
 
 export const save_form_response = async (data: any) => {
