@@ -65,6 +65,8 @@ const ActionForm: Component = (props) => {
         creator: userName(),
       });
 
+      console.log({ result });
+
       if (result.isOk()) {
         console.log("formpublished");
         showToast({
@@ -172,6 +174,11 @@ const ActionForm: Component = (props) => {
 
       <Show when={loading()}>
         <PageSpinner />
+      </Show>
+
+      <Show when={form()?.isErr()}>
+        <div class="text-muted-foreground">Error fetching</div>
+        <div class="text-muted-foreground">{form()?.error?.message}</div>
       </Show>
     </>
   );

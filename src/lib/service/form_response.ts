@@ -60,7 +60,6 @@ export const save_form_response = async (data: any) => {
     }
 
     const result = await response.json();
-
     return ok(result);
   } catch (e) {
     console.log(e);
